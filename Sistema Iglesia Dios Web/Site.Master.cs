@@ -11,7 +11,8 @@ namespace Sistema_Iglesia_Dios_Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            string a;
+            
         }
     }
 }
