@@ -1,4 +1,4 @@
-ï»¿var delalertok = false
+var delalertok = false
 function CerrarSesionAlert(btn) {
     if (delalertok) {
         delalertok = false
@@ -6,8 +6,8 @@ function CerrarSesionAlert(btn) {
     }
 
     swal({
-        title: "Cerrar sesiÃ³n",
-        text: "Â¿EstÃ¡ seguro que desea cerrar sesiÃ³n?",
+        title: "Cerrar sesión",
+        text: "¿Está seguro que desea cerrar sesión?",
         icon: "info",
         dangerMode: false,
         buttons: {
@@ -18,7 +18,7 @@ function CerrarSesionAlert(btn) {
                 closeModal: true,
             },
             confirm: {
-                text: "Cerrar sesiÃ³n",
+                text: "Cerrar sesión",
                 value: true,
                 visible: true,
                 closeModal: true,
@@ -108,7 +108,7 @@ function asignarEnlace() {
     document.getElementById('btnAyuda').href = url + 'Ayuda/frmAyuda.aspx';
     document.getElementById('btnConfiguracion_Usuarios').href = url + 'Usuarios/frmUsuarios.aspx';
     document.getElementById('btnCambiarPassword').href = url + 'Usuarios/frmCambiarPassword.aspx';
-   
+
 }
 
 
@@ -117,7 +117,7 @@ function asignarEnlace() {
 // With the above scripts loaded, you can call `tippy()` with a CSS
 // selector and a `content` prop:
 tippy('#btnCerrarSesion', {
-    content: 'Cerrar sesiÃ³n',
+    content: 'Cerrar sesión',
     placement: 'bottom',
     arrow: true,
 });
@@ -134,7 +134,7 @@ tippy('li  div  a', {
 });
 
 tippy('#BotonMenu', {
-    content: 'Mostrar/Contraer menÃº de opciones',
+    content: 'Mostrar/Contraer menú de opciones',
     placement: 'bottom',
     arrow: true,
 });

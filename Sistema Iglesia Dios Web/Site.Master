@@ -8,7 +8,7 @@
 
 <html lang="es">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sistema Web - Iglesia de Dios La 33</title>
@@ -17,7 +17,7 @@
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
@@ -63,7 +63,7 @@
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
 
-                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.Core.js"></asp:ScriptReference>
+                <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.Core.js"></asp:ScriptReference>
                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQuery.js"></asp:ScriptReference>
                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQueryInclude.js"></asp:ScriptReference>
                 <%--Site Scripts--%>
@@ -75,7 +75,7 @@
             <!--header_1 menu_1 start-->
             <div class="header_1">
                 <div class="header_1-menu_1">
-                    <div class="title_1">Egresados<span> PUCMM</span></div>
+                    <div class="title_1">Iglesia de Dios<span> La 33</span></div>
                     <div class="sidebar_1-btn_1" id="BotonMenu">
                         <i class="fas fa-bars"></i>
                     </div>
@@ -88,7 +88,7 @@
                                     <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label><asp:Label runat="server" ID="lblTipoUsuario" Style="display: block; font-size: 12px;">Tipo de usuario (Offline)</asp:Label>
                                 </div>
                             </div>
-                            <a href="#" id="btnCerrarSesion" style="display: inline-block;"  onclick="return CerrarSesionAlert(this);"><i class="fa-solid fa-right-from-bracket" style="margin-bottom: 10px;"></i></a></li>
+                            <a href="#" id="btnCerrarSesion" style="display: inline-block;" onclick="return CerrarSesionAlert(this);"><i class="fa-solid fa-right-from-bracket" style="margin-bottom: 10px;"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -102,37 +102,19 @@
                         </a>
                     </li>
 
-                    <li class="item_1" title="Egresados">
+                    <li class="item_1" title="Ingresos">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnEgresados" data-tippy-content="Egresados" title="">
                             <i class="fa-solid fa-user-graduate"></i><span>Egresados</span>
                         </a>
                     </li>
-                    <li class="item_1" title="Campus">
+                    <li class="item_1" title="Egresos">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnCampus" data-tippy-content="Campus" title="">
                             <i class="fa-solid fa-building-columns"></i><span>Campus</span>
                         </a>
                     </li>
-                    <li class="item_1" title="Grados">
+                    <li class="item_1" title="Miembros">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnGrados" data-tippy-content="Grados" title="">
                             <i class="fa-solid fa-graduation-cap"></i><span>Grados</span>
-                        </a>
-                    </li>
-
-                    <li class="item_1" title="Grupos acad&eacute;micos">
-                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnGruposAcademicos" data-tippy-content="Grupos acad&eacute;micos" title="">
-                            <i class="fa-solid fa-people-group"></i><span>Grupos acad&eacute;micos</span>
-                        </a>
-                    </li>
-
-                    <li class="item_1" title="Programas acad&eacute;micos">
-                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnProgramasAcademicos" data-tippy-content="Programas acad&eacute;micos" title="">
-                            <i class="fa-solid fa-book"></i><span>Programas acad&eacute;micos</span>
-                        </a>
-                    </li>
-
-                    <li class="item_1" title="Honores">
-                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnHonores" data-tippy-content="Honores" title="">
-                            <i class="fa-solid fa-award"></i><span>Honores</span>
                         </a>
                     </li>
 
@@ -142,52 +124,6 @@
                         </a>
                     </li>
 
-                    <li class="item_1" id="region" title="Regi&oacute;n">
-                        <a style="text-decoration: none;" href="#region" class="menu_1-btn_1" data-tippy-content="Regi&oacute;n" title="">
-                            <i class="fa-solid fa-earth-americas"></i><span>Regi&oacute;n <i class="fas fa-chevron-down drop-down_1"></i></span>
-                        </a>
-                        <div class="sub-menu_1">
-                            <a href="#" id="btnNacionalidades" data-tippy-content="Nacionalidades" title=""><i class="fa-solid fa-passport"></i><span>Nacionalidades</span></a>
-                            <a href="#" id="btnPaises" data-tippy-content="Pa&iacute;ses" title=""><i class="fa-solid fa-flag"></i><span>Pa&iacute;ses</span></a>
-                            <a href="#" id="btnCiudades" data-tippy-content="Ciudades" title=""><i class="fa-solid fa-city"></i><span>Ciudades</span></a>
-                        </div>
-                    </li>
-
-                    <li class="item_1" id="consultas" title="Consultas">
-                        <a style="text-decoration: none;" href="#consultas" class="menu_1-btn_1" data-tippy-content="Consultas" title="">
-                            <i class="fa-solid fa-chart-column"></i><span>Consultas <i class="fas fa-chevron-down drop-down_1"></i></span>
-                        </a>
-                        <div class="sub-menu_1">
-                            <a href="#" id="btnConsultas_Egresados" data-tippy-content="Egresados" title=""><i class="fa-solid fa-user-graduate"></i><span>Egresados</span></a>
-                        </div>
-                        <div class="sub-menu_1">
-                            <a href="#" id="btnGraficoEgresados" data-tippy-content="Gráfico de egresados" title=""><i class="fa-solid fa-chart-simple"></i><span>Gr&aacute;fico de egresados</span></a>
-                        </div>
-                    </li>
-
-                    <li class="item_1" title="Importaci&oacute;n masiva">
-                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnImportacionMasiva" data-tippy-content="Importaci&oacute;n masiva" title="">
-                            <i class="fa-solid fa-file-arrow-up"></i><span>Importaci&oacute;n masiva</span>
-                        </a>
-                    </li>
-
-                    <li class="item_1" title="Exportación">
-                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnExportacion" data-tippy-content="Exportación" title="">
-                            <i class="fa-solid fa-cloud-arrow-down"></i><span>Exportaci&oacute;n</span>
-                        </a>
-                    </li>
-
-                    <li class="item_1" title="Configuraci&oacute;n" id="configuracion">
-                        <a style="text-decoration: none;" href="#configuracion" class="menu_1-btn_1" data-tippy-content="Configuraci&oacute;n" title="">
-                            <i class="fas fa-cog"></i><span>Configuraci&oacute;n <i class="fas fa-chevron-down drop-down_1"></i></span>
-                        </a>
-                        <div class="sub-menu_1">
-                            <a href="#" id="btnConfiguracion_Usuarios" runat="server" data-tippy-content="Usuarios" title="" style="text-decoration: none;"><i class="fa-solid fa-user"></i><span>Usuarios</span></a>
-                        </div>
-                        <div class="sub-menu_1">
-                            <a href="#" id="btnCambiarPassword" runat="server" data-tippy-content="Cambiar contraseña" title="" style="text-decoration: none;"><i class="fa-solid fa-lock"></i><span>Cambiar contraseña</span></a>
-                        </div>
-                    </li>
                     <li class="item_1" title="Ayuda">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnAyuda" data-tippy-content="Ayuda" title="">
                             <i class="fa-solid fa-question"></i><span>Ayuda</span>
@@ -216,5 +152,5 @@
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
     </asp:PlaceHolder>
 </body>
-    <script src="../Recursos/Javascript/scripts_master.js"></script>
+<script src="../Recursos/Javascript/scripts_master.js"></script>
 </html>

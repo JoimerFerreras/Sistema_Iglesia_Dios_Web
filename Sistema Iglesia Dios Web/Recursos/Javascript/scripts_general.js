@@ -1,11 +1,11 @@
-ï»¿
+
 // Establecer ancho de RadGrid
 //function setTableWidth() {
 //    var Grid = document.getElementById("gvDatos");
 //    var windowWidth = window.innerWidth; // Ancho de la ventana del navegador
 //    Grid.style.width = "100%";
 //}
-//// Llamar a la funciÃ³n cuando se carga la pÃ¡gina y cuando se cambia el tamaÃ±o de la ventana
+//// Llamar a la función cuando se carga la página y cuando se cambia el tamaño de la ventana
 //window.addEventListener("load", setTableWidth);
 //window.addEventListener("resize", setTableWidth);
 
@@ -20,7 +20,7 @@ function delalert(btn) {
 
     swal({
         title: "Eliminar el registro",
-        text: "Â¿EstÃ¡ seguro que desea eliminar este registro?",
+        text: "¿Está seguro que desea eliminar este registro?",
         icon: "warning",
         dangerMode: true,
         buttons: {
@@ -52,22 +52,22 @@ function delalert(btn) {
 // Aplicar animacion de opasitdad a un contenedor al cargar la aplicacion
 function fadeInContainer() {
     const fadeContainer = document.getElementById('divContenedorOpasity');
-    fadeContainer.classList.add('show'); /* AÃ±adimos la clase "show" para activar la transiciÃ³n */
+    fadeContainer.classList.add('show'); /* Añadimos la clase "show" para activar la transición */
 }
 
-// Llamamos a la funciÃ³n para que se active la transiciÃ³n cuando se carga la pÃ¡gina
+// Llamamos a la función para que se active la transición cuando se carga la página
 window.addEventListener('load', fadeInContainer);
 
 
 
 
 
-            //var template = document.getElementsByClassName('item_1');
-            //tippy('.item_1', {
-            //    content: template.innerHTML,
-            //    placement: 'left',
-            //    arrow: true,
-            //});
+//var template = document.getElementsByClassName('item_1');
+//tippy('.item_1', {
+//    content: template.innerHTML,
+//    placement: 'left',
+//    arrow: true,
+//});
 
 
 
@@ -91,7 +91,7 @@ window.addEventListener('load', fadeInContainer);
 
 
 
-//// Se ejecuta al cambiar el tamaÃ±o
+//// Se ejecuta al cambiar el tamaño
 //window.addEventListener('resize', function () {
 //    var elemento = document.getElementById('wrapper_1');
 //    var ventanaAncho = window.innerWidth;
@@ -104,13 +104,13 @@ window.addEventListener('load', fadeInContainer);
 //    }
 //});
 
-//// Ejecutar el evento resize al cargar la pÃ¡gina para aplicar el estilo inicial
+//// Ejecutar el evento resize al cargar la página para aplicar el estilo inicial
 //window.dispatchEvent(new Event('resize'));
 
 
 
 function MostrarPanelCarga() {
-    // ObtÃ©n una referencia al elemento div
+    // Obtén una referencia al elemento div
     var divElement = document.getElementById("divPanelCarga");
 
     // Aplica estilos utilizando la propiedad style del elemento

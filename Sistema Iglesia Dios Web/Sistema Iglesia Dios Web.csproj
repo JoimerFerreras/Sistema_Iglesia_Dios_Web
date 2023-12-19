@@ -155,6 +155,16 @@
     <Content Include="favicon.ico" />
     <Content Include="frmLogin.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Recursos\CSS\botones.css" />
+    <Content Include="Recursos\CSS\estilos_general.css" />
+    <Content Include="Recursos\CSS\login.css" />
+    <Content Include="Recursos\CSS\master_page.css" />
+    <Content Include="Recursos\CSS\recuperar_password.css" />
+    <Content Include="Recursos\CSS\visualizador_pdf.css" />
+    <Content Include="Recursos\Imagenes\diezmo.jpg" />
+    <Content Include="Recursos\Javascript\scripts_general.js" />
+    <Content Include="Recursos\Javascript\scripts_master.js" />
+    <Content Include="Recursos\Javascript\typpy_tooltip.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -269,12 +279,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Consultas\" />
     <Folder Include="Egresos\" />
     <Folder Include="Ingresos\" />
     <Folder Include="Miembros\" />
-    <Folder Include="Recursos\CSS\" />
-    <Folder Include="Recursos\Imagenes\" />
-    <Folder Include="Recursos\Javascript\" />
     <Folder Include="Recursos\Recursos_Utiles\" />
     <Folder Include="Recursos\Scripts SQL\" />
     <Folder Include="Reportes\" />
@@ -295,6 +303,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Entidades\Entidades.csproj">
+      <Project>{ffcb856d-7203-4ebb-98bb-999e7f2842cc}</Project>
+      <Name>Entidades</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Negocio\Negocio.csproj">
       <Project>{5efc45aa-bc1f-4af1-bb72-f306db528683}</Project>
       <Name>Negocio</Name>

@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,15 +42,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ConexionBD\Conexion_D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Usuarios\Usuario_D.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ConexionBD\" />
     <Folder Include="Egresos\" />
     <Folder Include="Ingresos\" />
     <Folder Include="Miembros\" />
-    <Folder Include="Usuarios\" />
+    <Folder Include="Util_D\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entidades\Entidades.csproj">
+      <Project>{ffcb856d-7203-4ebb-98bb-999e7f2842cc}</Project>
+      <Name>Entidades</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

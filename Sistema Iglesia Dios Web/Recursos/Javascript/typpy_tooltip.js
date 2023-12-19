@@ -1,4 +1,4 @@
-﻿// With the above scripts loaded, you can call `tippy()` with a CSS
+// With the above scripts loaded, you can call `tippy()` with a CSS
 // selector and a `content` prop:
 
 // Tooltip para botones de formulario

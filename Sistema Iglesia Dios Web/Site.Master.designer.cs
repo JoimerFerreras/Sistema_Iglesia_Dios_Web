@@ -42,24 +42,6 @@ namespace Sistema_Iglesia_Dios_Web
         protected global::System.Web.UI.WebControls.Label lblTipoUsuario;
 
         /// <summary>
-        /// Control btnConfiguracion_Usuarios.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnConfiguracion_Usuarios;
-
-        /// <summary>
-        /// Control btnCambiarPassword.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnCambiarPassword;
-
-        /// <summary>
         /// Control upPrincipal.
         /// </summary>
         /// <remarks>
