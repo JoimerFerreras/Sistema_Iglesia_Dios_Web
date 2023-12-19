@@ -1,5 +1,9 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Sistema_Iglesia_Dios_Web.SiteMaster" %>
 
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register Assembly="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI" TagPrefix="asp" %>
+
+
 <!DOCTYPE html>
 
 <html lang="es">
@@ -7,7 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Mi aplicación ASP.NET</title>
+    <title>Sistema Web - Iglesia de Dios La 33</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -16,9 +20,32 @@
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-</head>
-<body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <link rel="stylesheet" href="Recursos/CSS/master_page.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Custom ToolTip -->
+    <!-- Development -->
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
+</head>
+<body onload="asignarEnlace()" class="fondo">
+    <telerik:RadFormDecorator runat="server" Skin="Bootstrap" RenderMode="Lightweight" Visible="false" />
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
@@ -35,37 +62,159 @@
                 <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
+
+                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.Core.js"></asp:ScriptReference>
+                <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQuery.js"></asp:ScriptReference>
+                <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQueryInclude.js"></asp:ScriptReference>
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
 
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" runat="server" href="~/">Nombre de la aplicación</a>
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/About">Acerca de</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contacto</a></li>
+
+        <div class="wrapper_1" id="ContenedorPrincipal">
+            <!--header_1 menu_1 start-->
+            <div class="header_1">
+                <div class="header_1-menu_1">
+                    <div class="title_1">Egresados<span> PUCMM</span></div>
+                    <div class="sidebar_1-btn_1" id="BotonMenu">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <ul>
+                        <li>
+                            <asp:Label runat="server" ID="lblNombrePantalla" Text="[Nombre Pantalla]" ClientIDMode="Static" Style="position: absolute; top: 18px; left: 325px; font-size: 22px; font-weight: bold;"></asp:Label>
+                            <div id="divContenedorInfoUsuario" style="display: inline-block; margin: 0 15px; line-height: 16px; margin-top: 15px;">
+                                <i class="fa-solid fa-circle-user" style="font-size: 40px; color: #2F323A;"></i>
+                                <div style="display: inline-block;">
+                                    <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label><asp:Label runat="server" ID="lblTipoUsuario" Style="display: block; font-size: 12px;">Tipo de usuario (Offline)</asp:Label>
+                                </div>
+                            </div>
+                            <a href="#" id="btnCerrarSesion" style="display: inline-block;"  onclick="return CerrarSesionAlert(this);"><i class="fa-solid fa-right-from-bracket" style="margin-bottom: 10px;"></i></a></li>
                     </ul>
                 </div>
             </div>
-        </nav>
-        <div class="container body-content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server">
-            </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Mi aplicación ASP.NET</p>
-            </footer>
+            <!--header_1 menu_1 end-->
+            <!--sidebar_1 start-->
+            <div class="sidebar_1" id="MenuLateral">
+                <div class="sidebar_1-menu_1">
+                    <li class="item_1" title="Resumen">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnResumen" data-tippy-content="Resumen" title="">
+                            <i class="fa-solid fa-table"></i><span>Resumen</span>
+                        </a>
+                    </li>
+
+                    <li class="item_1" title="Egresados">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnEgresados" data-tippy-content="Egresados" title="">
+                            <i class="fa-solid fa-user-graduate"></i><span>Egresados</span>
+                        </a>
+                    </li>
+                    <li class="item_1" title="Campus">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnCampus" data-tippy-content="Campus" title="">
+                            <i class="fa-solid fa-building-columns"></i><span>Campus</span>
+                        </a>
+                    </li>
+                    <li class="item_1" title="Grados">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnGrados" data-tippy-content="Grados" title="">
+                            <i class="fa-solid fa-graduation-cap"></i><span>Grados</span>
+                        </a>
+                    </li>
+
+                    <li class="item_1" title="Grupos acad&eacute;micos">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnGruposAcademicos" data-tippy-content="Grupos acad&eacute;micos" title="">
+                            <i class="fa-solid fa-people-group"></i><span>Grupos acad&eacute;micos</span>
+                        </a>
+                    </li>
+
+                    <li class="item_1" title="Programas acad&eacute;micos">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnProgramasAcademicos" data-tippy-content="Programas acad&eacute;micos" title="">
+                            <i class="fa-solid fa-book"></i><span>Programas acad&eacute;micos</span>
+                        </a>
+                    </li>
+
+                    <li class="item_1" title="Honores">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnHonores" data-tippy-content="Honores" title="">
+                            <i class="fa-solid fa-award"></i><span>Honores</span>
+                        </a>
+                    </li>
+
+                    <li class="item_1" title="T&iacute;tulos">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnTitulos" data-tippy-content="T&iacute;tulos" title="">
+                            <i class="fa-solid fa-stamp"></i><span>T&iacute;tulos</span>
+                        </a>
+                    </li>
+
+                    <li class="item_1" id="region" title="Regi&oacute;n">
+                        <a style="text-decoration: none;" href="#region" class="menu_1-btn_1" data-tippy-content="Regi&oacute;n" title="">
+                            <i class="fa-solid fa-earth-americas"></i><span>Regi&oacute;n <i class="fas fa-chevron-down drop-down_1"></i></span>
+                        </a>
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnNacionalidades" data-tippy-content="Nacionalidades" title=""><i class="fa-solid fa-passport"></i><span>Nacionalidades</span></a>
+                            <a href="#" id="btnPaises" data-tippy-content="Pa&iacute;ses" title=""><i class="fa-solid fa-flag"></i><span>Pa&iacute;ses</span></a>
+                            <a href="#" id="btnCiudades" data-tippy-content="Ciudades" title=""><i class="fa-solid fa-city"></i><span>Ciudades</span></a>
+                        </div>
+                    </li>
+
+                    <li class="item_1" id="consultas" title="Consultas">
+                        <a style="text-decoration: none;" href="#consultas" class="menu_1-btn_1" data-tippy-content="Consultas" title="">
+                            <i class="fa-solid fa-chart-column"></i><span>Consultas <i class="fas fa-chevron-down drop-down_1"></i></span>
+                        </a>
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnConsultas_Egresados" data-tippy-content="Egresados" title=""><i class="fa-solid fa-user-graduate"></i><span>Egresados</span></a>
+                        </div>
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnGraficoEgresados" data-tippy-content="Gráfico de egresados" title=""><i class="fa-solid fa-chart-simple"></i><span>Gr&aacute;fico de egresados</span></a>
+                        </div>
+                    </li>
+
+                    <li class="item_1" title="Importaci&oacute;n masiva">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnImportacionMasiva" data-tippy-content="Importaci&oacute;n masiva" title="">
+                            <i class="fa-solid fa-file-arrow-up"></i><span>Importaci&oacute;n masiva</span>
+                        </a>
+                    </li>
+
+                    <li class="item_1" title="Exportación">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnExportacion" data-tippy-content="Exportación" title="">
+                            <i class="fa-solid fa-cloud-arrow-down"></i><span>Exportaci&oacute;n</span>
+                        </a>
+                    </li>
+
+                    <li class="item_1" title="Configuraci&oacute;n" id="configuracion">
+                        <a style="text-decoration: none;" href="#configuracion" class="menu_1-btn_1" data-tippy-content="Configuraci&oacute;n" title="">
+                            <i class="fas fa-cog"></i><span>Configuraci&oacute;n <i class="fas fa-chevron-down drop-down_1"></i></span>
+                        </a>
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnConfiguracion_Usuarios" runat="server" data-tippy-content="Usuarios" title="" style="text-decoration: none;"><i class="fa-solid fa-user"></i><span>Usuarios</span></a>
+                        </div>
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnCambiarPassword" runat="server" data-tippy-content="Cambiar contraseña" title="" style="text-decoration: none;"><i class="fa-solid fa-lock"></i><span>Cambiar contraseña</span></a>
+                        </div>
+                    </li>
+                    <li class="item_1" title="Ayuda">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnAyuda" data-tippy-content="Ayuda" title="">
+                            <i class="fa-solid fa-question"></i><span>Ayuda</span>
+                        </a>
+                    </li>
+                </div>
+            </div>
+            <!--sidebar_1 end-->
+            <!--main container start-->
+            <div class="main-container_1">
+                <%--<div class="container body-content">--%>
+                <div>
+                    <asp:UpdatePanel ID="upPrincipal" runat="server" UpdateMode="Always">
+                        <ContentTemplate>
+                            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+            </div>
+            <!--main container end-->
         </div>
+
     </form>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
     </asp:PlaceHolder>
 </body>
+    <script src="../Recursos/Javascript/scripts_master.js"></script>
 </html>
