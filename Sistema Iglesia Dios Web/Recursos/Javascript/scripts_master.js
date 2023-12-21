@@ -90,25 +90,7 @@ function asignarEnlace() {
     url = window.location.protocol.replace(/\:/g, '') + "://" + window.location.host + '/'
     // Obtener la etiqueta <a> mediante su ID
 
-    document.getElementById('btnResumen').href = url + 'Resumen/frmResumen.aspx';
-    document.getElementById('btnEgresados').href = url + 'Egresados/frmEgresados.aspx';
-    document.getElementById('btnCampus').href = url + 'Campus/frmCampus.aspx';
-    document.getElementById('btnGrados').href = url + 'Grados/frmGrados.aspx';
-    document.getElementById('btnGruposAcademicos').href = url + 'Grupos_Academicos/frmGrupos_Academicos.aspx';
-    document.getElementById('btnProgramasAcademicos').href = url + 'Programas_Academicos/frmProgramas_Academicos.aspx';
-    document.getElementById('btnHonores').href = url + 'Honores/frmHonores.aspx';
-    document.getElementById('btnTitulos').href = url + 'Titulos/frmTitulos.aspx';
-    document.getElementById('btnNacionalidades').href = url + 'Regiones/frmNacionalidades.aspx';
-    document.getElementById('btnPaises').href = url + 'Regiones/frmPaises.aspx';
-    document.getElementById('btnCiudades').href = url + 'Regiones/frmCiudades.aspx';
-    document.getElementById('btnConsultas_Egresados').href = url + 'Consultas/frmConsulta_Egresados.aspx';
-    document.getElementById('btnGraficoEgresados').href = url + 'Consultas/frmGraficoEgresados';
-    document.getElementById('btnImportacionMasiva').href = url + 'Importacion_Masiva/frmImportacion_Masiva.aspx';
-    document.getElementById('btnExportacion').href = url + 'Exportacion/frmExportacion.aspx';
-    document.getElementById('btnAyuda').href = url + 'Ayuda/frmAyuda.aspx';
-    document.getElementById('btnConfiguracion_Usuarios').href = url + 'Usuarios/frmUsuarios.aspx';
-    document.getElementById('btnCambiarPassword').href = url + 'Usuarios/frmCambiarPassword.aspx';
-
+    document.getElementById('btnMiembros').href = url + 'Miembros/frmMiembros.aspx';
 }
 
 

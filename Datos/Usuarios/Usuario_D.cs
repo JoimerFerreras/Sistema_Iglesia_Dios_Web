@@ -18,7 +18,7 @@ namespace Datos.Usuarios
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = "SELECT Id_Usuario, Nombre, Apellido, Usuario, Tipo_Usuario FROM Usuarios WHERE Usuario = @usuario AND Password = @password";
+                string sentencia = "SELECT Id_Usuario, Nombres, Apellidos, Usuario, Tipo_Usuario FROM Usuarios WHERE Usuario = @usuario AND Password = @password";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@usuario", Username);
@@ -32,8 +32,8 @@ namespace Datos.Usuarios
                         if (dr.Read()) // Si el DataReader tiene filas
                         {
                             entidad.Id_Usuario = Convert.ToInt32(dr["Id_Usuario"].ToString());
-                            entidad.Nombre = Username = dr["Nombre"].ToString();
-                            entidad.Apellido = Username = dr["Apellido"].ToString();
+                            entidad.Nombre = Username = dr["Nombres"].ToString();
+                            entidad.Apellido = Username = dr["Apellidos"].ToString();
                             entidad.Usuario = Username = dr["Usuario"].ToString();
                             entidad.Tipo_Usuario = Convert.ToInt32(dr["Tipo_Usuario"].ToString());
                         }

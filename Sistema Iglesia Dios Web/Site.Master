@@ -3,22 +3,22 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI" TagPrefix="asp" %>
 
-
 <!DOCTYPE html>
 
-<html lang="es">
+<%-- Desarrollado por: Joimer Ferreras --%>
+<%-- Para consultas escribir a: ferrerascuevasjoimer@gmail.com --%>
+
+<html lang="es" style="height: 100%;" class="fondo">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sistema Web - Iglesia de Dios La 33</title>
+    <title>Egresados PUCMM</title>
+    <link rel="shortcut icon" href="/Recursos/Imagenes/Logos/Logo_EP_ico.ico" />
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
-
-    <webopt:BundleReference runat="server" Path="~/Content/css" />
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
@@ -40,13 +40,15 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 
+
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-
-
 </head>
+
 <body onload="asignarEnlace()" class="fondo">
+
     <telerik:RadFormDecorator runat="server" Skin="Bootstrap" RenderMode="Lightweight" Visible="false" />
     <form runat="server">
+
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
@@ -55,27 +57,25 @@
                 <asp:ScriptReference Name="jquery" />
                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
                 <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
-                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="menuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/menuStandards.js" />
                 <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
                 <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
                 <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
                 <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
-
                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.Core.js"></asp:ScriptReference>
                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQuery.js"></asp:ScriptReference>
                 <asp:ScriptReference Assembly="Telerik.Web.UI" Name="Telerik.Web.UI.Common.jQueryInclude.js"></asp:ScriptReference>
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
-
-
+        <!--wrapper_1 start-->
         <div class="wrapper_1" id="ContenedorPrincipal">
             <!--header_1 menu_1 start-->
             <div class="header_1">
                 <div class="header_1-menu_1">
-                    <div class="title_1">Iglesia de Dios<span> La 33</span></div>
+                    <div class="title_1">Iglesia de Dios<span>La 33</span></div>
                     <div class="sidebar_1-btn_1" id="BotonMenu">
                         <i class="fas fa-bars"></i>
                     </div>
@@ -88,7 +88,7 @@
                                     <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label><asp:Label runat="server" ID="lblTipoUsuario" Style="display: block; font-size: 12px;">Tipo de usuario (Offline)</asp:Label>
                                 </div>
                             </div>
-                            <a href="#" id="btnCerrarSesion" style="display: inline-block;" onclick="return CerrarSesionAlert(this);"><i class="fa-solid fa-right-from-bracket" style="margin-bottom: 10px;"></i></a></li>
+                            <a href="#" id="btnCerrarSesion" style="display: inline-block;"  onclick="return CerrarSesionAlert(this);"><i class="fa-solid fa-right-from-bracket" style="margin-bottom: 10px;"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -103,24 +103,18 @@
                     </li>
 
                     <li class="item_1" title="Ingresos">
-                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnEgresados" data-tippy-content="Egresados" title="">
-                            <i class="fa-solid fa-user-graduate"></i><span>Egresados</span>
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnIngresos" data-tippy-content="Ingresos" title="">
+                            <i class="fa-solid fa-user-graduate"></i><span>Ingresos</span>
                         </a>
                     </li>
                     <li class="item_1" title="Egresos">
-                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnCampus" data-tippy-content="Campus" title="">
-                            <i class="fa-solid fa-building-columns"></i><span>Campus</span>
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnEgresos" data-tippy-content="Egresos" title="">
+                            <i class="fa-solid fa-building-columns"></i><span>Egresos</span>
                         </a>
                     </li>
                     <li class="item_1" title="Miembros">
-                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnGrados" data-tippy-content="Grados" title="">
-                            <i class="fa-solid fa-graduation-cap"></i><span>Grados</span>
-                        </a>
-                    </li>
-
-                    <li class="item_1" title="T&iacute;tulos">
-                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnTitulos" data-tippy-content="T&iacute;tulos" title="">
-                            <i class="fa-solid fa-stamp"></i><span>T&iacute;tulos</span>
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnMiembros" data-tippy-content="Miembros" title="">
+                            <i class="fa-solid fa-graduation-cap"></i><span>Miembros</span>
                         </a>
                     </li>
 
@@ -146,7 +140,7 @@
             </div>
             <!--main container end-->
         </div>
-
+        <!--wrapper_1 end-->
     </form>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
