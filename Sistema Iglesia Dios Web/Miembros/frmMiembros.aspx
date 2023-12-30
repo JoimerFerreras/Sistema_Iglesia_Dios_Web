@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../Recursos/CSS/estilos_general.css" />
     <link rel="stylesheet" href="../Recursos/CSS/botones.css" />
 
+
     <div style="padding: 20px;">
         <div class="shadowed-div-body" style="width: 100%;">
             <div>
