@@ -4,3 +4,9 @@ C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidad
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.dll
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.pdb
+C:\Users\Joimer\source\repos\Sistema_Iglesia_Dios_Web\Entidades\bin\Debug\Entidades.dll
+C:\Users\Joimer\source\repos\Sistema_Iglesia_Dios_Web\Entidades\bin\Debug\Entidades.pdb
+C:\Users\Joimer\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.csproj.AssemblyReference.cache
+C:\Users\Joimer\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
+C:\Users\Joimer\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.dll
+C:\Users\Joimer\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.pdb
