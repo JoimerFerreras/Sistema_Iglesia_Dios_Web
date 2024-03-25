@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Negocio.Miembros
 {
-    public class Miembro_Nivel_Academico
+    public class Miembro_Nivel_Academico_N
     {
         Miembro_Nivel_Academico_D miembro_nivel_academico_D = new Miembro_Nivel_Academico_D();
         public bool Agregar(Miembro_Nivel_Academico_E entidad)

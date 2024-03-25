@@ -11,7 +11,7 @@ namespace Entidades.Miembros
         public int Id_Miembro { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
-        public int Nombre_Pila { get; set; }
+        public string Nombre_Pila { get; set; }
         public int Sexo { get; set; }
         public DateTime Fecha_Nacimiento { get; set; }
         public int Estado_Civil { get; set; }

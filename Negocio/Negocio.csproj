@@ -46,7 +46,7 @@
     <Compile Include="Miembros\Miembro_Informacion_Familiar2_N.cs" />
     <Compile Include="Miembros\Miembro_Informacion_Laboral_N.cs" />
     <Compile Include="Miembros\Miembro_N.cs" />
-    <Compile Include="Miembros\Miembro_Nivel_Academico.cs" />
+    <Compile Include="Miembros\Miembro_Nivel_Academico_N.cs" />
     <Compile Include="Miembros\Miembro_Pasatiempos_N.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuarios\Usuario_N.cs" />

@@ -16,9 +16,14 @@
             <div class="linea-separador" style="margin-top: 20px;"></div>
 
             <div class="row" style="margin-top: 20px;">
-                <div class="col-12 col-md-2">
+                <div class="col-12 col-md-6">
                     ID Registro
                     <asp:TextBox runat="server" ID="txtIdMiembro" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
+                </div>
+
+                 <div class="col-12 col-md-2">
+                    Número Alternativo
+                    <asp:TextBox runat="server" ID="txtNumeroMiembroAlternativo" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
                 </div>
             </div>
 
@@ -121,6 +126,90 @@
                 </div>
             </div>
 
+            <div class="linea-separador" style="margin-top: 20px;"></div>
+            
+
+            <div class="row" style="margin-top: 20px;">
+                
+                 <div class="col-12 col-md-6">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkEsMiembro" CssClass="form-check" Text="&nbsp;¿Es miembro?" Style="padding: 0" />
+                </div>
+                <div class="col-12 col-md-6">
+                    ¿Desde cuando es miembro?
+                    <br />
+                    <telerik:RadDatePicker ID="dtpDesdeCuandoMiembro" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
+                        <DateInput ID="DateInput11" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="true"></DateInput>
+                    </telerik:RadDatePicker>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                
+                 <div class="col-12 col-md-6">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkPertenece_Ministerio" CssClass="form-check" Text="&nbsp;¿Pertenece a un ministerio?" Style="padding: 0" />
+                </div>
+
+                 <div class="col-12 col-md-6">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkLe_Gustaria_Pertenecer_Ministerio" CssClass="form-check" Text="&nbsp;¿Le gustaria pertenecera a un ministerio?" Style="padding: 0" />
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Ministerio al que pertenece
+                    <telerik:RadComboBox ID="cmbMinisterio_Al_Que_Pertenece" runat="server" Width="100%" ClientIDMode="Static"
+                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                        <Items>
+                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                        </Items>
+                    </telerik:RadComboBox>
+                </div>
+
+                 <div class="col-12 col-md-6">
+                    Rol dentro de la iglesia
+                    <telerik:RadComboBox ID="cmbRol_Miembro" runat="server" Width="100%" ClientIDMode="Static"
+                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                        <Items>
+                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                        </Items>
+                    </telerik:RadComboBox>
+                </div>
+            </div>
+
+
+             <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Ministerio al que pertenece
+                    <telerik:RadComboBox ID="RadComboBox1" runat="server" Width="100%" ClientIDMode="Static"
+                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                        <Items>
+                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                        </Items>
+                    </telerik:RadComboBox>
+                </div>
+
+                 <div class="col-12 col-md-6">
+                    Rol dentro de la iglesia
+                    <telerik:RadComboBox ID="RadComboBox2" runat="server" Width="100%" ClientIDMode="Static"
+                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                        <Items>
+                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                        </Items>
+                    </telerik:RadComboBox>
+                </div>
+            </div>
+
         </div>
 
         <%-- NIVEL ACADEMICO Y PROFESIONALISMO --%>
@@ -201,14 +290,14 @@
         <%-- INFORMACION FAMILIAR 1 --%>
         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
             <div>
-                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">&nbsp;Información Familiar 1</span>
+                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">&nbsp;Información familiar I</span>
             </div>
             <div class="linea-separador" style="margin-top: 20px;"></div>
 
             <div class="row" style="margin-top: 20px;">
-                 <div class="col-12 col-md-6 bold-text">
-                     INFORMACI&Oacute;N DEL CONYUGE
-                 </div>
+                <div class="col-12 col-md-6 bold-text">
+                    INFORMACI&Oacute;N DEL CONYUGE
+                </div>
             </div>
 
             <div class="row" style="margin-top: 20px;">
@@ -232,14 +321,14 @@
             </div>
             <div class="linea-separador" style="margin-top: 20px;"></div>
 
-             <div class="row" style="margin-top: 20px;">
-                 <div class="col-12 col-md-6 bold-text">
-                     INFORMACI&Oacute;N DE LOS HIJOS
-                 </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6 bold-text">
+                    INFORMACI&Oacute;N DE LOS HIJOS
+                </div>
             </div>
 
-               <%-- HIJOS --%>
-             <div class="row" style="margin-top: 20px;">
+            <%-- HIJOS --%>
+            <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-6">
                     Nombre de los hijos
                 </div>
@@ -252,7 +341,7 @@
 
 
             <%--Hijo1--%>
-             <div class="row" style="margin-top: 20px;">
+            <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-6">
                     <asp:TextBox runat="server" ID="txtHijo1_Nombre" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
                 </div>
@@ -270,7 +359,7 @@
 
 
             <%--Hijo2--%>
-           <div class="row" style="margin-top: 20px;">
+            <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-6">
                     <asp:TextBox runat="server" ID="txtHijo2_Nombre" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
                 </div>
@@ -288,7 +377,7 @@
 
 
 
-               <%--Hijo3--%>
+            <%--Hijo3--%>
             <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-6">
                     <asp:TextBox runat="server" ID="txtHijo3_Nombre" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
@@ -307,7 +396,7 @@
 
 
             <%--Hijo4--%>
-              <div class="row" style="margin-top: 20px;">
+            <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-6">
                     <asp:TextBox runat="server" ID="txtHijo4_Nombre" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
                 </div>
@@ -324,8 +413,8 @@
             </div>
 
 
-              <%--Hijo5--%>
-              <div class="row" style="margin-top: 20px;">
+            <%--Hijo5--%>
+            <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-6">
                     <asp:TextBox runat="server" ID="txtHijo5_Nombre" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
                 </div>
@@ -342,8 +431,8 @@
             </div>
 
 
-              <%--Hijo6--%>
-              <div class="row" style="margin-top: 20px;">
+            <%--Hijo6--%>
+            <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-6">
                     <asp:TextBox runat="server" ID="txtHijo6_Nombre" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
                 </div>
@@ -358,10 +447,334 @@
                     <asp:CheckBox runat="server" ID="chkHijo6_Cristiano" CssClass="form-check" Text="&nbsp; ¿Es cristiano/a?" Style="padding: 0" />
                 </div>
             </div>
+        </div>
 
+
+
+        <%-- INFORMACION FAMILIAR 2 --%>
+        <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+            <div>
+                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">&nbsp;Información familiar II</span>
+            </div>
+            <div class="linea-separador" style="margin-top: 20px;"></div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6 bold-text">
+                    DATOS DEL PADRE
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-5">
+                    Nombre y apellidos completos
+                    <asp:TextBox runat="server" ID="txtPadre_NombreCompleto" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    Fecha de nacimiento
+                    <br />
+                    <telerik:RadDatePicker ID="dtpPadre_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
+                        <DateInput ID="DateInput9" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="true"></DateInput>
+                    </telerik:RadDatePicker>
+                </div>
+
+                <div class="col-12 col-md-2">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkPadre_Empleado" CssClass="form-check" Text="&nbsp; Empleado" Style="padding: 0" />
+                </div>
+                <div class="col-12 col-md-2">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkPadre_NegocioPropio" CssClass="form-check" Text="&nbsp; Negocio propio" Style="padding: 0" />
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-3">
+                    # Celular
+                    <asp:TextBox runat="server" ID="txtPadre_Celular" CssClass="form-control form-control" Width="100%" MaxLength="15" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkPadre_MiembroIglesia" CssClass="form-check" Text="&nbsp; ¿Es miembro de la iglesia?" Style="padding: 0" />
+                </div>
+            </div>
+
+            <div class="linea-separador" style="margin-top: 20px;"></div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6 bold-text">
+                    DATOS DE LA MADRE
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-5">
+                    Nombre y apellidos completos
+                    <asp:TextBox runat="server" ID="txMadre_NombreCompleto" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    Fecha de nacimiento
+                    <br />
+                    <telerik:RadDatePicker ID="dtpMadre_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
+                        <DateInput ID="DateInput10" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="true"></DateInput>
+                    </telerik:RadDatePicker>
+                </div>
+
+                <div class="col-12 col-md-2">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkMadre_Empleada" CssClass="form-check" Text="&nbsp; Empleado" Style="padding: 0" />
+                </div>
+                <div class="col-12 col-md-2">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkMadre_NegocioPropio" CssClass="form-check" Text="&nbsp; Negocio propio" Style="padding: 0" />
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-3">
+                    # Celular
+                    <asp:TextBox runat="server" ID="txtMadre_Celular" CssClass="form-control form-control" Width="100%" MaxLength="15" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkMadre_MiembroIglesia" CssClass="form-check" Text="&nbsp; ¿Es miembro de la iglesia?" Style="padding: 0" />
+                </div>
+            </div>
+
+
+            <div class="linea-separador" style="margin-top: 20px;"></div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6 bold-text">
+                    DATOS DE HERMANOS (AS)
+                </div>
+            </div>
+
+
+            <%--Hermano1--%>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Nombre completo
+                    <asp:TextBox runat="server" ID="txtHermano1_NombreCompleto" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    Escolaridad
+                     <asp:TextBox runat="server" ID="txtHermano1_Escolaridad" CssClass="form-control form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Correo electr&oacute;nico
+                    <asp:TextBox runat="server" ID="txtHermano1_CorreoElectronico" CssClass="form-control form-control" Width="100%" MaxLength="50" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    # Celular
+                    <asp:TextBox runat="server" ID="txtHermano1_Celular" CssClass="form-control form-control" Width="100%" MaxLength="15" TabIndex="2"></asp:TextBox>
+                </div>
+            </div>
+            <div class="linea-separador" style="margin-top: 20px;"></div>
+
+
+            <%--Hermano2--%>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Nombre completo
+                    <asp:TextBox runat="server" ID="txtHermano2_NombreCompleto" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    Escolaridad
+                     <asp:TextBox runat="server" ID="txtHermano2_Escolaridad" CssClass="form-control form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Correo electr&oacute;nico
+                    <asp:TextBox runat="server" ID="txtHermano2_CorreoElectronico" CssClass="form-control form-control" Width="100%" MaxLength="50" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    # Celular
+                    <asp:TextBox runat="server" ID="txtHermano2_Celular" CssClass="form-control form-control" Width="100%" MaxLength="15" TabIndex="2"></asp:TextBox>
+                </div>
+            </div>
+            <div class="linea-separador" style="margin-top: 20px;"></div>
+
+
+
+            <%--Hermano3--%>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Nombre completo
+                    <asp:TextBox runat="server" ID="txtHermano3_NombreCompleto" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    Escolaridad
+                     <asp:TextBox runat="server" ID="txtHermano3_Escolaridad" CssClass="form-control form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Correo electr&oacute;nico
+                    <asp:TextBox runat="server" ID="txtHermano3_CorreoElectronico" CssClass="form-control form-control" Width="100%" MaxLength="50" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    # Celular
+                    <asp:TextBox runat="server" ID="txtHermano3_Celualr" CssClass="form-control form-control" Width="100%" MaxLength="15" TabIndex="2"></asp:TextBox>
+                </div>
+            </div>
+            <div class="linea-separador" style="margin-top: 20px;"></div>
+
+
+            <%--Hermano4--%>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Nombre completo
+                    <asp:TextBox runat="server" ID="txtHermano4_NombreCompleto" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    Escolaridad
+                     <asp:TextBox runat="server" ID="txtHermano4_Escolaridad" CssClass="form-control form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Correo electr&oacute;nico
+                    <asp:TextBox runat="server" ID="txtHermano4_CorreoElectronico" CssClass="form-control form-control" Width="100%" MaxLength="50" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    # Celular
+                    <asp:TextBox runat="server" ID="txtHermano4_Celular" CssClass="form-control form-control" Width="100%" MaxLength="15" TabIndex="2"></asp:TextBox>
+                </div>
+            </div>
+            <div class="linea-separador" style="margin-top: 20px;"></div>
+
+
+            <%--Hermano5--%>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Nombre completo
+                    <asp:TextBox runat="server" ID="txtHermano5_NombreCompleto" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    Escolaridad
+                     <asp:TextBox runat="server" ID="txtHermano5_Escolaridad" CssClass="form-control form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Correo electr&oacute;nico
+                    <asp:TextBox runat="server" ID="txtHermano5_CorreoElectronico" CssClass="form-control form-control" Width="100%" MaxLength="50" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    # Celular
+                    <asp:TextBox runat="server" ID="txtHermano5_Celular" CssClass="form-control form-control" Width="100%" MaxLength="15" TabIndex="2"></asp:TextBox>
+                </div>
+            </div>
+        </div>
+
+
+        <%--INFORMACION PERSONAL--%>
+        <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+            <div>
+                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">&nbsp;Información personal (preferencias / gustos)</span>
+            </div>
+            <div class="linea-separador" style="margin-top: 20px;"></div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6 bold-text">
+                    PASATIEMPOS FAVORITOS
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-2">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkCine" CssClass="form-check" Text="&nbsp; Cine" Style="padding: 0" />
+                </div>
+
+                <div class="col-12 col-md-2">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkLeer" CssClass="form-check" Text="&nbsp; Leer" Style="padding: 0" />
+                </div>
+
+                <div class="col-12 col-md-2">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkVerTV" CssClass="form-check" Text="&nbsp; Ver TV" Style="padding: 0" />
+                </div>
+
+                <div class="col-12 col-md-2">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkSocializar" CssClass="form-check" Text="&nbsp; Socializar" Style="padding: 0" />
+                </div>
+
+                <div class="col-12 col-md-2">
+                    <br>
+                    <asp:CheckBox runat="server" ID="chkViajar" CssClass="form-check" Text="&nbsp; Viajar" Style="padding: 0" />
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Otros
+                    <asp:TextBox runat="server" ID="txtOtrosPasatiempos" CssClass="form-control form-control" Width="100%" MaxLength="100" TabIndex="2"></asp:TextBox>
+                </div>
+            </div>
+        </div>
+
+        <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+            <div>
+                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">&nbsp;Uso interno de la iglesia</span>
+            </div>
+            <div class="linea-separador" style="margin-top: 20px;"></div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 div-gridview">
+                    <telerik:RadGrid RenderMode="Lightweight" ID="gvMinisteriosMiembro" runat="server" Culture="es-DO" Style="overflow-x: auto;" BorderColor="White" MasterTableView-Width="100%" Width="100%" HeaderStyle-Font-Bold="true" AlternatingItemStyle-BackColor="#F1F5FF"
+                        AllowPaging="True" AllowAutomaticUpdates="True" AllowAutomaticInserts="False" MasterTableView-PagerStyle-PageSizeLabelText="Registros" Skin="Bootstrap" HeaderStyle-BackColor="#F1F5FF" PagerStyle-AlwaysVisible="true"
+                        AllowAutomaticDeletes="True" AllowSorting="True" PagerStyle-BorderStyle="None" BorderStyle="None" FooterStyle-BorderStyle="None" HeaderStyle-BorderStyle="None" MasterTableView-PagerStyle-NextPagesToolTip="" MasterTableView-PagerStyle-PrevPagesToolTip=""
+                        FooterStyle-ForeColor="Black" HeaderStyle-ForeColor="Black" ItemStyle-ForeColor="Black" AlternatingItemStyle-ForeColor="Black" MasterTableView-PagerStyle-PagerTextFormat="{4} <strong>{5}</strong> Registros en <strong>{1}</strong> Páginas"
+                        MasterTableView-PagerStyle-FirstPageToolTip="" MasterTableView-PagerStyle-PrevPageToolTip="" MasterTableView-PagerStyle-NextPageToolTip="" MasterTableView-PagerStyle-LastPageToolTip=""
+                        OnPageIndexChanged="gvGradosEgresados_PageIndexChanged" OnPageSizeChanged="gvGradosEgresados_PageSizeChanged" OnSortCommand="gvGradosEgresados_SortCommand">
+                        <PagerStyle Mode="NextPrevAndNumeric" />
+                        <MasterTableView AutoGenerateColumns="False">
+                            <Columns>
+                                <telerik:GridTemplateColumn>
+                                    <HeaderStyle HorizontalAlign="Center" />
+                                    <ItemStyle HorizontalAlign="Center" />
+                                    <ItemTemplate>
+                                        <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Registro") %>' OnClick="btnVerEstudioRealizado_Click" CssClass="btn btn-sm btn-primary fa-solid fa-pen boton_formulario_editar" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px; margin-bottom: 3px;"></asp:LinkButton>
+                                    </ItemTemplate>
+                                </telerik:GridTemplateColumn>
+                                <telerik:GridBoundColumn DataField="Id_Registro" HeaderText="Columna" HeaderStyle-Width="20%" ItemStyle-Width="20%" Visible="false">
+                                </telerik:GridBoundColumn>
+
+                                <telerik:GridBoundColumn DataField="Nombre_Ministerio" HeaderText="Camp" HeaderStyle-Width="20%" ItemStyle-Width="20%">
+                                </telerik:GridBoundColumn>
+                            </Columns>
+                        </MasterTableView>
+                    </telerik:RadGrid>
+                </div>
+            </div>
 
 
         </div>
+
+
         <div class="contenedor_botones">
             <asp:LinkButton CssClass="fa-solid fa-plus fa-lg boton_formulario_Agregar" runat="server" ID="btnAgregar" OnClick="btnAgregar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
             <asp:LinkButton CssClass="fa-solid fa-floppy-disk fa-lg boton_formulario_Guardar" runat="server" ID="btnGuardar" OnClick="btnGuardar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>

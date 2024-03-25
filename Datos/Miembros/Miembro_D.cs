@@ -12,9 +12,14 @@ namespace Datos.Miembros
 {
     public class Miembro_D
     {
-        public bool Agregar(Miembro_E entidad)
+        #region Declaraciones
+        SqlDataReader leer;
+        SqlCommand comando = new SqlCommand();
+        #endregion
+
+        public int Agregar(Miembro_E entidad)
         {
-            bool Respuesta = false;
+            int Id = 0;
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
@@ -107,6 +112,50 @@ namespace Datos.Miembros
                 try
                 {
                     conexion.Open();
+                    DataTable dt = new DataTable();
+                    leer = comando.ExecuteReader();
+                    dt.Load(leer);
+                    comando.Parameters.Clear();
+                    conexion.Close();
+
+                    if (dt.Rows.Count > 0)
+                    {
+                        Id = int.Parse(dt.Rows[0]["UltimoRegistroAgregado"].ToString());
+                    }
+                    return Id;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+
+
+        #region Miembros_Ministerios
+        // Ministerios de los miembros
+        public bool AgregarMiembroMinisterio(int Id_Miembro, int Id_Ministerio)
+        {
+            bool Respuesta = false;
+
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"INSERT INTO Miembros_Ministerios(
+                                    Id_Miembro,
+                                    Id_Ministerio)
+
+                                   VALUES(
+                                    @Id_Miembro,
+                                    @Id_Ministerio);";
+
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id_Miembro", Id_Miembro);
+                cmd.Parameters.AddWithValue("@Id_Ministerio", Id_Ministerio);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
                     int FilasAfectadas = cmd.ExecuteNonQuery();
                     conexion.Close();
                     if (FilasAfectadas > 0) Respuesta = true;
@@ -119,5 +168,34 @@ namespace Datos.Miembros
                 }
             }
         }
+
+        public bool EliminarMiembroMinisterio(int Id_Miembro, int Id_Ministerio)
+        {
+            bool Respuesta = false;
+
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"DELETE FROM Miembros_Ministerios WHERE Id_Miembro = @Id_Miembro AND Id_Ministerio = @Id_Ministerio;";
+
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id_Miembro", Id_Miembro);
+                cmd.Parameters.AddWithValue("@Id_Ministerio", Id_Ministerio);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    int FilasAfectadas = cmd.ExecuteNonQuery();
+                    conexion.Close();
+                    if (FilasAfectadas > 0) Respuesta = true;
+
+                    return Respuesta;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+        #endregion
     }
 }

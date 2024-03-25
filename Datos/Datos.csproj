@@ -49,6 +49,7 @@
     <Compile Include="Miembros\Miembro_Informacion_Laboral_D.cs" />
     <Compile Include="Miembros\Miembro_Nivel_Academico_D.cs" />
     <Compile Include="Miembros\Miembro_Pasatiempos_D.cs" />
+    <Compile Include="Miembros\Ministerios_D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuarios\Usuario_D.cs" />
   </ItemGroup>
