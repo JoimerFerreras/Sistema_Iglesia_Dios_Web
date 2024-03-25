@@ -150,78 +150,6 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::System.Web.UI.WebControls.TextBox txtNumeroCasa;
 
         /// <summary>
-        /// Control chkEsMiembro.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkEsMiembro;
-
-        /// <summary>
-        /// Control dtpDesdeCuandoMiembro.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpDesdeCuandoMiembro;
-
-        /// <summary>
-        /// Control chkPertenece_Ministerio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkPertenece_Ministerio;
-
-        /// <summary>
-        /// Control chkLe_Gustaria_Pertenecer_Ministerio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkLe_Gustaria_Pertenecer_Ministerio;
-
-        /// <summary>
-        /// Control cmbMinisterio_Al_Que_Pertenece.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbMinisterio_Al_Que_Pertenece;
-
-        /// <summary>
-        /// Control cmbRol_Miembro.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbRol_Miembro;
-
-        /// <summary>
-        /// Control RadComboBox1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox RadComboBox1;
-
-        /// <summary>
-        /// Control RadComboBox2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox RadComboBox2;
-
-        /// <summary>
         /// Control chkNivelPrimario.
         /// </summary>
         /// <remarks>
@@ -285,6 +213,15 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::System.Web.UI.WebControls.CheckBox chkDuenoNegocio;
 
         /// <summary>
+        /// Control chkIndependiente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkIndependiente;
+
+        /// <summary>
         /// Control chkOtros.
         /// </summary>
         /// <remarks>
@@ -321,13 +258,13 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::Telerik.Web.UI.RadDatePicker dtpFechaNacimiento_Conyuge;
 
         /// <summary>
-        /// Control txtConyugeCristiano.
+        /// Control chkConyugeCristiano.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox txtConyugeCristiano;
+        protected global::System.Web.UI.WebControls.CheckBox chkConyugeCristiano;
 
         /// <summary>
         /// Control txtHijo1_Nombre.
@@ -429,13 +366,13 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::Telerik.Web.UI.RadDatePicker dtpHijo4_FechaNacimiento;
 
         /// <summary>
-        /// Control dtpHijo4_Cristiano.
+        /// Control chkHijo4_Cristiano.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox dtpHijo4_Cristiano;
+        protected global::System.Web.UI.WebControls.CheckBox chkHijo4_Cristiano;
 
         /// <summary>
         /// Control txtHijo5_Nombre.
@@ -501,13 +438,13 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::System.Web.UI.WebControls.TextBox txtPadre_NombreCompleto;
 
         /// <summary>
-        /// Control dtpPadre_FechaNacimiento.
+        /// Control txtPadre_Edad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpPadre_FechaNacimiento;
+        protected global::System.Web.UI.WebControls.TextBox txtPadre_Edad;
 
         /// <summary>
         /// Control chkPadre_Empleado.
@@ -555,13 +492,13 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::System.Web.UI.WebControls.TextBox txMadre_NombreCompleto;
 
         /// <summary>
-        /// Control dtpMadre_FechaNacimiento.
+        /// Control txtMadre_Edad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpMadre_FechaNacimiento;
+        protected global::System.Web.UI.WebControls.TextBox txtMadre_Edad;
 
         /// <summary>
         /// Control chkMadre_Empleada.
@@ -699,13 +636,13 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::System.Web.UI.WebControls.TextBox txtHermano3_CorreoElectronico;
 
         /// <summary>
-        /// Control txtHermano3_Celualr.
+        /// Control txtHermano3_Celular.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtHermano3_Celualr;
+        protected global::System.Web.UI.WebControls.TextBox txtHermano3_Celular;
 
         /// <summary>
         /// Control txtHermano4_NombreCompleto.
@@ -841,6 +778,105 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid gvMinisteriosMiembro;
+
+        /// <summary>
+        /// Control chkEsMiembro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkEsMiembro;
+
+        /// <summary>
+        /// Control dtpDesdeCuandoMiembro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker dtpDesdeCuandoMiembro;
+
+        /// <summary>
+        /// Control chkPertenece_Ministerio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkPertenece_Ministerio;
+
+        /// <summary>
+        /// Control chkLe_Gustaria_Pertenecer_Ministerio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkLe_Gustaria_Pertenecer_Ministerio;
+
+        /// <summary>
+        /// Control cmbRol_Miembro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbRol_Miembro;
+
+        /// <summary>
+        /// Control txtOtroRol.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOtroRol;
+
+        /// <summary>
+        /// Control txtNombre_Diacono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNombre_Diacono;
+
+        /// <summary>
+        /// Control txtNombreLiderMinisterio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNombreLiderMinisterio;
+
+        /// <summary>
+        /// Control txtComentariosDiaconoLiderMinisterio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtComentariosDiaconoLiderMinisterio;
+
+        /// <summary>
+        /// Control txtRevisadoPor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRevisadoPor;
+
+        /// <summary>
+        /// Control txtAutorizadoPor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAutorizadoPor;
 
         /// <summary>
         /// Control btnAgregar.

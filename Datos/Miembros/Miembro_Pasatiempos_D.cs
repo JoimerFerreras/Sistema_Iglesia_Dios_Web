@@ -18,7 +18,7 @@ namespace Datos.Miembros
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"INSERT INTO Miembros_Informacion_Laboral(
+                string sentencia = $@"INSERT INTO Miembros_Pasatiempos(
                                     Id_Miembro, 
                                     Cine,
                                     Leer,

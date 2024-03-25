@@ -42,7 +42,7 @@ namespace Datos.Miembros
                                     Pertenece_Ministerio,
                                     Le_Gustaria_Pertenecer_Ministerio,
                                     Numero_Alternativo_Miembro,
-                                    Ministerio_Al_Que_Pertenece,
+                                    
                                     Rol_Miembro,
                                     Otro_Rol,
                                     Nombre_Diacono,
@@ -70,7 +70,7 @@ namespace Datos.Miembros
                                     @Pertenece_Ministerio,
                                     @Le_Gustaria_Pertenecer_Ministerio,
                                     @Numero_Alternativo_Miembro,
-                                    @Ministerio_Al_Que_Pertenece,
+                                    
                                     @Rol_Miembro,
                                     @Otro_Rol,
                                     @Nombre_Diacono,
@@ -100,7 +100,7 @@ namespace Datos.Miembros
                 cmd.Parameters.AddWithValue("@Pertenece_Ministerio", entidad.Pertenece_Ministerio);
                 cmd.Parameters.AddWithValue("@Le_Gustaria_Pertenecer_Ministerio", entidad.Le_Gustaria_Pertenecer_Ministerio);
                 cmd.Parameters.AddWithValue("@Numero_Alternativo_Miembro", entidad.Numero_Alternativo_Miembro);
-                cmd.Parameters.AddWithValue("@Ministerio_Al_Que_Pertenece", entidad.Ministerio_Al_Que_Pertenece);
+                //cmd.Parameters.AddWithValue("@Ministerio_Al_Que_Pertenece", entidad.Ministerio_Al_Que_Pertenece);
                 cmd.Parameters.AddWithValue("@Rol_Miembro", entidad.Rol_Miembro);
                 cmd.Parameters.AddWithValue("@Otro_Rol", entidad.Otro_Rol);
                 cmd.Parameters.AddWithValue("@Nombre_Diacono", entidad.Nombre_Diacono);
@@ -112,16 +112,15 @@ namespace Datos.Miembros
                 try
                 {
                     conexion.Open();
-                    DataTable dt = new DataTable();
-                    leer = comando.ExecuteReader();
-                    dt.Load(leer);
-                    comando.Parameters.Clear();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read()) // Si el DataReader tiene filas entonces hacer lo siguiente
+                        {
+                            Id = Convert.ToInt32(dr["UltimoRegistroAgregado"].ToString());
+                        }
+                    }
                     conexion.Close();
 
-                    if (dt.Rows.Count > 0)
-                    {
-                        Id = int.Parse(dt.Rows[0]["UltimoRegistroAgregado"].ToString());
-                    }
                     return Id;
                 }
                 catch (Exception ex)

@@ -96,12 +96,39 @@ namespace Datos.Miembros
                 cmd.Parameters.AddWithValue("@Padre_Negocio_Propio", entidad.Padre_Negocio_Propio);
                 cmd.Parameters.AddWithValue("@Padre_Celular", entidad.Padre_Celular);
                 cmd.Parameters.AddWithValue("@Padre_Miembro_Iglesia", entidad.Padre_Miembro_Iglesia);
+
                 cmd.Parameters.AddWithValue("@Madre_Nombre_Completo", entidad.Madre_Nombre_Completo);
                 cmd.Parameters.AddWithValue("@Madre_Edad", entidad.Madre_Edad);
                 cmd.Parameters.AddWithValue("@Madre_Empleada", entidad.Madre_Empleada);
                 cmd.Parameters.AddWithValue("@Madre_Negocio_Propio", entidad.Madre_Negocio_Propio);
                 cmd.Parameters.AddWithValue("@Madre_Celular", entidad.Madre_Celular);
                 cmd.Parameters.AddWithValue("@Madre_Miembro_Iglesia", entidad.Madre_Miembro_Iglesia);
+
+                cmd.Parameters.AddWithValue("@Hermano1_Nombre_Completo", entidad.Hermano1_Nombre_Completo);
+                cmd.Parameters.AddWithValue("@Hermano1_Escolaridad", entidad.Hermano1_Escolaridad);
+                cmd.Parameters.AddWithValue("@Hermano1_Correo_Electronico", entidad.Hermano1_Correo_Electronico);
+                cmd.Parameters.AddWithValue("@Hermano1_Celular", entidad.Hermano1_Celular);
+
+                cmd.Parameters.AddWithValue("@Hermano2_Nombre_Completo", entidad.Hermano2_Nombre_Completo);
+                cmd.Parameters.AddWithValue("@Hermano2_Escolaridad", entidad.Hermano2_Escolaridad);
+                cmd.Parameters.AddWithValue("@Hermano2_Correo_Electronico", entidad.Hermano2_Correo_Electronico);
+                cmd.Parameters.AddWithValue("@Hermano2_Celular", entidad.Hermano2_Celular);
+
+                cmd.Parameters.AddWithValue("@Hermano3_Nombre_Completo", entidad.Hermano3_Nombre_Completo);
+                cmd.Parameters.AddWithValue("@Hermano3_Escolaridad", entidad.Hermano3_Escolaridad);
+                cmd.Parameters.AddWithValue("@Hermano3_Correo_Electronico", entidad.Hermano3_Correo_Electronico);
+                cmd.Parameters.AddWithValue("@Hermano3_Celular", entidad.Hermano3_Celular);
+
+                cmd.Parameters.AddWithValue("@Hermano4_Nombre_Completo", entidad.Hermano4_Nombre_Completo);
+                cmd.Parameters.AddWithValue("@Hermano4_Escolaridad", entidad.Hermano4_Escolaridad);
+                cmd.Parameters.AddWithValue("@Hermano4_Correo_Electronico", entidad.Hermano4_Correo_Electronico);
+                cmd.Parameters.AddWithValue("@Hermano4_Celular", entidad.Hermano4_Celular);
+
+                cmd.Parameters.AddWithValue("@Hermano5_Nombre_Completo", entidad.Hermano5_Nombre_Completo);
+                cmd.Parameters.AddWithValue("@Hermano5_Escolaridad", entidad.Hermano5_Escolaridad);
+                cmd.Parameters.AddWithValue("@Hermano5_Correo_Electronico", entidad.Hermano5_Correo_Electronico);
+                cmd.Parameters.AddWithValue("@Hermano5_Celular", entidad.Hermano5_Celular);
+
                 cmd.CommandType = CommandType.Text;
                 try
                 {

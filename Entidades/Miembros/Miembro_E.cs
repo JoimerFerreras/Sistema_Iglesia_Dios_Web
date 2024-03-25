@@ -22,7 +22,7 @@ namespace Entidades.Miembros
         public string Barrio_Residencial { get; set; }
         public string Calle { get; set; }
         public string Numero_Casa { get; set; }
-        public string Es_Miembro { get; set; }
+        public bool Es_Miembro { get; set; }
         public DateTime Desde_Cuando_Miembro { get; set; }
         public bool Pertenece_Ministerio { get; set; }
         public bool Le_Gustaria_Pertenecer_Ministerio { get; set; }
