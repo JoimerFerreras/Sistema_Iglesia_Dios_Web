@@ -163,6 +163,9 @@
     <Content Include="Recursos\CSS\recuperar_password.css" />
     <Content Include="Recursos\CSS\visualizador_pdf.css" />
     <Content Include="Recursos\Imagenes\diezmo.jpg" />
+    <Content Include="Recursos\Imagenes\logo_iglesia_de_dios_color_png.png" />
+    <Content Include="Recursos\Imagenes\logo_iglesia_de_dios_color_ico.ico" />
+    <Content Include="Recursos\Imagenes\logo_iglesia_dios.png" />
     <Content Include="Recursos\Javascript\scripts_general.js" />
     <Content Include="Recursos\Javascript\scripts_master.js" />
     <Content Include="Recursos\Javascript\typpy_tooltip.js" />
@@ -326,6 +329,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Recursos\Imagenes\logo_iglesia_de_dios_color_ico.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

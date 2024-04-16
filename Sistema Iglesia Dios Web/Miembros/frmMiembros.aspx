@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../Recursos/CSS/estilos_general.css" />
     <link rel="stylesheet" href="../Recursos/CSS/botones.css" />
 
-    <div style="padding: 20px;">
+    <div style="padding: 20px;" >
         <div class="shadowed-div-body" style="width: 100%;">
             <div>
                 <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">&nbsp;Datos generales</span>
@@ -23,7 +23,8 @@
 
                  <div class="col-12 col-md-2">
                     Número Alternativo
-                    <asp:TextBox runat="server" ID="txtNumeroMiembroAlternativo" CssClass="form-control form-control" Width="100%" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
+                    <asp:TextBox runat="server" type="number" ID="txtNumeroMiembroAlternativo" CssClass="form-control form-control" Width="100%" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
+                     
                 </div>
             </div>
 
@@ -61,8 +62,8 @@
                 <div class="col-12 col-md-6">
                     Fecha de nacimiento 
                     <br />
-                    <telerik:RadDatePicker ID="dtpFechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
-                        <DateInput ID="DateInput1" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="true"></DateInput>
+                    <telerik:RadDatePicker ID="dtpFechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                        <DateInput ID="DateInput1" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                     </telerik:RadDatePicker>
                 </div>
 
@@ -230,8 +231,8 @@
                 <div class="col-12 col-md-3">
                     Fecha de nacimiento del conyuge
                     <br />
-                    <telerik:RadDatePicker ID="dtpFechaNacimiento_Conyuge" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
-                        <DateInput ID="DateInput2" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="true"></DateInput>
+                    <telerik:RadDatePicker ID="dtpFechaNacimiento_Conyuge" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                        <DateInput ID="DateInput2" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                     </telerik:RadDatePicker>
                 </div>
 
@@ -268,8 +269,8 @@
                 </div>
 
                 <div class="col-12 col-md-3">
-                    <telerik:RadDatePicker ID="dtpHijo1_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
-                        <DateInput ID="DateInput4" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="true"></DateInput>
+                    <telerik:RadDatePicker ID="dtpHijo1_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                        <DateInput ID="DateInput4" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                     </telerik:RadDatePicker>
                 </div>
 
@@ -286,8 +287,8 @@
                 </div>
 
                 <div class="col-12 col-md-3">
-                    <telerik:RadDatePicker ID="dtpHijo2_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
-                        <DateInput ID="DateInput3" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="true"></DateInput>
+                    <telerik:RadDatePicker ID="dtpHijo2_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                        <DateInput ID="DateInput3" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                     </telerik:RadDatePicker>
                 </div>
 
@@ -305,8 +306,8 @@
                 </div>
 
                 <div class="col-12 col-md-3">
-                    <telerik:RadDatePicker ID="dtpHijo3_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
-                        <DateInput ID="DateInput5" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="true"></DateInput>
+                    <telerik:RadDatePicker ID="dtpHijo3_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                        <DateInput ID="DateInput5" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                     </telerik:RadDatePicker>
                 </div>
 
@@ -323,8 +324,8 @@
                 </div>
 
                 <div class="col-12 col-md-3">
-                    <telerik:RadDatePicker ID="dtpHijo4_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
-                        <DateInput ID="DateInput6" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="true"></DateInput>
+                    <telerik:RadDatePicker ID="dtpHijo4_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                        <DateInput ID="DateInput6" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                     </telerik:RadDatePicker>
                 </div>
 
@@ -341,8 +342,8 @@
                 </div>
 
                 <div class="col-12 col-md-3">
-                    <telerik:RadDatePicker ID="dtpHijo5_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
-                        <DateInput ID="DateInput7" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="true"></DateInput>
+                    <telerik:RadDatePicker ID="dtpHijo5_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                        <DateInput ID="DateInput7" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                     </telerik:RadDatePicker>
                 </div>
 
@@ -359,8 +360,8 @@
                 </div>
 
                 <div class="col-12 col-md-3">
-                    <telerik:RadDatePicker ID="dtpHijo6_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
-                        <DateInput ID="DateInput8" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="true"></DateInput>
+                    <telerik:RadDatePicker ID="dtpHijo6_FechaNacimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                        <DateInput ID="DateInput8" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                     </telerik:RadDatePicker>
                 </div>
 
@@ -428,7 +429,7 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-5">
                     Nombre y apellidos completos
-                    <asp:TextBox runat="server" ID="txMadre_NombreCompleto" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtMadre_NombreCompleto" CssClass="form-control form-control" Width="100%" MaxLength="80" TabIndex="2"></asp:TextBox>
                 </div>
 
                 <div class="col-12 col-md-3">
@@ -604,9 +605,9 @@
 
 
         <%--INFORMACION PERSONAL--%>
-        <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+        <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;" >
             <div>
-                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">&nbsp;Información personal (preferencias / gustos)</span>
+                <i class="fa-solid fa-filter shadowed-div-body-titulo" id="informacion_personal_panel"></i><span class="shadowed-div-body-titulo">&nbsp;Información personal (preferencias / gustos)</span>
             </div>
             <div class="linea-separador" style="margin-top: 20px;"></div>
 
@@ -695,8 +696,8 @@
                 <div class="col-12 col-md-6">
                     ¿Desde cuando es miembro?
                     <br />
-                    <telerik:RadDatePicker ID="dtpDesdeCuandoMiembro" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
-                        <DateInput ID="DateInput11" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="true"></DateInput>
+                    <telerik:RadDatePicker ID="dtpDesdeCuandoMiembro" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                        <DateInput ID="DateInput11" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                     </telerik:RadDatePicker>
                 </div>
             </div>
@@ -747,8 +748,8 @@
              <div class="row" style="margin-top: 20px;">
                
                  <div class="col-12 col-md-12">
-                    Comentarios del di&aacute;cono / Lider del ministerio
-                    <asp:TextBox runat="server" ID="txtComentariosDiaconoLiderMinisterio" CssClass="form-control form-control" Width="100%" MaxLength="100" TabIndex="2"></asp:TextBox>
+                    Comentarios del di&aacute;cono / Lider del ministerio <a style="color:gray; margin-left: 10px;">(300 caracteres m&aacute;x.)</a>
+                    <asp:TextBox runat="server" ID="txtComentariosDiaconoLiderMinisterio" TextMode="MultiLine" CssClass="form-control form-control" Width="100%" MaxLength="300" Height="100" TabIndex="2"></asp:TextBox>
                 </div>
                   
             </div>
@@ -767,6 +768,10 @@
 
 
         <div class="contenedor_botones">
+            <div id="list_example">
+                 <a href="#informacion_personal_panel"  class="boton_formulario_Agregar"></a>
+            </div>
+           
             <asp:LinkButton CssClass="fa-solid fa-plus fa-lg boton_formulario_Agregar" runat="server" ID="btnAgregar" OnClick="btnAgregar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
             <asp:LinkButton CssClass="fa-solid fa-floppy-disk fa-lg boton_formulario_Guardar" runat="server" ID="btnGuardar" OnClick="btnGuardar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
         </div>

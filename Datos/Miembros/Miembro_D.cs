@@ -86,7 +86,14 @@ namespace Datos.Miembros
                 cmd.Parameters.AddWithValue("@Apellidos", entidad.Apellidos);
                 cmd.Parameters.AddWithValue("@Nombre_Pila", entidad.Nombre_Pila);
                 cmd.Parameters.AddWithValue("@Sexo", entidad.Sexo);
-                cmd.Parameters.AddWithValue("@Fecha_Nacimiento", entidad.Fecha_Nacimiento);
+                if (entidad.Fecha_Nacimiento == null)
+                {
+                    cmd.Parameters.AddWithValue("@Fecha_Nacimiento", DBNull.Value);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@Fecha_Nacimiento", entidad.Fecha_Nacimiento);
+                }
                 cmd.Parameters.AddWithValue("@Estado_Civil", entidad.Estado_Civil);
                 cmd.Parameters.AddWithValue("@Tiene_Hijos", entidad.Tiene_Hijos);
                 cmd.Parameters.AddWithValue("@Email", entidad.Email);
@@ -96,7 +103,14 @@ namespace Datos.Miembros
                 cmd.Parameters.AddWithValue("@Calle", entidad.Calle);
                 cmd.Parameters.AddWithValue("@Numero_Casa", entidad.Numero_Casa);
                 cmd.Parameters.AddWithValue("@Es_Miembro", entidad.Es_Miembro);
-                cmd.Parameters.AddWithValue("@Desde_Cuando_Miembro", entidad.Desde_Cuando_Miembro);
+                if (entidad.Desde_Cuando_Miembro == null)
+                {
+                    cmd.Parameters.AddWithValue("@Desde_Cuando_Miembro", DBNull.Value);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@Desde_Cuando_Miembro", entidad.Desde_Cuando_Miembro);
+                }
                 cmd.Parameters.AddWithValue("@Pertenece_Ministerio", entidad.Pertenece_Ministerio);
                 cmd.Parameters.AddWithValue("@Le_Gustaria_Pertenecer_Ministerio", entidad.Le_Gustaria_Pertenecer_Ministerio);
                 cmd.Parameters.AddWithValue("@Numero_Alternativo_Miembro", entidad.Numero_Alternativo_Miembro);

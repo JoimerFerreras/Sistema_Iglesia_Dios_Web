@@ -68,27 +68,63 @@ namespace Datos.Miembros
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
+
+                // Conyuge
                 cmd.Parameters.AddWithValue("@Conyuge_Nombre", entidad.Conyuge_Nombre);
                 cmd.Parameters.AddWithValue("@Conyuge_Cristiano", entidad.Conyuge_Cristiano);
-                cmd.Parameters.AddWithValue("@Conyuge_FechaNacimiento", entidad.Conyuge_FechaNacimiento);
+                if (entidad.Conyuge_FechaNacimiento == null)
+                    cmd.Parameters.AddWithValue("@Conyuge_FechaNacimiento", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@Conyuge_FechaNacimiento", entidad.Conyuge_FechaNacimiento);
+
+                // Hijo1
                 cmd.Parameters.AddWithValue("@Hijo1_Nombre", entidad.Hijo1_Nombre);
-                cmd.Parameters.AddWithValue("@Hijo1_FechaNacimiento", entidad.Hijo1_FechaNacimiento);
+                if (entidad.Hijo1_FechaNacimiento == null)
+                    cmd.Parameters.AddWithValue("@Hijo1_FechaNacimiento", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@Hijo1_FechaNacimiento", entidad.Hijo1_FechaNacimiento);
                 cmd.Parameters.AddWithValue("@Hijo1_Cristiano", entidad.Hijo1_Cristiano);
+
+                // Hijo2
                 cmd.Parameters.AddWithValue("@Hijo2_Nombre", entidad.Hijo2_Nombre);
-                cmd.Parameters.AddWithValue("@Hijo2_FechaNacimiento", entidad.Hijo2_FechaNacimiento);
+                if (entidad.Hijo2_FechaNacimiento == null)
+                    cmd.Parameters.AddWithValue("@Hijo2_FechaNacimiento", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@Hijo2_FechaNacimiento", entidad.Hijo2_FechaNacimiento);
                 cmd.Parameters.AddWithValue("@Hijo2_Cristiano", entidad.Hijo2_Cristiano);
+
+                // Hijo3
                 cmd.Parameters.AddWithValue("@Hijo3_Nombre", entidad.Hijo3_Nombre);
-                cmd.Parameters.AddWithValue("@Hijo3_FechaNacimiento", entidad.Hijo3_FechaNacimiento);
+                if (entidad.Hijo3_FechaNacimiento == null)
+                    cmd.Parameters.AddWithValue("@Hijo3_FechaNacimiento", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@Hijo3_FechaNacimiento", entidad.Hijo3_FechaNacimiento);
                 cmd.Parameters.AddWithValue("@Hijo3_Cristiano", entidad.Hijo3_Cristiano);
+
+                // Hijo4
                 cmd.Parameters.AddWithValue("@Hijo4_Nombre", entidad.Hijo4_Nombre);
-                cmd.Parameters.AddWithValue("@Hijo4_FechaNacimiento", entidad.Hijo4_FechaNacimiento);
+                if (entidad.Hijo4_FechaNacimiento == null)
+                    cmd.Parameters.AddWithValue("@Hijo4_FechaNacimiento", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@Hijo4_FechaNacimiento", entidad.Hijo4_FechaNacimiento);
                 cmd.Parameters.AddWithValue("@Hijo4_Cristiano", entidad.Hijo4_Cristiano);
+
+                // Hijo5
                 cmd.Parameters.AddWithValue("@Hijo5_Nombre", entidad.Hijo5_Nombre);
-                cmd.Parameters.AddWithValue("@Hijo5_FechaNacimiento", entidad.Hijo5_FechaNacimiento);
+                if (entidad.Hijo5_FechaNacimiento == null)
+                    cmd.Parameters.AddWithValue("@Hijo5_FechaNacimiento", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@Hijo5_FechaNacimiento", entidad.Hijo5_FechaNacimiento);
                 cmd.Parameters.AddWithValue("@Hijo5_Cristiano", entidad.Hijo5_Cristiano);
+
+                // Hijo6
                 cmd.Parameters.AddWithValue("@Hijo6_Nombre", entidad.Hijo6_Nombre);
-                cmd.Parameters.AddWithValue("@Hijo6_FechaNacimiento", entidad.Hijo6_FechaNacimiento);
+                if (entidad.Hijo6_FechaNacimiento == null)
+                    cmd.Parameters.AddWithValue("@Hijo6_FechaNacimiento", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@Hijo6_FechaNacimiento", entidad.Hijo6_FechaNacimiento);
                 cmd.Parameters.AddWithValue("@Hijo6_Cristiano", entidad.Hijo6_Cristiano);
+
                 cmd.CommandType = CommandType.Text;
                 try
                 {

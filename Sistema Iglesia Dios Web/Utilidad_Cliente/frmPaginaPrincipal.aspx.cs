@@ -9,26 +9,6 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
 {
     public partial class frmPaginaPrincipal : System.Web.UI.Page
     {
-        #region Metodos/Funciones
-        private void EstablecerNombrePantalla()
-        {
-            if (Master != null)
-            {
-                try
-                {
-                    Label lblMensaje = (Label)Master.FindControl("lblNombrePantalla");
-                    if (lblMensaje != null)
-                    {
-                        lblMensaje.Text = "";
-                    }
-                }
-                catch (Exception ex)
-                {
-                }
-            }
-        }
-        #endregion
-
         #region Eventos
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -36,7 +16,7 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
 
             if (!Page.IsPostBack)
             {
-                EstablecerNombrePantalla();
+                ((SiteMaster)Master).EstablecerNombrePantalla("");
             }
         }
         #endregion

@@ -34,6 +34,11 @@ namespace Sistema_Iglesia_Dios_Web
             }
         }
 
+        public void EstablecerNombrePantalla(string NombrePantalla)
+        {
+            lblNombrePantalla.Text = NombrePantalla;
+        }
+
         private void CerrarSesion()
         {
             Response.Redirect(Utilidad_N.ObtenerRutaServer() + "frmLogin.aspx");
@@ -46,7 +51,7 @@ namespace Sistema_Iglesia_Dios_Web
         {
             EvaluarSesion();
         }
-       
+
         #endregion
     }
 }

@@ -483,13 +483,13 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::System.Web.UI.WebControls.CheckBox chkPadre_MiembroIglesia;
 
         /// <summary>
-        /// Control txMadre_NombreCompleto.
+        /// Control txtMadre_NombreCompleto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txMadre_NombreCompleto;
+        protected global::System.Web.UI.WebControls.TextBox txtMadre_NombreCompleto;
 
         /// <summary>
         /// Control txtMadre_Edad.
