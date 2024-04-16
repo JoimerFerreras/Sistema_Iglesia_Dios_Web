@@ -277,6 +277,7 @@
     <Compile Include="Utilidad_Cliente\frmPaginaPrincipal.aspx.designer.cs">
       <DependentUpon>frmPaginaPrincipal.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Utilidad_Cliente\Utilidad_C.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -1,5 +1,6 @@
 ﻿using Datos.Usuarios;
 using Entidades.Usuarios;
+using Negocio.Util_N;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,7 +18,7 @@ namespace Negocio.Usuarios
         {
             try
             {
-                return usuario_D.Login(Usuario, Password);
+                return usuario_D.Login(Usuario, Utilidad_N.Encriptar(Password));
             }
             catch (Exception ex)
             {
