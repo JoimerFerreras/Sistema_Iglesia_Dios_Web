@@ -54,5 +54,41 @@ namespace Datos.Miembros
                 }
             }
         }
+
+        public bool Guardar(Miembro_Nivel_Academico_E entidad)
+        {
+            bool Respuesta = false;
+
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"UPDATE Miembros_Nivel_Academico SET
+                                    Primario = @Primario,
+                                    Secundario = @Secundario,
+                                    Grado_Universitario = @Grado_Universitario,
+                                    Post_Grado_Maestria = @Post_Grado_Maestria 
+                                    WHERE Id_Miembro = @Id_Miembro;";
+
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
+                cmd.Parameters.AddWithValue("@Primario", entidad.Primario);
+                cmd.Parameters.AddWithValue("@Secundario", entidad.Secundario);
+                cmd.Parameters.AddWithValue("@Grado_Universitario", entidad.Grado_Universitario);
+                cmd.Parameters.AddWithValue("@Post_Grado_Maestria", entidad.Post_Grado_Maestria);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    int FilasAfectadas = cmd.ExecuteNonQuery();
+                    conexion.Close();
+                    if (FilasAfectadas > 0) Respuesta = true;
+
+                    return Respuesta;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
     }
 }

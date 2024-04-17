@@ -29,5 +29,24 @@ namespace Negocio.Miembros
                 throw ex;
             }
         }
+
+        public bool Guardar(Miembro_Nivel_Academico_E entidad)
+        {
+            try
+            {
+                if (entidad != null)
+                {
+                    return miembro_nivel_academico_D.Guardar(entidad);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

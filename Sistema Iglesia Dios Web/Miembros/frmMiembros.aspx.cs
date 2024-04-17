@@ -65,6 +65,11 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El apellido del miembro no puede estar vacío");
             }
+
+            else if (dtpFechaNacimiento.SelectedDate == null)
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El la fecha de nacimiento debe ser válida"); 
+            }
             else
             {
                 Validacion = true;
@@ -81,6 +86,7 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
                 {
                     // Agregacion de la informacion basica del miembro
                     Miembro_E miembro_E = new Miembro_E();
+                    miembro_E.Id_Miembro = int.Parse(ID_REGISTRO);
                     miembro_E.Nombres = txtNombres_Miembro.Text;
                     miembro_E.Apellidos = txtApellidos_Miembro.Text;
                     miembro_E.Nombre_Pila = txtNombrePila.Text;
@@ -223,6 +229,7 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
                         if (MensajeSalida == "1")
                         {
                             Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
+                            LimpiarCampos();
                         }
                         else
                         {
@@ -243,6 +250,7 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
                         if (MensajeSalida == "1")
                         {
                             Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
+                            LimpiarCampos();
                         }
                         else
                         {
@@ -260,6 +268,9 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
 
         private void LimpiarCampos()
         {
+            ID_REGISTRO = "0";
+            EDITAR_REGISTRO = false;
+
             txtIdMiembro.Text = "(Nuevo)";
             txtNumeroMiembroAlternativo.Text = "0";
             txtNombres_Miembro.Text = "";
@@ -380,6 +391,46 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             txtNombres_Miembro.Focus();
         }
 
+        private void LlenarCombos()
+        {
+
+        }
+
+
+        private void VerRegistro()
+        {
+            // Llenado de datos generales
+            Miembro_E entidad = new Miembro_E();
+            entidad = miembro_N.ObtenerRegistro(ID_REGISTRO);
+
+            txtIdMiembro.Text = entidad.Id_Miembro.ToString();
+            txtNombres_Miembro.Text = entidad.Nombres;
+            txtApellidos_Miembro.Text = entidad.Apellidos;
+            txtNombrePila.Text = entidad.Nombre_Pila;
+            rbtnSexo.SelectedValue = entidad.Sexo.ToString();
+            dtpFechaNacimiento.SelectedDate = entidad.Fecha_Nacimiento;
+            cmbEstadoCivil.SelectedValue = entidad.Estado_Civil.ToString();
+            chkTieneHijos.Checked = entidad.Tiene_Hijos;
+            txtEmail.Text = entidad.Email;
+            txtCelular.Text = entidad.Celular;
+            txtSector.Text = entidad.Sector;
+            txtBarrio_Residencial.Text = entidad.Barrio_Residencial;
+            txtCalle.Text = entidad.Calle;
+            txtNumeroCasa.Text = entidad.Numero_Casa;
+            chkEsMiembro.Checked = entidad.Es_Miembro;
+            dtpDesdeCuandoMiembro.SelectedDate = entidad.Desde_Cuando_Miembro;
+            chkLe_Gustaria_Pertenecer_Ministerio.Checked = entidad.Le_Gustaria_Pertenecer_Ministerio;
+            txtNumeroMiembroAlternativo.Text = entidad.Numero_Alternativo_Miembro.ToString();
+            cmbRol_Miembro.SelectedValue = entidad.Rol_Miembro.ToString("");
+            txtOtroRol.Text = entidad.Otro_Rol;
+            txtNombre_Diacono.Text = entidad.Nombre_Diacono;
+            txtComentariosDiaconoLiderMinisterio.Text = entidad.Comentarios_Diacono_Lider_Ministerio;
+            txtRevisadoPor.Text = entidad.Revisado_Por;
+            txtAutorizadoPor.Text = entidad.Autorizado_Por;
+
+
+        }
+
         #endregion
 
 
@@ -391,10 +442,20 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             if (!Page.IsPostBack)
             {
                 ((SiteMaster)Master).EstablecerNombrePantalla("Miembros");
-                LimpiarCampos();
 
-                //dtpFechaDesde.MinDate = DateTime.Parse("01-01-1900");
-                //dtpFechaHasta.MinDate = DateTime.Parse("01-01-1900");
+                // Si se obtiene un Id de egresado entonces se rellenaran los campos para editarlo
+                if (Request.QueryString["Id_Miembro"] != null)
+                {
+                    ID_REGISTRO = Request.QueryString["Id_Miembro"];
+                    EDITAR_REGISTRO = true;
+                    LlenarCombos();
+                    VerRegistro();
+                }
+                else
+                {
+                    LimpiarCampos();
+                    LlenarCombos();
+                }
             }
         }
 

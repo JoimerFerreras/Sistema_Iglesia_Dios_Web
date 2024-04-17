@@ -60,5 +60,45 @@ namespace Datos.Miembros
                 }
             }
         }
+
+        public bool Guardar(Miembro_Pasatiempos_E entidad)
+        {
+            bool Respuesta = false;
+
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"UPDATE Miembros_Pasatiempos SET
+                                    Cine = @Cine,
+                                    Leer = @Leer,
+                                    Ver_TV = @Ver_TV,
+                                    Socializar = @Socializar,
+                                    Viajar = @Viajar,
+                                    Otros = @Otros
+                                    WHERE Id_Miembro = @Id_Miembro";
+
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
+                cmd.Parameters.AddWithValue("@Cine", entidad.Cine);
+                cmd.Parameters.AddWithValue("@Leer", entidad.Leer);
+                cmd.Parameters.AddWithValue("@Ver_TV", entidad.Ver_TV);
+                cmd.Parameters.AddWithValue("@Socializar", entidad.Socializar);
+                cmd.Parameters.AddWithValue("@Viajar", entidad.Viajar);
+                cmd.Parameters.AddWithValue("@Otros", entidad.Otros);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    int FilasAfectadas = cmd.ExecuteNonQuery();
+                    conexion.Close();
+                    if (FilasAfectadas > 0) Respuesta = true;
+
+                    return Respuesta;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
     }
 }

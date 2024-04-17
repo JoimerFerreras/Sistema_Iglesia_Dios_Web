@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,7 +48,7 @@
     <Compile Include="Miembros\Miembro_Informacion_Laboral_E.cs" />
     <Compile Include="Miembros\Miembro_Nivel_Academico_E.cs" />
     <Compile Include="Miembros\Miembro_Pasatiempos_E.cs" />
-    <Compile Include="Miembros\Ministerios_E.cs" />
+    <Compile Include="Ministerios\Ministerio_E.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuarios\Usuario_E.cs" />
   </ItemGroup>

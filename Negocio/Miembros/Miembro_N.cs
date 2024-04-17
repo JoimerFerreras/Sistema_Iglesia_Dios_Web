@@ -6,12 +6,51 @@ using System.Threading.Tasks;
 using System.Data;
 using Datos.Miembros;
 using Entidades.Miembros;
+using Datos.Ministerios;
+using Entidades.Ministerios;
 
 namespace Negocio.Miembros
 {
     public class Miembro_N
     {
         Miembro_D miembro_D = new Miembro_D();
+
+        public DataTable Consultar(string TipoFecha, DateTime FechaDesde, DateTime FechaHasta, string TextoBusqueda, string Sexo, string EstadoCivil, string Ministerio)
+        {
+            try
+            {
+                // Tipo de fecha
+                string TextoTipoFecha = "";
+                if (TipoFecha == "1")
+                {
+                    TextoTipoFecha = "Fecha_Nacimiento";
+                }
+                else if (TipoFecha == "2")
+                {
+                    TextoTipoFecha = "Desde_Cuando_Miembro";
+                }
+
+                return miembro_D.Consultar(TextoTipoFecha, FechaDesde, FechaHasta, TextoBusqueda, int.Parse(Sexo), int.Parse(EstadoCivil), int.Parse(Ministerio));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public Miembro_E ObtenerRegistro(string Id)
+        {
+            try
+            {
+                return miembro_D.ObtenerRegistro(Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public string Agregar(
             Miembro_E miembro_E,
             Miembro_Informacion_Familiar1_E informacion_familiar1_E,
@@ -35,7 +74,7 @@ namespace Negocio.Miembros
                     return MensajeSalida;
                 }
 
-                // Agregacion del mimebro
+                // Agregacion del miembro
                 int Id = miembro_D.Agregar(miembro_E);
 
                 // Agregación de los demas datos
@@ -91,29 +130,29 @@ namespace Negocio.Miembros
                     return MensajeSalida;
                 }
 
-                // Agregacion del mimebro
-                int Id = miembro_D.Agregar(miembro_E);
+                // Agregacion del miembro
+                bool Respuesta = miembro_D.Guardar(miembro_E);
 
                 // Agregación de los demas datos
                 Miembro_Informacion_Familiar1_N informacion_familia1_N = new Miembro_Informacion_Familiar1_N();
-                informacion_familiar1_E.Id_Miembro = Id;
-                informacion_familia1_N.Agregar(informacion_familiar1_E);
+                informacion_familiar1_E.Id_Miembro = miembro_E.Id_Miembro;
+                informacion_familia1_N.Guardar(informacion_familiar1_E);
 
                 Miembro_Informacion_Familiar2_N informacion_familiar2_N = new Miembro_Informacion_Familiar2_N();
-                informacion_familiar2_E.Id_Miembro = Id;
-                informacion_familiar2_N.Agregar(informacion_familiar2_E);
+                informacion_familiar2_E.Id_Miembro = miembro_E.Id_Miembro;
+                informacion_familiar2_N.Guardar(informacion_familiar2_E);
 
                 Miembro_Informacion_Laboral_N informacion_laboral_N = new Miembro_Informacion_Laboral_N();
-                informacion_laboral_E.Id_Miembro = Id;
-                informacion_laboral_N.Agregar(informacion_laboral_E);
+                informacion_laboral_E.Id_Miembro = miembro_E.Id_Miembro;
+                informacion_laboral_N.Guardar(informacion_laboral_E);
 
                 Miembro_Nivel_Academico_N nivel_academico_N = new Miembro_Nivel_Academico_N();
-                nivel_academico_E.Id_Miembro = Id;
-                nivel_academico_N.Agregar(nivel_academico_E);
+                nivel_academico_E.Id_Miembro = miembro_E.Id_Miembro;
+                nivel_academico_N.Guardar(nivel_academico_E);
 
                 Miembro_Pasatiempos_N pasatiempos_N = new Miembro_Pasatiempos_N();
-                pasatiempos_E.Id_Miembro = Id;
-                pasatiempos_N.Agregar(pasatiempos_E);
+                pasatiempos_E.Id_Miembro = miembro_E.Id_Miembro;
+                pasatiempos_N.Guardar(pasatiempos_E);
 
                 MensajeSalida = "1";
                 return MensajeSalida;

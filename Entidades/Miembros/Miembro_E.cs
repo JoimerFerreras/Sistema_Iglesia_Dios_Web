@@ -27,7 +27,6 @@ namespace Entidades.Miembros
         public bool Pertenece_Ministerio { get; set; }
         public bool Le_Gustaria_Pertenecer_Ministerio { get; set; }
         public int Numero_Alternativo_Miembro { get; set; }
-        public string Ministerio_Al_Que_Pertenece { get; set; }
         public int Rol_Miembro { get; set; }
         public string Otro_Rol { get; set; }
         public string Nombre_Diacono { get; set; }

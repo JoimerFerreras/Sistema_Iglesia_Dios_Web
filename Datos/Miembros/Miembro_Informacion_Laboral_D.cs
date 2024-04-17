@@ -57,5 +57,44 @@ namespace Datos.Miembros
                 }
             }
         }
+
+        public bool Guardar(Miembro_Informacion_Laboral_E entidad)
+        {
+            bool Respuesta = false;
+
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"UPDATE Miembros_Informacion_Laboral SET
+                                    Empleado_Privado = @Empleado_Privado,
+                                    Empleado_Publico = @Empleado_Publico,
+                                    Independiente = @Independiente,
+                                    Otros = @Otros,
+                                    Nombre_Empresa_Negocio = @Nombre_Empresa_Negocio
+
+                                    WHERE Id_Miembro = @Id_Miembro";
+
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
+                cmd.Parameters.AddWithValue("@Empleado_Privado", entidad.Empleado_Privado);
+                cmd.Parameters.AddWithValue("@Empleado_Publico", entidad.Empleado_Publico);
+                cmd.Parameters.AddWithValue("@Independiente", entidad.Independiente);
+                cmd.Parameters.AddWithValue("@Otros", entidad.Otros);
+                cmd.Parameters.AddWithValue("@Nombre_Empresa_Negocio", entidad.Nombre_Empresa_Negocio);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    int FilasAfectadas = cmd.ExecuteNonQuery();
+                    conexion.Close();
+                    if (FilasAfectadas > 0) Respuesta = true;
+
+                    return Respuesta;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
     }
 }

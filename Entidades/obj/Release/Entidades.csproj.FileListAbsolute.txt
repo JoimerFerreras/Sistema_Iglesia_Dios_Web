@@ -1,0 +1,6 @@
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Entidades\bin\Release\Entidades.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Entidades\bin\Release\Entidades.pdb
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Release\Entidades.csproj.AssemblyReference.cache
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Release\Entidades.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Release\Entidades.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Release\Entidades.pdb

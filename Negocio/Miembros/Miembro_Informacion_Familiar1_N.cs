@@ -28,5 +28,24 @@ namespace Negocio.Miembros
                 throw ex;
             }
         }
+
+        public bool Guardar(Miembro_Informacion_Familiar1_E entidad)
+        {
+            try
+            {
+                if (entidad != null)
+                {
+                    return miembro_informacion_familiar1_D.Guardar(entidad);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
