@@ -12,6 +12,49 @@ namespace Datos.Miembros
 {
     public class Miembro_Informacion_Laboral_D
     {
+        public Miembro_Informacion_Laboral_E ObtenerRegistro(string Id)
+        {
+            Miembro_Informacion_Laboral_E entidad = new Miembro_Informacion_Laboral_E();
+
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"SELECT 
+                                        Empleado_Privado,
+                                        Empleado_Publico,
+                                        Independiente,
+                                        Otros,
+                                        Nombre_Empresa_Negocio
+                                        FROM Miembros_Nivel_Academico
+
+                                        WHERE Id_Miembro = @Id";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id", Id);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        DataTable dt = new DataTable();
+                        dt.Load(dr);
+                        DataRow row = dt.Rows[0];
+                        entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
+                        entidad.Empleado_Privado = row["Empleado_Privado"].ToString() == "True" ? true : false;
+                        entidad.Empleado_Publico = row["Empleado_Publico"].ToString() == "True" ? true : false;
+                        entidad.Independiente = row["Independiente"].ToString() == "True" ? true : false;
+                        entidad.Otros = row["Otros"].ToString() == "True" ? true : false;
+                        entidad.Nombre_Empresa_Negocio = row["Nombre_Empresa_Negocio"].ToString();
+                    }
+                    conexion.Close();
+                    return entidad;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
         public bool Agregar(Miembro_Informacion_Laboral_E entidad)
         {
             bool Respuesta = false;

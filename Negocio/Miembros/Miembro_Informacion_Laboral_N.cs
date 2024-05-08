@@ -11,6 +11,19 @@ namespace Negocio.Miembros
     public class Miembro_Informacion_Laboral_N
     {
         Miembro_Informacion_Laboral_D miembro_Informacion_Laboral_D = new Miembro_Informacion_Laboral_D();
+
+        public Miembro_Informacion_Laboral_E ObtenerRegistro(string Id)
+        {
+            try
+            {
+                return miembro_Informacion_Laboral_D.ObtenerRegistro(Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool Agregar(Miembro_Informacion_Laboral_E entidad)
         {
             try

@@ -114,7 +114,7 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
                     miembro_E.Autorizado_Por = txtAutorizadoPor.Text;
 
 
-                    // Agregacion del nivel academica del miembro
+                    // Agregacion del nivel academico del miembro
                     Miembro_Nivel_Academico_E nivel_academico_E = new Miembro_Nivel_Academico_E();
                     nivel_academico_E.Primario = chkNivelPrimario.Checked;
                     nivel_academico_E.Secundario = chkNivelSecundario.Checked;
@@ -266,6 +266,101 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
            
         }
 
+        private void VerRegistro()
+        {
+            // Llenado de datos generales
+            Miembro_E Miembro_E = new Miembro_E();
+            Miembro_E = miembro_N.ObtenerRegistro(ID_REGISTRO);
+
+            txtIdMiembro.Text = Miembro_E.Id_Miembro.ToString();
+            txtNombres_Miembro.Text = Miembro_E.Nombres;
+            txtApellidos_Miembro.Text = Miembro_E.Apellidos;
+            txtNombrePila.Text = Miembro_E.Nombre_Pila;
+            rbtnSexo.SelectedValue = Miembro_E.Sexo.ToString();
+            dtpFechaNacimiento.SelectedDate = Miembro_E.Fecha_Nacimiento;
+            cmbEstadoCivil.SelectedValue = Miembro_E.Estado_Civil.ToString();
+            chkTieneHijos.Checked = Miembro_E.Tiene_Hijos;
+            txtEmail.Text = Miembro_E.Email;
+            txtCelular.Text = Miembro_E.Celular;
+            txtSector.Text = Miembro_E.Sector;
+            txtBarrio_Residencial.Text = Miembro_E.Barrio_Residencial;
+            txtCalle.Text = Miembro_E.Calle;
+            txtNumeroCasa.Text = Miembro_E.Numero_Casa;
+            chkEsMiembro.Checked = Miembro_E.Es_Miembro;
+            dtpDesdeCuandoMiembro.SelectedDate = Miembro_E.Desde_Cuando_Miembro;
+            chkLe_Gustaria_Pertenecer_Ministerio.Checked = Miembro_E.Le_Gustaria_Pertenecer_Ministerio;
+            txtNumeroMiembroAlternativo.Text = Miembro_E.Numero_Alternativo_Miembro.ToString();
+            cmbRol_Miembro.SelectedValue = Miembro_E.Rol_Miembro.ToString("");
+            txtOtroRol.Text = Miembro_E.Otro_Rol;
+            txtNombre_Diacono.Text = Miembro_E.Nombre_Diacono;
+            txtComentariosDiaconoLiderMinisterio.Text = Miembro_E.Comentarios_Diacono_Lider_Ministerio;
+            txtRevisadoPor.Text = Miembro_E.Revisado_Por;
+            txtAutorizadoPor.Text = Miembro_E.Autorizado_Por;
+
+
+            // Llenado de nivel academico
+            Miembro_Nivel_Academico_E Miembro_Nivel_Academico_E = new Miembro_Nivel_Academico_E();
+            Miembro_Nivel_Academico_N Miembro_Nivel_Academico_N = new Miembro_Nivel_Academico_N();
+            Miembro_Nivel_Academico_E = Miembro_Nivel_Academico_N.ObtenerRegistro(ID_REGISTRO);
+
+            chkNivelPrimario.Checked = Miembro_Nivel_Academico_E.Primario;
+            chkNivelSecundario.Checked = Miembro_Nivel_Academico_E.Secundario;
+            chkGradoUniversitario.Checked = Miembro_Nivel_Academico_E.Grado_Universitario;
+            chkNivePostGrado_Maestria.Checked = Miembro_Nivel_Academico_E.Post_Grado_Maestria;
+
+
+            // Llenado de informacion laboral
+            Miembro_Informacion_Laboral_E Miembro_Informacion_Laboral_E = new Miembro_Informacion_Laboral_E();
+            Miembro_Informacion_Laboral_N Miembro_Informacion_Laboral_N = new Miembro_Informacion_Laboral_N();
+            Miembro_Informacion_Laboral_E = Miembro_Informacion_Laboral_N.ObtenerRegistro(ID_REGISTRO);
+
+            chkEmpleadoPrivado.Checked = Miembro_Informacion_Laboral_E.Empleado_Privado;
+            chkEmpleadoPublico.Checked = Miembro_Informacion_Laboral_E.Empleado_Publico;
+            chkIndependiente.Checked = Miembro_Informacion_Laboral_E.Independiente;
+            chkOtros.Checked = Miembro_Informacion_Laboral_E.Otros;
+            txtNombreEmpresaNegocio.Text = Miembro_Informacion_Laboral_E.Nombre_Empresa_Negocio;
+
+
+            // Llenado de informacion familiar 1
+            Miembro_Informacion_Familiar1_E Miembro_Informacion_Familiar1_E = new Miembro_Informacion_Familiar1_E();
+            Miembro_Informacion_Familiar1_N Miembro_Informacion_Familiar1_N = new Miembro_Informacion_Familiar1_N();
+            Miembro_Informacion_Familiar1_E = Miembro_Informacion_Familiar1_N.ObtenerRegistro(ID_REGISTRO);
+
+            txtNombreConyuge.Text = Miembro_Informacion_Familiar1_E.Conyuge_Nombre;
+            chkConyugeCristiano.Checked = Miembro_Informacion_Familiar1_E.Conyuge_Cristiano;
+            dtpFechaNacimiento_Conyuge.SelectedDate = Miembro_Informacion_Familiar1_E.Conyuge_FechaNacimiento;
+
+            txtHijo1_Nombre.Text = Miembro_Informacion_Familiar1_E.Hijo1_Nombre;
+            dtpHijo1_FechaNacimiento.SelectedDate = Miembro_Informacion_Familiar1_E.Hijo1_FechaNacimiento;
+            chkHijo1_Cristiano.Checked = Miembro_Informacion_Familiar1_E.Hijo1_Cristiano;
+
+            txtHijo2_Nombre.Text = Miembro_Informacion_Familiar1_E.Hijo2_Nombre;
+            dtpHijo2_FechaNacimiento.SelectedDate = Miembro_Informacion_Familiar1_E.Hijo2_FechaNacimiento;
+            chkHijo2_Cristiano.Checked = Miembro_Informacion_Familiar1_E.Hijo2_Cristiano;
+
+            txtHijo3_Nombre.Text = Miembro_Informacion_Familiar1_E.Hijo3_Nombre;
+            dtpHijo3_FechaNacimiento.SelectedDate = Miembro_Informacion_Familiar1_E.Hijo3_FechaNacimiento;
+            chkHijo3_Cristiano.Checked = Miembro_Informacion_Familiar1_E.Hijo3_Cristiano;
+
+            txtHijo4_Nombre.Text = Miembro_Informacion_Familiar1_E.Hijo4_Nombre;
+            dtpHijo4_FechaNacimiento.SelectedDate = Miembro_Informacion_Familiar1_E.Hijo4_FechaNacimiento;
+            chkHijo4_Cristiano.Checked = Miembro_Informacion_Familiar1_E.Hijo4_Cristiano;
+
+            txtHijo5_Nombre.Text = Miembro_Informacion_Familiar1_E.Hijo5_Nombre;
+            dtpHijo5_FechaNacimiento.SelectedDate = Miembro_Informacion_Familiar1_E.Hijo5_FechaNacimiento;
+            chkHijo5_Cristiano.Checked = Miembro_Informacion_Familiar1_E.Hijo5_Cristiano;
+
+            txtHijo6_Nombre.Text = Miembro_Informacion_Familiar1_E.Hijo6_Nombre;
+            dtpHijo6_FechaNacimiento.SelectedDate = Miembro_Informacion_Familiar1_E.Hijo6_FechaNacimiento;
+            chkHijo6_Cristiano.Checked = Miembro_Informacion_Familiar1_E.Hijo6_Cristiano;
+
+
+            // Llenado de informacion familiar 2
+            Miembro_Informacion_Familiar2_E Miembro_Informacion_Familiar2_E = new Miembro_Informacion_Familiar2_E();
+            Miembro_Informacion_Familiar2_N Miembro_Informacion_Familiar2_N = new Miembro_Informacion_Familiar2_N();
+            Miembro_Informacion_Familiar2_E = Miembro_Informacion_Familiar2_N.ObtenerRegistro(ID_REGISTRO);
+        }
+
         private void LimpiarCampos()
         {
             ID_REGISTRO = "0";
@@ -397,39 +492,7 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         }
 
 
-        private void VerRegistro()
-        {
-            // Llenado de datos generales
-            Miembro_E entidad = new Miembro_E();
-            entidad = miembro_N.ObtenerRegistro(ID_REGISTRO);
-
-            txtIdMiembro.Text = entidad.Id_Miembro.ToString();
-            txtNombres_Miembro.Text = entidad.Nombres;
-            txtApellidos_Miembro.Text = entidad.Apellidos;
-            txtNombrePila.Text = entidad.Nombre_Pila;
-            rbtnSexo.SelectedValue = entidad.Sexo.ToString();
-            dtpFechaNacimiento.SelectedDate = entidad.Fecha_Nacimiento;
-            cmbEstadoCivil.SelectedValue = entidad.Estado_Civil.ToString();
-            chkTieneHijos.Checked = entidad.Tiene_Hijos;
-            txtEmail.Text = entidad.Email;
-            txtCelular.Text = entidad.Celular;
-            txtSector.Text = entidad.Sector;
-            txtBarrio_Residencial.Text = entidad.Barrio_Residencial;
-            txtCalle.Text = entidad.Calle;
-            txtNumeroCasa.Text = entidad.Numero_Casa;
-            chkEsMiembro.Checked = entidad.Es_Miembro;
-            dtpDesdeCuandoMiembro.SelectedDate = entidad.Desde_Cuando_Miembro;
-            chkLe_Gustaria_Pertenecer_Ministerio.Checked = entidad.Le_Gustaria_Pertenecer_Ministerio;
-            txtNumeroMiembroAlternativo.Text = entidad.Numero_Alternativo_Miembro.ToString();
-            cmbRol_Miembro.SelectedValue = entidad.Rol_Miembro.ToString("");
-            txtOtroRol.Text = entidad.Otro_Rol;
-            txtNombre_Diacono.Text = entidad.Nombre_Diacono;
-            txtComentariosDiaconoLiderMinisterio.Text = entidad.Comentarios_Diacono_Lider_Ministerio;
-            txtRevisadoPor.Text = entidad.Revisado_Por;
-            txtAutorizadoPor.Text = entidad.Autorizado_Por;
-
-
-        }
+       
 
         #endregion
 
