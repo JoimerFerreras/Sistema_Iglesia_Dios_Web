@@ -11,7 +11,7 @@
     <div style="padding: 20px;">
         <div class="shadowed-div-body" style="width: 100%;">
             <div>
-                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo"> Filtros</span>
+                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Filtros</span>
             </div>
             <div class="linea-separador" style="margin-top: 20px;"></div>
 

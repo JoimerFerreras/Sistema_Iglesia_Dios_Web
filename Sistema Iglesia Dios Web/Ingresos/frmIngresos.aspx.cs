@@ -353,7 +353,7 @@ namespace Sistema_Iglesia_Dios_Web.Consultas
 
             if (!Page.IsPostBack)
             {
-                ((SiteMaster)Master).EstablecerNombrePantalla("Consulta de miembros");
+                ((SiteMaster)Master).EstablecerNombrePantalla("Ingresos");
                 LlenerCombos();
                 LimpiarFiltros();
                 LimpiarCampos();

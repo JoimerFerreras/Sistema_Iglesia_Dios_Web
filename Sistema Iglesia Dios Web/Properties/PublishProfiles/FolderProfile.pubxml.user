@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\inetpub\IglesiaDiosWeb</_PublishTargetUrl>
-    <History>True|2024-04-17T04:19:55.9340262Z;True|2024-04-17T00:11:44.2366191-04:00;</History>
+    <History>True|2024-05-08T18:36:36.7814511Z;True|2024-04-17T00:19:55.9340262-04:00;True|2024-04-17T00:11:44.2366191-04:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -19,16 +19,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/24/2024 20:55:43</publishTime>
     </File>
     <File Include="bin/Datos.dll">
-      <publishTime>04/16/2024 23:57:35</publishTime>
+      <publishTime>05/08/2024 14:36:33</publishTime>
     </File>
     <File Include="bin/Datos.pdb">
-      <publishTime>04/16/2024 23:57:35</publishTime>
+      <publishTime>05/08/2024 14:36:33</publishTime>
     </File>
     <File Include="bin/Entidades.dll">
-      <publishTime>04/16/2024 23:57:35</publishTime>
+      <publishTime>05/08/2024 14:36:33</publishTime>
     </File>
     <File Include="bin/Entidades.pdb">
-      <publishTime>04/16/2024 23:57:35</publishTime>
+      <publishTime>05/08/2024 14:36:33</publishTime>
     </File>
     <File Include="bin/es/Microsoft.AspNet.FriendlyUrls.resources.dll">
       <publishTime>03/24/2024 20:55:43</publishTime>
@@ -55,10 +55,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/24/2024 20:55:43</publishTime>
     </File>
     <File Include="bin/Negocio.dll">
-      <publishTime>04/16/2024 23:57:35</publishTime>
+      <publishTime>05/08/2024 14:36:33</publishTime>
     </File>
     <File Include="bin/Negocio.pdb">
-      <publishTime>04/16/2024 23:57:35</publishTime>
+      <publishTime>05/08/2024 14:36:33</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>03/24/2024 20:55:43</publishTime>
@@ -211,10 +211,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/24/2024 20:55:43</publishTime>
     </File>
     <File Include="bin/Sistema Iglesia Dios Web.dll">
-      <publishTime>04/17/2024 00:11:43</publishTime>
+      <publishTime>05/08/2024 14:36:35</publishTime>
     </File>
     <File Include="bin/Sistema Iglesia Dios Web.pdb">
-      <publishTime>04/17/2024 00:11:43</publishTime>
+      <publishTime>05/08/2024 14:36:35</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
       <publishTime>03/24/2024 20:55:43</publishTime>
@@ -250,7 +250,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/24/2024 20:55:43</publishTime>
     </File>
     <File Include="Consultas/frmConsulta_Miembros.aspx">
-      <publishTime>04/16/2024 23:01:28</publishTime>
+      <publishTime>05/07/2024 22:06:36</publishTime>
     </File>
     <File Include="Content/bootstrap-grid.css">
       <publishTime>03/24/2024 20:55:43</publishTime>
@@ -357,14 +357,17 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Global.asax">
       <publishTime>03/24/2024 20:55:43</publishTime>
     </File>
+    <File Include="Ingresos/frmIngresos.aspx">
+      <publishTime>05/08/2024 14:24:17</publishTime>
+    </File>
     <File Include="Miembros/frmMiembros.aspx">
-      <publishTime>04/16/2024 23:53:37</publishTime>
+      <publishTime>05/07/2024 21:25:49</publishTime>
     </File>
     <File Include="Recursos/CSS/botones.css">
       <publishTime>03/24/2024 20:55:43</publishTime>
     </File>
     <File Include="Recursos/CSS/estilos_general.css">
-      <publishTime>04/16/2024 03:13:33</publishTime>
+      <publishTime>05/07/2024 21:23:12</publishTime>
     </File>
     <File Include="Recursos/CSS/login.css">
       <publishTime>04/15/2024 11:13:10</publishTime>
@@ -394,7 +397,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/24/2024 20:55:43</publishTime>
     </File>
     <File Include="Recursos/Javascript/scripts_master.js">
-      <publishTime>04/16/2024 19:23:30</publishTime>
+      <publishTime>05/08/2024 02:09:40</publishTime>
     </File>
     <File Include="Recursos/Javascript/typpy_tooltip.js">
       <publishTime>03/24/2024 20:55:43</publishTime>
@@ -520,7 +523,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/24/2024 20:55:43</publishTime>
     </File>
     <File Include="Site.Master">
-      <publishTime>04/16/2024 19:23:43</publishTime>
+      <publishTime>05/08/2024 02:11:36</publishTime>
     </File>
     <File Include="Site.Mobile.Master">
       <publishTime>04/16/2024 01:49:19</publishTime>

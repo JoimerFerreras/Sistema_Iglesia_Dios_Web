@@ -101,11 +101,16 @@
                         </a>
                     </li>
 
-                    <li class="item_1" title="Ingresos">
-                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnIngresos" data-tippy-content="Ingresos" title="">
-                            <i class="fa-solid fa-cash-register"></i><span>Ingresos</span>
+                     <li class="item_1" id="ingresos" title="Ingresos">
+                        <a style="text-decoration: none;" href="#ingresos" class="menu_1-btn_1" data-tippy-content="Ingresos" title="">
+                            <i class="fa-solid fa-cash-register"></i><span>Ingresos<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnIngresos" data-tippy-content="Ingresos" title=""><i class="fa-solid fa-cash-register"></i><span>Ingresos</span></a>
+                        </div>
                     </li>
+
+
                     <li class="item_1" title="Egresos">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnEgresos" data-tippy-content="Egresos" title="">
                             <i class="fa-solid fa-percent"></i><span>Egresos</span>

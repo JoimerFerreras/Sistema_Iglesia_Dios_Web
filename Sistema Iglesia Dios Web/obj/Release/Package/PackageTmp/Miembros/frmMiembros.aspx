@@ -11,7 +11,7 @@
     <div style="padding: 20px;" >
         <div class="shadowed-div-body" style="width: 100%;">
             <div>
-                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">&nbsp;Datos generales</span>
+                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Datos generales</span>
             </div>
             <div class="linea-separador" style="margin-top: 20px;"></div>
 
@@ -132,7 +132,7 @@
         <%-- NIVEL ACADEMICO Y PROFESIONALISMO --%>
         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
             <div>
-                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">&nbsp;Nivel acad&eacute;mico y profesionalismo</span>
+                <i class="fa-solid fa-user-graduate shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Nivel acad&eacute;mico y profesionalismo</span>
             </div>
             <div class="linea-separador" style="margin-top: 20px;"></div>
 
@@ -212,7 +212,7 @@
         <%-- INFORMACION FAMILIAR 1 --%>
         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
             <div>
-                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">&nbsp;Información familiar I</span>
+                <i class="fa-solid fa-people-roof shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Información familiar I</span>
             </div>
             <div class="linea-separador" style="margin-top: 20px;"></div>
 
@@ -376,7 +376,7 @@
         <%-- INFORMACION FAMILIAR 2 --%>
         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
             <div>
-                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">&nbsp;Información familiar II</span>
+                <i class="fa-solid fa-people-roof shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Información familiar II</span>
             </div>
             <div class="linea-separador" style="margin-top: 20px;"></div>
 
@@ -607,7 +607,7 @@
         <%--INFORMACION PERSONAL--%>
         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;" >
             <div>
-                <i class="fa-solid fa-filter shadowed-div-body-titulo" id="informacion_personal_panel"></i><span class="shadowed-div-body-titulo">&nbsp;Información personal (preferencias / gustos)</span>
+                <i class="fa-solid fa-filter shadowed-div-body-titulo" id="informacion_personal_panel"></i><span class="shadowed-div-body-titulo">Información personal (preferencias / gustos)</span>
             </div>
             <div class="linea-separador" style="margin-top: 20px;"></div>
 
