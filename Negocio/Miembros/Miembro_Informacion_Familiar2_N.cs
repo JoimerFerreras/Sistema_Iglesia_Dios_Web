@@ -12,6 +12,18 @@ namespace Negocio.Miembros
     {
         Miembro_Informacion_Familiar2_D miembro_informacion_familiar2_D = new Miembro_Informacion_Familiar2_D();
 
+        public Miembro_Informacion_Familiar2_E ObtenerRegistro(string Id)
+        {
+            try
+            {
+                return miembro_informacion_familiar2_D.ObtenerRegistro(Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool Agregar(Miembro_Informacion_Familiar2_E entidad)
         {
             try

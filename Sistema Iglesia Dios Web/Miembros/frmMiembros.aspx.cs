@@ -126,6 +126,7 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
                     Miembro_Informacion_Laboral_E info_laboral_E = new Miembro_Informacion_Laboral_E();
                     info_laboral_E.Empleado_Privado = chkEmpleadoPrivado.Checked;
                     info_laboral_E.Empleado_Publico = chkEmpleadoPublico.Checked;
+                    info_laboral_E.Dueno_Negocio = chkDuenoNegocio.Checked;
                     info_laboral_E.Independiente = chkIndependiente.Checked;
                     info_laboral_E.Otros = chkOtros.Checked;
                     info_laboral_E.Nombre_Empresa_Negocio = txtNombreEmpresaNegocio.Text;
@@ -288,11 +289,13 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             txtNumeroCasa.Text = Miembro_E.Numero_Casa;
             chkEsMiembro.Checked = Miembro_E.Es_Miembro;
             dtpDesdeCuandoMiembro.SelectedDate = Miembro_E.Desde_Cuando_Miembro;
+            chkPertenece_Ministerio.Checked = Miembro_E.Pertenece_Ministerio;
             chkLe_Gustaria_Pertenecer_Ministerio.Checked = Miembro_E.Le_Gustaria_Pertenecer_Ministerio;
             txtNumeroMiembroAlternativo.Text = Miembro_E.Numero_Alternativo_Miembro.ToString();
             cmbRol_Miembro.SelectedValue = Miembro_E.Rol_Miembro.ToString("");
             txtOtroRol.Text = Miembro_E.Otro_Rol;
             txtNombre_Diacono.Text = Miembro_E.Nombre_Diacono;
+            txtNombreLiderMinisterio.Text = Miembro_E.Nombre_Lider_Ministerio;
             txtComentariosDiaconoLiderMinisterio.Text = Miembro_E.Comentarios_Diacono_Lider_Ministerio;
             txtRevisadoPor.Text = Miembro_E.Revisado_Por;
             txtAutorizadoPor.Text = Miembro_E.Autorizado_Por;
@@ -316,6 +319,7 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
 
             chkEmpleadoPrivado.Checked = Miembro_Informacion_Laboral_E.Empleado_Privado;
             chkEmpleadoPublico.Checked = Miembro_Informacion_Laboral_E.Empleado_Publico;
+            chkDuenoNegocio.Checked = Miembro_Informacion_Laboral_E.Dueno_Negocio;
             chkIndependiente.Checked = Miembro_Informacion_Laboral_E.Independiente;
             chkOtros.Checked = Miembro_Informacion_Laboral_E.Otros;
             txtNombreEmpresaNegocio.Text = Miembro_Informacion_Laboral_E.Nombre_Empresa_Negocio;
@@ -359,6 +363,58 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             Miembro_Informacion_Familiar2_E Miembro_Informacion_Familiar2_E = new Miembro_Informacion_Familiar2_E();
             Miembro_Informacion_Familiar2_N Miembro_Informacion_Familiar2_N = new Miembro_Informacion_Familiar2_N();
             Miembro_Informacion_Familiar2_E = Miembro_Informacion_Familiar2_N.ObtenerRegistro(ID_REGISTRO);
+
+            txtPadre_NombreCompleto.Text = Miembro_Informacion_Familiar2_E.Padre_Nombre_Completo;
+            txtPadre_Edad.Text = Miembro_Informacion_Familiar2_E.Padre_Edad.ToString();
+            chkPadre_Empleado.Checked = Miembro_Informacion_Familiar2_E.Padre_Empleado;
+            chkPadre_NegocioPropio.Checked = Miembro_Informacion_Familiar2_E.Padre_Negocio_Propio;
+            txtPadre_Celular.Text = Miembro_Informacion_Familiar2_E.Padre_Celular;
+            chkPadre_MiembroIglesia.Checked = Miembro_Informacion_Familiar2_E.Padre_Miembro_Iglesia;
+
+            txtMadre_NombreCompleto.Text = Miembro_Informacion_Familiar2_E.Madre_Nombre_Completo;
+            txtMadre_Edad.Text = Miembro_Informacion_Familiar2_E.Madre_Edad.ToString();
+            chkMadre_Empleada.Checked = Miembro_Informacion_Familiar2_E.Madre_Empleada;
+            chkMadre_NegocioPropio.Checked = Miembro_Informacion_Familiar2_E.Madre_Negocio_Propio;
+            txtMadre_Celular.Text = Miembro_Informacion_Familiar2_E.Madre_Celular;
+            chkMadre_MiembroIglesia.Checked = Miembro_Informacion_Familiar2_E.Madre_Miembro_Iglesia;
+
+            txtHermano1_NombreCompleto.Text = Miembro_Informacion_Familiar2_E.Hermano1_Nombre_Completo;
+            txtHermano1_Escolaridad.Text = Miembro_Informacion_Familiar2_E.Hermano1_Escolaridad;
+            txtHermano1_CorreoElectronico.Text = Miembro_Informacion_Familiar2_E.Hermano1_Correo_Electronico;
+            txtHermano1_Celular.Text = Miembro_Informacion_Familiar2_E.Hermano1_Celular;
+
+            txtHermano2_NombreCompleto.Text = Miembro_Informacion_Familiar2_E.Hermano2_Nombre_Completo;
+            txtHermano2_Escolaridad.Text = Miembro_Informacion_Familiar2_E.Hermano2_Escolaridad;
+            txtHermano2_CorreoElectronico.Text = Miembro_Informacion_Familiar2_E.Hermano2_Correo_Electronico;
+            txtHermano2_Celular.Text = Miembro_Informacion_Familiar2_E.Hermano2_Celular;
+
+            txtHermano3_NombreCompleto.Text = Miembro_Informacion_Familiar2_E.Hermano3_Nombre_Completo;
+            txtHermano3_Escolaridad.Text = Miembro_Informacion_Familiar2_E.Hermano3_Escolaridad;
+            txtHermano3_CorreoElectronico.Text = Miembro_Informacion_Familiar2_E.Hermano3_Correo_Electronico;
+            txtHermano3_Celular.Text = Miembro_Informacion_Familiar2_E.Hermano3_Celular;
+
+            txtHermano4_NombreCompleto.Text = Miembro_Informacion_Familiar2_E.Hermano4_Nombre_Completo;
+            txtHermano4_Escolaridad.Text = Miembro_Informacion_Familiar2_E.Hermano4_Escolaridad;
+            txtHermano4_CorreoElectronico.Text = Miembro_Informacion_Familiar2_E.Hermano4_Correo_Electronico;
+            txtHermano4_Celular.Text = Miembro_Informacion_Familiar2_E.Hermano4_Celular;
+
+            txtHermano5_NombreCompleto.Text = Miembro_Informacion_Familiar2_E.Hermano5_Nombre_Completo;
+            txtHermano5_Escolaridad.Text = Miembro_Informacion_Familiar2_E.Hermano5_Escolaridad;
+            txtHermano5_CorreoElectronico.Text = Miembro_Informacion_Familiar2_E.Hermano5_Correo_Electronico;
+            txtHermano5_Celular.Text = Miembro_Informacion_Familiar2_E.Hermano5_Celular;
+
+
+            // Llenado de informacion de pasatiempos
+            Miembro_Pasatiempos_E miembro_Pasatiempos_E = new Miembro_Pasatiempos_E();
+            Miembro_Pasatiempos_N miembro_Pasatiempos_N = new Miembro_Pasatiempos_N();
+            miembro_Pasatiempos_E = miembro_Pasatiempos_N.ObtenerRegistro(ID_REGISTRO);
+
+            chkCine.Checked = miembro_Pasatiempos_E.Cine;
+            chkLeer.Checked = miembro_Pasatiempos_E.Leer;
+            chkVerTV.Checked = miembro_Pasatiempos_E.Ver_TV;
+            chkSocializar.Checked = miembro_Pasatiempos_E.Socializar;
+            chkViajar.Checked = miembro_Pasatiempos_E.Viajar;
+            txtOtrosPasatiempos.Text = miembro_Pasatiempos_E.Otros;
         }
 
         private void LimpiarCampos()

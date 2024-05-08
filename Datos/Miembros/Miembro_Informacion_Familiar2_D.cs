@@ -12,6 +12,109 @@ namespace Datos.Miembros
 {
     public class Miembro_Informacion_Familiar2_D
     {
+        public Miembro_Informacion_Familiar2_E ObtenerRegistro(string Id)
+        {
+            Miembro_Informacion_Familiar2_E entidad = new Miembro_Informacion_Familiar2_E();
+
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"SELECT Id_Miembro,
+                                        Padre_Nombre_Completo,
+                                        Padre_Edad,
+                                        Padre_Empleado,
+                                        Padre_Negocio_Propio,
+                                        Padre_Celular,
+                                        Padre_Miembro_Iglesia,
+                                        Madre_Nombre_Completo,
+                                        Madre_Edad,
+                                        Madre_Empleada,
+                                        Madre_Negocio_Propio,
+                                        Madre_Celular,
+                                        Madre_Miembro_Iglesia,
+                                        Hermano1_Nombre_Completo,
+                                        Hermano1_Escolaridad,
+                                        Hermano1_Correo_Electronico,
+                                        Hermano1_Celular,
+                                        Hermano2_Nombre_Completo,
+                                        Hermano2_Escolaridad,
+                                        Hermano2_Correo_Electronico,
+                                        Hermano2_Celular,
+                                        Hermano3_Nombre_Completo,
+                                        Hermano3_Escolaridad,
+                                        Hermano3_Correo_Electronico,
+                                        Hermano3_Celular,
+                                        Hermano4_Nombre_Completo,
+                                        Hermano4_Escolaridad,
+                                        Hermano4_Correo_Electronico,
+                                        Hermano4_Celular,
+                                        Hermano5_Nombre_Completo,
+                                        Hermano5_Escolaridad,
+                                        Hermano5_Correo_Electronico,
+                                        Hermano5_Celular
+                                        FROM Miembros_Informacion_Familiar_2
+
+                                        WHERE Id_Miembro = @Id";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id", Id);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        DataTable dt = new DataTable();
+                        dt.Load(dr);
+                        DataRow row = dt.Rows[0];
+                        entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
+
+                        entidad.Padre_Nombre_Completo = row["Padre_Nombre_Completo"].ToString();
+                        entidad.Padre_Edad = int.Parse(row["Padre_Edad"].ToString());
+                        entidad.Padre_Empleado = row["Padre_Empleado"].ToString() == "True" ? true : false;
+                        entidad.Padre_Negocio_Propio = row["Padre_Negocio_Propio"].ToString() == "True" ? true : false;
+                        entidad.Padre_Celular = row["Padre_Celular"].ToString();
+                        entidad.Padre_Miembro_Iglesia = row["Padre_Miembro_Iglesia"].ToString() == "True" ? true : false;
+
+                        entidad.Madre_Nombre_Completo = row["Madre_Nombre_Completo"].ToString();
+                        entidad.Madre_Edad = int.Parse(row["Madre_Edad"].ToString());
+                        entidad.Madre_Empleada = row["Madre_Empleada"].ToString() == "True" ? true : false;
+                        entidad.Madre_Negocio_Propio = row["Madre_Negocio_Propio"].ToString() == "True" ? true : false;
+                        entidad.Madre_Celular = row["Madre_Celular"].ToString();
+                        entidad.Madre_Miembro_Iglesia = row["Madre_Miembro_Iglesia"].ToString() == "True" ? true : false;
+
+                        entidad.Hermano1_Nombre_Completo = row["Hermano1_Nombre_Completo"].ToString();
+                        entidad.Hermano1_Escolaridad = row["Hermano1_Escolaridad"].ToString();
+                        entidad.Hermano1_Correo_Electronico = row["Hermano1_Correo_Electronico"].ToString();
+                        entidad.Hermano1_Celular = row["Hermano1_Celular"].ToString();
+
+                        entidad.Hermano2_Nombre_Completo = row["Hermano2_Nombre_Completo"].ToString();
+                        entidad.Hermano2_Escolaridad = row["Hermano2_Escolaridad"].ToString();
+                        entidad.Hermano2_Correo_Electronico = row["Hermano2_Correo_Electronico"].ToString();
+                        entidad.Hermano2_Celular = row["Hermano2_Celular"].ToString();
+
+                        entidad.Hermano3_Nombre_Completo = row["Hermano3_Nombre_Completo"].ToString();
+                        entidad.Hermano3_Escolaridad = row["Hermano3_Escolaridad"].ToString();
+                        entidad.Hermano3_Correo_Electronico = row["Hermano3_Correo_Electronico"].ToString();
+                        entidad.Hermano3_Celular = row["Hermano3_Celular"].ToString();
+
+                        entidad.Hermano4_Nombre_Completo = row["Hermano4_Nombre_Completo"].ToString();
+                        entidad.Hermano4_Escolaridad = row["Hermano4_Escolaridad"].ToString();
+                        entidad.Hermano4_Correo_Electronico = row["Hermano4_Correo_Electronico"].ToString();
+                        entidad.Hermano4_Celular = row["Hermano4_Celular"].ToString();
+
+                        entidad.Hermano5_Nombre_Completo = row["Hermano5_Nombre_Completo"].ToString();
+                        entidad.Hermano5_Escolaridad = row["Hermano5_Escolaridad"].ToString();
+                        entidad.Hermano5_Correo_Electronico = row["Hermano5_Correo_Electronico"].ToString();
+                        entidad.Hermano5_Celular = row["Hermano5_Celular"].ToString();
+                    }
+                    conexion.Close();
+                    return entidad;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
         public bool Agregar(Miembro_Informacion_Familiar2_E entidad)
         {
             bool Respuesta = false;

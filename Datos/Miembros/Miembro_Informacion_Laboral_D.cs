@@ -19,12 +19,14 @@ namespace Datos.Miembros
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
                 string sentencia = $@"SELECT 
+                                        Id_Miembro,
                                         Empleado_Privado,
                                         Empleado_Publico,
+                                        Dueno_Negocio,
                                         Independiente,
                                         Otros,
                                         Nombre_Empresa_Negocio
-                                        FROM Miembros_Nivel_Academico
+                                        FROM Miembros_Informacion_Laboral
 
                                         WHERE Id_Miembro = @Id";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
@@ -41,6 +43,7 @@ namespace Datos.Miembros
                         entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
                         entidad.Empleado_Privado = row["Empleado_Privado"].ToString() == "True" ? true : false;
                         entidad.Empleado_Publico = row["Empleado_Publico"].ToString() == "True" ? true : false;
+                        entidad.Dueno_Negocio = row["Dueno_Negocio"].ToString() == "True" ? true : false;
                         entidad.Independiente = row["Independiente"].ToString() == "True" ? true : false;
                         entidad.Otros = row["Otros"].ToString() == "True" ? true : false;
                         entidad.Nombre_Empresa_Negocio = row["Nombre_Empresa_Negocio"].ToString();
@@ -65,6 +68,7 @@ namespace Datos.Miembros
                                     Id_Miembro, 
                                     Empleado_Privado,
                                     Empleado_Publico,
+                                    Dueno_Negocio,
                                     Independiente,
                                     Otros,
                                     Nombre_Empresa_Negocio)
@@ -73,6 +77,7 @@ namespace Datos.Miembros
                                     @Id_Miembro,
                                     @Empleado_Privado,
                                     @Empleado_Publico,
+                                    @Dueno_Negocio,
                                     @Independiente,
                                     @Otros,
                                     @Nombre_Empresa_Negocio);";
@@ -81,6 +86,7 @@ namespace Datos.Miembros
                 cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
                 cmd.Parameters.AddWithValue("@Empleado_Privado", entidad.Empleado_Privado);
                 cmd.Parameters.AddWithValue("@Empleado_Publico", entidad.Empleado_Publico);
+                cmd.Parameters.AddWithValue("@Dueno_Negocio", entidad.Dueno_Negocio);
                 cmd.Parameters.AddWithValue("@Independiente", entidad.Independiente);
                 cmd.Parameters.AddWithValue("@Otros", entidad.Otros);
                 cmd.Parameters.AddWithValue("@Nombre_Empresa_Negocio", entidad.Nombre_Empresa_Negocio);
@@ -110,6 +116,7 @@ namespace Datos.Miembros
                 string sentencia = $@"UPDATE Miembros_Informacion_Laboral SET
                                     Empleado_Privado = @Empleado_Privado,
                                     Empleado_Publico = @Empleado_Publico,
+                                    Dueno_Negocio = @Dueno_Negocio,
                                     Independiente = @Independiente,
                                     Otros = @Otros,
                                     Nombre_Empresa_Negocio = @Nombre_Empresa_Negocio
@@ -120,6 +127,7 @@ namespace Datos.Miembros
                 cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
                 cmd.Parameters.AddWithValue("@Empleado_Privado", entidad.Empleado_Privado);
                 cmd.Parameters.AddWithValue("@Empleado_Publico", entidad.Empleado_Publico);
+                cmd.Parameters.AddWithValue("@Dueno_Negocio", entidad.Dueno_Negocio);
                 cmd.Parameters.AddWithValue("@Independiente", entidad.Independiente);
                 cmd.Parameters.AddWithValue("@Otros", entidad.Otros);
                 cmd.Parameters.AddWithValue("@Nombre_Empresa_Negocio", entidad.Nombre_Empresa_Negocio);

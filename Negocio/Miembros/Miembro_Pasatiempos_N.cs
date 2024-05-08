@@ -11,6 +11,18 @@ namespace Negocio.Miembros
     public class Miembro_Pasatiempos_N
     {
         Miembro_Pasatiempos_D miembro_pasatiempos_D = new Miembro_Pasatiempos_D();
+        public Miembro_Pasatiempos_E ObtenerRegistro(string Id)
+        {
+            try
+            {
+                return miembro_pasatiempos_D.ObtenerRegistro(Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool Agregar(Miembro_Pasatiempos_E entidad)
         {
             try

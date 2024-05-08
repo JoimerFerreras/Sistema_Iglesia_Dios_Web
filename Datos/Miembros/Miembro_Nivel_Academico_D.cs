@@ -19,6 +19,7 @@ namespace Datos.Miembros
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
                 string sentencia = $@"SELECT 
+                                        Id_Miembro,
                                         Primario,
                                         Secundario,
                                         Grado_Universitario,
