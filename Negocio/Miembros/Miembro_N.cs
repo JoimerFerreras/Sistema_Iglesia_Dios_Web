@@ -8,6 +8,7 @@ using Datos.Miembros;
 using Entidades.Miembros;
 using Datos.Ministerios;
 using Entidades.Ministerios;
+using Negocio.Ministerios;
 
 namespace Negocio.Miembros
 {
@@ -31,6 +32,17 @@ namespace Negocio.Miembros
                 }
 
                 return miembro_D.Consultar(TextoTipoFecha, FechaDesde, FechaHasta, TextoBusqueda, int.Parse(Sexo), int.Parse(EstadoCivil), int.Parse(Ministerio));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public DataTable ListaCombo()
+        {
+            try
+            {
+                return miembro_D.ListaCombo();
             }
             catch (Exception ex)
             {

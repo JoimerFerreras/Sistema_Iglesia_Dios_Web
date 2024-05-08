@@ -140,18 +140,6 @@ namespace Sistema_Iglesia_Dios_Web
                 }
             }
         }
-        /*
-        private void Login()
-        {
-            var usuario = usuario_N.Login(txtUsuario.Text, txtPassword.Text);
-
-            if (usuario.Id_Usuario != 0)
-            {
-                Response.Redirect(Utilidad_N.ObtenerRutaServer() + "/Utilidad_Cliente/frmPaginaPrincipal.aspx");
-            }
-
-        }*/
-
 
         private void Login()
         {

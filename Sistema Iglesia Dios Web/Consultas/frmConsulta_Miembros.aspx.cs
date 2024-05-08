@@ -109,7 +109,7 @@ namespace Sistema_Iglesia_Dios_Web.Consultas
         {
             DataTable dt = new DataTable();
 
-            // Campus
+            // Ministerio
             Ministerio_N Ministerio_N = new Ministerio_N();
             dt = Ministerio_N.ListaCombo("0", false);
             cmbMinisterio.DataSource = dt;

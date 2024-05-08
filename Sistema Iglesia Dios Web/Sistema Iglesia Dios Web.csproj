@@ -154,6 +154,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="frmLogin.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Ingresos\frmIngresos.aspx" />
     <Content Include="Miembros\frmMiembros.aspx" />
     <Content Include="Recursos\CSS\botones.css" />
     <Content Include="Recursos\CSS\estilos_general.css" />
@@ -250,6 +251,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Ingresos\frmIngresos.aspx.cs">
+      <DependentUpon>frmIngresos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ingresos\frmIngresos.aspx.designer.cs">
+      <DependentUpon>frmIngresos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Miembros\frmMiembros.aspx.cs">
       <DependentUpon>frmMiembros.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -291,7 +299,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Egresos\" />
-    <Folder Include="Ingresos\" />
     <Folder Include="Recursos\Recursos_Utiles\" />
     <Folder Include="Recursos\Scripts SQL\" />
     <Folder Include="Reportes\" />

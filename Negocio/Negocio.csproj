@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ingresos\Descripcion_Ingreso_N.cs" />
+    <Compile Include="Ingresos\Moneda_N.cs" />
+    <Compile Include="Ingresos\Ingreso_N.cs" />
     <Compile Include="Miembros\Miembro_Informacion_Familiar1_N.cs" />
     <Compile Include="Miembros\Miembro_Informacion_Familiar2_N.cs" />
     <Compile Include="Miembros\Miembro_Informacion_Laboral_N.cs" />
@@ -68,7 +71,6 @@
   <ItemGroup>
     <Folder Include="Ayuda\" />
     <Folder Include="Egresos\" />
-    <Folder Include="Ingresos\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

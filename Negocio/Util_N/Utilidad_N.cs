@@ -28,12 +28,18 @@ namespace Negocio.Util_N
 
 
         #region Informacion del usuario
+        public static string Id_Usuario
+        {
+            get { return _Id_Usuario; }
+            set { _Id_Usuario = value; }
+        }
         public static string Tipo_Usuario
         {
             get { return _Tipo_Usuario; }
             set { _Tipo_Usuario = value; }
         }
 
+        private static string _Id_Usuario;
         private static string _Tipo_Usuario;
 
         #endregion

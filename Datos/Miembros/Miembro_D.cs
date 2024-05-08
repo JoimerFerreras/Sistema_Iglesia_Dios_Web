@@ -126,6 +126,31 @@ namespace Datos.Miembros
             }
         }
 
+        public DataTable ListaCombo()
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = "SELECT Id_Miembro, Nombres + ' ' + Apellidos + ' (' + CAST(Id_Miembro AS varchar) + ')' AS Nombre_Miembro FROM Miembros ORDER BY Nombre_Miembro ASC";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
         public Miembro_E ObtenerRegistro(string Id)
         {
             Miembro_E entidad = new Miembro_E();
