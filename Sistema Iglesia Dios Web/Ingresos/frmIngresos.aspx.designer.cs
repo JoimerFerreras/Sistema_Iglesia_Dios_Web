@@ -7,7 +7,7 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Sistema_Iglesia_Dios_Web.Consultas
+namespace Sistema_Iglesia_Dios_Web.Ingresos
 {
 
 

@@ -17,7 +17,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Sistema_Iglesia_Dios_Web.Consultas
+namespace Sistema_Iglesia_Dios_Web.Ingresos
 {
     public partial class frmIngresos : System.Web.UI.Page
     {
@@ -314,6 +314,8 @@ namespace Sistema_Iglesia_Dios_Web.Consultas
             {
                 divValorMoneda.Visible = false;
             }
+
+            txtId_Ingreso.Focus();
         }
 
         private void LimpiarCampos()

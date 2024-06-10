@@ -108,6 +108,9 @@
                         <div class="sub-menu_1">
                             <a href="#" id="btnIngresos" data-tippy-content="Ingresos" title=""><i class="fa-solid fa-cash-register"></i><span>Ingresos</span></a>
                         </div>
+                         <div class="sub-menu_1">
+                            <a href="#" id="btnDescripcionIngresos" data-tippy-content="Descripción de ingresos" title=""><i class="fa-solid fa-cash-register"></i><span>Descripción de ingresos</span></a>
+                        </div>
                     </li>
 
 
