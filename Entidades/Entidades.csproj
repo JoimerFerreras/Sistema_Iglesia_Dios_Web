@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Egresos\Descripcion_Egreso_E.cs" />
     <Compile Include="Ingresos\Ingreso_E.cs" />
     <Compile Include="Ingresos\Descripcion_Ingreso_E.cs" />
     <Compile Include="Ingresos\Moneda_E.cs" />

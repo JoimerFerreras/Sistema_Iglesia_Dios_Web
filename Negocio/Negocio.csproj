@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Egresos\Descripcion_Egreso_N.cs" />
     <Compile Include="Ingresos\Descripcion_Ingreso_N.cs" />
     <Compile Include="Ingresos\Moneda_N.cs" />
     <Compile Include="Ingresos\Ingreso_N.cs" />
@@ -70,7 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ayuda\" />
-    <Folder Include="Egresos\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
