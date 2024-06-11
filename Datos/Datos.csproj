@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConexionBD\Conexion_D.cs" />
+    <Compile Include="Egresos\Descripcion_Ingreso_D.cs" />
     <Compile Include="Ingresos\Descripcion_Ingreso_D.cs" />
     <Compile Include="Ingresos\Moneda_D.cs" />
     <Compile Include="Ingresos\Ingreso_D.cs" />
@@ -58,7 +59,6 @@
     <Compile Include="Usuarios\Usuario_D.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Egresos\" />
     <Folder Include="Util_D\" />
   </ItemGroup>
   <ItemGroup>
