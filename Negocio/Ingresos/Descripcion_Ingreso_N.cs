@@ -1,6 +1,7 @@
 ﻿using Datos.Ingresos;
 using Datos.Ministerios;
 using Entidades.Ingresos;
+using Negocio.Util_N;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -50,6 +51,20 @@ namespace Negocio.Ingresos
             }
         }
 
+        public bool RegistrosExistentes(int Id_Registro)
+        {
+            try
+            {
+                Utilidad_N utilidad = new Utilidad_N();
+                
+                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Descripcion_Ingreso", "Descripciones_Ingreso");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool Agregar(Descripcion_Ingreso_E entidad)
         {
             try
@@ -92,7 +107,7 @@ namespace Negocio.Ingresos
                     throw new OperationCanceledException("Debe seleccionar un registro para eliminar");
                 }
 
-                return Descripcion_Ingreso_D.Eliminar(Convert.ToInt32(Id));
+                return Descripcion_Ingreso_D.Eliminar(Id);
             }
             catch (Exception ex)
             {

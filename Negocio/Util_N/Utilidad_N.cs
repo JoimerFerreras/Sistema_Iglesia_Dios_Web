@@ -13,6 +13,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Configuration;
+using Datos.Ingresos;
+using System.Data;
+using Datos.Util_D;
 
 namespace Negocio.Util_N
 {
@@ -408,6 +411,44 @@ namespace Negocio.Util_N
             return stackFrame.GetMethod().Name;
         }
 
+        #endregion
+
+
+        #region Datos
+
+        /* Con esta funcion ingresando el campo que se desea consultar junto con la tabla de origen al que pertenece ese campo, se podran obtener 
+         * todas las tablas donde aparece el campo junto con la cantidad de registros existentes en esa tabla */
+        public bool RegistrosExistentesEnTablas(string Id_Valor, string NombreCampo, string NombreTablaExcluir)
+        {
+            bool RegistrosExistentes = false;
+
+            Utilidad_D utilidad = new Utilidad_D();
+            try
+            {
+                DataTable dt = utilidad.ObtenerCantidadRegistros(Id_Valor, NombreCampo, NombreTablaExcluir);
+                if (dt.Rows.Count > 0)
+                { 
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        DataRow row = dt.Rows[i];
+                        if (Convert.ToInt32(row["CantidadRegistros"]) > 0)
+                        {
+                            RegistrosExistentes = true;
+                            return RegistrosExistentes;
+                        }
+                    }
+                }
+                else
+                {
+                    RegistrosExistentes = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RegistrosExistentes;
+        }
         #endregion
     }
 }

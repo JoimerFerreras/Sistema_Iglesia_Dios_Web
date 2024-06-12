@@ -10,5 +10,6 @@ namespace Entidades.Egresos
     {
         public int Id_Descripcion_Egreso { get; set; }
         public string Descripcion_Egreso { get; set; }
+        public bool Estado { get; set; }
     }
 }

@@ -116,6 +116,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     Descripcion_Ingreso_E descripcion_ingreso_E = new Descripcion_Ingreso_E();
                     descripcion_ingreso_E.Id_Descripcion_Ingreso = int.Parse(ID_REGISTRO);
                     descripcion_ingreso_E.Descripcion_Ingreso = txtDescripcion.Text;
+                    descripcion_ingreso_E.Estado = Convert.ToBoolean(cmbEstado.SelectedValue);
 
                     if (EDITAR_REGISTRO == true)
                     {
@@ -158,6 +159,37 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
         }
 
+        private void Eliminar(int Id_Registro)
+        {
+            if (Id_Registro == 0)
+            {
+                Utilidad_C.MostrarAlerta_Eliminar_Error(this, this.GetType(), "Primero seleccione un registro para poder eliminarlo");
+            }
+            else
+            {
+                if (descripcion_ingreso_N.RegistrosExistentes(Id_Registro) == false)
+                {
+                    bool respuesta = descripcion_ingreso_N.Eliminar(Id_Registro);
+
+                    if (respuesta)
+                    {
+                        Utilidad_C.MostrarAlerta_Eliminar_Success(this, this.GetType());
+                        Consultar();
+                    }
+                    else
+                    {
+                        Utilidad_C.MostrarAlerta_Eliminar_Error_Fatal(this, this.GetType());
+                    }
+                }
+                else
+                {
+                    Utilidad_C.MostrarAlerta_Eliminar_Error(this, this.GetType(), $@"No se puede eliminar este registro porque está siendo utilizado por otra entidad. Sin embargo, puede establecer el Estado en ""Inactivo"" para deshabilitarlo sin eliminarlo definitivamente.");
+                }
+
+                LimpiarCampos();
+            }
+        }
+
         private void VerRegistro()
         {
             // Llenado de datos generales
@@ -166,6 +198,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             txtId_Ingreso.Text = Descripcion_Ingreso_E.Id_Descripcion_Ingreso.ToString();
             txtDescripcion.Text = Descripcion_Ingreso_E.Descripcion_Ingreso.ToString();
+            cmbEstado.SelectedValue = Descripcion_Ingreso_E.Estado.ToString();
         }
 
         private void LimpiarCampos()
@@ -175,6 +208,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             txtId_Ingreso.Text = "(Nuevo)";
             txtDescripcion.Text = "";
+            cmbEstado.SelectedValue = "True";
 
             txtDescripcion.Focus();
         }
@@ -226,6 +260,28 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             GuardarRegistro();
+        }
+        
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            int Id_Registro;
+            Id_Registro = System.Convert.ToInt32(btn.CommandArgument.ToString());
+            Eliminar(Id_Registro);
+        }
+
+        // Estas dos funciones se utilizan para asignarle clases css de color rojo o verde a los items de la columan "Estado" en los Grid
+        protected string GetStatusText(object status)
+        {
+            string statusText = status.ToString();
+            return statusText == "Activo" ? "Activo" : "Inactivo";
+        }
+
+        protected string GetStatusColor(object status)
+        {
+            string statusText = status.ToString();
+            return statusText == "Activo" ? "status-green" : "status-red";
         }
         #endregion
     }

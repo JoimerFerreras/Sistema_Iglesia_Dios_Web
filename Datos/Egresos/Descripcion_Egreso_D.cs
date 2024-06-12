@@ -25,7 +25,14 @@ namespace Datos.Egresos
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Descripcion_Egreso, Descripcion_Egreso FROM Descripciones_Egreso";
+                string sentencia = $@"SELECT Id_Descripcion_Egreso, 
+                                            Descripcion_Egreso,
+                                            CASE Estado 
+                                                WHEN '0' THEN 'Inactivo' 
+                                                WHEN '1' THEN 'Activo' 
+                                            END AS Estado 
+
+                                            FROM Descripciones_Egreso";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.CommandType = CommandType.Text;
                 try
@@ -77,7 +84,7 @@ namespace Datos.Egresos
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Descripcion_Egreso, Descripcion_Egreso FROM Descripciones_Egreso WHERE Id_Descripcion_Egreso = @Id";
+                string sentencia = $@"SELECT Id_Descripcion_Egreso, Descripcion_Egreso, Estado FROM Descripciones_Egreso WHERE Id_Descripcion_Egreso = @Id";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 cmd.CommandType = CommandType.Text;
@@ -91,6 +98,10 @@ namespace Datos.Egresos
                         DataRow row = dt.Rows[0];
                         entidad.Id_Descripcion_Egreso = int.Parse(row["Id_Descripcion_Egreso"].ToString());
                         entidad.Descripcion_Egreso = row["Descripcion_Egreso"].ToString();
+                        if (row["Estado"].ToString() == "True")
+                            entidad.Estado = true;
+                        else
+                            entidad.Estado = false;
                     }
                     conexion.Close();
                     return entidad;
@@ -114,10 +125,11 @@ namespace Datos.Egresos
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"INSERT INTO Descripciones_Egreso(Descripcion_Egreso) VALUES(@Descripcion_Egreso);";
+                string sentencia = $@"INSERT INTO Descripciones_Egreso(Descripcion_Egreso, Estado) VALUES(@Descripcion_Egreso, @Estado);";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Descripcion_Egreso", entidad.Descripcion_Egreso);
+                cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -141,11 +153,12 @@ namespace Datos.Egresos
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"UPDATE Descripciones_Egreso SET Descripcion_Egreso = @Descripcion_Egreso WHERE Id_Descripcion_Egreso = @Id_Descripcion_Egreso";
+                string sentencia = $@"UPDATE Descripciones_Egreso SET Descripcion_Egreso = @Descripcion_Egreso, Estado = @Estado WHERE Id_Descripcion_Egreso = @Id_Descripcion_Egreso";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id_Descripcion_Egreso", entidad.Id_Descripcion_Egreso);
                 cmd.Parameters.AddWithValue("@Descripcion_Egreso", entidad.Descripcion_Egreso);
+                cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -169,7 +182,7 @@ namespace Datos.Egresos
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = "DELETE FROM Descripciones_Egreso WHERE Id_Moneda = @id;";
+                string sentencia = "DELETE FROM Descripciones_Egreso WHERE Id_Descripcion_Egreso = @id;";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.CommandType = CommandType.Text;

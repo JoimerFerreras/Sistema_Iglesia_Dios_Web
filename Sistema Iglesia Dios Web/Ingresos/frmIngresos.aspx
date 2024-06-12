@@ -12,7 +12,7 @@
         <div class="shadowed-div-body" style="width: 100%;">
             <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-6">
-                    ID Registro
+                    ID
                     <asp:TextBox runat="server" ID="txtId_Ingreso" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
                 </div>
             </div>

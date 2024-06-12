@@ -25,7 +25,14 @@ namespace Datos.Ingresos
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Descripcion_Ingreso, Descripcion_Ingreso FROM Descripciones_Ingreso";
+                string sentencia = $@"SELECT Id_Descripcion_Ingreso, 
+                                            Descripcion_Ingreso, 
+                                            CASE Estado 
+                                                WHEN '0' THEN 'Inactivo' 
+                                                WHEN '1' THEN 'Activo' 
+                                            END AS Estado 
+
+                                            FROM Descripciones_Ingreso";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.CommandType = CommandType.Text;
                 try
@@ -77,7 +84,7 @@ namespace Datos.Ingresos
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Descripcion_Ingreso, Descripcion_Ingreso FROM Descripciones_Ingreso WHERE Id_Descripcion_Ingreso = @Id";
+                string sentencia = $@"SELECT Id_Descripcion_Ingreso, Descripcion_Ingreso, Estado FROM Descripciones_Ingreso WHERE Id_Descripcion_Ingreso = @Id";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 cmd.CommandType = CommandType.Text;
@@ -91,6 +98,10 @@ namespace Datos.Ingresos
                         DataRow row = dt.Rows[0];
                         entidad.Id_Descripcion_Ingreso = int.Parse(row["Id_Descripcion_Ingreso"].ToString());
                         entidad.Descripcion_Ingreso = row["Descripcion_Ingreso"].ToString();
+                        if (row["Estado"].ToString() == "True")
+                            entidad.Estado = true;
+                        else
+                            entidad.Estado = false;
                     }
                     conexion.Close();
                     return entidad;
@@ -114,10 +125,11 @@ namespace Datos.Ingresos
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"INSERT INTO Descripciones_Ingreso(Descripcion_Ingreso) VALUES(@Descripcion_Ingreso);";
+                string sentencia = $@"INSERT INTO Descripciones_Ingreso(Descripcion_Ingreso, Estado) VALUES(@Descripcion_Ingreso, @Estado);";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Descripcion_Ingreso", entidad.Descripcion_Ingreso);
+                cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -141,11 +153,12 @@ namespace Datos.Ingresos
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"UPDATE Descripciones_Ingreso SET Descripcion_Ingreso = @Descripcion_Ingreso WHERE Id_Descripcion_Ingreso = @Id_Descripcion_Ingreso";
+                string sentencia = $@"UPDATE Descripciones_Ingreso SET Descripcion_Ingreso = @Descripcion_Ingreso, Estado = @Estado WHERE Id_Descripcion_Ingreso = @Id_Descripcion_Ingreso";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id_Descripcion_Ingreso", entidad.Id_Descripcion_Ingreso);
                 cmd.Parameters.AddWithValue("@Descripcion_Ingreso", entidad.Descripcion_Ingreso);
+                cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -169,7 +182,7 @@ namespace Datos.Ingresos
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = "DELETE FROM Descripciones_Ingreso WHERE Id_Moneda = @id;";
+                string sentencia = "DELETE FROM Descripciones_Ingreso WHERE Id_Descripcion_Ingreso = @id;";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.CommandType = CommandType.Text;

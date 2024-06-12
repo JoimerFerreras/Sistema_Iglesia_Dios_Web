@@ -1,5 +1,6 @@
 ﻿using Datos.Egresos;
 using Entidades.Egresos;
+using Negocio.Util_N;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -42,6 +43,20 @@ namespace Negocio.Egresos
             try
             {
                 return Descripcion_Egreso_D.ObtenerRegistro(Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool RegistrosExistentes(int Id_Registro)
+        {
+            try
+            {
+                Utilidad_N utilidad = new Utilidad_N();
+
+                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Descripcion_Egreso", "Descripciones_Egreso");
             }
             catch (Exception ex)
             {

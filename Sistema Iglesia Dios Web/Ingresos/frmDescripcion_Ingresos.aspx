@@ -11,14 +11,29 @@
     <div style="padding: 20px;">
         <div class="shadowed-div-body" style="width: 100%;">
             <div class="row" style="margin-top: 20px;">
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-1">
                     ID
                     <asp:TextBox runat="server" ID="txtId_Ingreso" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
                 </div>
 
-                <div class="col-12 col-md-9">
+                <div class="col-12 col-md-6">
                     Descripción
                     <asp:TextBox runat="server" ID="txtDescripcion" CssClass="form-control form-control" Width="100%" TabIndex="2"></asp:TextBox>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <div>
+                        Estado
+                    </div>
+                    <telerik:RadComboBox ID="cmbEstado" runat="server" Width="100%" ClientIDMode="Static" style="max-width: 230px;"
+                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                        <Items>
+                            <telerik:RadComboBoxItem Text="Activo" Value="True" Selected="true"/>
+                            <telerik:RadComboBoxItem Text="Inactivo" Value="False" />
+                        </Items>
+                    </telerik:RadComboBox>
                 </div>
             </div>
 
@@ -46,13 +61,24 @@
                                 <ItemStyle HorizontalAlign="Center" />
                                 <ItemTemplate>
                                     <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Descripcion_Ingreso") %>' OnClick="btnEditar_Click" CssClass="btn btn-sm btn-primary fa-solid fa-pen boton_formulario_editar" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px; margin-bottom: 3px;"></asp:LinkButton>
+                                    <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Descripcion_Ingreso") %>' OnClick="btnEliminar_Click" OnClientClick="return delalert(this);" CssClass="btn btn-sm btn-danger fa-solid fa-trash" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px;"></asp:LinkButton>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
                             <telerik:GridBoundColumn DataField="Id_Descripcion_Ingreso" HeaderText="ID" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                             </telerik:GridBoundColumn>
 
-                            <telerik:GridBoundColumn DataField="Descripcion_Ingreso" HeaderText="Descripción" HeaderStyle-Width="90%" ItemStyle-Width="90%">
+                            <telerik:GridBoundColumn DataField="Descripcion_Ingreso" HeaderText="Descripción" HeaderStyle-Width="90%" ItemStyle-Width="80%">
                             </telerik:GridBoundColumn>
+
+                             <telerik:GridTemplateColumn HeaderText="Estado">
+                                    <HeaderStyle HorizontalAlign="Center" Width="10%" />
+                                    <ItemStyle HorizontalAlign="Center" Width="10%" />
+                                    <ItemTemplate>
+                                        <div runat="server" commandargument='<%# Eval("Estado") %>' class='<%# GetStatusColor(Eval("Estado")) %>'>
+                                            <asp:LinkButton runat="server" CommandArgument='<%# Eval("Estado") %>' CssClass='<%# GetStatusColor(Eval("Estado")) %>' Text='<%# GetStatusText(Eval("Estado")) %>' />
+                                        </div>
+                                    </ItemTemplate>
+                                </telerik:GridTemplateColumn>
                         </Columns>
                     </MasterTableView>
                 </telerik:RadGrid>

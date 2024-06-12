@@ -10,5 +10,6 @@ namespace Entidades.Ingresos
     {
         public int Id_Descripcion_Ingreso { get; set; }
         public string Descripcion_Ingreso { get; set; }
+        public bool Estado { get; set; }
     }
 }
