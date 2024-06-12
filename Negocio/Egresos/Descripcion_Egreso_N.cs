@@ -1,5 +1,5 @@
-﻿using Datos.Ingresos;
-using Datos.Ministerios;
+﻿using Datos.Egresos;
+using Entidades.Egresos;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,13 +11,13 @@ namespace Negocio.Egresos
 {
     public class Descripcion_Egreso_N
     {
-        Descripcion_Ingreso_D Descripcion_Ingreso_D = new Descripcion_Ingreso_D();
+        Descripcion_Egreso_D Descripcion_Egreso_D = new Descripcion_Egreso_D();
 
         public DataTable Listar()
         {
             try
             {
-                return Descripcion_Ingreso_D.Listar();
+                return Descripcion_Egreso_D.Listar();
             }
             catch (Exception ex)
             {
@@ -29,7 +29,7 @@ namespace Negocio.Egresos
         {
             try
             {
-                return Descripcion_Ingreso_D.ListaCombo();
+                return Descripcion_Egreso_D.ListaCombo();
             }
             catch (Exception ex)
             {
@@ -37,11 +37,11 @@ namespace Negocio.Egresos
             }
         }
 
-        public Descripcion_Ingreso_E ObtenerRegistro(string Id)
+        public Descripcion_Egreso_E ObtenerRegistro(string Id)
         {
             try
             {
-                return Descripcion_Ingreso_D.ObtenerRegistro(Id);
+                return Descripcion_Egreso_D.ObtenerRegistro(Id);
             }
             catch (Exception ex)
             {
@@ -49,11 +49,11 @@ namespace Negocio.Egresos
             }
         }
 
-        public bool Agregar(Descripcion_Ingreso_E entidad)
+        public bool Agregar(Descripcion_Egreso_E entidad)
         {
             try
             {
-                return Descripcion_Ingreso_D.Agregar(entidad);
+                return Descripcion_Egreso_D.Agregar(entidad);
             }
             catch (Exception ex)
             {
@@ -61,20 +61,20 @@ namespace Negocio.Egresos
             }
         }
 
-        public bool Editar(Descripcion_Ingreso_E entidad)
+        public bool Editar(Descripcion_Egreso_E entidad)
         {
             try
             {
-                if (entidad.Id_Descripcion_Ingreso == 0)
+                if (entidad.Id_Descripcion_Egreso == 0)
                 {
                     throw new OperationCanceledException("Debe seleccionar un registro para editar");
                 }
-                if (entidad.Descripcion_Ingreso.Length == 0)
+                if (entidad.Descripcion_Egreso.Length == 0)
                 {
-                    throw new OperationCanceledException("La descripción del ingreso no puede estar vacía");
+                    throw new OperationCanceledException("La descripción del egreso no puede estar vacía");
                 }
 
-                return Descripcion_Ingreso_D.Editar(entidad);
+                return Descripcion_Egreso_D.Editar(entidad);
             }
             catch (Exception ex)
             {
@@ -91,7 +91,7 @@ namespace Negocio.Egresos
                     throw new OperationCanceledException("Debe seleccionar un registro para eliminar");
                 }
 
-                return Descripcion_Ingreso_D.Eliminar(Convert.ToInt32(Id));
+                return Descripcion_Egreso_D.Eliminar(Convert.ToInt32(Id));
             }
             catch (Exception ex)
             {

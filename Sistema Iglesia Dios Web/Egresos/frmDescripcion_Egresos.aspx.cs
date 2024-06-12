@@ -1,10 +1,7 @@
 ﻿// Autor: Joimer Ferreras
 
-using Entidades.Ingresos;
-using Entidades.Miembros;
-using Negocio.Ingresos;
-using Negocio.Miembros;
-using Negocio.Ministerios;
+using Entidades.Egresos;
+using Negocio.Egresos;
 using Negocio.Util_N;
 using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
@@ -17,12 +14,12 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Sistema_Iglesia_Dios_Web.Ingresos
+namespace Sistema_Iglesia_Dios_Web.Egresos
 {
-    public partial class frmDescripcion_Ingresos : System.Web.UI.Page
+    public partial class frmDescripcion_Egresos : System.Web.UI.Page
     {
         #region Declaraciones
-        Descripcion_Ingreso_N descripcion_ingreso_N = new Descripcion_Ingreso_N();
+        Descripcion_Egreso_N Descripcion_Egreso_N = new Descripcion_Egreso_N();
         public string ID_REGISTRO
         {
             get
@@ -74,11 +71,9 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
 
         #region Metodos/ Procedimientos
-     
-
         private void Consultar()
         {
-            DT_DATOS = descripcion_ingreso_N.Listar();
+            DT_DATOS = Descripcion_Egreso_N.Listar();
 
             gvDatos.DataSource = DT_DATOS;
             gvDatos.DataBind();
@@ -113,14 +108,15 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 if (ValidarCampos() == true)
                 {
                     // Agregacion de la informacion basica del miembro
-                    Descripcion_Ingreso_E descripcion_ingreso_E = new Descripcion_Ingreso_E();
-                    descripcion_ingreso_E.Id_Descripcion_Ingreso = int.Parse(ID_REGISTRO);
-                    descripcion_ingreso_E.Descripcion_Ingreso = txtDescripcion.Text;
+                    Descripcion_Egreso_E Descripcion_Egreso_E = new Descripcion_Egreso_E();
+                    Descripcion_Egreso_E.Id_Descripcion_Egreso = int.Parse(ID_REGISTRO);
+                    Descripcion_Egreso_E.Descripcion_Egreso = txtDescripcion.Text;
 
                     if (EDITAR_REGISTRO == true)
                     {
-                        // Agregar registro
-                        bool salida = descripcion_ingreso_N.Editar(descripcion_ingreso_E);
+                        
+                        // Guardar registro existente
+                        bool salida = Descripcion_Egreso_N.Editar(Descripcion_Egreso_E);
 
                         if (salida == true)
                         {
@@ -135,8 +131,8 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     }
                     else
                     {
-                        // Guardar registro existente
-                        bool salida = descripcion_ingreso_N.Agregar(descripcion_ingreso_E);
+                        // Agregar registro
+                        bool salida = Descripcion_Egreso_N.Agregar(Descripcion_Egreso_E);
 
                         if (salida == true)
                         {
@@ -161,11 +157,11 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         private void VerRegistro()
         {
             // Llenado de datos generales
-            Descripcion_Ingreso_E Descripcion_Ingreso_E = new Descripcion_Ingreso_E();
-            Descripcion_Ingreso_E = descripcion_ingreso_N.ObtenerRegistro(ID_REGISTRO);
+            Descripcion_Egreso_E Descripcion_Egreso_E = new Descripcion_Egreso_E();
+            Descripcion_Egreso_E = Descripcion_Egreso_N.ObtenerRegistro(ID_REGISTRO);
 
-            txtId_Ingreso.Text = Descripcion_Ingreso_E.Id_Descripcion_Ingreso.ToString();
-            txtDescripcion.Text = Descripcion_Ingreso_E.Descripcion_Ingreso.ToString();
+            txtId_Egreso.Text = Descripcion_Egreso_E.Id_Descripcion_Egreso.ToString();
+            txtDescripcion.Text = Descripcion_Egreso_E.Descripcion_Egreso.ToString();
         }
 
         private void LimpiarCampos()
@@ -173,7 +169,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             ID_REGISTRO = "0";
             EDITAR_REGISTRO = false;
 
-            txtId_Ingreso.Text = "(Nuevo)";
+            txtId_Egreso.Text = "(Nuevo)";
             txtDescripcion.Text = "";
 
             txtDescripcion.Focus();
@@ -189,7 +185,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             if (!Page.IsPostBack)
             {
-                ((SiteMaster)Master).EstablecerNombrePantalla("Descripción de ingresos");
+                ((SiteMaster)Master).EstablecerNombrePantalla("Descripción de egresos");
                 LimpiarCampos();
                 Consultar();
             }

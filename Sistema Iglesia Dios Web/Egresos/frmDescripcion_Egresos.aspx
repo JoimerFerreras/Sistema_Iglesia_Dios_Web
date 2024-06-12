@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="frmDescripcion_Ingresos.aspx.cs" Inherits="Sistema_Iglesia_Dios_Web.Ingresos.frmDescripcion_Ingresos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="frmDescripcion_Egresos.aspx.cs" Inherits="Sistema_Iglesia_Dios_Web.Egresos.frmDescripcion_Egresos" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI" TagPrefix="asp" %>
@@ -13,7 +13,7 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-3">
                     ID
-                    <asp:TextBox runat="server" ID="txtId_Ingreso" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtId_Egreso" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
                 </div>
 
                 <div class="col-12 col-md-9">
@@ -45,13 +45,13 @@
                                 <HeaderStyle HorizontalAlign="Center" />
                                 <ItemStyle HorizontalAlign="Center" />
                                 <ItemTemplate>
-                                    <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Descripcion_Ingreso") %>' OnClick="btnEditar_Click" CssClass="btn btn-sm btn-primary fa-solid fa-pen boton_formulario_editar" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px; margin-bottom: 3px;"></asp:LinkButton>
+                                    <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Descripcion_Egreso") %>' OnClick="btnEditar_Click" CssClass="btn btn-sm btn-primary fa-solid fa-pen boton_formulario_editar" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px; margin-bottom: 3px;"></asp:LinkButton>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
-                            <telerik:GridBoundColumn DataField="Id_Descripcion_Ingreso" HeaderText="ID" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                            <telerik:GridBoundColumn DataField="Id_Descripcion_Egreso" HeaderText="ID" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                             </telerik:GridBoundColumn>
 
-                            <telerik:GridBoundColumn DataField="Descripcion_Ingreso" HeaderText="Descripción" HeaderStyle-Width="90%" ItemStyle-Width="90%">
+                            <telerik:GridBoundColumn DataField="Descripcion_Egreso" HeaderText="Descripción" HeaderStyle-Width="90%" ItemStyle-Width="90%">
                             </telerik:GridBoundColumn>
                         </Columns>
                     </MasterTableView>

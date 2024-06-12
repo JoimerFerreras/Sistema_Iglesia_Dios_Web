@@ -152,6 +152,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Egresos\frmDescripcion_Egresos.aspx" />
     <Content Include="frmLogin.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Ingresos\frmDescripcion_Ingresos.aspx" />
@@ -242,6 +243,13 @@
     <Compile Include="Consultas\frmConsulta_Miembros.aspx.designer.cs">
       <DependentUpon>frmConsulta_Miembros.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Egresos\frmDescripcion_Egresos.aspx.cs">
+      <DependentUpon>frmDescripcion_Egresos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Egresos\frmDescripcion_Egresos.aspx.designer.cs">
+      <DependentUpon>frmDescripcion_Egresos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="frmLogin.aspx.cs">
       <DependentUpon>frmLogin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -306,7 +314,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Egresos\" />
+    <Folder Include="Otros_Parametros\" />
     <Folder Include="Recursos\Recursos_Utiles\" />
     <Folder Include="Recursos\Scripts SQL\" />
     <Folder Include="Reportes\" />

@@ -56,5 +56,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuarios\Usuario_E.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Otros_Parametros\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -94,6 +94,7 @@ function asignarEnlace() {
     document.getElementById('btnConsulta_Miembros').href = url + 'Consultas/frmConsulta_Miembros.aspx';
     document.getElementById('btnIngresos').href = url + 'Ingresos/frmIngresos.aspx';
     document.getElementById('btnDescripcionIngresos').href = url + 'Ingresos/frmDescripcion_Ingresos.aspx';
+    document.getElementById('btnDescripcionEgresos').href = url + 'Egresos/frmDescripcion_Egresos.aspx';
 }
 
 
