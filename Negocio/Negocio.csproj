@@ -46,7 +46,8 @@
   <ItemGroup>
     <Compile Include="Egresos\Descripcion_Egreso_N.cs" />
     <Compile Include="Ingresos\Descripcion_Ingreso_N.cs" />
-    <Compile Include="Ingresos\Moneda_N.cs" />
+    <Compile Include="Otros_Parametros\Forma_Pago_N.cs" />
+    <Compile Include="Otros_Parametros\Moneda_N.cs" />
     <Compile Include="Ingresos\Ingreso_N.cs" />
     <Compile Include="Miembros\Miembro_Informacion_Familiar1_N.cs" />
     <Compile Include="Miembros\Miembro_Informacion_Familiar2_N.cs" />
@@ -71,7 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ayuda\" />
-    <Folder Include="Otros_Parametros\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

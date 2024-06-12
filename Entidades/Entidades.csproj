@@ -45,7 +45,8 @@
     <Compile Include="Egresos\Descripcion_Egreso_E.cs" />
     <Compile Include="Ingresos\Ingreso_E.cs" />
     <Compile Include="Ingresos\Descripcion_Ingreso_E.cs" />
-    <Compile Include="Ingresos\Moneda_E.cs" />
+    <Compile Include="Otros_Parametros\Forma_Pago_E.cs" />
+    <Compile Include="Otros_Parametros\Moneda_E.cs" />
     <Compile Include="Miembros\Miembro_E.cs" />
     <Compile Include="Miembros\Miembro_Informacion_Familiar1_ E.cs" />
     <Compile Include="Miembros\Miembro_Informacion_Familiar2_E.cs" />
@@ -56,8 +57,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuarios\Usuario_E.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Otros_Parametros\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

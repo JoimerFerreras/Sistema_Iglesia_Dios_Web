@@ -1,10 +1,9 @@
 ﻿// Autor: Joimer Ferreras
 
 using Entidades.Ingresos;
-using Entidades.Miembros;
 using Negocio.Ingresos;
+using Negocio.Otros_Parametros;
 using Negocio.Miembros;
-using Negocio.Ministerios;
 using Negocio.Util_N;
 using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
@@ -277,7 +276,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     }
                 }
             }
-            catch (Exception Ex)
+            catch 
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Fatal(this, this.GetType());
             }

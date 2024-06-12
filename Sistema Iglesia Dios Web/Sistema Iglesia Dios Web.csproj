@@ -158,6 +158,8 @@
     <Content Include="Ingresos\frmDescripcion_Ingresos.aspx" />
     <Content Include="Ingresos\frmIngresos.aspx" />
     <Content Include="Miembros\frmMiembros.aspx" />
+    <Content Include="Otros_Parametros\frmFormas_Pago.aspx" />
+    <Content Include="Otros_Parametros\frmMonedas.aspx" />
     <Content Include="Recursos\CSS\botones.css" />
     <Content Include="Recursos\CSS\estilos_general.css" />
     <Content Include="Recursos\CSS\login.css" />
@@ -281,6 +283,20 @@
     <Compile Include="Miembros\frmMiembros.aspx.designer.cs">
       <DependentUpon>frmMiembros.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Otros_Parametros\frmFormas_Pago.aspx.cs">
+      <DependentUpon>frmFormas_Pago.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Otros_Parametros\frmFormas_Pago.aspx.designer.cs">
+      <DependentUpon>frmFormas_Pago.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Otros_Parametros\frmMonedas.aspx.cs">
+      <DependentUpon>frmMonedas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Otros_Parametros\frmMonedas.aspx.designer.cs">
+      <DependentUpon>frmMonedas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -314,7 +330,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Otros_Parametros\" />
     <Folder Include="Recursos\Recursos_Utiles\" />
     <Folder Include="Recursos\Scripts SQL\" />
     <Folder Include="Reportes\" />

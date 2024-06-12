@@ -1,6 +1,6 @@
-﻿using Datos.Ingresos;
-using Datos.Ministerios;
-using Entidades.Ingresos;
+﻿using Datos.Otros_Parametros;
+using Entidades.Otros_Parametros;
+using Negocio.Util_N;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Negocio.Ingresos
+namespace Negocio.Otros_Parametros
 {
     public class Moneda_N
     {
@@ -43,6 +43,20 @@ namespace Negocio.Ingresos
             try
             {
                 return Moneda_D.ObtenerRegistro(Id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool RegistrosExistentes(int Id_Registro)
+        {
+            try
+            {
+                Utilidad_N utilidad = new Utilidad_N();
+
+                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Moneda", "Monedas");
             }
             catch (Exception ex)
             {

@@ -1,5 +1,4 @@
 ﻿using Datos.ConexionBD;
-using Entidades.Miembros;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,10 +6,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entidades.Ministerios;
-using Entidades.Ingresos;
+using Entidades.Otros_Parametros;
 
-namespace Datos.Ingresos
+namespace Datos.Otros_Parametros
 {
     public class Moneda_D
     {
@@ -25,7 +23,14 @@ namespace Datos.Ingresos
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Moneda, Nombre_Moneda FROM Monedas";
+                string sentencia = $@"SELECT Id_Moneda, 
+                                        Nombre_Moneda, 
+                                        CASE Estado 
+                                            WHEN '0' THEN 'Inactivo' 
+                                            WHEN '1' THEN 'Activo' 
+                                        END AS Estado 
+
+                                        FROM Monedas";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.CommandType = CommandType.Text;
                 try
@@ -77,7 +82,7 @@ namespace Datos.Ingresos
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Moneda, Nombre_Moneda FROM Monedas WHERE Id_Moneda = @Id";
+                string sentencia = $@"SELECT Id_Moneda, Nombre_Moneda, Estado FROM Monedas WHERE Id_Moneda = @Id";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 cmd.CommandType = CommandType.Text;
@@ -91,6 +96,10 @@ namespace Datos.Ingresos
                         DataRow row = dt.Rows[0];
                         entidad.Id_Moneda = int.Parse(row["Id_Moneda"].ToString());
                         entidad.Nombre_Moneda = row["Nombre_Moneda"].ToString();
+                        if (row["Estado"].ToString() == "True")
+                            entidad.Estado = true;
+                        else
+                            entidad.Estado = false;
                     }
                     conexion.Close();
                     return entidad;
@@ -114,10 +123,11 @@ namespace Datos.Ingresos
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"INSERT INTO Monedas(Nombre_Moneda) VALUES(@Nombre_Moneda);";
+                string sentencia = $@"INSERT INTO Monedas(Nombre_Moneda, Estado) VALUES(@Nombre_Moneda, @Estado);";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Nombre_Moneda", entidad.Nombre_Moneda);
+                cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -141,11 +151,12 @@ namespace Datos.Ingresos
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"UPDATE Monedas SET Nombre_Moneda = @Nombre_Moneda WHERE Id_Moneda = @Id_Moneda";
+                string sentencia = $@"UPDATE Monedas SET Nombre_Moneda = @Nombre_Moneda, Estado = @Estado WHERE Id_Moneda = @Id_Moneda";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id_Moneda", entidad.Id_Moneda);
                 cmd.Parameters.AddWithValue("@Nombre_Moneda", entidad.Nombre_Moneda);
+                cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
