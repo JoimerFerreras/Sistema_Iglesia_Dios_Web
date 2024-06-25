@@ -99,6 +99,6 @@
             </div>
         </div>
 
-        <script src="../Recursos/Javascript/scripts_general.js"></script>
+        <script src="../Recursos/Javascript/scripts_general.js" type="text/javascript" charset="ISO-8859-1"></script>
     </div>
 </asp:Content>
