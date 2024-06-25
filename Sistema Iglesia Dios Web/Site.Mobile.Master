@@ -10,8 +10,9 @@
 
 <html lang="es" style="height: 100%;" class="fondo">
 <head runat="server">
+    <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Iglesia de Dios La 33</title>
     <link rel="shortcut icon" href="/Recursos/Imagenes/logo_iglesia_de_dios_color_ico.ico" />

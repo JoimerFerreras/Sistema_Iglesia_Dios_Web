@@ -93,6 +93,10 @@ function asignarEnlace() {
     document.getElementById('btnMiembros').href = url + 'Miembros/frmMiembros.aspx';
     document.getElementById('btnConsulta_Miembros').href = url + 'Consultas/frmConsulta_Miembros.aspx';
     document.getElementById('btnIngresos').href = url + 'Ingresos/frmIngresos.aspx';
+    document.getElementById('btnDescripcionIngresos').href = url + 'Ingresos/frmDescripcion_Ingresos.aspx';
+    document.getElementById('btnDescripcionEgresos').href = url + 'Egresos/frmDescripcion_Egresos.aspx';
+    document.getElementById('btnMonedas').href = url + 'Otros_Parametros/frmMonedas.aspx';
+    document.getElementById('btnFormas_Pago').href = url + 'Otros_Parametros/frmFormas_Pago.aspx';
 }
 
 
