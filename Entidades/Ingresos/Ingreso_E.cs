@@ -21,5 +21,7 @@ namespace Entidades.Ingresos
         public int Id_Usuario_Ultima_Modificacion { get; set; }
         public string Nombre_Usuario_Ultima_Modificacion { get; set; }
         public DateTime? Fecha_Ultima_Modificacion { get; set; }
+        public int Id_Forma_Pago { get; set; }
+        public string Comentario { get; set; }
     }
 }

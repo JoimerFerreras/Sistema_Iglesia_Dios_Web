@@ -42,6 +42,24 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::Telerik.Web.UI.RadComboBox cmbDescripcion_Ingreso;
 
         /// <summary>
+        /// Control dtpFechaIngreso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker dtpFechaIngreso;
+
+        /// <summary>
+        /// Control cmbFormaPago.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbFormaPago;
+
+        /// <summary>
         /// Control cmbMoneda.
         /// </summary>
         /// <remarks>
@@ -78,13 +96,13 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::System.Web.UI.WebControls.TextBox txtMonto;
 
         /// <summary>
-        /// Control dtpFechaIngreso.
+        /// Control txtComentario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpFechaIngreso;
+        protected global::System.Web.UI.WebControls.TextBox txtComentario;
 
         /// <summary>
         /// Control txtUsuarioRegistro.
@@ -238,5 +256,23 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnGenerarExcel;
+
+        /// <summary>
+        /// Control txtDescripcionIngresoAgregar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDescripcionIngresoAgregar;
+
+        /// <summary>
+        /// Control btnAgregarDescripcion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarDescripcion;
     }
 }

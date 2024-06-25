@@ -142,7 +142,9 @@ namespace Datos.Ingresos
                                         Valor_Moneda,
                                         Id_Usuario_Registro,
                                         Fecha_Registro,
-                                        Id_Usuario_Ultima_Modificacion)
+                                        Id_Usuario_Ultima_Modificacion,
+                                        Id_Forma_Pago,
+                                        Comentario)
 
                                     VALUES(
                                         @Id_Miembro,
@@ -153,7 +155,9 @@ namespace Datos.Ingresos
                                         @Valor_Moneda,
                                         @Id_Usuario_Registro,
                                         @Fecha_Registro,
-                                        @Id_Usuario_Ultima_Modificacion);";
+                                        @Id_Usuario_Ultima_Modificacion,
+                                        @Id_Forma_Pago,
+                                        @Comentario);";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
@@ -165,6 +169,8 @@ namespace Datos.Ingresos
                 cmd.Parameters.AddWithValue("@Id_Usuario_Registro", entidad.Id_Usuario_Registro);
                 cmd.Parameters.AddWithValue("@Fecha_Registro", entidad.Fecha_Registro);
                 cmd.Parameters.AddWithValue("@Id_Usuario_Ultima_Modificacion", "0");
+                cmd.Parameters.AddWithValue("@Id_Forma_Pago", entidad.Id_Forma_Pago);
+                cmd.Parameters.AddWithValue("@Comentario", entidad.Comentario);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -196,6 +202,8 @@ namespace Datos.Ingresos
                                         Valor_Moneda = @Valor_Moneda, 
                                         Id_Usuario_Ultima_Modificacion = @Id_Usuario_Ultima_Modificacion, 
                                         Fecha_Ultima_Modificacion = @Fecha_Ultima_Modificacion 
+                                        Id_Forma_Pago = @Id_Forma_Pago 
+                                        Comentario = @Comentario 
 
                                         WHERE Id_Ingreso = @Id_Ingreso";
 
@@ -208,6 +216,8 @@ namespace Datos.Ingresos
                 cmd.Parameters.AddWithValue("@Valor_Moneda", entidad.Valor_Moneda);
                 cmd.Parameters.AddWithValue("@Id_Usuario_Ultima_Modificacion", entidad.Id_Usuario_Ultima_Modificacion);
                 cmd.Parameters.AddWithValue("@Fecha_Ultima_Modificacion", entidad.Fecha_Ultima_Modificacion);
+                cmd.Parameters.AddWithValue("@Id_Forma_Pago", entidad.Id_Forma_Pago);
+                cmd.Parameters.AddWithValue("@Comentario", entidad.Comentario);
                 cmd.CommandType = CommandType.Text;
                 try
                 {

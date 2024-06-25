@@ -18,7 +18,7 @@
 
                 <div class="col-12 col-md-6">
                     Descripción
-                    <asp:TextBox runat="server" ID="txtDescripcion" CssClass="form-control form-control" Width="100%" TabIndex="2"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtDescripcion" CssClass="form-control form-control" MaxLength="100" Width="100%" TabIndex="2"></asp:TextBox>
                 </div>
 
                 <div class="col-12 col-md-3">

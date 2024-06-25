@@ -166,9 +166,34 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             cmbMoneda_Consulta.DataTextField = "Nombre_Moneda";
             cmbMoneda_Consulta.DataBind();
 
+            // Forma de pago
+            Forma_Pago_N Forma_Pago_N = new Forma_Pago_N();
+            dt = Forma_Pago_N.ListaCombo();
+            cmbFormaPago.DataSource = dt;
+            cmbFormaPago.DataValueField = "Id_Forma_Pago";
+            cmbFormaPago.DataTextField = "Descripcion_Forma_Pago";
+            cmbFormaPago.DataBind();
+
+
+            LlenarComboDescripcion();
+        }
+
+        private void LlenarComboDescripcion()
+        {
+            DataTable dt = new DataTable();
             // Descripcion de ingreso
             Descripcion_Ingreso_N Descripcion_Ingreso_N = new Descripcion_Ingreso_N();
             dt = Descripcion_Ingreso_N.ListaCombo();
+
+            // Crear un nuevo DataRow para el ítem "Seleccionar..."
+            DataRow dr = dt.NewRow();
+            dr["Id_Descripcion_Ingreso"] = 0; // Asegúrate de que este campo coincida con el nombre del campo Id_Miembro en tu DataTable
+            dr["Descripcion_Ingreso"] = "Seleccionar...";
+
+            // Insertar el nuevo DataRow al principio del DataTable
+            dt.Rows.InsertAt(dr, 0);
+
+            cmbDescripcion_Ingreso.Items.Clear();
             cmbDescripcion_Ingreso.DataSource = dt;
             cmbDescripcion_Ingreso.DataValueField = "Id_Descripcion_Ingreso";
             cmbDescripcion_Ingreso.DataTextField = "Descripcion_Ingreso";
@@ -179,6 +204,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             cmbDescripcionIngreso_Consulta.DataTextField = "Descripcion_Ingreso";
             cmbDescripcionIngreso_Consulta.DataBind();
         }
+
 
         private void ActualizarGrid()
         {
@@ -201,6 +227,10 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             else if (cmbMoneda.SelectedValue != "1" && txtValorMoneda.Text.Length == 0)
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe espesificar el tipo de cambio de la moneda");
+            }
+            else if (cmbFormaPago.SelectedValue == "0")
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe espesificar el la forma de pago");
             }
             else if (!double.TryParse(txtValorMoneda.Text, out double resultado_moneda))
             {
@@ -241,6 +271,8 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     ingreso_E.Fecha_Registro = DateTime.Now;
                     ingreso_E.Id_Usuario_Ultima_Modificacion = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
                     ingreso_E.Fecha_Ultima_Modificacion = DateTime.Now;
+                    ingreso_E.Id_Forma_Pago = int.Parse(cmbFormaPago.SelectedValue);
+                    ingreso_E.Comentario = txtComentario.Text;
 
                     if (EDITAR_REGISTRO == true)
                     {
@@ -299,6 +331,8 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             txtUsuarioRegistro.Text = Ingreso_E.Nombre_Usuario_Registro;
             txtFechaRegistro.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", Ingreso_E.Fecha_Registro);
             txtUsuarioUltimaModificacion.Text = Ingreso_E.Nombre_Usuario_Ultima_Modificacion;
+            cmbFormaPago.SelectedValue = Ingreso_E.Id_Forma_Pago.ToString();
+            txtComentario.Text = Ingreso_E.Comentario;
 
             if (Ingreso_E.Fecha_Ultima_Modificacion != null)
             {
@@ -333,6 +367,8 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             txtFechaRegistro.Text = "";
             txtUsuarioUltimaModificacion.Text = "";
             txtFechaUltimaModificacion.Text = "";
+            cmbFormaPago.SelectedValue = "0";
+            txtComentario.Text = "";
 
             if (cmbMoneda.SelectedValue == "1" || cmbMoneda.SelectedValue == "0")
             {
@@ -342,6 +378,8 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             {
                 divValorMoneda.Visible = true;
             }
+
+            cmbMiembro.Focus();
         }
 
         #endregion
@@ -351,6 +389,22 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected void Page_Load(object sender, EventArgs e)
         {
             Utilidad_C.RecargarTooltips(this, this.GetType());
+
+            string scriptModal = @"
+                    <script>
+                        $(document).ready(function () {
+                            $('#btnAbrirPanelDescripcion').on('click', function () {
+                                $('#exampleModal').modal('show');
+                            });
+                        });
+
+                         tippy('#btnAbrirPanelDescripcion', {
+                                        content: 'Agregaar descripción',
+                                        placement: 'bottom',
+                                        arrow: true,
+                                    });
+                    </script>";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Modal", scriptModal, false);
 
             if (!Page.IsPostBack)
             {
@@ -425,6 +479,30 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             {
                 divValorMoneda.Visible = true;
             }
+        }
+
+        private void AgregarDescripcion()
+        {
+            if (txtDescripcionIngresoAgregar.Text.Length > 0)
+            {
+                Descripcion_Ingreso_E entidad = new Descripcion_Ingreso_E();
+                Descripcion_Ingreso_N Descripcion_Ingreso_N = new Descripcion_Ingreso_N();
+                entidad.Descripcion_Ingreso = txtDescripcionIngresoAgregar.Text;
+                entidad.Estado = true;
+                Descripcion_Ingreso_N.Agregar(entidad);
+                txtDescripcionIngresoAgregar.Text = "";
+
+                LlenarComboDescripcion();
+            }
+            else
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe proporcionar una descripción válida");
+            }
+        }
+
+        protected void btnAgregarDescripcion_Click(object sender, EventArgs e)
+        {
+            AgregarDescripcion();
         }
     }
 }

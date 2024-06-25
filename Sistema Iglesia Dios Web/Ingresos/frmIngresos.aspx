@@ -20,19 +20,44 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-6">
                     Miembro 
-                    <telerik:RadComboBox ID="cmbMiembro" runat="server" Width="100%" ClientIDMode="Static"
-                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
-                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
-                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
-                        <Items>
-                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
-                        </Items>
-                    </telerik:RadComboBox>
+                     <telerik:RadComboBox ID="cmbMiembro" runat="server" Width="100%" ClientIDMode="Static"
+                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                         Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                         <Items>
+                             <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                         </Items>
+                     </telerik:RadComboBox>
                 </div>
 
                 <div class="col-12 col-md-6">
-                    Descripci&oacute;n <span class="LabelCampoObligatorio">*</span>
-                    <telerik:RadComboBox ID="cmbDescripcion_Ingreso" runat="server" Width="100%" ClientIDMode="Static"
+                    Descripción
+                    <div class="d-flex align-items-center">
+                        <telerik:RadComboBox ID="cmbDescripcion_Ingreso" runat="server" Width="100%" ClientIDMode="Static"
+                            MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                            MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                            Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                            <Items>
+                                <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                            </Items>
+                        </telerik:RadComboBox>
+                        <button type="button" id="btnAbrirPanelDescripcion" class="btn btn-primary ml-2 fa-solid fa-plus fa-lg" style="margin-left: 10px; height: 37px;" data-toggle="modal" data-target="#exampleModal" data-tippy-content="Agregar descripción" data-whatever="@mdo"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    Fecha de Ingreso <span class="LabelCampoObligatorio">*</span>
+                    <br />
+                    <telerik:RadDatePicker ID="dtpFechaIngreso" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                        <DateInput ID="DateInput1" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
+                    </telerik:RadDatePicker>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    Forma de pago <span class="LabelCampoObligatorio">*</span>
+                    <telerik:RadComboBox ID="cmbFormaPago" runat="server" Width="100%" ClientIDMode="Static"
                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                         Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
@@ -57,23 +82,20 @@
                     </telerik:RadComboBox>
                 </div>
                 <div id="divValorMoneda" runat="server" visible="false" class="col-12 col-md-4">
-                     Tipo de cambio <span class="LabelCampoObligatorio">*</span>
-                        <asp:TextBox runat="server" ID="txtValorMoneda" CssClass="form-control form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
+                    Tipo de cambio <span class="LabelCampoObligatorio">*</span>
+                    <asp:TextBox runat="server" ID="txtValorMoneda" CssClass="form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
                 </div>
                 <div class="col-12 col-md-4">
                     Monto <span class="LabelCampoObligatorio">*</span>
-                    <asp:TextBox runat="server" ID="txtMonto" CssClass="form-control form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtMonto" CssClass="form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
                 </div>
 
             </div>
 
             <div class="row" style="margin-top: 20px;">
-                <div class="col-12 col-md-6">
-                    Fecha de Ingreso <span class="LabelCampoObligatorio">*</span>
-                    <br />
-                    <telerik:RadDatePicker ID="dtpFechaIngreso" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
-                        <DateInput ID="DateInput1" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
-                    </telerik:RadDatePicker>
+                <div class="col-12 col-md-12">
+                    Comentario
+                    <asp:TextBox runat="server" ID="txtComentario" CssClass="form-control" Height="76" TextMode="MultiLine" MaxLength="200" Width="100%" TabIndex="2"></asp:TextBox>
                 </div>
             </div>
 
@@ -82,24 +104,24 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-6">
                     Usuario que hizo el registro
-                    <asp:TextBox runat="server" ID="txtUsuarioRegistro" CssClass="form-control form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtUsuarioRegistro" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
                 </div>
 
                 <div class="col-12 col-md-6">
                     Fecha de registro
-                    <asp:TextBox runat="server" ID="txtFechaRegistro" CssClass="form-control form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtFechaRegistro" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
                 </div>
             </div>
 
             <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-6">
                     Usuario de ultima modificaci&oacute;n
-                    <asp:TextBox runat="server" ID="txtUsuarioUltimaModificacion" CssClass="form-control form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtUsuarioUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
                 </div>
 
                 <div class="col-12 col-md-6">
                     Fecha de ultima modificaci&oacute;n
-                    <asp:TextBox runat="server" ID="txtFechaUltimaModificacion" CssClass="form-control form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtFechaUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
                 </div>
             </div>
         </div>
@@ -141,7 +163,7 @@
             </div>
 
 
-        <div class="row" style="margin-top: 20px;">
+            <div class="row" style="margin-top: 20px;">
                 <div class="col-12 col-md-6">
                     Descripción de ingreso 
                     <telerik:RadComboBox ID="cmbDescripcionIngreso_Consulta" runat="server" Width="100%" ClientIDMode="Static"
@@ -229,12 +251,18 @@
 
 
         <div class="contenedor_botones">
-            <asp:LinkButton CssClass="fa-solid fa-plus fa-lg boton_formulario_Agregar" runat="server" ID="btnAgregar" OnClick="btnAgregar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
-            <asp:LinkButton CssClass="fa-solid fa-floppy-disk fa-lg boton_formulario_Guardar" runat="server" ID="btnGuardar" OnClick="btnGuardar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
-            <asp:LinkButton CssClass="fa-solid fa-magnifying-glass fa-lg boton_formulario_Buscar" runat="server" ID="btnBuscar" OnClientClick="MostrarPanelCarga()" OnClick="btnBuscar_Click"></asp:LinkButton>
-            <asp:LinkButton CssClass="fa-solid fa-filter-circle-xmark fa-lg boton_formulario_LimpiarFiltros" runat="server" ID="btnLimpiarFiltros" OnClick="btnLimpiarFiltros_Click"></asp:LinkButton>
-            <asp:LinkButton CssClass="fa-solid fa-file-pdf fa-lg boton_formulario_Agregar" runat="server" ID="btnGenerarPDF" OnClick="btnGenerarPDF_Click" OnClientClick="MostrarPanelCarga()" data-tippy-content="Generar reporte en PDF"></asp:LinkButton>
-            <asp:LinkButton CssClass="fa-solid fa-file-excel fa-lg boton_formulario_Agregar" runat="server" ID="btnGenerarExcel" OnClick="btnGenerarExcel_Click" data-tippy-content="Generar reporte en Excel"></asp:LinkButton>
+            <div class="contenedor-div-botones-segmentados" style="margin-bottom: 5px;">
+                <asp:LinkButton CssClass="fa-solid fa-plus fa-lg boton_formulario_Agregar" runat="server" ID="btnAgregar" OnClick="btnAgregar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
+                <asp:LinkButton CssClass="fa-solid fa-floppy-disk fa-lg boton_formulario_Guardar" Style="margin-bottom: 0px;" runat="server" ID="btnGuardar" OnClick="btnGuardar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
+            </div>
+
+            <div class="contenedor-div-botones-segmentados" style="margin-bottom: 5px;">
+                <asp:LinkButton CssClass="fa-solid fa-magnifying-glass fa-lg boton_formulario_Buscar" runat="server" ID="btnBuscar" OnClientClick="MostrarPanelCarga()" OnClick="btnBuscar_Click"></asp:LinkButton>
+                <asp:LinkButton CssClass="fa-solid fa-filter-circle-xmark fa-lg boton_formulario_LimpiarFiltros" runat="server" ID="btnLimpiarFiltros" OnClick="btnLimpiarFiltros_Click"></asp:LinkButton>
+                <asp:LinkButton CssClass="fa-solid fa-file-pdf fa-lg boton_formulario_Agregar" runat="server" ID="btnGenerarPDF" OnClick="btnGenerarPDF_Click" OnClientClick="MostrarPanelCarga()" data-tippy-content="Generar reporte en PDF"></asp:LinkButton>
+                <asp:LinkButton CssClass="fa-solid fa-file-excel fa-lg boton_formulario_Agregar" Style="margin-bottom: 0px;" runat="server" ID="btnGenerarExcel" OnClick="btnGenerarExcel_Click" data-tippy-content="Generar reporte en Excel"></asp:LinkButton>
+            </div>
+
         </div>
 
         <div class="panel-carga" id="divPanelCarga" style="visibility: hidden; z-index: 50000;">
@@ -246,5 +274,26 @@
         </div>
 
         <script src="../Recursos/Javascript/scripts_general.js"></script>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Descripción de ingreso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12 col-md-12">
+                        Descripción
+                    <asp:TextBox runat="server" ID="txtDescripcionIngresoAgregar" CssClass="form-control" MaxLength="100" Width="100%" TabIndex="2"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <asp:Button runat="server" ID="btnAgregarDescripcion" CssClass="btn btn-primary" OnClick="btnAgregarDescripcion_Click" Text="Agregar descripción" data-bs-dismiss="modal"></asp:Button>
+                </div>
+            </div>
+        </div>
     </div>
 </asp:Content>
