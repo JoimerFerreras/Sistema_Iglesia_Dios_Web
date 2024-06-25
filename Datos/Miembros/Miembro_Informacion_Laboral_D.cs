@@ -39,14 +39,17 @@ namespace Datos.Miembros
                     {
                         DataTable dt = new DataTable();
                         dt.Load(dr);
-                        DataRow row = dt.Rows[0];
-                        entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
-                        entidad.Empleado_Privado = row["Empleado_Privado"].ToString() == "True" ? true : false;
-                        entidad.Empleado_Publico = row["Empleado_Publico"].ToString() == "True" ? true : false;
-                        entidad.Dueno_Negocio = row["Dueno_Negocio"].ToString() == "True" ? true : false;
-                        entidad.Independiente = row["Independiente"].ToString() == "True" ? true : false;
-                        entidad.Otros = row["Otros"].ToString() == "True" ? true : false;
-                        entidad.Nombre_Empresa_Negocio = row["Nombre_Empresa_Negocio"].ToString();
+                        if (dt.Rows.Count > 0)
+                        {
+                            DataRow row = dt.Rows[0];
+                            entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
+                            entidad.Empleado_Privado = row["Empleado_Privado"].ToString() == "True" ? true : false;
+                            entidad.Empleado_Publico = row["Empleado_Publico"].ToString() == "True" ? true : false;
+                            entidad.Dueno_Negocio = row["Dueno_Negocio"].ToString() == "True" ? true : false;
+                            entidad.Independiente = row["Independiente"].ToString() == "True" ? true : false;
+                            entidad.Otros = row["Otros"].ToString() == "True" ? true : false;
+                            entidad.Nombre_Empresa_Negocio = row["Nombre_Empresa_Negocio"].ToString();
+                        }
                     }
                     conexion.Close();
                     return entidad;

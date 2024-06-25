@@ -38,14 +38,17 @@ namespace Datos.Miembros
                     {
                         DataTable dt = new DataTable();
                         dt.Load(dr);
-                        DataRow row = dt.Rows[0];
-                        entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
-                        entidad.Cine = row["Cine"].ToString() == "True" ? true : false;
-                        entidad.Leer = row["Leer"].ToString() == "True" ? true : false;
-                        entidad.Ver_TV = row["Ver_TV"].ToString() == "True" ? true : false;
-                        entidad.Socializar = row["Socializar"].ToString() == "True" ? true : false;
-                        entidad.Viajar = row["Viajar"].ToString() == "True" ? true : false;
-                        entidad.Otros = row["Otros"].ToString();
+                        if (dt.Rows.Count > 0)
+                        {
+                            DataRow row = dt.Rows[0];
+                            entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
+                            entidad.Cine = row["Cine"].ToString() == "True" ? true : false;
+                            entidad.Leer = row["Leer"].ToString() == "True" ? true : false;
+                            entidad.Ver_TV = row["Ver_TV"].ToString() == "True" ? true : false;
+                            entidad.Socializar = row["Socializar"].ToString() == "True" ? true : false;
+                            entidad.Viajar = row["Viajar"].ToString() == "True" ? true : false;
+                            entidad.Otros = row["Otros"].ToString();
+                        }
                     }
                     conexion.Close();
                     return entidad;

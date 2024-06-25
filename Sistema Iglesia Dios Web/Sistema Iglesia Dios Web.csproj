@@ -134,7 +134,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Consultas\frmConsulta_Miembros.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -238,13 +237,6 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Consultas\frmConsulta_Miembros.aspx.cs">
-      <DependentUpon>frmConsulta_Miembros.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Consultas\frmConsulta_Miembros.aspx.designer.cs">
-      <DependentUpon>frmConsulta_Miembros.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Egresos\frmDescripcion_Egresos.aspx.cs">
       <DependentUpon>frmDescripcion_Egresos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -330,6 +322,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Consultas\" />
     <Folder Include="Recursos\Recursos_Utiles\" />
     <Folder Include="Recursos\Scripts SQL\" />
     <Folder Include="Reportes\" />

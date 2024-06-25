@@ -37,12 +37,15 @@ namespace Datos.Miembros
                     {
                         DataTable dt = new DataTable();
                         dt.Load(dr);
-                        DataRow row = dt.Rows[0];
-                        entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
-                        entidad.Primario = row["Primario"].ToString() == "True" ? true : false;
-                        entidad.Secundario = row["Secundario"].ToString() == "True" ? true : false;
-                        entidad.Grado_Universitario = row["Grado_Universitario"].ToString() == "True" ? true : false;
-                        entidad.Post_Grado_Maestria = row["Post_Grado_Maestria"].ToString() == "True" ? true : false;
+                        if (dt.Rows.Count > 0)
+                        {
+                            DataRow row = dt.Rows[0];
+                            entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
+                            entidad.Primario = row["Primario"].ToString() == "True" ? true : false;
+                            entidad.Secundario = row["Secundario"].ToString() == "True" ? true : false;
+                            entidad.Grado_Universitario = row["Grado_Universitario"].ToString() == "True" ? true : false;
+                            entidad.Post_Grado_Maestria = row["Post_Grado_Maestria"].ToString() == "True" ? true : false;
+                        }
                     }
                     conexion.Close();
                     return entidad;

@@ -54,55 +54,58 @@ namespace Datos.Miembros
                     {
                         DataTable dt = new DataTable();
                         dt.Load(dr);
-                        DataRow row = dt.Rows[0];
-                        entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
-                        entidad.Conyuge_Nombre = row["Conyuge_Nombre"].ToString();
-                        entidad.Conyuge_Cristiano = row["Conyuge_Cristiano"].ToString() == "True" ? true : false;
-                        if (row["Conyuge_FechaNacimiento"] != DBNull.Value)
+                        if (dt.Rows.Count > 0)
                         {
-                            entidad.Conyuge_FechaNacimiento = DateTime.Parse(row["Conyuge_FechaNacimiento"].ToString());
-                        }
+                            DataRow row = dt.Rows[0];
+                            entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
+                            entidad.Conyuge_Nombre = row["Conyuge_Nombre"].ToString();
+                            entidad.Conyuge_Cristiano = row["Conyuge_Cristiano"].ToString() == "True" ? true : false;
+                            if (row["Conyuge_FechaNacimiento"] != DBNull.Value)
+                            {
+                                entidad.Conyuge_FechaNacimiento = DateTime.Parse(row["Conyuge_FechaNacimiento"].ToString());
+                            }
 
-                        entidad.Hijo1_Nombre = row["Hijo1_Nombre"].ToString();
-                        entidad.Hijo1_Cristiano = row["Hijo1_Cristiano"].ToString() == "True" ? true : false;
-                        if (row["Hijo1_FechaNacimiento"] != DBNull.Value)
-                        {
-                            entidad.Hijo1_FechaNacimiento = DateTime.Parse(row["Hijo1_FechaNacimiento"].ToString());
-                        }
+                            entidad.Hijo1_Nombre = row["Hijo1_Nombre"].ToString();
+                            entidad.Hijo1_Cristiano = row["Hijo1_Cristiano"].ToString() == "True" ? true : false;
+                            if (row["Hijo1_FechaNacimiento"] != DBNull.Value)
+                            {
+                                entidad.Hijo1_FechaNacimiento = DateTime.Parse(row["Hijo1_FechaNacimiento"].ToString());
+                            }
 
-                        entidad.Hijo2_Nombre = row["Hijo2_Nombre"].ToString();
-                        entidad.Hijo2_Cristiano = row["Hijo2_Cristiano"].ToString() == "True" ? true : false;
-                        if (row["Hijo2_FechaNacimiento"] != DBNull.Value)
-                        {
-                            entidad.Hijo2_FechaNacimiento = DateTime.Parse(row["Hijo2_FechaNacimiento"].ToString());
-                        }
+                            entidad.Hijo2_Nombre = row["Hijo2_Nombre"].ToString();
+                            entidad.Hijo2_Cristiano = row["Hijo2_Cristiano"].ToString() == "True" ? true : false;
+                            if (row["Hijo2_FechaNacimiento"] != DBNull.Value)
+                            {
+                                entidad.Hijo2_FechaNacimiento = DateTime.Parse(row["Hijo2_FechaNacimiento"].ToString());
+                            }
 
-                        entidad.Hijo3_Nombre = row["Hijo3_Nombre"].ToString();
-                        entidad.Hijo3_Cristiano = row["Hijo3_Cristiano"].ToString() == "True" ? true : false;
-                        if (row["Hijo3_FechaNacimiento"] != DBNull.Value)
-                        {
-                            entidad.Hijo3_FechaNacimiento = DateTime.Parse(row["Hijo3_FechaNacimiento"].ToString());
-                        }
+                            entidad.Hijo3_Nombre = row["Hijo3_Nombre"].ToString();
+                            entidad.Hijo3_Cristiano = row["Hijo3_Cristiano"].ToString() == "True" ? true : false;
+                            if (row["Hijo3_FechaNacimiento"] != DBNull.Value)
+                            {
+                                entidad.Hijo3_FechaNacimiento = DateTime.Parse(row["Hijo3_FechaNacimiento"].ToString());
+                            }
 
-                        entidad.Hijo4_Nombre = row["Hijo4_Nombre"].ToString();
-                        entidad.Hijo4_Cristiano = row["Hijo4_Cristiano"].ToString() == "True" ? true : false;
-                        if (row["Hijo4_FechaNacimiento"] != DBNull.Value)
-                        {
-                            entidad.Hijo4_FechaNacimiento = DateTime.Parse(row["Hijo4_FechaNacimiento"].ToString());
-                        }
+                            entidad.Hijo4_Nombre = row["Hijo4_Nombre"].ToString();
+                            entidad.Hijo4_Cristiano = row["Hijo4_Cristiano"].ToString() == "True" ? true : false;
+                            if (row["Hijo4_FechaNacimiento"] != DBNull.Value)
+                            {
+                                entidad.Hijo4_FechaNacimiento = DateTime.Parse(row["Hijo4_FechaNacimiento"].ToString());
+                            }
 
-                        entidad.Hijo5_Nombre = row["Hijo5_Nombre"].ToString();
-                        entidad.Hijo5_Cristiano = row["Hijo5_Cristiano"].ToString() == "True" ? true : false;
-                        if (row["Hijo5_FechaNacimiento"] != DBNull.Value)
-                        {
-                            entidad.Hijo5_FechaNacimiento = DateTime.Parse(row["Hijo5_FechaNacimiento"].ToString());
-                        }
+                            entidad.Hijo5_Nombre = row["Hijo5_Nombre"].ToString();
+                            entidad.Hijo5_Cristiano = row["Hijo5_Cristiano"].ToString() == "True" ? true : false;
+                            if (row["Hijo5_FechaNacimiento"] != DBNull.Value)
+                            {
+                                entidad.Hijo5_FechaNacimiento = DateTime.Parse(row["Hijo5_FechaNacimiento"].ToString());
+                            }
 
-                        entidad.Hijo6_Nombre = row["Hijo6_Nombre"].ToString();
-                        entidad.Hijo6_Cristiano = row["Hijo6_Cristiano"].ToString() == "True" ? true : false;
-                        if (row["Hijo6_FechaNacimiento"] != DBNull.Value)
-                        {
-                            entidad.Hijo6_FechaNacimiento = DateTime.Parse(row["Hijo6_FechaNacimiento"].ToString());
+                            entidad.Hijo6_Nombre = row["Hijo6_Nombre"].ToString();
+                            entidad.Hijo6_Cristiano = row["Hijo6_Cristiano"].ToString() == "True" ? true : false;
+                            if (row["Hijo6_FechaNacimiento"] != DBNull.Value)
+                            {
+                                entidad.Hijo6_FechaNacimiento = DateTime.Parse(row["Hijo6_FechaNacimiento"].ToString());
+                            }
                         }
                     }
                     conexion.Close();
