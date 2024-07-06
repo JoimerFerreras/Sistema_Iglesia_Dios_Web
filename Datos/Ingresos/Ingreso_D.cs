@@ -59,6 +59,44 @@ namespace Datos.Ingresos
             }
         }
 
+        public DataTable ListarArchivos(int Id_Ingreso)
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"SELECT 
+                                        AG.Id_Archivo, 
+                                        AG.NombreArchivo,
+                                        AG.NombreArchivoCarpeta,
+                                        AG.Extencion,
+                                        AG.Descripcion,
+                                        AG.Fecha_Registro
+
+                                        FROM Archivos_Generales AG
+
+                                        LEFT JOIN Archivos_Ingresos AI ON AI.Id_Archivo = AG.Id_Archivo
+
+                                        WHERE AI.Id_Ingreso = @Id_Ingreso ORDER BY AG.Id_Archivo";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id_Ingreso", Id_Ingreso);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
         public Ingreso_E ObtenerRegistro(string Id)
         {
             Ingreso_E entidad = new Ingreso_E();
@@ -127,9 +165,9 @@ namespace Datos.Ingresos
 
         #region Mantenimientos
 
-        public bool Agregar(Ingreso_E entidad)
+        public int Agregar(Ingreso_E entidad)
         {
-            bool Respuesta = false;
+            int Id = 0;
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
@@ -157,7 +195,9 @@ namespace Datos.Ingresos
                                         @Fecha_Registro,
                                         @Id_Usuario_Ultima_Modificacion,
                                         @Id_Forma_Pago,
-                                        @Comentario);";
+                                        @Comentario);
+
+                                        SELECT SCOPE_IDENTITY() AS UltimoRegistroAgregado;";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
@@ -171,6 +211,45 @@ namespace Datos.Ingresos
                 cmd.Parameters.AddWithValue("@Id_Usuario_Ultima_Modificacion", "0");
                 cmd.Parameters.AddWithValue("@Id_Forma_Pago", entidad.Id_Forma_Pago);
                 cmd.Parameters.AddWithValue("@Comentario", entidad.Comentario);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read()) // Si el DataReader tiene filas entonces hacer lo siguiente
+                        {
+                            Id = Convert.ToInt32(dr["UltimoRegistroAgregado"].ToString());
+                        }
+                    }
+                    conexion.Close();
+
+                    return Id;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public bool AgregarArchivoIngreso(int Id_Ingreso, int Id_Archivo)
+        {
+            bool Respuesta = false;
+
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"INSERT INTO Archivos_Ingresos(
+                                        Id_Ingreso,
+                                        Id_Archivo)
+
+                                    VALUES(
+                                        @Id_Ingreso,
+                                        @Id_Archivo);";
+
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id_Ingreso", Id_Ingreso);
+                cmd.Parameters.AddWithValue("@Id_Archivo", Id_Archivo);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -201,8 +280,8 @@ namespace Datos.Ingresos
                                         Monto = @Monto, 
                                         Valor_Moneda = @Valor_Moneda, 
                                         Id_Usuario_Ultima_Modificacion = @Id_Usuario_Ultima_Modificacion, 
-                                        Fecha_Ultima_Modificacion = @Fecha_Ultima_Modificacion 
-                                        Id_Forma_Pago = @Id_Forma_Pago 
+                                        Fecha_Ultima_Modificacion = @Fecha_Ultima_Modificacion, 
+                                        Id_Forma_Pago = @Id_Forma_Pago, 
                                         Comentario = @Comentario 
 
                                         WHERE Id_Ingreso = @Id_Ingreso";
@@ -242,6 +321,32 @@ namespace Datos.Ingresos
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
                 string sentencia = "DELETE FROM Ingresos WHERE Id_Ingreso = @id;";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@id", Id);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    int FilasAfectadas = cmd.ExecuteNonQuery();
+                    conexion.Close();
+                    if (FilasAfectadas > 0) Respuesta = true;
+
+                    return Respuesta;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public bool EliminarArchivoIngreso(int Id)
+        {
+            bool Respuesta = false;
+
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = "DELETE FROM Archivos_Ingresos WHERE Id_Ingreso = @id;";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.CommandType = CommandType.Text;

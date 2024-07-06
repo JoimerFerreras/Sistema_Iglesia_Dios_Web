@@ -15,6 +15,8 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
+using Entidades.Util_E;
 
 namespace Sistema_Iglesia_Dios_Web.Ingresos
 {
@@ -348,6 +350,13 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 divValorMoneda.Visible = false;
             }
 
+            // Listar archivos del ingreso
+            ListarArchivos(Ingreso_E.Id_Ingreso);
+
+
+            rtsTabulador.Tabs[1].Selected = true;
+            rmpTabs.SelectedIndex = 1;
+
             txtId_Ingreso.Focus();
         }
 
@@ -379,7 +388,62 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 divValorMoneda.Visible = true;
             }
 
+            gvArchivos.DataSource = new DataTable();
+            gvArchivos.DataBind();
+
             cmbMiembro.Focus();
+        }
+
+        private void ListarArchivos(int Id_Ingreso)
+        {
+            // Listar archivos del ingreso
+            DataTable dtArchivos = new DataTable();
+            dtArchivos = ingreso_N.ListarArchivos(Id_Ingreso);
+            if (dtArchivos.Rows.Count > 0)
+            {
+                gvArchivos.DataSource = dtArchivos;
+                gvArchivos.DataBind();
+            }
+        }
+
+        private void SubirArchivo()
+        {
+            if (ID_REGISTRO.ToString() != "0" || ID_REGISTRO.ToString() != "")
+            {
+                if (FileUpload1.HasFile == true)
+                {
+                    double TamanoArchivo = FileUpload1.PostedFile.ContentLength;
+                    if (TamanoArchivo / (1024.0 * 1024.0) > 30)
+                    {
+                        Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "No puede subir archivos con tamaño mayor a 30MB", "warning");
+                    }
+                    else
+                    {
+                        Utilidad_N utilidad_N = new Utilidad_N();
+                        HttpPostedFile postedFile = FileUpload1.PostedFile;
+
+                        int Id_Archivo = utilidad_N.AgregarArchivo(postedFile, txtNombreArchivo.Text, txtDescripcionArchivo.Text);
+
+                        ingreso_N.AgregarArchivoIngreso(int.Parse(ID_REGISTRO), Id_Archivo);
+
+
+                        if (Id_Archivo > 0)
+                        {
+                            txtNombreArchivo.Text = "";
+                            txtDescripcionArchivo.Text = "";
+                            ListarArchivos(int.Parse(ID_REGISTRO));
+                        }
+                    }
+                }
+                else
+                {
+                    Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "Debe cargar un archivo para continuar", "warning");
+                }
+            }
+            else
+            {
+                Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "Debe seleccionar un registro existente para continuar, o en su defecto, guardar el registro que está editando actualmente", "warning");
+            }
         }
 
         #endregion
@@ -503,6 +567,30 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected void btnAgregarDescripcion_Click(object sender, EventArgs e)
         {
             AgregarDescripcion();
+        }
+
+
+
+        #region Archivos
+
+        protected void btnDescargarArchivo(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            //ID_REGISTRO = btn.CommandArgument.ToString();
+       
+        }
+
+        protected void btnEliminarArchivo(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            //ID_REGISTRO = btn.CommandArgument.ToString();
+ 
+        }
+        #endregion
+
+        protected void btnSubirArchivo_Click(object sender, EventArgs e)
+        {
+            SubirArchivo();
         }
     }
 }

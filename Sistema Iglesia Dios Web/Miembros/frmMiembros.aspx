@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="../Recursos/CSS/estilos_general.css" />
     <link rel="stylesheet" href="../Recursos/CSS/botones.css" />
 
+    <style type="text/css">
+        /* Estilo css del RadTabStrip para que la linea del borde no sobresalga por el color*/
+        .RadTabStrip_Bootstrap .rtsLevel1 {
+            border-color: transparent;
+        }
+    </style>
+
     <div style="padding: 20px;">
         <telerik:RadTabStrip RenderMode="Lightweight" runat="server" ID="rtsTabulador" Skin="Bootstrap" MultiPageID="rmpTabs" SelectedIndex="0" Style="margin-left: -1px; border-color: transparent;">
             <Tabs>
