@@ -35,18 +35,6 @@ namespace Negocio.Ingresos
             }
         }
 
-        public DataTable ListarArchivos(int Id_Ingreso)
-        {
-            try
-            {
-                return Ingreso_D.ListarArchivos(Id_Ingreso);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
         public Ingreso_E ObtenerRegistro(string Id)
         {
             try
@@ -59,23 +47,11 @@ namespace Negocio.Ingresos
             }
         }
 
-        public bool Agregar(Ingreso_E entidad)
+        public int Agregar(Ingreso_E entidad)
         {
             try
             {
                 return Ingreso_D.Agregar(entidad);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public bool AgregarArchivoIngreso(int Id_Ingreso, int Id_Archivo)
-        {
-            try
-            {
-                return Ingreso_D.AgregarArchivoIngreso(entidad);
             }
             catch (Exception ex)
             {
@@ -104,11 +80,11 @@ namespace Negocio.Ingresos
             }
         }
 
-        public bool Eliminar(int Id)
+        public bool Eliminar(string Id)
         {
             try
             {
-                if (Id == 0)
+                if (int.Parse(Id) == 0)
                 {
                     throw new OperationCanceledException("Debe seleccionar un registro para eliminar");
                 }

@@ -118,6 +118,12 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
                 arrow: true,
             });
 
+            tippy('.boton_formulario_descargar_archivo', {
+                content: 'Descargar archivo',
+                placement: 'left',
+                arrow: true,
+            });
+
             tippy('.boton_formulario_ver_info', {
                 content: 'Ver información',
                 placement: 'left',

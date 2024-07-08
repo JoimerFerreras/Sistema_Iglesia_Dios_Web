@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ConexionBD\Conexion_D.cs" />
     <Compile Include="Egresos\Descripcion_Egreso_D.cs" />
+    <Compile Include="Ingresos\Archivo_Ingreso_D.cs" />
     <Compile Include="Ingresos\Descripcion_Ingreso_D.cs" />
     <Compile Include="Otros_Parametros\Forma_Pago_D.cs" />
     <Compile Include="Otros_Parametros\Moneda_D.cs" />

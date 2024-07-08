@@ -16,7 +16,6 @@ using System.Configuration;
 using Datos.Ingresos;
 using System.Data;
 using Datos.Util_D;
-using Entidades.Util_E;
 
 namespace Negocio.Util_N
 {
@@ -114,6 +113,24 @@ namespace Negocio.Util_N
                     break;
             }
             return NumeroFormateado;
+        }
+
+        // Convertir un archivo a Array de bytes para ser guardado en un campo VarBinary de SQL Server
+        public byte[] ReadFileToByteArray(Stream inputStream)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                inputStream.CopyTo(ms);
+                return ms.ToArray();
+            }
+        }
+
+        // Convertir el tamaño del archivo a MB
+        public float CalcularBytesToMB(int ValorBytes)
+        {
+            float Resultado = float.Parse((ValorBytes / (1024.0 * 1024.0)).ToString());
+
+            return Resultado;
         }
         #endregion
 
@@ -450,71 +467,6 @@ namespace Negocio.Util_N
             }
             return RegistrosExistentes;
         }
-        #endregion
-
-
-        #region Archivos
-
-        public DataTable ObtenerArchivo()
-        {
-            DataTable dt = new DataTable();
-
-            return dt;
-        }
-
-        public int AgregarArchivo(HttpPostedFile postedFile, string NombreArchivo, string DescripcionArchivo)
-        {
-            try
-            {
-                Archivo_E archivo_E = new Archivo_E();
-
-                int Id_Archivo = 0;
-
-                // Obtener el nombre del archivo
-                archivo_E.NombreArchivoCarpeta = Path.GetFileNameWithoutExtension(postedFile.FileName);
-
-                // Obtener la extensión del archivo
-                archivo_E.Extencion = Path.GetExtension(postedFile.FileName);
-
-                // Obtener el tipo de contenido (MIME type)
-                archivo_E.TipoArchivo = postedFile.ContentType;
-
-                // Obtener el tamaño del archivo en bytes
-                int fileSizeInBytes = postedFile.ContentLength;
-
-                // Convertir el tamaño del archivo a MB
-                archivo_E.Tamano = float.Parse((fileSizeInBytes / (1024.0 * 1024.0)).ToString());
-
-                // Leer el contenido del archivo en un byte[]
-                archivo_E.Archivo = ReadFileToByteArray(postedFile.InputStream);
-
-                archivo_E.NombreArchivo = NombreArchivo;
-                archivo_E.Descripcion = DescripcionArchivo;
-                archivo_E.Fecha_Registro = DateTime.Now;
-
-                Utilidad_D utilidad_D = new Utilidad_D();
-                Id_Archivo = utilidad_D.AgregarArchivo(archivo_E);
-
-                return Id_Archivo;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        private byte[] ReadFileToByteArray(Stream inputStream)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                inputStream.CopyTo(ms);
-                return ms.ToArray();
-            }
-        }
-
-
-
-
         #endregion
     }
 }

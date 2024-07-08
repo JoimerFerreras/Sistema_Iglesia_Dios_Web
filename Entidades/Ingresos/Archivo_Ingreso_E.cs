@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entidades.Util_E
+namespace Entidades.Ingresos
 {
-    public class Archivo_E
+    [Serializable]
+    public class Archivo_Ingreso_E
     {
         public int Id_Archivo { get; set; }
+        public int Id_Ingreso { get; set; }
         public string NombreArchivo { get; set; }
         public string NombreArchivoCarpeta { get; set; }
         public string TipoArchivo { get; set; }

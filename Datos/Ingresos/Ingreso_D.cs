@@ -59,43 +59,6 @@ namespace Datos.Ingresos
             }
         }
 
-        public DataTable ListarArchivos(int Id_Ingreso)
-        {
-            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
-            {
-                string sentencia = $@"SELECT 
-                                        AG.Id_Archivo, 
-                                        AG.NombreArchivo,
-                                        AG.NombreArchivoCarpeta,
-                                        AG.Extencion,
-                                        AG.Descripcion,
-                                        AG.Fecha_Registro
-
-                                        FROM Archivos_Generales AG
-
-                                        LEFT JOIN Archivos_Ingresos AI ON AI.Id_Archivo = AG.Id_Archivo
-
-                                        WHERE AI.Id_Ingreso = @Id_Ingreso ORDER BY AG.Id_Archivo";
-                SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                cmd.Parameters.AddWithValue("@Id_Ingreso", Id_Ingreso);
-                cmd.CommandType = CommandType.Text;
-                try
-                {
-                    conexion.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-
-                    DataTable dt = new DataTable();
-                    dt.Load(dr);
-
-                    conexion.Close();
-                    return dt;
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
 
         public Ingreso_E ObtenerRegistro(string Id)
         {
@@ -233,40 +196,6 @@ namespace Datos.Ingresos
             }
         }
 
-        public bool AgregarArchivoIngreso(int Id_Ingreso, int Id_Archivo)
-        {
-            bool Respuesta = false;
-
-            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
-            {
-                string sentencia = $@"INSERT INTO Archivos_Ingresos(
-                                        Id_Ingreso,
-                                        Id_Archivo)
-
-                                    VALUES(
-                                        @Id_Ingreso,
-                                        @Id_Archivo);";
-
-                SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                cmd.Parameters.AddWithValue("@Id_Ingreso", Id_Ingreso);
-                cmd.Parameters.AddWithValue("@Id_Archivo", Id_Archivo);
-                cmd.CommandType = CommandType.Text;
-                try
-                {
-                    conexion.Open();
-                    int FilasAfectadas = cmd.ExecuteNonQuery();
-                    conexion.Close();
-                    if (FilasAfectadas > 0) Respuesta = true;
-
-                    return Respuesta;
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
-
         public bool Editar(Ingreso_E entidad)
         {
             bool Respuesta = false;
@@ -321,32 +250,6 @@ namespace Datos.Ingresos
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
                 string sentencia = "DELETE FROM Ingresos WHERE Id_Ingreso = @id;";
-                SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                cmd.Parameters.AddWithValue("@id", Id);
-                cmd.CommandType = CommandType.Text;
-                try
-                {
-                    conexion.Open();
-                    int FilasAfectadas = cmd.ExecuteNonQuery();
-                    conexion.Close();
-                    if (FilasAfectadas > 0) Respuesta = true;
-
-                    return Respuesta;
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
-
-        public bool EliminarArchivoIngreso(int Id)
-        {
-            bool Respuesta = false;
-
-            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
-            {
-                string sentencia = "DELETE FROM Archivos_Ingresos WHERE Id_Ingreso = @id;";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.CommandType = CommandType.Text;
