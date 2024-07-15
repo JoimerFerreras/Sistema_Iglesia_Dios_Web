@@ -16,6 +16,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
+using System.Net;
+using Telerik.Web.UI;
 
 namespace Sistema_Iglesia_Dios_Web.Ingresos
 {
@@ -36,6 +38,22 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             set
             {
                 ViewState["ID_REGISTRO"] = value;
+            }
+        }
+
+        public string ID_REGISTRO_ARCHIVO
+        {
+            get
+            {
+                if (Utilidad_N.ValidarNull(ViewState["ID_REGISTRO_ARCHIVO"]))
+                {
+                    return "";
+                }
+                return ViewState["ID_REGISTRO_ARCHIVO"].ToString();
+            }
+            set
+            {
+                ViewState["ID_REGISTRO_ARCHIVO"] = value;
             }
         }
 
@@ -86,22 +104,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 ViewState["ListaArchivoE"] = value;
             }
         }
-
-        //public List<Archivo_Ingreso_E> ListaArchivoE
-        //{
-        //    get
-        //    {
-        //        if (Utilidad_N.ValidarNull(ViewState["ListaArchivoE"]))
-        //        {
-        //            return new List<Archivo_Ingreso_E>(); // Si ViewState["ListaArchivoE"] es null, retorna una lista vacía
-        //        }
-        //        return (List<Archivo_Ingreso_E>)ViewState["ListaArchivoE"];
-        //    }
-        //    set
-        //    {
-        //        ViewState["ListaArchivoE"] = value; // Establece el valor en ViewState
-        //    }
-        //}
 
         public DataTable DT_DATOS_ARCHIVOS
         {
@@ -165,7 +167,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                         dtpFechaDesde.SelectedDate.Value,
                         dtpFechaHasta.SelectedDate.Value,
                         cmbMiembro_Consulta.SelectedValue,
-                        cmbDescripcion_Ingreso.SelectedValue,
+                        cmbDescripcionIngreso_Consulta.SelectedValue,
                         cmbMoneda_Consulta.SelectedValue);
 
                         gvDatos.DataSource = DT_DATOS;
@@ -250,7 +252,20 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             cmbDescripcion_Ingreso.DataTextField = "Descripcion_Ingreso";
             cmbDescripcion_Ingreso.DataBind();
 
-            cmbDescripcionIngreso_Consulta.DataSource = dt;
+
+            // Consulta
+            DataTable dtConsulta = dt.Copy();
+
+            DataRow drConsulta = dtConsulta.NewRow();
+            drConsulta["Id_Descripcion_Ingreso"] = 0; // Asegúrate de que este campo coincida con el nombre del campo Id_Miembro en tu DataTable
+            drConsulta["Descripcion_Ingreso"] = "Todos";
+
+            // Insertar el nuevo DataRow al principio del DataTable
+            dtConsulta.Rows.RemoveAt(0);
+            dtConsulta.Rows.InsertAt(drConsulta, 0);
+
+            cmbDescripcionIngreso_Consulta.Items.Clear();
+            cmbDescripcionIngreso_Consulta.DataSource = dtConsulta;
             cmbDescripcionIngreso_Consulta.DataValueField = "Id_Descripcion_Ingreso";
             cmbDescripcionIngreso_Consulta.DataTextField = "Descripcion_Ingreso";
             cmbDescripcionIngreso_Consulta.DataBind();
@@ -423,6 +438,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         private void LimpiarCampos()
         {
             ID_REGISTRO = "0";
+            ID_REGISTRO_ARCHIVO = "0";
             EDITAR_REGISTRO = false;
 
             txtId_Ingreso.Text = "(Nuevo)";
@@ -448,6 +464,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 divValorMoneda.Visible = true;
             }
 
+            txtNombreArchivoDescargar.Text = "";
             gvArchivos.DataSource = new DataTable();
             gvArchivos.DataBind();
 
@@ -498,7 +515,53 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             gvArchivos.DataBind();
         }
 
-        private void DescargarArchivo(int Id_Archivo)
+
+        private void DescargarArchivo()
+        {
+            if (EDITAR_REGISTRO == true)
+            {
+                if (ID_REGISTRO_ARCHIVO == "" || ID_REGISTRO_ARCHIVO == "0")
+                {
+                    Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe seleccionar un archivo de la lista para descargar");
+                }
+                else
+                {
+                    int Id_Archivo = int.Parse(ID_REGISTRO_ARCHIVO);
+
+                    // Llenado de datos generales
+                    Archivo_Ingreso_E Archivo_E = new Archivo_Ingreso_E();
+                    Archivo_Ingreso_N Archivo_N = new Archivo_Ingreso_N();
+                    Archivo_E = Archivo_N.ObtenerArchivo(Id_Archivo);
+
+                    // Simular obtener los bytes del archivo (reemplazar con tu lógica real)
+                    byte[] archivoBytes = Archivo_E.Archivo;
+
+                    // Nombre del archivo para la descarga
+                    string nombreArchivo = Archivo_E.NombreArchivoCarpeta + Archivo_E.Extencion; // Puedes obtener el nombre original del archivo aquí
+
+                    ID_REGISTRO_ARCHIVO = "0";
+                    txtNombreArchivoDescargar.Text = "";
+
+                    HttpResponse response = HttpContext.Current.Response;
+
+                    response.Clear();
+                    response.ClearContent();
+                    response.ClearHeaders();
+                    response.Buffer = true;
+
+                    response.AddHeader("Content-Disposition", $"attachment;filename={nombreArchivo}");
+                    response.AddHeader("Content-Length", archivoBytes.Length.ToString());
+
+                    response.OutputStream.Write(archivoBytes, 0, archivoBytes.Length);
+                    response.Flush(); // Envía todo al cliente
+                    response.SuppressContent = true; // Impide cualquier contenido adicional
+                    HttpContext.Current.ApplicationInstance.CompleteRequest(); // Finaliza la solicitud correctamente
+
+                }
+            }
+        }
+
+        private void SeleccionarArchivoDescargar(int Id_Archivo)
         {
             if (EDITAR_REGISTRO == true)
             {
@@ -507,46 +570,14 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 Archivo_Ingreso_N Archivo_N = new Archivo_Ingreso_N();
                 Archivo_E = Archivo_N.ObtenerArchivo(Id_Archivo);
 
-
-                // Simular obtener los bytes del archivo (reemplazar con tu lógica real)
-                byte[] archivoBytes = Archivo_E.Archivo;
-
                 // Nombre del archivo para la descarga
                 string nombreArchivo = Archivo_E.NombreArchivoCarpeta + Archivo_E.Extencion; // Puedes obtener el nombre original del archivo aquí
 
-                HttpResponse response = HttpContext.Current.Response;
+                txtNombreArchivoDescargar.Text = "(" + Id_Archivo.ToString() + ") " + nombreArchivo;
 
-                response.Clear();
-                response.ClearContent();
-                response.ClearHeaders();
-                response.Buffer = true;
-
-                response.ContentType = "application/pdf";
-                response.AddHeader("Content-Disposition", $"attachment; filename={nombreArchivo}");
-                response.AddHeader("Content-Length", archivoBytes.Length.ToString());
-
-                response.OutputStream.Write(archivoBytes, 0, archivoBytes.Length);
-                response.Flush(); // Envía todo al cliente
-                response.SuppressContent = true; // Impide cualquier contenido adicional
-                HttpContext.Current.ApplicationInstance.CompleteRequest(); // Finaliza la solicitud correctamente
+                ID_REGISTRO_ARCHIVO = Id_Archivo.ToString();
             }
         }
-
-        //private byte[] ObtenerBytesDelArchivo()
-        //{
-        //    // Aquí deberías tener la lógica para obtener el byte[] del archivo
-        //    // Este método es solo un ejemplo, reemplázalo con tu lógica real
-        //    string rutaArchivo = @"C:\Ruta\Al\Archivo.pdf";
-        //    byte[] bytes;
-
-        //    using (FileStream file = new FileStream(rutaArchivo, FileMode.Open, FileAccess.Read))
-        //    {
-        //        bytes = new byte[file.Length];
-        //        file.Read(bytes, 0, (int)file.Length);
-        //    }
-
-        //    return bytes;
-        //}
 
         private void SubirArchivo()
         {
@@ -647,6 +678,9 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 ListarArchivos(ID_REGISTRO);
                 Utilidad_C.MostrarAlerta_Eliminar_Success(this, this.GetType());
             }
+
+            ID_REGISTRO_ARCHIVO = "0";
+            txtNombreArchivoDescargar.Text = "";
         }
         #endregion
 
@@ -692,6 +726,12 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     DT_DATOS_ARCHIVOS.Columns.Add("Tamano");
                     DT_DATOS_ARCHIVOS.Columns.Add("Fecha_Registro");
                 }
+            }
+
+
+            if (ID_REGISTRO_ARCHIVO == "0" || ID_REGISTRO_ARCHIVO == "")
+            {
+                txtNombreArchivoDescargar.Text = "";
             }
         }
 
@@ -794,12 +834,12 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
         #region Archivos
 
-        protected void btnDescargarArchivo_Click(object sender, EventArgs e)
+        protected void btnSeleccionarArchivoDescargar_Click(object sender, EventArgs e)
         {
             LinkButton btn = (LinkButton)sender;
             int Id_Archivo;
             Id_Archivo = System.Convert.ToInt32(btn.CommandArgument.ToString());
-            DescargarArchivo(Id_Archivo);
+            SeleccionarArchivoDescargar(Id_Archivo);
 
         }
 
@@ -816,6 +856,13 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             SubirArchivo();
         }
         #endregion
+
         #endregion
+
+        protected void btnDescargarArchivo_Click(object sender, EventArgs e)
+        {
+            DescargarArchivo();
+        }
+    
     }
 }

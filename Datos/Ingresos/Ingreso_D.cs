@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Entidades.Ministerios;
 using Entidades.Ingresos;
+using Datos.Ministerios;
 
 namespace Datos.Ingresos
 {
@@ -25,7 +26,9 @@ namespace Datos.Ingresos
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Ingreso,
+                string sentencia = "";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                sentencia = @"SELECT Id_Ingreso,
                                           M.Nombres + ' ' + M.Apellidos AS Miembro,
                                           DI.Descripcion_Ingreso,
                                           Mon.Nombre_Moneda AS Moneda,
@@ -36,10 +39,38 @@ namespace Datos.Ingresos
                                       FROM Ingresos I
                                       LEFT JOIN Descripciones_Ingreso DI ON DI.Id_Descripcion_Ingreso = I.Id_Descripcion_Ingreso
                                       LEFT JOIN Miembros M ON M.Id_Miembro = I.Id_Miembro
-                                      LEFT JOIN Monedas Mon ON Mon.Id_Moneda = I.Id_Moneda
+                                      LEFT JOIN Monedas Mon ON Mon.Id_Moneda = I.Id_Moneda ";
 
-                                      ORDER BY Id_Ingreso DESC";
-                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                // Tipo de fecha
+                sentencia += $@" WHERE ({TipoFecha} BETWEEN @FechaInicial AND @FechaFinal) ";
+                cmd.Parameters.AddWithValue("@FechaInicial", FechaInicial);
+                cmd.Parameters.AddWithValue("@FechaFinal", FechaFinal);
+
+                // Miembro
+                if (Miembro > 0)
+                {
+                    sentencia += $" AND (M.Id_Miembro = @Miembro) ";
+                    cmd.Parameters.AddWithValue("@Miembro", Miembro);
+                }
+
+                //Descripcion de ingreso
+                if (Descripcion_Ingreso > 0)
+                {
+                    sentencia += $" AND (DI.Id_Descripcion_Ingreso = @Descripcion_Ingreso) ";
+                    cmd.Parameters.AddWithValue("@Descripcion_Ingreso", Descripcion_Ingreso);
+                }
+
+                //Moneda
+                if (Moneda > 0)
+                {
+                    sentencia += $" AND (Mon.Id_Moneda = @Moneda) ";
+                    cmd.Parameters.AddWithValue("@Moneda", Moneda);
+                }
+
+                sentencia += $@"ORDER BY Id_Ingreso DESC";
+
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
                 cmd.CommandType = CommandType.Text;
                 try
                 {
