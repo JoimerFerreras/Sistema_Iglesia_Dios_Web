@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using Datos.ConexionBD;
-using Entidades.Ingresos;
-using Entidades.Otros_Parametros;
 
 namespace Datos.Util_D
 {

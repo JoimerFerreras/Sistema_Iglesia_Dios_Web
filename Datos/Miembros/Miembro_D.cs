@@ -7,7 +7,6 @@ using System.Data;
 using System.Data.SqlClient;
 using Entidades.Miembros;
 using Datos.ConexionBD;
-using Entidades.Ministerios;
 
 namespace Datos.Miembros
 {

@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Egresos\Archivo_Egreso_E.cs" />
+    <Compile Include="Egresos\Cuenta_Pagar_E.cs" />
+    <Compile Include="Egresos\Abono_Cuenta_Pagar_E.cs" />
     <Compile Include="Egresos\Descripcion_Egreso_E.cs" />
     <Compile Include="Ingresos\Archivo_Ingreso_E.cs" />
     <Compile Include="Ingresos\Ingreso_E.cs" />

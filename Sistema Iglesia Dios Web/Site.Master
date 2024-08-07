@@ -119,6 +119,9 @@
                             <i class="fa-solid fa-cash-register"></i><span>Egresos<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
                          <div class="sub-menu_1">
+                            <a href="#" id="btnCuentasPagar" data-tippy-content="Cuentas por pagar" title=""><i class="fa-solid fa-cash-register"></i><span>Cuentas por pagar</span></a>
+                        </div>
+                         <div class="sub-menu_1">
                             <a href="#" id="btnDescripcionEgresos" data-tippy-content="Descripción de egresos" title=""><i class="fa-solid fa-cash-register"></i><span>Descripción de egresos</span></a>
                         </div>
                     </li>

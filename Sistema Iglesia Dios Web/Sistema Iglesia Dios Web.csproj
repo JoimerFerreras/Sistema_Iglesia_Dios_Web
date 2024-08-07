@@ -152,6 +152,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Egresos\frmDescripcion_Egresos.aspx" />
+    <Content Include="Egresos\frmCuentasPagar.aspx" />
     <Content Include="frmLogin.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Ingresos\frmDescripcion_Ingresos.aspx" />
@@ -243,6 +244,13 @@
     </Compile>
     <Compile Include="Egresos\frmDescripcion_Egresos.aspx.designer.cs">
       <DependentUpon>frmDescripcion_Egresos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Egresos\frmCuentasPagar.aspx.cs">
+      <DependentUpon>frmCuentasPagar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Egresos\frmCuentasPagar.aspx.designer.cs">
+      <DependentUpon>frmCuentasPagar.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmLogin.aspx.cs">
       <DependentUpon>frmLogin.aspx</DependentUpon>

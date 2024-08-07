@@ -1,5 +1,4 @@
 ﻿using Datos.ConexionBD;
-using Entidades.Miembros;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,9 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entidades.Ministerios;
 using Entidades.Ingresos;
-using Datos.Ministerios;
 
 namespace Datos.Ingresos
 {
