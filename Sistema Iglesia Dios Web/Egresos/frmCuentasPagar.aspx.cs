@@ -346,7 +346,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe escribir el número o código de la factura");
             }
-            else if (cmbBeneficiario.SelectedValue != "0" && txtOtroBeneficiario.Text.Length == 0)
+            else if (cmbBeneficiario.SelectedValue == "0" && txtOtroBeneficiario.Text.Length == 0)
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Si no va a seleccionar un beneficiario, entonces el campo Otro beneficiario no puede estar vacío");
             }
@@ -394,7 +394,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                     cuenta_pagar_E.Fecha = dtpFecha_CuentaPagar.SelectedDate.Value;
                     cuenta_pagar_E.Fecha_Vencimiento = dtpFechaVencimiento.SelectedDate.Value;
                     cuenta_pagar_E.No_Factura = txtNo_Factura.Text;
-                    cuenta_pagar_E.Id_Beneficiario = int.Parse(cmbBeneficiario.Text);
+                    cuenta_pagar_E.Id_Beneficiario = int.Parse(cmbBeneficiario.SelectedValue);
                     cuenta_pagar_E.Otro_Beneficiario = txtOtroBeneficiario.Text;
                     cuenta_pagar_E.Comentario = txtComentarioCuentaPagar.Text;
                     cuenta_pagar_E.Id_Usuario_Registro = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));

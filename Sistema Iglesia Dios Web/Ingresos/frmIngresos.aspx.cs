@@ -622,7 +622,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                             txtDescripcionArchivo.Text = "";
                             ListarArchivosTemporales();
                         }
-                    }
+                    } 
                     else
                     {
                         Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "Debe cargar un archivo para continuar", "warning");

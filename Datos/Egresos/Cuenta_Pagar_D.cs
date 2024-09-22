@@ -190,7 +190,7 @@ namespace Datos.Egresos
                                         No_Factura,
                                         Id_Beneficiario,
                                         Otro_Beneficiario,
-                                        Comentario
+                                        Comentario,
                                         Id_Usuario_Registro,
                                         Fecha_Registro,
                                         Id_Usuario_Ultima_Modificacion)
