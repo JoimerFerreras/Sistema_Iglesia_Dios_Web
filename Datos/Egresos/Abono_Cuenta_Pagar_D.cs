@@ -26,16 +26,12 @@ namespace Datos.Egresos
                 string sentencia = "";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                                     sentencia = @"SELECT ACP.Id_Abono_CP,
-                                                        ACP.Id_Cuenta_Pagar,
                                                         ACP.Monto_Abono,
-                                                        M.Nombre_Moneda,
-	                                                    ACP.Valor_Moneda,
 	                                                    FP.Descripcion_Forma_Pago,
                                                         ACP.Fecha_Abono,
                                                         ACP.Fecha_Registro
       
                                                     FROM Abonos_Cuentas_Pagar ACP
-                                                    LEFT JOIN Monedas M ON M.Id_Moneda = ACP.Id_Moneda
                                                     LEFT JOIN Formas_Pago FP ON FP.Id_Forma_Pago = ACP.Id_Forma_Pago";
 
 
@@ -44,6 +40,43 @@ namespace Datos.Egresos
                 cmd.Parameters.AddWithValue("@Id_Cuenta_Pagar", Id_Cuenta_Pagar);
 
                 sentencia += $@"ORDER BY ACP.Id_Abono_CP DESC";
+
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public DataTable ObtenerTotalesPagadosRestantes(int Id_Cuenta_Pagar)
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+
+                // Con esta consutla se obtienen los totales pagados y los totales pendientes por pagar
+                string sentencia = "";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                sentencia = @"SELECT SUM(ACP.Monto_Abono) AS Total_Pagado, CPP.Monto_Total_Pagar - SUM(ACP.Monto_Abono) AS Total_Restante FROM Abonos_Cuentas_Pagar ACP
+                            INNER JOIN Cuentas_Por_Pagar CPP ON CPP.Id_Cuenta_Pagar = ACP.Id_Cuenta_Pagar 
+
+                            WHERE CPP.Id_Cuenta_Pagar = @Id_Cuenta_Pagar
+
+                            GROUP BY CPP.Monto_Total_Pagar";
+                cmd.Parameters.AddWithValue("@Id_Cuenta_Pagar", Id_Cuenta_Pagar);
 
                 cmd.CommandText = sentencia;
                 cmd.Connection = conexion;
@@ -76,7 +109,6 @@ namespace Datos.Egresos
                 string sentencia = $@"SELECT ACP.Id_Abono_CP,
                                               ACP.Id_Cuenta_Pagar,
                                               ACP.Monto_Abono,
-                                              ACP.Id_Moneda,
                                               ACP.Fecha_Abono,
                                               ACP.Id_Usuario_Registro,
 	                                          U1.Nombre1 + ' ' + U1.Apellido1 AS Nombre_Usuario_Registro,
@@ -85,8 +117,7 @@ namespace Datos.Egresos
 	                                          U2.Nombre1 + ' ' + U2.Apellido1 AS Nombre_Usuario_Ultima_Modificacion,
                                               ACP.Fecha_Ultima_Modificacion,
                                               ACP.Comentario,
-                                              ACP.Id_Forma_Pago,
-                                              ACP.Valor_Moneda
+                                              ACP.Id_Forma_Pago
                                           FROM Abonos_Cuentas_Pagar ACP
                                           LEFT JOIN Usuarios U1 ON U1.Id_Usuario = ACP.Id_Usuario_Registro
                                           LEFT JOIN Usuarios U2 ON U2.Id_Usuario = ACP.Id_Usuario_Ultima_Modificacion
@@ -106,8 +137,6 @@ namespace Datos.Egresos
                         entidad.Id_Abono_CP = int.Parse(row["Id_Abono_CP"].ToString());
                         entidad.Id_Cuenta_Pagar = int.Parse(row["Id_Cuenta_Pagar"].ToString());
                         entidad.Monto_Abono = float.Parse(row["Monto_Abono"].ToString());
-                        entidad.Id_Moneda = int.Parse(row["Id_Moneda"].ToString());
-                        entidad.Valor_Moneda = float.Parse(row["Valor_Moneda"].ToString());
                         entidad.Fecha_Abono = DateTime.Parse(row["Fecha_Abono"].ToString());
                         entidad.Id_Forma_Pago = int.Parse(row["Id_Forma_Pago"].ToString());
                         entidad.Comentario = row["Comentario"].ToString();
@@ -148,8 +177,6 @@ namespace Datos.Egresos
                 string sentencia = $@"INSERT INTO Abonos_Cuentas_Pagar(
                                         Id_Cuenta_Pagar,
                                         Monto_Abono,
-                                        Id_Moneda,
-                                        Valor_Moneda,
                                         Fecha_Abono,
                                         Id_Usuario_Registro,
                                         Fecha_Registro,
@@ -160,8 +187,6 @@ namespace Datos.Egresos
                                     VALUES(
                                         @Id_Cuenta_Pagar,
                                         @Monto_Abono,
-                                        @Id_Moneda,
-                                        @Valor_Moneda,
                                         @Fecha_Abono,
                                         @Id_Usuario_Registro,
                                         @Fecha_Registro,
@@ -172,8 +197,6 @@ namespace Datos.Egresos
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id_Cuenta_Pagar", entidad.Id_Cuenta_Pagar);
                 cmd.Parameters.AddWithValue("@Monto_Abono", entidad.Monto_Abono);
-                cmd.Parameters.AddWithValue("@Id_Moneda", entidad.Id_Moneda);
-                cmd.Parameters.AddWithValue("@Valor_Moneda", entidad.Valor_Moneda);
                 cmd.Parameters.AddWithValue("@Fecha_Abono", entidad.Fecha_Abono);
                 cmd.Parameters.AddWithValue("@Id_Usuario_Registro", entidad.Id_Usuario_Registro);
                 cmd.Parameters.AddWithValue("@Fecha_Registro", entidad.Fecha_Registro);
@@ -206,9 +229,7 @@ namespace Datos.Egresos
                 string sentencia = $@"UPDATE Abonos_Cuentas_Pagar SET 
                                         Id_Cuenta_Pagar = @Id_Cuenta_Pagar, 
                                         Monto_Abono = @Monto_Abono, 
-                                        Id_Moneda = @Id_Moneda, 
-                                        Valor_Moneda = @Valor_Moneda, 
-                                        Fecha_Abono = @Fecha_Abono, , 
+                                        Fecha_Abono = @Fecha_Abono,
                                         Comentario = @Comentario, 
                                         Id_Forma_Pago = @Id_Forma_Pago, 
                                         Id_Usuario_Ultima_Modificacion = @Id_Usuario_Ultima_Modificacion, 
@@ -220,8 +241,6 @@ namespace Datos.Egresos
                 cmd.Parameters.AddWithValue("@Id_Abono_CP", entidad.Id_Abono_CP);
                 cmd.Parameters.AddWithValue("@Id_Cuenta_Pagar", entidad.Id_Cuenta_Pagar);
                 cmd.Parameters.AddWithValue("@Monto_Abono", entidad.Monto_Abono);
-                cmd.Parameters.AddWithValue("@Id_Moneda", entidad.Id_Moneda);
-                cmd.Parameters.AddWithValue("@Valor_Moneda", entidad.Valor_Moneda);
                 cmd.Parameters.AddWithValue("@Fecha_Abono", entidad.Fecha_Abono);
                 cmd.Parameters.AddWithValue("@Comentario", entidad.Comentario);
                 cmd.Parameters.AddWithValue("@Id_Forma_Pago", entidad.Id_Forma_Pago);

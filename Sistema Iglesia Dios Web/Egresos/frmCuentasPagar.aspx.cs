@@ -18,6 +18,7 @@ using System.Web.UI.WebControls;
 using System.IO;
 using System.Net;
 using Telerik.Web.UI;
+using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace Sistema_Iglesia_Dios_Web.Egresos
 {
@@ -266,11 +267,6 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             cmbMoneda_CuentaPagar.DataTextField = "Nombre_Moneda";
             cmbMoneda_CuentaPagar.DataBind();
 
-            cmbMonedaAbono.DataSource = dt;
-            cmbMonedaAbono.DataValueField = "Id_Moneda";
-            cmbMonedaAbono.DataTextField = "Nombre_Moneda";
-            cmbMonedaAbono.DataBind();
-
             cmbMoneda_Consulta.DataSource = dt;
             cmbMoneda_Consulta.DataValueField = "Id_Moneda";
             cmbMoneda_Consulta.DataTextField = "Nombre_Moneda";
@@ -475,7 +471,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
 
             txtUsuarioRegistro_CuentaPagar.Text = Cuenta_Pagar_E.Nombre_Usuario_Registro;
             txtFechaRegistro_CuentaPagar.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", Cuenta_Pagar_E.Fecha_Registro);
-            txtFechaUltimaModificacion_CuentaPagar.Text = Cuenta_Pagar_E.Nombre_Usuario_Ultima_Modificacion;
+            txtUsuarioUltimaModificacion_CuentaPagar.Text = Cuenta_Pagar_E.Nombre_Usuario_Ultima_Modificacion;
 
             if (Cuenta_Pagar_E.Fecha_Ultima_Modificacion != null)
             {
@@ -490,6 +486,9 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             {
                 divValorMoneda.Visible = false;
             }
+
+            // Listar abonos
+            ConsultarAbonos();
 
             // Listar archivos del ingreso
             ListarArchivos(ID_REGISTRO);
@@ -564,6 +563,203 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         }
 
         #endregion
+
+
+        #region Abonos
+
+        private void ConsultarAbonos()
+        {
+            DataTable dt = new DataTable();
+            dt = abonoCP_N.Listar(ID_REGISTRO);
+            gvAbonos.DataSource = dt;
+            gvAbonos.DataBind();
+
+            ConsultarTotalesAbonos();
+        }
+
+        private void ConsultarTotalesAbonos()
+        {
+            DataTable dt = new DataTable();
+            dt = abonoCP_N.ObtenerTotalesPagadosRestantes(ID_REGISTRO);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+                txtMontoTotalAbonado.Text = "$" + Utilidad_N.FormatearNumero(row["Total_Pagado"].ToString(), 2, 2);
+                txtMontoRestante.Text = "$" + Utilidad_N.FormatearNumero(row["Total_Restante"].ToString(), 2, 2);
+            }
+            else
+            {
+                txtMontoTotalAbonado.Text = "$" + Utilidad_N.FormatearNumero("0", 2, 2);
+                txtMontoRestante.Text = "$" + Utilidad_N.FormatearNumero("0", 2, 2);
+            }
+        }
+
+
+        private void LimpiarCamposAbonos()
+        {
+            // Cuentas por pagar
+            ID_REGISTRO_ABONO = "0";
+            EDITAR_REGISTRO_ABONO = false;
+
+            txtIdAbono.Text = "(Nuevo)";
+            dtpFechaAbono.SelectedDate = DateTime.Now;
+            cmbFormaPagoAbono.SelectedValue = "0";
+            txtMontoAbono.Text = Utilidad_N.FormatearNumero("0", 2, 2);
+            txtComentarioAbono.Text = "";
+
+            txtUsuarioRegistroAbono.Text = "";
+            txtFechaRegistroAbono.Text = "";
+            txtUsuarioUltimaModificacion_Abono.Text = "";
+            txtFechaUltimaModificacion_Abono.Text = "";
+
+            txtMontoTotalAbonado.Text = "$" + Utilidad_N.FormatearNumero("0", 2, 2);
+            txtMontoRestante.Text = "$" + Utilidad_N.FormatearNumero("0", 2, 2);
+
+            gvAbonos.DataSource = new DataTable();
+            gvAbonos.DataBind();
+        }
+
+        private void VerRegistroAbono()
+        {
+            // Llenado de datos generales
+            Abono_Cuenta_Pagar_E abono_E = new Abono_Cuenta_Pagar_E();
+            abono_E = abonoCP_N.ObtenerRegistro(ID_REGISTRO_ABONO);
+
+            txtIdAbono.Text = abono_E.Id_Abono_CP.ToString();
+            txtMontoAbono.Text = Utilidad_N.FormatearNumero(abono_E.Monto_Abono.ToString(), 2, 2);
+            dtpFechaAbono.SelectedDate = abono_E.Fecha_Abono;
+            cmbFormaPagoAbono.SelectedValue = abono_E.Id_Forma_Pago.ToString();
+            txtComentarioAbono.Text = abono_E.Comentario;
+
+            txtUsuarioRegistroAbono.Text = abono_E.Nombre_Usuario_Registro;
+            txtFechaRegistro_CuentaPagar.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", abono_E.Fecha_Registro);
+            txtUsuarioUltimaModificacion_Abono.Text = abono_E.Nombre_Usuario_Ultima_Modificacion;
+
+            if (abono_E.Fecha_Ultima_Modificacion != null)
+            {
+                txtFechaUltimaModificacion_Abono.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", abono_E.Fecha_Ultima_Modificacion);
+            }
+
+            txtIdAbono.Focus();
+        }
+
+        private bool ValidarCamposAbono()
+        {
+            bool Validacion = false;
+
+            if (ID_REGISTRO == "0" || ID_REGISTRO == "")
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe seleccionar una cuenta por pagar para registrarle abonos");
+            }
+            else if (dtpFechaAbono.SelectedDate.Value == null)
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La fecha de abono no es válida");
+            }
+            else if (cmbFormaPagoAbono.SelectedValue == "0")
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe espesificar la forma de pago del abono");
+            }
+            else if (!double.TryParse(txtMontoAbono.Text, out double resultado_monto))
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El monto de abono a pagar no es válido");
+            }
+            else
+            {
+                Validacion = true;
+            }
+
+            return Validacion;
+        }
+
+        private void GuardarRegistroAbono()
+        {
+            try
+            {
+                if (ValidarCamposAbono() == true)
+                {
+                    // Agregacion de la informacion basica del miembro
+                    Abono_Cuenta_Pagar_E abono_E = new Abono_Cuenta_Pagar_E();
+                    abono_E.Id_Abono_CP = int.Parse(ID_REGISTRO_ABONO);
+                    abono_E.Id_Cuenta_Pagar = int.Parse(ID_REGISTRO);
+                    abono_E.Monto_Abono = float.Parse(txtMontoAbono.Text);
+                    abono_E.Fecha_Abono = dtpFechaAbono.SelectedDate.Value;
+                    abono_E.Comentario = txtComentarioCuentaPagar.Text;
+                    abono_E.Id_Forma_Pago = int.Parse(cmbFormaPagoAbono.SelectedValue);
+
+
+                    abono_E.Id_Usuario_Registro = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
+                    abono_E.Fecha_Registro = DateTime.Now;
+                    abono_E.Id_Usuario_Ultima_Modificacion = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
+                    abono_E.Fecha_Ultima_Modificacion = DateTime.Now;
+
+                    if (EDITAR_REGISTRO_ABONO == true)
+                    {
+                        // Guardar registro existente
+                        bool salida = abonoCP_N.Editar(abono_E);
+
+                        if (salida == true)
+                        {
+                            Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
+                            LimpiarCamposAbonos();
+                            ConsultarAbonos();
+                        }
+                        else
+                        {
+                            Utilidad_C.MostrarAlerta_Guardar_Error(this, this.GetType());
+                        }
+                    }
+                    else
+                    {
+                        // Agregar registro
+                        bool Id_Egreso = abonoCP_N.Agregar(abono_E);
+
+                        if (Id_Egreso == true)
+                        {
+                            Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
+                            LimpiarCamposAbonos();
+                            ConsultarAbonos();
+                        }
+                        else
+                        {
+                            Utilidad_C.MostrarAlerta_Guardar_Error(this, this.GetType());
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string a = ex.Message;
+                Utilidad_C.MostrarAlerta_Guardar_Error_Fatal(this, this.GetType());
+            }
+
+        }
+
+        private void EliminarAbono()
+        {
+            if (EDITAR_REGISTRO_ABONO == false)
+            {
+                Utilidad_C.MostrarAlerta_Eliminar_Error(this, this.GetType(), "Primero seleccione un abono para poder eliminarlo");
+            }
+            else
+            {
+                bool respuesta = abonoCP_N.Eliminar(ID_REGISTRO_ABONO);
+
+                if (respuesta)
+                {
+                    Utilidad_C.MostrarAlerta_Eliminar_Success(this, this.GetType());
+                    LimpiarCamposAbonos();
+                    ConsultarAbonos();
+                }
+                else
+                {
+                    Utilidad_C.MostrarAlerta_Eliminar_Error_Fatal(this, this.GetType());
+                }
+            }
+        }
+
+        #endregion
+
 
         #region Archivos
         private void ListarArchivos(string Id_Ingreso)
@@ -645,6 +841,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                 txtNombreArchivoDescargar.Text = "(" + Id_Archivo.ToString() + ") " + nombreArchivo;
 
                 ID_REGISTRO_ARCHIVO = Id_Archivo.ToString();
+                txtNombreArchivoDescargar.Focus();
             }
         }
 
@@ -783,6 +980,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                 LlenerCombos();
                 LimpiarFiltros();
                 LimpiarCampos();
+                LimpiarCamposAbonos();
 
                 // Preparar tabla de archivos temporales
 
@@ -901,6 +1099,33 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         #endregion
 
 
+        #region Abonos
+        protected void btnEditarAbono_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            ID_REGISTRO_ABONO = btn.CommandArgument.ToString();
+            EDITAR_REGISTRO_ABONO = true;
+            VerRegistroAbono();
+        }
+
+        protected void btnAgregarAbono_Click(object sender, EventArgs e)
+        {
+            LimpiarCamposAbonos();
+        }
+
+        protected void btnGuardarAbono_Click(object sender, EventArgs e)
+        {
+            GuardarRegistroAbono();
+        }
+
+        protected void btnEliminarAbono_Click(object sender, EventArgs e)
+        {
+            EliminarAbono();
+        }
+        #endregion
+
+
+
         #region Archivos
 
         protected void btnSeleccionarArchivoDescargar_Click(object sender, EventArgs e)
@@ -924,14 +1149,15 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         {
             SubirArchivo();
         }
-        #endregion
-
-        #endregion
 
         protected void btnDescargarArchivo_Click(object sender, EventArgs e)
         {
             DescargarArchivo();
         }
-    
+
+        #endregion
+
+
+        #endregion
     }
 }

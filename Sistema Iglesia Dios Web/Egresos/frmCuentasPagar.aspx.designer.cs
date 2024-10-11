@@ -348,13 +348,13 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::System.Web.UI.WebControls.TextBox txtIdAbono;
 
         /// <summary>
-        /// Control rdpFechaAbono.
+        /// Control dtpFechaAbono.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker rdpFechaAbono;
+        protected global::Telerik.Web.UI.RadDatePicker dtpFechaAbono;
 
         /// <summary>
         /// Control cmbFormaPagoAbono.
@@ -364,33 +364,6 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox cmbFormaPagoAbono;
-
-        /// <summary>
-        /// Control cmbMonedaAbono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbMonedaAbono;
-
-        /// <summary>
-        /// Control div1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div1;
-
-        /// <summary>
-        /// Control txtValorMonedaAbono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtValorMonedaAbono;
 
         /// <summary>
         /// Control txtMontoAbono.
@@ -429,22 +402,22 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::System.Web.UI.WebControls.TextBox txtFechaRegistroAbono;
 
         /// <summary>
-        /// Control txtUsuarioUltimaActualizacionAbono.
+        /// Control txtUsuarioUltimaModificacion_Abono.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUsuarioUltimaActualizacionAbono;
+        protected global::System.Web.UI.WebControls.TextBox txtUsuarioUltimaModificacion_Abono;
 
         /// <summary>
-        /// Control txtFechaUltimaActualizacionAbono.
+        /// Control txtFechaUltimaModificacion_Abono.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFechaUltimaActualizacionAbono;
+        protected global::System.Web.UI.WebControls.TextBox txtFechaUltimaModificacion_Abono;
 
         /// <summary>
         /// Control gvAbonos.
@@ -454,6 +427,51 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid gvAbonos;
+
+        /// <summary>
+        /// Control txtMontoTotalAbonado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMontoTotalAbonado;
+
+        /// <summary>
+        /// Control txtMontoRestante.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMontoRestante;
+
+        /// <summary>
+        /// Control btnAgregarAbono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnAgregarAbono;
+
+        /// <summary>
+        /// Control btnGuardarAbono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnGuardarAbono;
+
+        /// <summary>
+        /// Control btnEliminarAbono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnEliminarAbono;
 
         /// <summary>
         /// Control rpvArchivos.

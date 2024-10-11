@@ -25,6 +25,18 @@ namespace Negocio.Egresos
             }
         }
 
+        public DataTable ObtenerTotalesPagadosRestantes(string Id_Cuenta_Pagar)
+        {
+            try
+            {
+                return abono_cuenta_pagar_D.ObtenerTotalesPagadosRestantes(int.Parse(Id_Cuenta_Pagar));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public Abono_Cuenta_Pagar_E ObtenerRegistro(string Id)
         {
             try

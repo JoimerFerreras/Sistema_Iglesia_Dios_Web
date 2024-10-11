@@ -298,7 +298,7 @@
                         <div class="contenedor_botones">
                             <asp:LinkButton CssClass="fa-solid fa-plus fa-lg boton_formulario_Agregar" runat="server" ID="btnAgregar" OnClick="btnAgregar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
                             <asp:LinkButton CssClass="fa-solid fa-floppy-disk fa-lg boton_formulario_Guardar" runat="server" ID="btnGuardar" OnClick="btnGuardar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
-                            <asp:LinkButton CssClass="fa-solid fa-trash fa-lg boton_formulario_Eliminar" runat="server" ID="btnEliminar" OnClick="btnEliminar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
+                            <asp:LinkButton CssClass="fa-solid fa-trash fa-lg boton_formulario_Eliminar" runat="server" ID="btnEliminar" OnClick="btnEliminar_Click" OnClientClick="return delalert(this);"></asp:LinkButton>
                         </div>
                     </telerik:RadPageView>
 
@@ -316,7 +316,7 @@
                                 <div class="col-12 col-md-6">
                                     Fecha de Abono <span class="LabelCampoObligatorio">*</span>
                                     <br />
-                                    <telerik:RadDatePicker ID="rdpFechaAbono" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                                    <telerik:RadDatePicker ID="dtpFechaAbono" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
                                         <DateInput ID="DateInput4" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                                     </telerik:RadDatePicker>
                                 </div>
@@ -335,22 +335,6 @@
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
-
-                                <div class="col-12 col-md-4">
-                                    Moneda <span class="LabelCampoObligatorio">*</span>
-                                    <telerik:RadComboBox ID="cmbMonedaAbono" runat="server" Width="100%" ClientIDMode="Static"
-                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
-                                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap" OnSelectedIndexChanged="cmbMoneda_CuentaPagar_SelectedIndexChanged"
-                                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="true">
-                                        <Items>
-                                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
-                                        </Items>
-                                    </telerik:RadComboBox>
-                                </div>
-                                <div id="div1" runat="server" visible="false" class="col-12 col-md-4">
-                                    Tipo de cambio <span class="LabelCampoObligatorio">*</span>
-                                    <asp:TextBox runat="server" ID="txtValorMonedaAbono" CssClass="form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
-                                </div>
                                 <div class="col-12 col-md-4">
                                     Monto de Abono<span class="LabelCampoObligatorio">*</span>
                                     <asp:TextBox runat="server" ID="txtMontoAbono" CssClass="form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
@@ -382,12 +366,12 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Usuario de ultima modificaci&oacute;n
-                                   <asp:TextBox runat="server" ID="txtUsuarioUltimaActualizacionAbono" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                   <asp:TextBox runat="server" ID="txtUsuarioUltimaModificacion_Abono" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Fecha de ultima modificaci&oacute;n
-                                     <asp:TextBox runat="server" ID="txtFechaUltimaActualizacionAbono" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                     <asp:TextBox runat="server" ID="txtFechaUltimaModificacion_Abono" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
                                 </div>
                             </div>
 
@@ -407,7 +391,7 @@
                                                 <HeaderStyle HorizontalAlign="Center" />
                                                 <ItemStyle HorizontalAlign="Center" />
                                                 <ItemTemplate>
-                                                    <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Abono_CP") %>' OnClick="btnEditar_Click" CssClass="btn btn-sm btn-primary fa-solid fa-pen boton_formulario_editar" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px; margin-bottom: 3px;"></asp:LinkButton>
+                                                    <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Abono_CP") %>' OnClick="btnEditarAbono_Click" CssClass="btn btn-sm btn-primary fa-solid fa-pen boton_formulario_editar" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px; margin-bottom: 3px;"></asp:LinkButton>
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
                                             <telerik:GridBoundColumn DataField="Id_Abono_CP" HeaderText="ID de abono" HeaderStyle-Width="10%" ItemStyle-Width="10%">
@@ -419,23 +403,33 @@
                                             <telerik:GridBoundColumn DataField="Fecha_Registro" HeaderText="Fecha de registro" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Descripcion_Forma_Pago" HeaderText="Forma de pago" HeaderStyle-Width="20%" ItemStyle-Width="20%">
+                                            <telerik:GridBoundColumn DataField="Descripcion_Forma_Pago" HeaderText="Forma de pago" HeaderStyle-Width="40%" ItemStyle-Width="40%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Nombre_Moneda" HeaderText="Moneda" HeaderStyle-Width="10%" ItemStyle-Width="10%">
-                                            </telerik:GridBoundColumn>
-
-                                            <telerik:GridBoundColumn DataField="Monto_Total_Pagar" HeaderText="Monto total a pagar" HeaderStyle-Width="10%" ItemStyle-Width="10%">
-                                            </telerik:GridBoundColumn>
-
-                                            <telerik:GridBoundColumn DataField="Valor_Moneda" HeaderText="Tipo de cambio" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Monto_Abono" HeaderText="Monto Abonado" HeaderStyle-Width="20%" ItemStyle-Width="20%">
                                             </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>
                             </div>
+                               <div class="row" style="margin-top: 20px;">
+                                <div class="col-12 col-md-6">
+                                   <a style="color:green; font-weight:bold;">Monto total abonado</a>
+                                   <asp:TextBox runat="server" ID="txtMontoTotalAbonado" CssClass="form-control" Width="200px" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <a style="color:red; font-weight:bold;">Monto restante por pagar</a>
+                                     <asp:TextBox runat="server" ID="txtMontoRestante" CssClass="form-control" Width="200px" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                </div>
+                            </div>
 
 
+                        </div>
+                        <div class="contenedor_botones">
+                            <asp:LinkButton CssClass="fa-solid fa-plus fa-lg boton_formulario_Agregar" runat="server" ID="btnAgregarAbono" OnClick="btnAgregarAbono_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
+                            <asp:LinkButton CssClass="fa-solid fa-floppy-disk fa-lg boton_formulario_Guardar" runat="server" ID="btnGuardarAbono" OnClick="btnGuardarAbono_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
+                            <asp:LinkButton CssClass="fa-solid fa-trash fa-lg boton_formulario_Eliminar" runat="server" ID="btnEliminarAbono" OnClick="btnEliminarAbono_Click" OnClientClick="return delalert(this);"></asp:LinkButton>
                         </div>
                     </telerik:RadPageView>
 

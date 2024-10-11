@@ -11,8 +11,6 @@ namespace Entidades.Egresos
         public int Id_Abono_CP { get; set; }
         public int Id_Cuenta_Pagar { get; set; }
         public float Monto_Abono { get; set; }
-        public int Id_Moneda { get; set; }
-        public float Valor_Moneda { get; set; }
         public DateTime Fecha_Abono { get; set; }
         public int Id_Usuario_Registro { get; set; }
         public string Nombre_Usuario_Registro { get; set; }
