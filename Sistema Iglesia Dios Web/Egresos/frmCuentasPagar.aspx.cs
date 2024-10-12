@@ -20,6 +20,7 @@ using System.Net;
 using Telerik.Web.UI;
 using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
+
 namespace Sistema_Iglesia_Dios_Web.Egresos
 {
     public partial class frmCuentasPagar : System.Web.UI.Page
@@ -1197,9 +1198,5 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
 
         #endregion
 
-        protected void btnObtenerCambioDolarPeso_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

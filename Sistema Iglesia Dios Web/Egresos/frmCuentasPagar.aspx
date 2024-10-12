@@ -34,7 +34,7 @@
                     <telerik:RadPageView runat="server" ID="rpvConsulta" Style="margin: 0 auto;">
                         <div class="shadowed-div-body" style="width: 100%; border-radius: 0px 10px 10px 10px;">
                             <div>
-                                <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Consulta</span>
+                                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Filtros</span>
                             </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>
 
@@ -283,11 +283,7 @@
                                 </div>
                                 <div id="divValorMoneda" runat="server" visible="false" class="col-12 col-md-4">
                                     Tipo de cambio <span class="LabelCampoObligatorio">*</span>
-                                    <div class="d-flex align-items-center">
-                                        <asp:TextBox runat="server" ID="txtValorMoneda_CuentaPagar" CssClass="form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
-                                    <asp:Button runat="server" ID="btnObtenerCambioDolarPeso" OnClick="btnObtenerCambioDolarPeso_Click" CssClass="btn btn-primary ml-2 fa-solid fa-dollar-sign fa-lg" style="margin-left: 10px; height: 37px;" data-toggle="modal" data-target="#exampleModal" data-tippy-content="Obtener tasa de cambio Dollar (Banreservas)" data-whatever="@mdo" />
-                                    </div>
-                                    
+                                   <asp:TextBox runat="server" ID="txtValorMoneda_CuentaPagar" CssClass="form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
                                 </div>
                                 <div class="col-12 col-md-4">
                                     Monto total a pagar <span class="LabelCampoObligatorio">*</span>

@@ -87,7 +87,6 @@ namespace Datos.Ingresos
             }
         }
 
-
         public Ingreso_E ObtenerRegistro(string Id)
         {
             Ingreso_E entidad = new Ingreso_E();
@@ -101,6 +100,7 @@ namespace Datos.Ingresos
                                         I.Monto,
                                         I.Fecha_Ingreso,
                                         I.Valor_Moneda,
+                                        I.Id_Forma_Pago,
                                         I.Id_Usuario_Registro,
                                         U1.Nombre1 + ' ' + U1.Apellido1 AS Nombre_Usuario_Registro,
                                         I.Fecha_Registro,
@@ -130,6 +130,7 @@ namespace Datos.Ingresos
                         entidad.Monto = double.Parse(row["Monto"].ToString());
                         entidad.Fecha_Ingreso = DateTime.Parse(row["Fecha_Ingreso"].ToString());
                         entidad.Valor_Moneda = double.Parse(row["Valor_Moneda"].ToString());
+                        entidad.Id_Forma_Pago = int.Parse(row["Id_Forma_Pago"].ToString());
                         entidad.Id_Usuario_Registro = int.Parse(row["Id_Usuario_Registro"].ToString());
                         entidad.Nombre_Usuario_Registro = row["Nombre_Usuario_Registro"].ToString();
                         entidad.Fecha_Registro = DateTime.Parse(row["Fecha_Registro"].ToString());

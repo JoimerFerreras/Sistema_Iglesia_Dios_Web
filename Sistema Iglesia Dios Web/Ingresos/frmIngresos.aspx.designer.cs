@@ -114,6 +114,15 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::Telerik.Web.UI.RadGrid gvDatos;
 
         /// <summary>
+        /// Control gvMontosTotales.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid gvMontosTotales;
+
+        /// <summary>
         /// Control btnBuscar.
         /// </summary>
         /// <remarks>

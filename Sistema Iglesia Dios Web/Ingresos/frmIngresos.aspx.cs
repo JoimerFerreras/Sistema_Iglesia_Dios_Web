@@ -172,6 +172,8 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
                         gvDatos.DataSource = DT_DATOS;
                         gvDatos.DataBind();
+
+                        CalcularMontosTotalesMonedas();
                     }
                     else
                     {
@@ -276,6 +278,57 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         {
             gvDatos.DataSource = DT_DATOS;
             gvDatos.DataBind();
+        }
+
+        private void CalcularMontosTotalesMonedas()
+        {
+            if (DT_DATOS.Rows.Count > 0)
+            {
+                DataTable dtTotales = new DataTable();
+                dtTotales.Columns.Add("Moneda");
+                dtTotales.Columns.Add("Monto", typeof(float));
+                for (int i = 0; i < DT_DATOS.Rows.Count; i++)
+                {
+                    DataRow row = DT_DATOS.Rows[i];
+                    if (dtTotales.Rows.Count == 0)
+                    {
+                        dtTotales.Rows.Add(row["Moneda"].ToString(), 0);
+                    }
+
+                    for (int j = 0; j < dtTotales.Rows.Count; j++)
+                    {
+                        DataRow rowTotales = dtTotales.Rows[j];
+                        
+                        if (row["Moneda"].ToString() == rowTotales["Moneda"].ToString())
+                        {
+                            int MontoOriginal = int.Parse(rowTotales["Monto"].ToString());
+                            int MontoTotal = MontoOriginal + int.Parse(row["Monto"].ToString());
+
+                            rowTotales["Monto"] = MontoTotal;
+                            break;
+                        }
+                        else
+                        {
+                            dtTotales.Rows.Add(row["Moneda"].ToString(), int.Parse(row["Monto"].ToString()));
+                            break;
+                        }
+                    }
+                }
+
+                gvMontosTotales.DataSource = dtTotales;
+                gvMontosTotales.DataBind();
+
+            }
+            else
+            {
+                DataTable dtTotales = new DataTable();
+                dtTotales.Columns.Add("Moneda");
+                dtTotales.Columns.Add("Monto", typeof(float));
+
+                gvMontosTotales.DataSource = dtTotales;
+                gvMontosTotales.DataBind();
+            }
+
         }
 
         private bool ValidarCampos()
@@ -576,6 +629,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 txtNombreArchivoDescargar.Text = "(" + Id_Archivo.ToString() + ") " + nombreArchivo;
 
                 ID_REGISTRO_ARCHIVO = Id_Archivo.ToString();
+                txtNombreArchivoDescargar.Focus();
             }
         }
 
@@ -737,6 +791,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
         #region Ingresos
 
+        // Grid principal
         protected void gvDatos_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
         {
             ActualizarGrid();
@@ -750,6 +805,22 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected void gvDatos_PageIndexChanged(object sender, Telerik.Web.UI.GridPageChangedEventArgs e)
         {
             ActualizarGrid();
+        }
+
+        // Grid de montos totales
+        protected void gvMontosTotales_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
+        {
+            CalcularMontosTotalesMonedas();
+        }
+
+        protected void gvMontosTotales_PageSizeChanged(object sender, Telerik.Web.UI.GridPageSizeChangedEventArgs e)
+        {
+            CalcularMontosTotalesMonedas();
+        }
+
+        protected void gvMontosTotales_PageIndexChanged(object sender, Telerik.Web.UI.GridPageChangedEventArgs e)
+        {
+            CalcularMontosTotalesMonedas();
         }
 
         protected void btnEditar_Click(object sender, EventArgs e)

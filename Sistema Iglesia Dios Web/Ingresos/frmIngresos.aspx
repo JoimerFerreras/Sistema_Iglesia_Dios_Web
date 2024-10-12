@@ -33,7 +33,7 @@
                     <telerik:RadPageView runat="server" ID="rpvConsulta" Style="margin: 0 auto;">
                         <div class="shadowed-div-body" style="width: 100%; border-radius: 0px 10px 10px 10px;">
                             <div>
-                                <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Consulta</span>
+                                <i class="fa-solid fa-filter shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Filtros</span>
                             </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>
 
@@ -95,15 +95,22 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-4">
                                     Moneda
-                    <telerik:RadComboBox ID="cmbMoneda_Consulta" runat="server" Width="100%" ClientIDMode="Static"
-                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
-                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
-                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
-                        <Items>
-                            <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
-                        </Items>
-                    </telerik:RadComboBox>
+                        <telerik:RadComboBox ID="cmbMoneda_Consulta" runat="server" Width="100%" ClientIDMode="Static"
+                            MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                            MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                            Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                            <Items>
+                                <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
+                            </Items>
+                        </telerik:RadComboBox>
                                 </div>
+                            </div>
+                        </div>
+
+
+                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+                            <div>
+                                <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Resultado</span>
                             </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>
 
@@ -136,10 +143,10 @@
                                             <telerik:GridBoundColumn DataField="Moneda" HeaderText="Moneda" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Monto" HeaderText="Monto" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Monto" HeaderText="Monto" DataFormatString="{0:0,0.00}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Valor_Moneda" HeaderText="Tipo de cambio" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Valor_Moneda" HeaderText="Tipo de cambio" DataFormatString="{0:0,0.00}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="Fecha_Ingreso" HeaderText="Fecha de ingreso" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
@@ -151,6 +158,33 @@
                                     </MasterTableView>
                                 </telerik:RadGrid>
                             </div>
+                        </div>
+
+                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+                            <div>
+                                <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Montos totales</span>
+                            </div>
+                            <div class="linea-separador" style="margin-top: 20px;"></div>
+
+                            <telerik:RadGrid RenderMode="Lightweight" ID="gvMontosTotales" runat="server" Culture="es-DO" Style="overflow-x: auto;" BorderColor="White" MasterTableView-Width="100%" Width="100%" HeaderStyle-Font-Bold="true" AlternatingItemStyle-BackColor="#F1F5FF"
+                                AllowPaging="True" AllowAutomaticUpdates="True" AllowAutomaticInserts="False" MasterTableView-PagerStyle-PageSizeLabelText="Registros" Skin="Bootstrap" HeaderStyle-BackColor="#F1F5FF" PagerStyle-AlwaysVisible="true"
+                                AllowAutomaticDeletes="True" AllowSorting="True" PagerStyle-BorderStyle="None" BorderStyle="None" FooterStyle-BorderStyle="None" HeaderStyle-BorderStyle="None" MasterTableView-PagerStyle-NextPagesToolTip="" MasterTableView-PagerStyle-PrevPagesToolTip=""
+                                FooterStyle-ForeColor="Black" HeaderStyle-ForeColor="Black" ItemStyle-ForeColor="Black" AlternatingItemStyle-ForeColor="Black" MasterTableView-PagerStyle-PagerTextFormat="{4} <strong>{5}</strong> Registros en <strong>{1}</strong> Páginas"
+                                MasterTableView-PagerStyle-FirstPageToolTip="" MasterTableView-PagerStyle-PrevPageToolTip="" MasterTableView-PagerStyle-NextPageToolTip="" MasterTableView-PagerStyle-LastPageToolTip=""
+                                OnPageIndexChanged="gvMontosTotales_PageIndexChanged" OnPageSizeChanged="gvMontosTotales_PageSizeChanged" OnSortCommand="gvMontosTotales_SortCommand">
+                                <PagerStyle Mode="NextPrevAndNumeric" />
+                                <MasterTableView AutoGenerateColumns="False">
+                                    <Columns>
+
+                                        <telerik:GridBoundColumn DataField="Moneda" HeaderText="Moneda" HeaderStyle-Width="50%" ItemStyle-Width="50%">
+                                        </telerik:GridBoundColumn>
+
+                                        <telerik:GridBoundColumn DataField="Monto" HeaderText="Monto" DataFormatString="{0:0,0.00}" HeaderStyle-Width="50%" ItemStyle-Width="50%">
+                                        </telerik:GridBoundColumn>
+                                    </Columns>
+                                </MasterTableView>
+                            </telerik:RadGrid>
+
                         </div>
                         <div class="contenedor_botones">
                             <asp:LinkButton CssClass="fa-solid fa-magnifying-glass fa-lg boton_formulario_Buscar" runat="server" ID="btnBuscar" OnClientClick="MostrarPanelCarga()" OnClick="btnBuscar_Click"></asp:LinkButton>
@@ -325,12 +359,12 @@
                                 </div>
                                 <div class="col-12 col-md-2">
                                     <br />
-                           <asp:Button runat="server" ID="btnDescargarArchivo" Text="Descargar archivo" CssClass="btn btn-primary" OnClick="btnDescargarArchivo_Click" Width="100%"></asp:Button>
+                                    <asp:Button runat="server" ID="btnDescargarArchivo" Text="Descargar archivo" CssClass="btn btn-primary" OnClick="btnDescargarArchivo_Click" Width="100%"></asp:Button>
                                 </div>
-                                 
+
                             </div>
-                           
-                       
+
+
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-12">
                                     <telerik:RadGrid RenderMode="Lightweight" ID="gvArchivos" runat="server" Culture="es-DO" Style="overflow-x: auto;" BorderColor="White" MasterTableView-Width="100%" Width="100%" HeaderStyle-Font-Bold="true" AlternatingItemStyle-BackColor="#F1F5FF"
