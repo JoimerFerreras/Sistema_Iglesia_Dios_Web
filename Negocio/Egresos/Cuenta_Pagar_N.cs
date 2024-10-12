@@ -13,7 +13,7 @@ namespace Negocio.Egresos
     {
         Cuenta_Pagar_D cuenta_pagar_D = new Cuenta_Pagar_D();
 
-        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Beneficiario, string Descripcion_Egreso, string Moneda)
+        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Beneficiario, string Descripcion_Egreso, string Moneda, string Estado)
         {
             try
             {
@@ -21,17 +21,17 @@ namespace Negocio.Egresos
                 string TextoTipoFecha = "";
                 if (TipoFecha == "1")
                 {
-                    TextoTipoFecha = "Fecha";
+                    TextoTipoFecha = "CPP.Fecha";
                 }
                 else if (TipoFecha == "2")
                 {
-                    TextoTipoFecha = "Fecha_Vencimiento";
+                    TextoTipoFecha = "CPP.Fecha_Vencimiento";
                 }
                 else if (TipoFecha == "3")
                 {
-                    TextoTipoFecha = "Fecha_Registro";
+                    TextoTipoFecha = "CPP.Fecha_Registro";
                 }
-                return cuenta_pagar_D.Listar(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Beneficiario), int.Parse(Descripcion_Egreso), int.Parse(Moneda));
+                return cuenta_pagar_D.Listar(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Beneficiario), int.Parse(Descripcion_Egreso), int.Parse(Moneda), int.Parse(Estado));
             }
             catch (Exception ex)
             {

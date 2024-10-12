@@ -95,17 +95,37 @@
                                 </div>
                             </div>
                             <div class="row" style="margin-top: 20px;">
-                                <div class="col-12 col-md-4">
-                                    Moneda
+                                <div class="col-12 col-md-6">
+                                    Moneda <br />
                                 <telerik:RadComboBox ID="cmbMoneda_Consulta" runat="server" Width="100%" ClientIDMode="Static"
                                     MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
                                     MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
-                                    Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                                    Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false" style="max-width:200px;">
                                     <Items>
                                         <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
                                     </Items>
                                 </telerik:RadComboBox>
                                 </div>
+
+                                <div class="col-12 col-md-6">
+                                    Estado <br />
+                                <telerik:RadComboBox ID="cmbEstado_Consulta" runat="server" Width="100%" ClientIDMode="Static"
+                                    MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                    MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                                    Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false" style="max-width:200px;">
+                                    <Items>
+                                        <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
+                                        <telerik:RadComboBoxItem Text="Pagado" Value="1" Selected="false" />
+                                        <telerik:RadComboBoxItem Text="En Proceso" Value="2" Selected="false" />
+                                        <telerik:RadComboBoxItem Text="Sin Abonos" Value="3" Selected="false" />
+                                    </Items>
+                                </telerik:RadComboBox>
+                                </div>
+                            </div>
+                            </div>
+                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+                            <div>
+                                <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Resultado</span>
                             </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>
 
@@ -150,11 +170,21 @@
                                             <telerik:GridBoundColumn DataField="Moneda" HeaderText="Moneda" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Monto_Total_Pagar" HeaderText="Monto total a pagar" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Monto_Total_Pagar" HeaderText="Monto total a pagar" DataFormatString="{0:0,0.00}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Valor_Moneda" HeaderText="Tipo de cambio" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Valor_Moneda" HeaderText="Tipo de cambio" DataFormatString="{0:0,0.00}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
+
+                                            <telerik:GridTemplateColumn HeaderText="Estado">
+                                                <HeaderStyle HorizontalAlign="Center" Width="10%" />
+                                                <ItemStyle HorizontalAlign="Center" Width="10%" />
+                                                <ItemTemplate>
+                                                    <div runat="server" commandargument='<%# Eval("Estado") %>' class='<%# GetStatusColor(Eval("Estado")) %>'>
+                                                        <asp:LinkButton runat="server" CommandArgument='<%# Eval("Estado") %>' CssClass='<%# GetStatusColor(Eval("Estado")) %>' Text='<%# GetStatusText(Eval("Estado")) %>' />
+                                                    </div>
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>
@@ -253,7 +283,11 @@
                                 </div>
                                 <div id="divValorMoneda" runat="server" visible="false" class="col-12 col-md-4">
                                     Tipo de cambio <span class="LabelCampoObligatorio">*</span>
-                                    <asp:TextBox runat="server" ID="txtValorMoneda_CuentaPagar" CssClass="form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
+                                    <div class="d-flex align-items-center">
+                                        <asp:TextBox runat="server" ID="txtValorMoneda_CuentaPagar" CssClass="form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
+                                    <asp:Button runat="server" ID="btnObtenerCambioDolarPeso" OnClick="btnObtenerCambioDolarPeso_Click" CssClass="btn btn-primary ml-2 fa-solid fa-dollar-sign fa-lg" style="margin-left: 10px; height: 37px;" data-toggle="modal" data-target="#exampleModal" data-tippy-content="Obtener tasa de cambio Dollar (Banreservas)" data-whatever="@mdo" />
+                                    </div>
+                                    
                                 </div>
                                 <div class="col-12 col-md-4">
                                     Monto total a pagar <span class="LabelCampoObligatorio">*</span>
@@ -406,7 +440,7 @@
                                             <telerik:GridBoundColumn DataField="Descripcion_Forma_Pago" HeaderText="Forma de pago" HeaderStyle-Width="40%" ItemStyle-Width="40%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Monto_Abono" HeaderText="Monto Abonado" HeaderStyle-Width="20%" ItemStyle-Width="20%">
+                                            <telerik:GridBoundColumn DataField="Monto_Abono" HeaderText="Monto Abonado" DataFormatString="{0:0,0.00}" HeaderStyle-Width="20%" ItemStyle-Width="20%">
                                             </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>

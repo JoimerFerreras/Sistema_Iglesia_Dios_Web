@@ -19,28 +19,38 @@ namespace Datos.Egresos
 
         #region Consultas
 
-        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Beneficiario, int Descripcion_Egreso, int Moneda)
+        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Beneficiario, int Descripcion_Egreso, int Moneda, int Estado)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
+                // Nota: Es necesario el orden en que está desarrollada esta consulta para que funcione correctamente
                 string sentencia = "";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                                    sentencia = @"SELECT Id_Cuenta_Pagar,
-                                                    CPP.Fecha,
-	                                                CPP.Fecha_Vencimiento,
-                                                    Fecha_Registro,
-                                                    M.Nombres + ' ' + M.Apellidos AS Beneficiario,
-	                                                CPP.Otro_Beneficiario,
-                                                    DE.Descripcion_Egreso,
-                                                    Mon.Nombre_Moneda AS Moneda,
-                                                    CPP.Valor_Moneda,
-                                                    CPP.Monto_Total_Pagar
-    
-                                                FROM Cuentas_Por_Pagar CPP
-                                                LEFT JOIN Descripciones_Egreso DE ON DE.Id_Descripcion_Egreso = CPP.Id_Descripcion_Egreso
-                                                LEFT JOIN Miembros M ON M.Id_Miembro = CPP.Id_Beneficiario
-                                                LEFT JOIN Monedas Mon ON Mon.Id_Moneda = CPP.Id_Moneda ";
-
+                                    sentencia = @"SELECT * 
+                                                    FROM (
+                                                        SELECT 
+                                                            CPP.Id_Cuenta_Pagar,
+                                                            CPP.Fecha,
+                                                            CPP.Fecha_Vencimiento,
+                                                            CPP.Fecha_Registro,
+                                                            M.Nombres + ' ' + M.Apellidos AS Beneficiario,
+                                                            CPP.Otro_Beneficiario,
+                                                            DE.Descripcion_Egreso,
+                                                            Mon.Nombre_Moneda AS Moneda,
+                                                            CPP.Valor_Moneda,
+                                                            CPP.Monto_Total_Pagar,
+                                                            CASE 
+                                                                WHEN ISNULL(SUM(ACP.Monto_Abono), 0) <= 0 THEN 3
+                                                                WHEN ISNULL(SUM(ACP.Monto_Abono), 0) < CPP.Monto_Total_Pagar THEN 2
+                                                                WHEN ISNULL(SUM(ACP.Monto_Abono), 0) >= CPP.Monto_Total_Pagar THEN 1
+                                                            END AS Estado
+                                                        FROM Cuentas_Por_Pagar CPP
+                                                        LEFT JOIN Descripciones_Egreso DE ON DE.Id_Descripcion_Egreso = CPP.Id_Descripcion_Egreso
+                                                        LEFT JOIN Miembros M ON M.Id_Miembro = CPP.Id_Beneficiario
+                                                        LEFT JOIN Monedas Mon ON Mon.Id_Moneda = CPP.Id_Moneda 
+                                                        LEFT JOIN Abonos_Cuentas_Pagar ACP ON ACP.Id_Cuenta_Pagar = CPP.Id_Cuenta_Pagar ";
+                              
+                
                 // Tipo de fecha
                 sentencia += $@" WHERE ({TipoFecha} BETWEEN @FechaInicial AND @FechaFinal) ";
                 cmd.Parameters.AddWithValue("@FechaInicial", FechaInicial);
@@ -65,6 +75,18 @@ namespace Datos.Egresos
                 {
                     sentencia += $" AND (Mon.Id_Moneda = @Moneda) ";
                     cmd.Parameters.AddWithValue("@Moneda", Moneda);
+                }
+
+                sentencia += @"GROUP BY CPP.Id_Cuenta_Pagar, CPP.Fecha, CPP.Fecha_Vencimiento, CPP.Fecha_Registro, 
+                                                                 M.Nombres, M.Apellidos, CPP.Otro_Beneficiario, DE.Descripcion_Egreso, 
+                                                                 Mon.Nombre_Moneda, CPP.Valor_Moneda, CPP.Monto_Total_Pagar
+                                                    ) AS CuentasConEstado ";
+
+                // Estado
+                if (Estado > 0)
+                {
+                    sentencia += $" WHERE (Estado = @Estado) ";
+                    cmd.Parameters.AddWithValue("@Estado", Estado);
                 }
 
                 sentencia += $@"ORDER BY Id_Cuenta_Pagar DESC";

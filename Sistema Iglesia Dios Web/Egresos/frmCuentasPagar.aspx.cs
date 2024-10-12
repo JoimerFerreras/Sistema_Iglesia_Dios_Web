@@ -182,7 +182,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
 
         private void LimpiarFiltros()
         {
-            rbtnTipoFecha.SelectedValue = "2";
+            rbtnTipoFecha.SelectedValue = "1";
 
             //Primero obtenemos el día actual
             DateTime date = DateTime.Now;
@@ -221,7 +221,8 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                         dtpFechaHasta.SelectedDate.Value,
                         cmbBeneficiarios_Consulta.SelectedValue,
                         cmbDescripcionEgreso_Consulta.SelectedValue,
-                        cmbMoneda_Consulta.SelectedValue);
+                        cmbMoneda_Consulta.SelectedValue,
+                        cmbEstado_Consulta.SelectedValue);
 
                         gvDatos.DataSource = DT_DATOS;
                         gvDatos.DataBind();
@@ -1158,6 +1159,47 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         #endregion
 
 
+        // Estas dos funciones se utilizan para asignarle clases css de color rojo o verde a los items de la columan "Estado" en los Grid
+        protected string GetStatusText(object status)
+        {
+            string statusText = status.ToString();
+            if (statusText == "1")
+            {
+                return "Pagado";
+            }
+            else if (statusText == "2")
+            {
+                return "En Proceso";
+            }
+            else
+            {
+                return "Sin Abonos";
+            }
+        }
+
+        protected string GetStatusColor(object status)
+        {
+            string statusText = status.ToString();
+
+            if (statusText == "1")
+            {
+                return "status-green";
+            }
+            else if (statusText == "2")
+            {
+                return "status-yellow";
+            }
+            else
+            {
+                return "status-red";
+            }
+        }
+
         #endregion
+
+        protected void btnObtenerCambioDolarPeso_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
