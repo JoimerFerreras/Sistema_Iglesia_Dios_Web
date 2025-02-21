@@ -20,7 +20,7 @@ function delalert(btn) {
 
     swal({
         title: "Eliminar el registro",
-        text: "¿Está seguro que desea eliminar este registro?",
+        text: "\u00BFEst\u00E1 seguro que desea eliminar este registro?",
         icon: "warning",
         dangerMode: true,
         buttons: {

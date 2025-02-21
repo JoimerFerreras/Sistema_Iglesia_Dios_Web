@@ -60,22 +60,22 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::Telerik.Web.UI.RadRadioButtonList rbtnTipoFecha;
 
         /// <summary>
-        /// Control dtpFechaDesde.
+        /// Control dtpFechaDesdeFiltro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpFechaDesde;
+        protected global::Telerik.Web.UI.RadDatePicker dtpFechaDesdeFiltro;
 
         /// <summary>
-        /// Control dtpFechaHasta.
+        /// Control dtpFechaHastaFiltro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpFechaHasta;
+        protected global::Telerik.Web.UI.RadDatePicker dtpFechaHastaFiltro;
 
         /// <summary>
         /// Control cmbDescripcionIngreso_Consulta.
@@ -105,6 +105,24 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::Telerik.Web.UI.RadComboBox cmbMoneda_Consulta;
 
         /// <summary>
+        /// Control btnGenerarPDF_Detalle.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnGenerarPDF_Detalle;
+
+        /// <summary>
+        /// Control btnGenerarExcel_Detalle.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnGenerarExcel_Detalle;
+
+        /// <summary>
         /// Control gvDatos.
         /// </summary>
         /// <remarks>
@@ -112,6 +130,33 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid gvDatos;
+
+        /// <summary>
+        /// Control btnGenerarPDF_Resumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnGenerarPDF_Resumen;
+
+        /// <summary>
+        /// Control btnGenerarExcel_Resumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnGenerarExcel_Resumen;
+
+        /// <summary>
+        /// Control gvResumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid gvResumen;
 
         /// <summary>
         /// Control gvMontosTotales.
@@ -139,24 +184,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnLimpiarFiltros;
-
-        /// <summary>
-        /// Control btnGenerarPDF.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnGenerarPDF;
-
-        /// <summary>
-        /// Control btnGenerarExcel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnGenerarExcel;
 
         /// <summary>
         /// Control rpvRegistro.

@@ -51,58 +51,58 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::Telerik.Web.UI.RadRadioButtonList rbtnTipoFecha;
 
         /// <summary>
-        /// Control dtpFechaDesde.
+        /// Control dtpFechaDesdeFiltro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpFechaDesde;
+        protected global::Telerik.Web.UI.RadDatePicker dtpFechaDesdeFiltro;
 
         /// <summary>
-        /// Control dtpFechaHasta.
+        /// Control dtpFechaHastaFiltro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpFechaHasta;
+        protected global::Telerik.Web.UI.RadDatePicker dtpFechaHastaFiltro;
 
         /// <summary>
-        /// Control txtTextoBusqueda.
+        /// Control txtTextoBusquedaFiltro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTextoBusqueda;
+        protected global::System.Web.UI.WebControls.TextBox txtTextoBusquedaFiltro;
 
         /// <summary>
-        /// Control cmbSexo.
+        /// Control cmbSexoFiltro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbSexo;
+        protected global::Telerik.Web.UI.RadComboBox cmbSexoFiltro;
 
         /// <summary>
-        /// Control RadComboBox1.
+        /// Control cmbEstadoCivilFiltro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox RadComboBox1;
+        protected global::Telerik.Web.UI.RadComboBox cmbEstadoCivilFiltro;
 
         /// <summary>
-        /// Control cmbMinisterio.
+        /// Control cmbMinisterioFiltro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbMinisterio;
+        protected global::Telerik.Web.UI.RadComboBox cmbMinisterioFiltro;
 
         /// <summary>
         /// Control gvDatos.

@@ -89,33 +89,33 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             string PrimerDiaAnio = "1/1/" + DateTime.Now.Year.ToString();
             //string UltimoDiaAnio = "31/12/" + DateTime.Now.Year.ToString();
 
-            dtpFechaDesde.SelectedDate = DateTime.Parse(PrimerDiaAnio);
-            dtpFechaHasta.SelectedDate = DateTime.Now;
+            dtpFechaDesdeFiltro.SelectedDate = DateTime.Parse(PrimerDiaAnio);
+            dtpFechaHastaFiltro.SelectedDate = DateTime.Now;
 
-            txtTextoBusqueda.Text = "";
-            cmbSexo.SelectedValue = "0";
-            cmbEstadoCivil.SelectedValue = "0";
-            cmbMinisterio.SelectedValue = "0";
+            txtTextoBusquedaFiltro.Text = "";
+            cmbSexoFiltro.SelectedValue = "0";
+            cmbEstadoCivilFiltro.SelectedValue = "0";
+            cmbMinisterioFiltro.SelectedValue = "0";
         }
 
         private void Consultar()
         {
             DateTime fecha;
 
-            if (dtpFechaDesde.SelectedDate != null && dtpFechaHasta.SelectedDate != null)
+            if (dtpFechaDesdeFiltro.SelectedDate != null && dtpFechaHastaFiltro.SelectedDate != null)
             {
-                if (DateTime.TryParse(dtpFechaDesde.SelectedDate.Value.ToString(), out fecha) == true)
+                if (DateTime.TryParse(dtpFechaDesdeFiltro.SelectedDate.Value.ToString(), out fecha) == true)
                 {
-                    if (DateTime.TryParse(dtpFechaHasta.SelectedDate.Value.ToString(), out fecha) == true)
+                    if (DateTime.TryParse(dtpFechaHastaFiltro.SelectedDate.Value.ToString(), out fecha) == true)
                     {
                         DT_DATOS = miembro_N.Consultar(
                         rbtnTipoFecha.SelectedValue,
-                        dtpFechaDesde.SelectedDate.Value,
-                        dtpFechaHasta.SelectedDate.Value,
-                        txtTextoBusqueda.Text,
-                        cmbSexo.SelectedValue,
-                        cmbEstadoCivil.SelectedValue,
-                        cmbMinisterio.SelectedValue);
+                        dtpFechaDesdeFiltro.SelectedDate.Value,
+                        dtpFechaHastaFiltro.SelectedDate.Value,
+                        txtTextoBusquedaFiltro.Text,
+                        cmbSexoFiltro.SelectedValue,
+                        cmbEstadoCivilFiltro.SelectedValue,
+                        cmbMinisterioFiltro.SelectedValue);
 
                         gvDatos.DataSource = DT_DATOS;
                         gvDatos.DataBind();
@@ -143,10 +143,10 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             // Ministerio
             Ministerio_N Ministerio_N = new Ministerio_N();
             dt = Ministerio_N.ListaCombo("0", false);
-            cmbMinisterio.DataSource = dt;
-            cmbMinisterio.DataValueField = "Id_Ministerio";
-            cmbMinisterio.DataTextField = "Nombre_Ministerio";
-            cmbMinisterio.DataBind();
+            cmbMinisterioFiltro.DataSource = dt;
+            cmbMinisterioFiltro.DataValueField = "Id_Ministerio";
+            cmbMinisterioFiltro.DataTextField = "Nombre_Ministerio";
+            cmbMinisterioFiltro.DataBind();
         }
 
         private void ActualizarGrid()
@@ -167,15 +167,22 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             if (txtNombres_Miembro.Text.Length == 0)
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El nombre del miembro no puede estar vacío");
+                txtNombres_Miembro.Focus();
             }
             else if (txtApellidos_Miembro.Text.Length == 0)
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El apellido del miembro no puede estar vacío");
+                txtApellidos_Miembro.Focus();
             }
-
             else if (dtpFechaNacimiento.SelectedDate == null)
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El la fecha de nacimiento debe ser válida"); 
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La fecha de nacimiento debe ser válida"); 
+                dtpFechaNacimiento.Focus();
+            }
+            else if (dtpDesdeCuandoMiembro.SelectedDate == null)
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La fecha de cuando se unió el miembro debe ser válida");
+                dtpDesdeCuandoMiembro.Focus();
             }
             else
             {
@@ -652,6 +659,47 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             txtNombres_Miembro.Focus();
         }
 
+        private void GenerarReporteExcel()
+        {
+            // Se establece una lista con el nombre de las columnas del grid
+            List<string> NombresColumnas = new List<string>();
+            for (int i = 1; i < gvDatos.MasterTableView.Columns.Count; i++)
+            {
+                NombresColumnas.Add(gvDatos.MasterTableView.Columns[i].HeaderText);
+            }
+
+            // Se establece el nombre del reporte
+            string NombreReporte = "Reporte_Miembros";
+            DataTable dtReporte = DT_DATOS.Copy();
+
+            // Se crea una tabla con los parametros de los filtros
+            DataTable dtParametros = new DataTable();
+            dtParametros.Columns.Add("Parametro");
+            dtParametros.Columns.Add("Valor");
+
+            dtParametros.Rows.Add("Iglesia de Dios La 33 Casa de Fe", "");
+            dtParametros.Rows.Add("Relación de Miembros");
+            dtParametros.Rows.Add("Fecha/Hora de reporte: " + string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", DateTime.Now));
+            dtParametros.Rows.Add("", "");
+            dtParametros.Rows.Add("Filtros");
+            dtParametros.Rows.Add("Tipo de fecha: ", rbtnTipoFecha.Items[rbtnTipoFecha.SelectedIndex].Text);
+
+            dtParametros.Rows.Add("Fecha inicial: ", string.Format("{0:dd/MM/yyyy}", dtpFechaDesdeFiltro.SelectedDate));
+            dtParametros.Rows.Add("Fecha final: ", string.Format("{0:dd/MM/yyyy}", dtpFechaHastaFiltro.SelectedDate));
+
+            dtParametros.Rows.Add("Sexo: ", cmbSexoFiltro.Text);
+            //dtParametros.Rows.Add("Via de registro: ", rbtnViaRegistro.Items[rbtnViaRegistro.SelectedIndex].Text);
+            dtParametros.Rows.Add("Estado Civil: ", cmbEstadoCivilFiltro.Text);
+            dtParametros.Rows.Add("Nombre, Apellido, Nombre de pila o ID: ", txtTextoBusquedaFiltro.Text);
+            dtParametros.Rows.Add("Ministerio perteneciente: ", cmbMinisterioFiltro.Text);
+            dtParametros.Rows.Add("", "");
+            dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
+
+            // Se llama al metodo de generar reporte de Utilidad_C
+            Utilidad_C utilidad_C = new Utilidad_C();
+            utilidad_C.GenerarReporteExcel(dtParametros, dtReporte, NombresColumnas, NombreReporte, this.Page, null);
+        }
+
         #endregion
 
 
@@ -742,7 +790,7 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
 
         protected void btnGenerarExcel_Click(object sender, EventArgs e)
         {
-
+            GenerarReporteExcel();
         }
 
 

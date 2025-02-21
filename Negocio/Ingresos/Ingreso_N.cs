@@ -35,6 +35,28 @@ namespace Negocio.Ingresos
             }
         }
 
+        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Descripcion_Ingreso, string Moneda)
+        {
+            try
+            {
+                // Tipo de fecha
+                string TextoTipoFecha = "";
+                if (TipoFecha == "1")
+                {
+                    TextoTipoFecha = "Fecha_Ingreso";
+                }
+                else if (TipoFecha == "2")
+                {
+                    TextoTipoFecha = "Fecha_Registro";
+                }
+                return Ingreso_D.ListarResumen(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Descripcion_Ingreso), int.Parse(Moneda));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public Ingreso_E ObtenerRegistro(string Id)
         {
             try

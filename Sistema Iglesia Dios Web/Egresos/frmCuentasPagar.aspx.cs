@@ -524,6 +524,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             txtUsuarioUltimaModificacion_CuentaPagar.Text = "";
             txtFechaUltimaModificacion_CuentaPagar.Text = "";
             txtComentarioCuentaPagar.Text = "";
+            txtNo_Factura.Text = "";
 
             if (cmbMoneda_CuentaPagar.SelectedValue == "1" || cmbMoneda_CuentaPagar.SelectedValue == "0")
             {
@@ -1170,7 +1171,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             }
             else if (statusText == "2")
             {
-                return "En Proceso";
+                return "En Abono";
             }
             else
             {

@@ -17,6 +17,10 @@
     <asp:UpdatePanel runat="server" UpdateMode="Conditional" ID="upPrincipal">
         <Triggers>
             <asp:PostBackTrigger ControlID="btnDescargarArchivo" />
+            <asp:PostBackTrigger ControlID="btnGenerarPDF_Detalle" />
+            <asp:PostBackTrigger ControlID="btnGenerarExcel_Detalle" />
+            <asp:PostBackTrigger ControlID="btnGenerarPDF_Resumen" />
+            <asp:PostBackTrigger ControlID="btnGenerarExcel_Resumen" />
         </Triggers>
         <ContentTemplate>
 
@@ -53,14 +57,14 @@
                                 <div class="col-12 col-md-6">
                                     Fecha inicial
                     <br>
-                                    <telerik:RadDatePicker ID="dtpFechaDesde" runat="server" Width="100%" Culture="es-DO" TabIndex="2" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
+                                    <telerik:RadDatePicker ID="dtpFechaDesdeFiltro" runat="server" Width="100%" Culture="es-DO" TabIndex="2" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
                                         <DateInput ID="DateInput2" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                                     </telerik:RadDatePicker>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     Fecha final
                     <br>
-                                    <telerik:RadDatePicker ID="dtpFechaHasta" runat="server" Width="100%" Culture="es-DO" TabIndex="3" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
+                                    <telerik:RadDatePicker ID="dtpFechaHastaFiltro" runat="server" Width="100%" Culture="es-DO" TabIndex="3" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
                                         <DateInput ID="DateInput3" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                                     </telerik:RadDatePicker>
                                 </div>
@@ -81,7 +85,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6">
-                                    Miembro
+                                    Beneficiario
                     <telerik:RadComboBox ID="cmbMiembro_Consulta" runat="server" Width="100%" ClientIDMode="Static"
                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
@@ -110,7 +114,9 @@
 
                          <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
                             <div>
-                                <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Resultado</span>
+                                <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Detalle</span> 
+                                <asp:LinkButton runat="server" ID="btnGenerarPDF_Detalle" CssClass="btn btn-secondary" OnClick="btnGenerarPDF_Detalle_Click" OnClientClick="MostrarPanelCarga()"><i class="fa-solid fa-file-pdf"></i> Generar reporte PDF</asp:LinkButton> 
+                                <asp:LinkButton runat="server" ID="btnGenerarExcel_Detalle" CssClass="btn btn-success" OnClick="btnGenerarExcel_Detalle_Click"><i class="fa-solid fa-file-excel"></i> Generar Excel</asp:LinkButton> 
                             </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>
 
@@ -162,6 +168,41 @@
 
                          <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
                             <div>
+                                <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Resumen</span>
+                                <asp:LinkButton runat="server" ID="btnGenerarPDF_Resumen" CssClass="btn btn-secondary" OnClick="btnGenerarPDF_Resumen_Click" OnClientClick="MostrarPanelCarga()"><i class="fa-solid fa-file-pdf"></i> Generar reporte PDF</asp:LinkButton> 
+                                <asp:LinkButton runat="server" ID="btnGenerarExcel_Resumen" CssClass="btn btn-success" OnClick="btnGenerarExcel_Resumen_Click"><i class="fa-solid fa-file-excel"></i> Generar Excel</asp:LinkButton> 
+                            </div>
+                            <div class="linea-separador" style="margin-top: 20px;"></div>
+
+                            <div class="col-12 div-gridview">
+                                <telerik:RadGrid RenderMode="Lightweight" ID="gvResumen" runat="server" Culture="es-DO" Style="overflow-x: auto;" BorderColor="White" MasterTableView-Width="100%" Width="100%" HeaderStyle-Font-Bold="true" AlternatingItemStyle-BackColor="#F1F5FF"
+                                    AllowPaging="True" AllowAutomaticUpdates="True" AllowAutomaticInserts="False" MasterTableView-PagerStyle-PageSizeLabelText="Registros" Skin="Bootstrap" HeaderStyle-BackColor="#F1F5FF" PagerStyle-AlwaysVisible="true"
+                                    AllowAutomaticDeletes="True" AllowSorting="True" PagerStyle-BorderStyle="None" BorderStyle="None" FooterStyle-BorderStyle="None" HeaderStyle-BorderStyle="None" MasterTableView-PagerStyle-NextPagesToolTip="" MasterTableView-PagerStyle-PrevPagesToolTip=""
+                                    FooterStyle-ForeColor="Black" HeaderStyle-ForeColor="Black" ItemStyle-ForeColor="Black" AlternatingItemStyle-ForeColor="Black" MasterTableView-PagerStyle-PagerTextFormat="{4} <strong>{5}</strong> Registros en <strong>{1}</strong> Páginas"
+                                    MasterTableView-PagerStyle-FirstPageToolTip="" MasterTableView-PagerStyle-PrevPageToolTip="" MasterTableView-PagerStyle-NextPageToolTip="" MasterTableView-PagerStyle-LastPageToolTip=""
+                                    OnPageIndexChanged="gvResumen_PageIndexChanged" OnPageSizeChanged="gvResumen_PageSizeChanged" OnSortCommand="gvResumen_SortCommand">
+                                    <PagerStyle Mode="NextPrevAndNumeric" />
+                                    <MasterTableView AutoGenerateColumns="False">
+                                        <Columns>
+                                            <telerik:GridBoundColumn DataField="Descripcion_Ingreso" HeaderText="Descripción" HeaderStyle-Width="20%" ItemStyle-Width="20%">
+                                            </telerik:GridBoundColumn>
+
+                                            <telerik:GridBoundColumn DataField="Total_Monto" HeaderText="Monto Total" DataFormatString="{0:0,0.00}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            </telerik:GridBoundColumn>
+
+                                            <telerik:GridBoundColumn DataField="Moneda" HeaderText="Moneda" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            </telerik:GridBoundColumn>
+
+                                            
+                                        </Columns>
+                                    </MasterTableView>
+                                </telerik:RadGrid>
+                            </div>
+                        </div>
+
+
+                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+                            <div>
                                 <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Montos totales</span>
                             </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>
@@ -189,8 +230,6 @@
                         <div class="contenedor_botones">
                             <asp:LinkButton CssClass="fa-solid fa-magnifying-glass fa-lg boton_formulario_Buscar" runat="server" ID="btnBuscar" OnClientClick="MostrarPanelCarga()" OnClick="btnBuscar_Click"></asp:LinkButton>
                             <asp:LinkButton CssClass="fa-solid fa-filter-circle-xmark fa-lg boton_formulario_LimpiarFiltros" runat="server" ID="btnLimpiarFiltros" OnClick="btnLimpiarFiltros_Click"></asp:LinkButton>
-                            <asp:LinkButton CssClass="fa-solid fa-file-pdf fa-lg boton_formulario_Agregar" runat="server" ID="btnGenerarPDF" OnClick="btnGenerarPDF_Click" OnClientClick="MostrarPanelCarga()" data-tippy-content="Generar reporte en PDF"></asp:LinkButton>
-                            <asp:LinkButton CssClass="fa-solid fa-file-excel fa-lg boton_formulario_Agregar" runat="server" ID="btnGenerarExcel" OnClick="btnGenerarExcel_Click" data-tippy-content="Generar reporte en Excel"></asp:LinkButton>
                         </div>
                     </telerik:RadPageView>
 

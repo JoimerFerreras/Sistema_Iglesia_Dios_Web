@@ -104,34 +104,34 @@
 
                      <li class="item_1" id="ingresos" title="Ingresos">
                         <a style="text-decoration: none;" href="#ingresos" class="menu_1-btn_1" data-tippy-content="Ingresos" title="">
-                            <i class="fa-solid fa-cash-register"></i><span>Ingresos<i class="fas fa-chevron-down drop-down_1"></i></span>
+                            <i class="fa-solid fa-hand-holding-dollar"></i><span>Ingresos<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
                         <div class="sub-menu_1">
-                            <a href="#" id="btnIngresos" data-tippy-content="Ingresos" title=""><i class="fa-solid fa-cash-register"></i><span>Ingresos</span></a>
+                            <a href="#" id="btnIngresos" data-tippy-content="Ingresos" title=""><i class="fa-solid fa-hand-holding-dollar"></i><span>Ingresos</span></a>
                         </div>
                          <div class="sub-menu_1">
-                            <a href="#" id="btnDescripcionIngresos" data-tippy-content="Descripción de ingresos" title=""><i class="fa-solid fa-cash-register"></i><span>Descripción de ingresos</span></a>
+                            <a href="#" id="btnDescripcionIngresos" data-tippy-content="Descripción de ingresos" title=""><i class="fa-solid fa-folder-open"></i><span>Descripción de ingresos</span></a>
                         </div>
                     </li>
 
                     <li class="item_1" id="egresos" title="Egresos">
                         <a style="text-decoration: none;" href="#egresos" class="menu_1-btn_1" data-tippy-content="Egresos" title="">
-                            <i class="fa-solid fa-cash-register"></i><span>Egresos<i class="fas fa-chevron-down drop-down_1"></i></span>
+                            <i class="fa-solid fa-scale-unbalanced-flip"></i><span>Egresos<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
                          <div class="sub-menu_1">
-                            <a href="#" id="btnCuentasPagar" data-tippy-content="Cuentas por pagar" title=""><i class="fa-solid fa-cash-register"></i><span>Cuentas por pagar</span></a>
+                            <a href="#" id="btnCuentasPagar" data-tippy-content="Cuentas por pagar" title=""><i class="fa-solid fa-scale-unbalanced-flip"></i><span>Cuentas por pagar</span></a>
                         </div>
                          <div class="sub-menu_1">
-                            <a href="#" id="btnDescripcionEgresos" data-tippy-content="Descripción de egresos" title=""><i class="fa-solid fa-cash-register"></i><span>Descripción de egresos</span></a>
+                            <a href="#" id="btnDescripcionEgresos" data-tippy-content="Descripción de egresos" title=""><i class="fa-solid fa-folder-open"></i><span>Descripción de egresos</span></a>
                         </div>
                     </li>
 
                     <li class="item_1" id="miembros" title="Miembros">
                         <a style="text-decoration: none;" href="#miembros" class="menu_1-btn_1" data-tippy-content="Miembros" title="">
-                            <i class="fa-solid fa-folder-open"></i><span>Miembros<i class="fas fa-chevron-down drop-down_1"></i></span>
+                            <i class="fa-solid fa-users"></i><span>Miembros<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
                         <div class="sub-menu_1">
-                            <a href="#" id="btnMiembros" data-tippy-content="Miembros" title=""><i class="fa-solid fa-user-plus"></i><span>Miembros</span></a>
+                            <a href="#" id="btnMiembros" data-tippy-content="Miembros" title=""><i class="fa-solid fa-id-card"></i><span>Miembros</span></a>
                         </div>
                     </li>
 
@@ -147,14 +147,14 @@
 
                      <li class="item_1" id="otros_parametros" title="Otros parámetros">
                         <a style="text-decoration: none;" href="#otros_parametros" class="menu_1-btn_1" data-tippy-content="Otros parámetros" title="">
-                            <i class="fa-solid fa-folder-open"></i><span>Otros Parametros<i class="fas fa-chevron-down drop-down_1"></i></span>
+                            <i class="fa-solid fa-sliders"></i><span>Otros Parametros<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
                         <div class="sub-menu_1">
-                            <a href="#" id="btnFormas_Pago" data-tippy-content="Formas de pago" title=""><i class="fa-solid fa-user-plus"></i><span>Formas de pago</span></a>
+                            <a href="#" id="btnFormas_Pago" data-tippy-content="Formas de pago" title=""><i class="fa-solid fa-money-bill"></i><span>Formas de pago</span></a>
                         </div>
 
                           <div class="sub-menu_1">
-                            <a href="#" id="btnMonedas" data-tippy-content="Monedas" title=""><i class="fa-solid fa-user-plus"></i><span>Monedas</span></a>
+                            <a href="#" id="btnMonedas" data-tippy-content="Monedas" title=""><i class="fa-solid fa-dollar-sign"></i><span>Monedas</span></a>
                         </div>
                     </li>
 

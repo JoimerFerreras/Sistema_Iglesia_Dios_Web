@@ -26,17 +26,18 @@ namespace Datos.Ingresos
                 string sentencia = "";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 sentencia = @"SELECT Id_Ingreso,
-                                          M.Nombres + ' ' + M.Apellidos AS Miembro,
-                                          DI.Descripcion_Ingreso,
-                                          Mon.Nombre_Moneda AS Moneda,
-                                          Monto,
-                                          Fecha_Ingreso,
-                                          Valor_Moneda,
-                                          Fecha_Registro
-                                      FROM Ingresos I
-                                      LEFT JOIN Descripciones_Ingreso DI ON DI.Id_Descripcion_Ingreso = I.Id_Descripcion_Ingreso
-                                      LEFT JOIN Miembros M ON M.Id_Miembro = I.Id_Miembro
-                                      LEFT JOIN Monedas Mon ON Mon.Id_Moneda = I.Id_Moneda ";
+                                        DI.Descripcion_Ingreso,
+                                        M.Nombres + ' ' + M.Apellidos AS Miembro,
+                                        Mon.Nombre_Moneda AS Moneda,
+                                        Monto,
+                                        Valor_Moneda,
+                                        FORMAT(Fecha_Ingreso, 'dd/MM/yyyy') AS Fecha_Ingreso,
+                                        FORMAT(Fecha_Registro, 'dd/MM/yyyy') AS Fecha_Registro
+
+                                        FROM Ingresos I
+                                        LEFT JOIN Descripciones_Ingreso DI ON DI.Id_Descripcion_Ingreso = I.Id_Descripcion_Ingreso
+                                        LEFT JOIN Miembros M ON M.Id_Miembro = I.Id_Miembro
+                                        LEFT JOIN Monedas Mon ON Mon.Id_Moneda = I.Id_Moneda ";
 
                 // Tipo de fecha
                 sentencia += $@" WHERE ({TipoFecha} BETWEEN @FechaInicial AND @FechaFinal) ";
@@ -86,6 +87,69 @@ namespace Datos.Ingresos
                 }
             }
         }
+
+
+        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion_Ingreso, int Moneda)
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = @"
+                    SELECT 
+                        DI.Descripcion_Ingreso,
+                        Mon.Nombre_Moneda AS Moneda,
+                        SUM(Monto) AS Total_Monto
+                    FROM Ingresos I
+                    LEFT JOIN Descripciones_Ingreso DI ON DI.Id_Descripcion_Ingreso = I.Id_Descripcion_Ingreso
+                    LEFT JOIN Monedas Mon ON Mon.Id_Moneda = I.Id_Moneda
+                    WHERE (" + TipoFecha + " BETWEEN @FechaInicial AND @FechaFinal) ";
+
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@FechaInicial", FechaInicial);
+                cmd.Parameters.AddWithValue("@FechaFinal", FechaFinal);
+
+                // Filtrar por Miembro
+                if (Miembro > 0)
+                {
+                    sentencia += " AND (I.Id_Miembro = @Miembro) ";
+                    cmd.Parameters.AddWithValue("@Miembro", Miembro);
+                }
+
+                // Filtrar por Descripción de Ingreso
+                if (Descripcion_Ingreso > 0)
+                {
+                    sentencia += " AND (DI.Id_Descripcion_Ingreso = @Descripcion_Ingreso) ";
+                    cmd.Parameters.AddWithValue("@Descripcion_Ingreso", Descripcion_Ingreso);
+                }
+
+                // Filtrar por Moneda
+                if (Moneda > 0)
+                {
+                    sentencia += " AND (Mon.Id_Moneda = @Moneda) ";
+                    cmd.Parameters.AddWithValue("@Moneda", Moneda);
+                }
+
+                sentencia += " GROUP BY DI.Descripcion_Ingreso, Mon.Nombre_Moneda ORDER BY DI.Descripcion_Ingreso";
+
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
+                cmd.CommandType = CommandType.Text;
+
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
 
         public Ingreso_E ObtenerRegistro(string Id)
         {
@@ -236,6 +300,7 @@ namespace Datos.Ingresos
                                         Id_Descripcion_Ingreso = @Id_Descripcion_Ingreso, 
                                         Id_Moneda = @Id_Moneda, 
                                         Monto = @Monto, 
+                                        Fecha_Ingreso = @Fecha_Ingreso,
                                         Valor_Moneda = @Valor_Moneda, 
                                         Id_Usuario_Ultima_Modificacion = @Id_Usuario_Ultima_Modificacion, 
                                         Fecha_Ultima_Modificacion = @Fecha_Ultima_Modificacion, 
@@ -250,6 +315,7 @@ namespace Datos.Ingresos
                 cmd.Parameters.AddWithValue("@Id_Descripcion_Ingreso", entidad.Id_Descripcion_Ingreso);
                 cmd.Parameters.AddWithValue("@Id_Moneda", entidad.Id_Moneda);
                 cmd.Parameters.AddWithValue("@Monto", entidad.Monto);
+                cmd.Parameters.AddWithValue("@Fecha_Ingreso", entidad.Fecha_Ingreso);
                 cmd.Parameters.AddWithValue("@Valor_Moneda", entidad.Valor_Moneda);
                 cmd.Parameters.AddWithValue("@Id_Usuario_Ultima_Modificacion", entidad.Id_Usuario_Ultima_Modificacion);
                 cmd.Parameters.AddWithValue("@Fecha_Ultima_Modificacion", entidad.Fecha_Ultima_Modificacion);

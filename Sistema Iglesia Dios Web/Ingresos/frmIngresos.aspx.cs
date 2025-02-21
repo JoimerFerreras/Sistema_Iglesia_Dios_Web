@@ -18,6 +18,9 @@ using System.Web.UI.WebControls;
 using System.IO;
 using System.Net;
 using Telerik.Web.UI;
+using CrystalDecisions.CrystalReports.Engine;
+using System.Data.OleDb;
+using CrystalDecisions.Shared;
 
 namespace Sistema_Iglesia_Dios_Web.Ingresos
 {
@@ -89,6 +92,22 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             }
         }
 
+        public DataTable DT_DATOS_RESUMEN
+        {
+            get
+            {
+                if (Utilidad_N.ValidarNull(ViewState["DT_DATOS_RESUMEN"]))
+                {
+                    ViewState["DT_DATOS_RESUMEN"] = new DataTable();
+                }
+                return (DataTable)ViewState["DT_DATOS_RESUMEN"];
+            }
+            set
+            {
+                ViewState["DT_DATOS_RESUMEN"] = value;
+            }
+        }
+
         public List<Archivo_Ingreso_E> ListaArchivoE
         {
             get
@@ -126,7 +145,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         #region Metodos/ Procedimientos
 
         #region Ingresos
-
         private void LimpiarFiltros()
         {
             rbtnTipoFecha.SelectedValue = "2";
@@ -144,8 +162,8 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             string PrimerDiaAnio = "1/1/" + DateTime.Now.Year.ToString();
             //string UltimoDiaAnio = "31/12/" + DateTime.Now.Year.ToString();
 
-            dtpFechaDesde.SelectedDate = PrimerDiaMes;
-            dtpFechaHasta.SelectedDate = DateTime.Now;
+            dtpFechaDesdeFiltro.SelectedDate = PrimerDiaMes;
+            dtpFechaHastaFiltro.SelectedDate = DateTime.Now;
 
             cmbDescripcionIngreso_Consulta.SelectedValue = "0";
             cmbMiembro_Consulta.SelectedValue = "0";
@@ -156,22 +174,24 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         {
             DateTime fecha;
 
-            if (dtpFechaDesde.SelectedDate != null && dtpFechaHasta.SelectedDate != null)
+            if (dtpFechaDesdeFiltro.SelectedDate != null && dtpFechaHastaFiltro.SelectedDate != null)
             {
-                if (DateTime.TryParse(dtpFechaDesde.SelectedDate.Value.ToString(), out fecha) == true)
+                if (DateTime.TryParse(dtpFechaDesdeFiltro.SelectedDate.Value.ToString(), out fecha) == true)
                 {
-                    if (DateTime.TryParse(dtpFechaHasta.SelectedDate.Value.ToString(), out fecha) == true)
+                    if (DateTime.TryParse(dtpFechaHastaFiltro.SelectedDate.Value.ToString(), out fecha) == true)
                     {
                         DT_DATOS = ingreso_N.Listar(
                         rbtnTipoFecha.SelectedValue,
-                        dtpFechaDesde.SelectedDate.Value,
-                        dtpFechaHasta.SelectedDate.Value,
+                        dtpFechaDesdeFiltro.SelectedDate.Value,
+                        dtpFechaHastaFiltro.SelectedDate.Value,
                         cmbMiembro_Consulta.SelectedValue,
                         cmbDescripcionIngreso_Consulta.SelectedValue,
                         cmbMoneda_Consulta.SelectedValue);
 
                         gvDatos.DataSource = DT_DATOS;
                         gvDatos.DataBind();
+
+                        ConsultarResumen();
 
                         CalcularMontosTotalesMonedas();
                     }
@@ -189,6 +209,20 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             {
                 Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "Advertencia", "Fecha Desde y Fechas Hasta deben tener valores válidos", "warning");
             }
+        }
+
+        private void ConsultarResumen()
+        {
+            DT_DATOS_RESUMEN = ingreso_N.ListarResumen(
+                                   rbtnTipoFecha.SelectedValue,
+                                   dtpFechaDesdeFiltro.SelectedDate.Value,
+                                   dtpFechaHastaFiltro.SelectedDate.Value,
+                                   cmbMiembro_Consulta.SelectedValue,
+                                   cmbDescripcionIngreso_Consulta.SelectedValue,
+                                   cmbMoneda_Consulta.SelectedValue);
+
+            gvResumen.DataSource = DT_DATOS_RESUMEN;
+            gvResumen.DataBind();
         }
 
         private void LlenerCombos()
@@ -228,7 +262,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             cmbFormaPago.DataValueField = "Id_Forma_Pago";
             cmbFormaPago.DataTextField = "Descripcion_Forma_Pago";
             cmbFormaPago.DataBind();
-
 
             LlenarComboDescripcion();
         }
@@ -278,6 +311,12 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         {
             gvDatos.DataSource = DT_DATOS;
             gvDatos.DataBind();
+        }
+
+        private void ActualizarGridResumen()
+        {
+            gvResumen.DataSource = DT_DATOS_RESUMEN;
+            gvResumen.DataBind();
         }
 
         private void CalcularMontosTotalesMonedas()
@@ -547,6 +586,182 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             }
         }
 
+        private void GenerarReporteExcel_Detalle()
+        {
+            // Se establece una lista con el nombre de las columnas del grid
+            List<string> NombresColumnas = new List<string>();
+            for (int i = 1; i < gvDatos.MasterTableView.Columns.Count; i++)
+            {
+                NombresColumnas.Add(gvDatos.MasterTableView.Columns[i].HeaderText);
+            }
+
+            // Se establece el nombre del reporte
+            string NombreReporte = "Reporte_Ingresos_Detalle";
+            DataTable dtReporte = DT_DATOS.Copy();
+
+            // Se crea una tabla con los parametros de los filtros
+            DataTable dtParametros = new DataTable();
+            dtParametros.Columns.Add("Parametro");
+            dtParametros.Columns.Add("Valor");
+
+            dtParametros.Rows.Add("Iglesia de Dios La 33 Casa de Fe", "");
+            dtParametros.Rows.Add("Relación de Ingresos (Detalle)");
+            dtParametros.Rows.Add("Fecha/Hora de reporte: " + string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", DateTime.Now));
+            dtParametros.Rows.Add("", "");
+            dtParametros.Rows.Add("Filtros");
+            dtParametros.Rows.Add("Tipo de fecha: ", rbtnTipoFecha.Items[rbtnTipoFecha.SelectedIndex].Text);
+
+            dtParametros.Rows.Add("Fecha inicial: ", string.Format("{0:dd/MM/yyyy}", dtpFechaDesdeFiltro.SelectedDate));
+            dtParametros.Rows.Add("Fecha final: ", string.Format("{0:dd/MM/yyyy}", dtpFechaHastaFiltro.SelectedDate));
+
+            dtParametros.Rows.Add("Descripción de ingreso: ", cmbDescripcionIngreso_Consulta.Text);
+            dtParametros.Rows.Add("Beneficiario: ", cmbMiembro_Consulta.Text);
+            dtParametros.Rows.Add("Moneda: ", cmbMoneda_Consulta.Text);
+            dtParametros.Rows.Add("", "");
+            dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
+
+            // Se llama al metodo de generar reporte de Utilidad_C
+            Utilidad_C utilidad_C = new Utilidad_C();
+            utilidad_C.GenerarReporteExcel(dtParametros, dtReporte, NombresColumnas, NombreReporte, this.Page, null);
+        }
+
+        private void GenerarReporteExcel_Resumen()
+        {
+            // Se establece una lista con el nombre de las columnas del grid
+            List<string> NombresColumnas = new List<string>();
+            for (int i = 0; i < gvResumen.MasterTableView.Columns.Count; i++)
+            {
+                NombresColumnas.Add(gvResumen.MasterTableView.Columns[i].HeaderText);
+            }
+
+            // Se establece el nombre del reporte
+            string NombreReporte = "Reporte_Ingresos_Resumen";
+            DataTable dtReporte = DT_DATOS_RESUMEN.Copy();
+
+            // Se crea una tabla con los parametros de los filtros
+            DataTable dtParametros = new DataTable();
+            dtParametros.Columns.Add("Parametro");
+            dtParametros.Columns.Add("Valor");
+
+            dtParametros.Rows.Add("Iglesia de Dios La 33 Casa de Fe", "");
+            dtParametros.Rows.Add("Relación de Ingresos (Resumen)");
+            dtParametros.Rows.Add("Fecha/Hora de reporte: " + string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", DateTime.Now));
+            dtParametros.Rows.Add("", "");
+            dtParametros.Rows.Add("Filtros");
+            dtParametros.Rows.Add("Tipo de fecha: ", rbtnTipoFecha.Items[rbtnTipoFecha.SelectedIndex].Text);
+
+            dtParametros.Rows.Add("Fecha inicial: ", string.Format("{0:dd/MM/yyyy}", dtpFechaDesdeFiltro.SelectedDate));
+            dtParametros.Rows.Add("Fecha final: ", string.Format("{0:dd/MM/yyyy}", dtpFechaHastaFiltro.SelectedDate));
+
+            dtParametros.Rows.Add("Descripción de ingreso: ", cmbDescripcionIngreso_Consulta.Text);
+            dtParametros.Rows.Add("Beneficiario: ", cmbMiembro_Consulta.Text);
+            dtParametros.Rows.Add("Moneda: ", cmbMoneda_Consulta.Text);
+            dtParametros.Rows.Add("", "");
+            dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
+
+            // Se llama al metodo de generar reporte de Utilidad_C
+            Utilidad_C utilidad_C = new Utilidad_C();
+            utilidad_C.GenerarReporteExcel(dtParametros, dtReporte, NombresColumnas, NombreReporte, this.Page, null);
+        }
+
+
+        private void GenerarReportePDF(string NombreArchvoReporte, string NombreSalidaReporte)
+        {
+            try
+            {
+                // Se establecen la ruta del reporte de Crystal y la de creacion del reporte en PDF
+                string Path = Server.MapPath(@"~/Reportes/");
+                string PathPDF = Server.MapPath(@"~/Recursos/Archivos_Temp/");
+
+                if (!Directory.Exists(PathPDF))
+                {
+                    Directory.CreateDirectory(PathPDF);
+                }
+
+                // Se carga el reporte y se loguea con la base de datos
+                ReportDocument oRep = new ReportDocument();
+                var cadena = new OleDbConnectionStringBuilder();
+                cadena = Utilidad_C.LoginReport();
+                oRep.Load(Path + NombreArchvoReporte + ".rpt", OpenReportMethod.OpenReportByTempCopy);
+                Utilidad_C.SetLoginReport(oRep, cadena["Initial Catalog"].ToString(), cadena["Data Source"].ToString(), cadena["USER ID"].ToString(), cadena["Password"].ToString());
+
+
+                // Se formatea los parametros que seran utilizados por el procedimiento almacenado del reporte
+                string TipoFecha = "";
+                if (rbtnTipoFecha.SelectedValue == "1")
+                {
+                    TipoFecha = "Fecha_Ingreso";
+                }
+                else if (rbtnTipoFecha.SelectedValue == "2")
+                {
+                    TipoFecha = "Fecha_Registro";
+                }
+                else
+                {
+                    TipoFecha = "0";
+                }
+
+
+                //Se envian los parametros del procedimiento almacenado al reporte
+                oRep.SetParameterValue("@TipoFecha", TipoFecha);
+                oRep.SetParameterValue("@FechaInicial", string.Format("{0:yyyy-MM-dd}" + " 00:00:00", dtpFechaDesdeFiltro.SelectedDate));
+                oRep.SetParameterValue("@FechaFinal", string.Format("{0:yyyy-MM-dd}" + " 23:59:59", dtpFechaHastaFiltro.SelectedDate));
+                oRep.SetParameterValue("@Miembro", cmbMiembro_Consulta.SelectedValue);
+                oRep.SetParameterValue("@Descripcion_Ingreso", cmbDescripcionIngreso_Consulta.SelectedValue);
+                oRep.SetParameterValue("@Moneda", cmbMoneda_Consulta.SelectedValue);
+
+
+                // Se cargan el texto de los parametros en el reporte
+                oRep.DataDefinition.FormulaFields["TipoFecha"].Text = string.Format("'{0}'", rbtnTipoFecha.Items[rbtnTipoFecha.SelectedIndex].Text);
+
+                if (rbtnTipoFecha.SelectedValue == "0")
+                {
+                    oRep.DataDefinition.FormulaFields["FechaInicial"].Text = "''";
+                    oRep.DataDefinition.FormulaFields["FechaFinal"].Text = "''";
+                }
+                else
+                {
+                    oRep.DataDefinition.FormulaFields["FechaInicial"].Text = "'" + string.Format("{0:dd/MM/yyyy}", dtpFechaDesdeFiltro.SelectedDate) + "'";
+                    oRep.DataDefinition.FormulaFields["FechaFinal"].Text = "'" + string.Format("{0:dd/MM/yyyy}", dtpFechaHastaFiltro.SelectedDate) + "'";
+                }
+
+                oRep.DataDefinition.FormulaFields["Miembro"].Text = string.Format("'{0}'", cmbMiembro_Consulta.Text);
+                oRep.DataDefinition.FormulaFields["Descripcion_Ingreso"].Text = string.Format("'{0}'", cmbDescripcionIngreso_Consulta.Text);
+                oRep.DataDefinition.FormulaFields["Moneda"].Text = string.Format("'{0}'", cmbMoneda_Consulta.Text);
+
+                // Se establece el nombre del reporte y se concatena al Path
+                string NombreArchivo = NombreSalidaReporte + string.Format("{0:ddMMyyyyHHmmss}", DateTime.Now) + ".pdf";
+                PathPDF = PathPDF + NombreArchivo;
+
+                // Se establece las opciones del reporte y se exporta
+                ExportOptions crExportOption = oRep.ExportOptions;
+                DiskFileDestinationOptions crDiskFileDestinationOptions = new DiskFileDestinationOptions();
+
+                crDiskFileDestinationOptions.DiskFileName = PathPDF;
+
+                crExportOption.ExportDestinationType = ExportDestinationType.DiskFile;
+                crExportOption.ExportFormatType = ExportFormatType.PortableDocFormat;
+                crExportOption.DestinationOptions = crDiskFileDestinationOptions;
+                oRep.Export();
+
+                oRep.Refresh();
+
+                if (System.IO.File.Exists(PathPDF))
+                {
+                    // Exportacion del reporte en PDF a una nueva pestaña del navegador para poder ser descargado
+                    Utilidad_C.EjecutarScript(this, "window.open('../Recursos/Archivos_Temp/" + NombreArchivo + "','_blank');");
+                }
+                else
+                {
+                    Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "Error al generar el reporte", "No se pudo generar el reporte", "error");
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "Error al generar el reporte", "Ocurrió un error al generar el reporte: " + ex.Message, "error");
+            }
+        }
+
         #endregion
 
         #region Archivos
@@ -807,6 +1022,22 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             ActualizarGrid();
         }
 
+        // Grid resumen
+        protected void gvResumen_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
+        {
+            ActualizarGridResumen();
+        }
+
+        protected void gvResumen_PageSizeChanged(object sender, Telerik.Web.UI.GridPageSizeChangedEventArgs e)
+        {
+            ActualizarGridResumen();
+        }
+
+        protected void gvResumen_PageIndexChanged(object sender, Telerik.Web.UI.GridPageChangedEventArgs e)
+        {
+            ActualizarGridResumen();
+        }
+
         // Grid de montos totales
         protected void gvMontosTotales_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
         {
@@ -845,16 +1076,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             LimpiarFiltros();
         }
 
-        protected void btnGenerarPDF_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btnGenerarExcel_Click(object sender, EventArgs e)
-        {
-
-        }
-        
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             LimpiarCampos();
@@ -926,14 +1147,33 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         {
             SubirArchivo();
         }
-        #endregion
-
-        #endregion
 
         protected void btnDescargarArchivo_Click(object sender, EventArgs e)
         {
             DescargarArchivo();
         }
-    
+        #endregion
+
+        #endregion
+
+        protected void btnGenerarPDF_Detalle_Click(object sender, EventArgs e)
+        {
+            GenerarReportePDF("ReporteIngresos_Detalle", "Reporte_Ingresos_Detalle");
+        }
+
+        protected void btnGenerarExcel_Detalle_Click(object sender, EventArgs e)
+        {
+            GenerarReporteExcel_Detalle();
+        }
+
+        protected void btnGenerarPDF_Resumen_Click(object sender, EventArgs e)
+        {
+            GenerarReportePDF("ReporteIngresos_Resumen", "Reporte_Ingresos_Resumen");
+        }
+
+        protected void btnGenerarExcel_Resumen_Click(object sender, EventArgs e)
+        {
+            GenerarReporteExcel_Resumen();
+        }
     }
 }

@@ -8,6 +8,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using Negocio.Util_N;
+using SpreadsheetLight;
+using System.Web.UI.WebControls;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using Table = CrystalDecisions.CrystalReports.Engine.Table;
 
 namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
 {
@@ -295,6 +300,196 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
         {
             ScriptManager.RegisterStartupScript(pagina, pagina.GetType(), key, "<script languaje='javascript'>" + script + "</script>", AddTagScript);
         }
+        #endregion
+
+
+        #region Generacion de reportes
+        public void GenerarReporteExcel(DataTable dtParametros, DataTable dtReporte, List<string> NombresColumnas, string NombreReporte, Page Pagina, List<DataTable> TablasSecundarias)
+        {
+            try
+            {
+                if (dtReporte.Rows.Count > 0)
+                {
+                    // Se establece el nombre del archivo
+                    string FileName = NombreReporte + "_" + string.Format("{0:ddMMyyyHHmmss}", DateTime.Now) + ".xlsx";
+                    string PathExcel = Pagina.Server.MapPath(@"~/Recursos/Archivos_Temp/");
+
+                    if (!Directory.Exists(PathExcel))
+                    {
+                        Directory.CreateDirectory(PathExcel);
+                    }
+                    PathExcel = Pagina.Server.MapPath(@"~/Recursos/Archivos_Temp/" + FileName);
+
+                    if (NombresColumnas.Count > 0)
+                    {
+                        for (int i = 0; i < dtReporte.Columns.Count; i++)
+                        {
+                            dtReporte.Columns[i].ColumnName = NombresColumnas[i];
+                        }
+                    }
+
+                    SLDocument oSLDocument = new SLDocument();
+
+
+                    if (dtParametros.Rows.Count > 0 && dtParametros != null)
+                    {
+                        oSLDocument.ImportDataTable(1, 1, dtParametros, false);
+
+                        // Dando formato al nombre de la institucion
+                        SpreadsheetLight.SLStyle estiloParametros = new SpreadsheetLight.SLStyle();
+                        estiloParametros.SetFontBold(false);
+                        estiloParametros.Font.FontSize = 22;
+                        estiloParametros.Fill.SetPattern(DocumentFormat.OpenXml.Spreadsheet.PatternValues.Solid, System.Drawing.ColorTranslator.FromHtml("#EFF4FF"), System.Drawing.ColorTranslator.FromHtml("#EFF4FF"));
+                        estiloParametros.SetHorizontalAlignment(DocumentFormat.OpenXml.Spreadsheet.HorizontalAlignmentValues.Center);
+                        oSLDocument.SetCellStyle(1, 1, 1, dtReporte.Columns.Count, estiloParametros);
+                        oSLDocument.MergeWorksheetCells(1, 1, 1, dtReporte.Columns.Count);
+
+                        // Dando formato al titulo del reporte
+                        estiloParametros = new SLStyle();
+                        estiloParametros.Font.FontSize = 20;
+                        estiloParametros.SetFontBold(true);
+                        estiloParametros.Fill.SetPattern(DocumentFormat.OpenXml.Spreadsheet.PatternValues.Solid, System.Drawing.ColorTranslator.FromHtml("#EFF4FF"), System.Drawing.ColorTranslator.FromHtml("#EFF4FF"));
+                        estiloParametros.SetHorizontalAlignment(DocumentFormat.OpenXml.Spreadsheet.HorizontalAlignmentValues.Center);
+                        oSLDocument.SetCellStyle(2, 1, 2, dtReporte.Columns.Count, estiloParametros);
+                        oSLDocument.MergeWorksheetCells(2, 1, 2, dtReporte.Columns.Count);
+
+                        // Dando formato a la fecha/hora del reporte
+                        estiloParametros = new SLStyle();
+                        estiloParametros.SetHorizontalAlignment(DocumentFormat.OpenXml.Spreadsheet.HorizontalAlignmentValues.Right);
+                        oSLDocument.SetCellStyle(3, 1, 3, dtReporte.Columns.Count, estiloParametros);
+                        oSLDocument.MergeWorksheetCells(3, 1, 3, dtReporte.Columns.Count);
+
+                        // Detectando la palabra "Filtros"
+                        for (int i = 0; i < dtParametros.Rows.Count; i++)
+                        {
+                            if (dtParametros.Rows[i][0].ToString() == "Filtros")
+                            {
+                                estiloParametros = new SLStyle();
+                                estiloParametros.SetFontBold(true);
+                                estiloParametros.Font.FontSize = 14;
+                                oSLDocument.SetRowStyle(i + 1, estiloParametros);
+
+
+                                // Estableciendo formato a los filtros
+                                estiloParametros = new SLStyle();
+                                estiloParametros.SetFontBold(true);
+                                oSLDocument.SetCellStyle(i + 2, 1, dtParametros.Rows.Count, 1, estiloParametros);
+                                //oSLDocument.MergeWorksheetCells(i + 1, 1, dtParametros.Rows.Count, dtReporte.Columns.Count);
+                                oSLDocument.AutoFitColumn(1);
+
+                                break;
+                            }
+                        }
+                    }
+
+                    // Se importa los datos del reporte
+                    oSLDocument.ImportDataTable(dtParametros.Rows.Count + 1, 1, dtReporte, true);
+                    oSLDocument.RenameWorksheet(oSLDocument.GetCurrentWorksheetName(), "Reporte");
+
+                    // Se le asigna un estilo a la pagina del reporte
+                    SpreadsheetLight.SLStyle estilo = new SpreadsheetLight.SLStyle();
+                    estilo.SetFontBold(true);
+                    estilo.Font.FontSize = 14;
+                    estilo.Fill.SetPattern(DocumentFormat.OpenXml.Spreadsheet.PatternValues.Solid, System.Drawing.ColorTranslator.FromHtml("#EFF4FF"), System.Drawing.ColorTranslator.FromHtml("#EFF4FF"));
+
+                    oSLDocument.SetCellStyle(dtParametros.Rows.Count + 1, 1, dtParametros.Rows.Count + 1, dtReporte.Columns.Count, estilo);
+                    oSLDocument.AutoFitColumn(1, dtReporte.Columns.Count);
+
+
+                    // Si existen tablas secundarias entonces se importan y se les da formato
+                    if (TablasSecundarias != null && TablasSecundarias.Count > 0)
+                    {
+                        for (int i = 0; i < TablasSecundarias.Count; i++)
+                        {
+                            DataTable dtTablaSecundaria = TablasSecundarias[i];
+
+                            oSLDocument.AddWorksheet(dtTablaSecundaria.TableName.Replace("_", " "));
+                            oSLDocument.ImportDataTable(1, 1, dtTablaSecundaria, true);
+
+                            SpreadsheetLight.SLStyle estiloTablaSecundaria = new SpreadsheetLight.SLStyle();
+                            estiloTablaSecundaria.SetFontBold(true);
+                            estiloTablaSecundaria.Font.FontSize = 14;
+                            estiloTablaSecundaria.Fill.SetPattern(DocumentFormat.OpenXml.Spreadsheet.PatternValues.Solid, System.Drawing.ColorTranslator.FromHtml("#EFF4FF"), System.Drawing.ColorTranslator.FromHtml("#EFF4FF"));
+                            estiloTablaSecundaria.SetHorizontalAlignment(DocumentFormat.OpenXml.Spreadsheet.HorizontalAlignmentValues.Center);
+                            oSLDocument.SetCellStyle(1, 1, 1, dtTablaSecundaria.Columns.Count, estiloTablaSecundaria);
+                            oSLDocument.AutoFitColumn(1, dtTablaSecundaria.Columns.Count);
+                        }
+                        oSLDocument.SelectWorksheet("Reporte");
+                    }
+
+
+                    // Se guarda el archivo en la ubicacion espesificada para guardar archivos temporales en el servidor
+                    oSLDocument.SaveAs(PathExcel);
+
+                    // Se descarga el archivo en la maquina cliente desde la ubicacion espesificada para guardar archivos temporales del servidor
+                    if (File.Exists(PathExcel))
+                    {
+                        Pagina.Response.AddHeader("Content-Disposition", "attachment;filename=" + FileName);
+                        Pagina.Response.TransmitFile(PathExcel);
+                        Pagina.Response.End();
+                    }
+                    else
+                    {
+                        MostrarAlerta_Personalizada(Pagina, Pagina.GetType(), "Error al generar el reporte", "No se pudo descargar el reporte", "error");
+                    }
+                }
+                else
+                {
+                    MostrarAlerta_Personalizada(Pagina, Pagina.GetType(), "No se puede generar el reporte", "No hay datos para generar el reporte", "warning");
+                }
+            }
+            catch (Exception ex)
+            {
+                MostrarAlerta_Personalizada(Pagina, Pagina.GetType(), "Error al generar el reporte", "Ocurrió un error al generar el reporte: " + ex.Message, "error");
+            }
+        }
+
+        // Se realiza el login con la base de datos para los reportes en PDF de Crystal
+        public static void SetLoginReport(ReportDocument report, String dbname, String dbserver, String dbuser, String userpass) {
+
+            var crTableLogonInfo = new TableLogOnInfo();
+            var crConnectionInfo = new ConnectionInfo();
+
+            crConnectionInfo.DatabaseName = dbname;
+            crConnectionInfo.ServerName = dbserver;
+            crConnectionInfo.UserID = dbuser;
+            crConnectionInfo.Password = userpass;
+            //crConnectionInfo.IntegratedSecurity = False
+            crConnectionInfo.Type = ConnectionInfoType.SQL;
+
+            crTableLogonInfo.ConnectionInfo = crConnectionInfo;
+            crTableLogonInfo.ConnectionInfo.DatabaseName = dbname;
+
+            foreach (Table crTable in report.Database.Tables)
+            {
+                crTable.ApplyLogOnInfo(crTableLogonInfo);
+            }
+
+            foreach (ReportDocument d in report.Subreports)
+            {
+                foreach (Table crTable in d.Database.Tables)
+                {
+                    crTable.ApplyLogOnInfo(crTableLogonInfo);
+                }
+            }
+        }
+
+        // Se obtiene la cadena de conexion para realizar el login para los reportes en PDF de Crystal
+        public static OleDbConnectionStringBuilder LoginReport() {
+            try
+            {
+                var cadena = new OleDbConnectionStringBuilder();
+                cadena = new OleDbConnectionStringBuilder(ConfigurationManager.ConnectionStrings["CadenaConexionSQL"].ConnectionString);
+
+                //cadena("password") = App_Code.Criptografia.Desencriptar(ConfigurationManager.AppSettings("password"))
+
+                return cadena;
+            } catch (Exception ex) {
+                throw;
+            }
+        }
+
+
         #endregion
     }
 }

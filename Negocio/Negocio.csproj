@@ -61,6 +61,7 @@
     <Compile Include="Miembros\Miembro_Pasatiempos_N.cs" />
     <Compile Include="Ministerios\Ministerio_N.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resumen\Resumen_N.cs" />
     <Compile Include="Usuarios\Usuario_N.cs" />
     <Compile Include="Util_N\Utilidad_N.cs" />
   </ItemGroup>
