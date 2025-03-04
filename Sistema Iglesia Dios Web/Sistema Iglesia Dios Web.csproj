@@ -181,6 +181,7 @@
     <Content Include="Ingresos\frmIngresos.aspx" />
     <Content Include="Miembros\frmMiembros.aspx" />
     <Content Include="Otros_Parametros\frmFormas_Pago.aspx" />
+    <Content Include="Otros_Parametros\frmMiscelaneos.aspx" />
     <Content Include="Otros_Parametros\frmMonedas.aspx" />
     <Content Include="Recursos\CSS\botones.css" />
     <Content Include="Recursos\CSS\estilos_general.css" />
@@ -312,6 +313,13 @@
     </Compile>
     <Compile Include="Otros_Parametros\frmFormas_Pago.aspx.designer.cs">
       <DependentUpon>frmFormas_Pago.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Otros_Parametros\frmMiscelaneos.aspx.cs">
+      <DependentUpon>frmMiscelaneos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Otros_Parametros\frmMiscelaneos.aspx.designer.cs">
+      <DependentUpon>frmMiscelaneos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Otros_Parametros\frmMonedas.aspx.cs">
       <DependentUpon>frmMonedas.aspx</DependentUpon>

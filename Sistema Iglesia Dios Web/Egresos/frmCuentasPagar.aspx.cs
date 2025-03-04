@@ -19,7 +19,7 @@ using System.IO;
 using System.Net;
 using Telerik.Web.UI;
 using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
-
+using Entidades.Otros_Parametros;
 
 namespace Sistema_Iglesia_Dios_Web.Egresos
 {
@@ -204,6 +204,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             cmbDescripcionEgreso_Consulta.SelectedValue = "0";
             cmbBeneficiarios_Consulta.SelectedValue = "0";
             cmbMoneda_Consulta.SelectedValue = "0";
+            cmbMiscelaneo_Consulta.SelectedValue = "0";
         }
 
         private void Consultar()
@@ -223,7 +224,8 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                         cmbBeneficiarios_Consulta.SelectedValue,
                         cmbDescripcionEgreso_Consulta.SelectedValue,
                         cmbMoneda_Consulta.SelectedValue,
-                        cmbEstado_Consulta.SelectedValue);
+                        cmbEstado_Consulta.SelectedValue, 
+                        cmbMiscelaneo_Consulta.SelectedValue);
 
                         gvDatos.DataSource = DT_DATOS;
                         gvDatos.DataBind();
@@ -269,6 +271,11 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             cmbMoneda_CuentaPagar.DataTextField = "Nombre_Moneda";
             cmbMoneda_CuentaPagar.DataBind();
 
+            if (dt.Rows.Count > 0)
+            {
+                cmbMoneda_CuentaPagar.SelectedValue = "1";
+            }
+
             cmbMoneda_Consulta.DataSource = dt;
             cmbMoneda_Consulta.DataValueField = "Id_Moneda";
             cmbMoneda_Consulta.DataTextField = "Nombre_Moneda";
@@ -283,7 +290,48 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             cmbFormaPagoAbono.DataBind();
 
             LlenarComboDescripcion();
+            LlenarComboMiscelaneo();
         }
+
+        private void LlenarComboMiscelaneo()
+        {
+            // Registro
+            Miscelaneo_N Miscelaneo_N = new Miscelaneo_N();
+            DataTable dt = new DataTable();
+            dt = Miscelaneo_N.ListaCombo();
+
+            // Crear un nuevo DataRow para el ítem "Seleccionar..."
+            DataRow dr = dt.NewRow();
+            dr["Id_Miscelaneo"] = 0; 
+            dr["Descripcion_Miscelaneo"] = "Seleccionar...";
+
+            // Insertar el nuevo DataRow al principio del DataTable
+            dt.Rows.InsertAt(dr, 0);
+
+            cmbMiscelaneo.Items.Clear();
+            cmbMiscelaneo.DataSource = dt;
+            cmbMiscelaneo.DataValueField = "Id_Miscelaneo";
+            cmbMiscelaneo.DataTextField = "Descripcion_Miscelaneo";
+            cmbMiscelaneo.DataBind();
+
+            // Consulta
+            DataTable dtConsulta = dt.Copy();
+
+            DataRow drConsulta = dtConsulta.NewRow();
+            drConsulta["Id_Miscelaneo"] = 0;
+            drConsulta["Descripcion_Miscelaneo"] = "Todos";
+
+            // Insertar el nuevo DataRow al principio del DataTable
+            dtConsulta.Rows.RemoveAt(0);
+            dtConsulta.Rows.InsertAt(drConsulta, 0);
+
+            cmbMiscelaneo_Consulta.Items.Clear();
+            cmbMiscelaneo_Consulta.DataSource = dtConsulta;
+            cmbMiscelaneo_Consulta.DataValueField = "Id_Miscelaneo";
+            cmbMiscelaneo_Consulta.DataTextField = "Descripcion_Miscelaneo";
+            cmbMiscelaneo_Consulta.DataBind();
+        }
+
 
         private void LlenarComboDescripcion()
         {
@@ -294,7 +342,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
 
             // Crear un nuevo DataRow para el ítem "Seleccionar..."
             DataRow dr = dt.NewRow();
-            dr["Id_Descripcion_Egreso"] = 0; // Asegúrate de que este campo coincida con el nombre del campo Id_Miembro en tu DataTable
+            dr["Id_Descripcion_Egreso"] = 0; 
             dr["Descripcion_Egreso"] = "Seleccionar...";
 
             // Insertar el nuevo DataRow al principio del DataTable
@@ -306,12 +354,11 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             cmbDescripcion_Egreso.DataTextField = "Descripcion_Egreso";
             cmbDescripcion_Egreso.DataBind();
 
-
             // Consulta
             DataTable dtConsulta = dt.Copy();
 
             DataRow drConsulta = dtConsulta.NewRow();
-            drConsulta["Id_Descripcion_Egreso"] = 0; // Asegúrate de que este campo coincida con el nombre del campo Id_Miembro en tu DataTable
+            drConsulta["Id_Descripcion_Egreso"] = 0; 
             drConsulta["Descripcion_Egreso"] = "Todos";
 
             // Insertar el nuevo DataRow al principio del DataTable
@@ -340,13 +387,9 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La descripción del egreso no puede estar vacía");
             }
-            else if (txtNo_Factura.Text.Length == 0)
+            else if (cmbBeneficiario.SelectedValue == "0" && cmbMiscelaneo.SelectedValue == "0")
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe escribir el número o código de la factura");
-            }
-            else if (cmbBeneficiario.SelectedValue == "0" && txtOtroBeneficiario.Text.Length == 0)
-            {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Si no va a seleccionar un beneficiario, entonces el campo Otro beneficiario no puede estar vacío");
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Si no va a seleccionar un beneficiario, entonces el campo Misceláneo no puede estar vacío");
             }
             else if (cmbMoneda_CuentaPagar.SelectedValue != "1" && txtValorMoneda_CuentaPagar.Text.Length == 0)
             {
@@ -364,7 +407,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La fecha no es válida");
             }
-            else if (dtpFechaVencimiento.SelectedDate.Value == null)
+            else if (dtpFechaVencimiento.SelectedDate.ToString().Length == 0)
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La fecha de vencimiento no es válida");
             }
@@ -392,8 +435,8 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                     cuenta_pagar_E.Fecha = dtpFecha_CuentaPagar.SelectedDate.Value;
                     cuenta_pagar_E.Fecha_Vencimiento = dtpFechaVencimiento.SelectedDate.Value;
                     cuenta_pagar_E.No_Factura = txtNo_Factura.Text;
-                    cuenta_pagar_E.Id_Beneficiario = int.Parse(cmbBeneficiario.SelectedValue);
-                    cuenta_pagar_E.Otro_Beneficiario = txtOtroBeneficiario.Text;
+                    cuenta_pagar_E.Id_Miembro = int.Parse(cmbBeneficiario.SelectedValue);
+                    cuenta_pagar_E.Id_Miscelaneo = int.Parse(cmbMiscelaneo.SelectedValue);
                     cuenta_pagar_E.Comentario = txtComentarioCuentaPagar.Text;
                     cuenta_pagar_E.Id_Usuario_Registro = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
                     cuenta_pagar_E.Fecha_Registro = DateTime.Now;
@@ -408,7 +451,8 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                         if (salida == true)
                         {
                             Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
-                            LimpiarCampos();
+                            //LimpiarCampos();
+                            rtsTabulador.Tabs[2].Visible = true;
                             Consultar();
                         }
                         else
@@ -420,6 +464,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                     {
                         // Agregar registro
                         int Id_Egreso = cuenta_pagar_N.Agregar(cuenta_pagar_E);
+                        txtId_CuentaPagar.Text = Id_Egreso.ToString();
 
                         if (Id_Egreso > 0 )
                         {
@@ -429,13 +474,23 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                                 Archivo_Egreso_N archivo_N = new Archivo_Egreso_N();
                                 for (int i = 0; i < ListaArchivoE.Count; i++)
                                 {
-                                    
                                     archivo_N.AgregarArchivo(ListaArchivoE[i], Id_Egreso);
                                 }
                             }
 
                             Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
-                            LimpiarCampos();
+                            //LimpiarCampos();
+
+                            EDITAR_REGISTRO = true;
+                            ID_REGISTRO = Id_Egreso.ToString();
+                            ConsultarAbonos();
+
+                            rtsTabulador.Tabs[2].Visible = true;
+                            rtsTabulador.Tabs[2].Selected = true;
+                            rmpTabs.SelectedIndex = 2;
+
+                            
+
                             Consultar();
                         }
                         else
@@ -467,8 +522,8 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             dtpFecha_CuentaPagar.SelectedDate = Cuenta_Pagar_E.Fecha;
             dtpFechaVencimiento.SelectedDate = Cuenta_Pagar_E.Fecha_Vencimiento;
             txtNo_Factura.Text = Cuenta_Pagar_E.No_Factura;
-            cmbBeneficiario.SelectedValue = Cuenta_Pagar_E.Id_Beneficiario.ToString();
-            txtOtroBeneficiario.Text = Cuenta_Pagar_E.Otro_Beneficiario;
+            cmbBeneficiario.SelectedValue = Cuenta_Pagar_E.Id_Miembro.ToString();
+            cmbMiscelaneo.SelectedValue = Cuenta_Pagar_E.Id_Miscelaneo.ToString();
             txtComentarioCuentaPagar.Text = Cuenta_Pagar_E.Comentario;
 
             txtUsuarioRegistro_CuentaPagar.Text = Cuenta_Pagar_E.Nombre_Usuario_Registro;
@@ -496,6 +551,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             ListarArchivos(ID_REGISTRO);
 
             rtsTabulador.Tabs[1].Selected = true;
+            rtsTabulador.Tabs[2].Visible = true;
             rmpTabs.SelectedIndex = 1;
 
             txtId_CuentaPagar.Focus();
@@ -511,6 +567,8 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             EDITAR_REGISTRO = false;
             EDITAR_REGISTRO_ABONO = false;
 
+            rtsTabulador.Tabs[2].Visible = false;
+
             txtId_CuentaPagar.Text = "(Nuevo)";
             cmbDescripcion_Egreso.SelectedValue = "0";
             txtMontoTotalPagar.Text = Utilidad_N.FormatearNumero("0", 2, 2);
@@ -518,7 +576,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             txtValorMoneda_CuentaPagar.Text = Utilidad_N.FormatearNumero("0", 2, 2);
             dtpFecha_CuentaPagar.SelectedDate = DateTime.Now;
             cmbBeneficiario.SelectedValue = "0";
-            txtOtroBeneficiario.Text = "";
+            cmbMiscelaneo.SelectedValue = "0";
             txtUsuarioRegistro_CuentaPagar.Text = "";
             txtFechaRegistro_CuentaPagar.Text = "";
             txtUsuarioUltimaModificacion_CuentaPagar.Text = "";
@@ -533,6 +591,11 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             else
             {
                 divValorMoneda.Visible = true;
+            }
+
+            if (cmbMoneda_CuentaPagar.Items.Count > 1)
+            {
+                cmbMoneda_CuentaPagar.SelectedValue = "1";
             }
 
             txtNombreArchivoDescargar.Text = "";
@@ -565,6 +628,44 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             }
         }
 
+        private void AgregarDescripcion()
+        {
+            if (txtDescripcionEgresoAgregar.Text.Length > 0)
+            {
+                Descripcion_Egreso_E entidad = new Descripcion_Egreso_E();
+                Descripcion_Egreso_N Descripcion_Egreso_N = new Descripcion_Egreso_N();
+                entidad.Descripcion_Egreso = txtDescripcionEgresoAgregar.Text;
+                entidad.Estado = true;
+                Descripcion_Egreso_N.Agregar(entidad);
+                txtDescripcionEgresoAgregar.Text = "";
+
+                LlenarComboDescripcion();
+            }
+            else
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Descripción no puede estar vacío");
+            }
+        }
+
+        private void AgregarMiscelaneo()
+        {
+            if (txtDescripcionMiscelaneoAgregar.Text.Length > 0)
+            {
+                Miscelaneo_E entidad = new Miscelaneo_E();
+                Miscelaneo_N Miscelaneo_N = new Miscelaneo_N();
+                entidad.Descripcion_Miscelaneo = txtDescripcionMiscelaneoAgregar.Text;
+                entidad.Estado = true;
+                Miscelaneo_N.Agregar(entidad);
+                txtDescripcionMiscelaneoAgregar.Text = "";
+
+                LlenarComboMiscelaneo();
+            }
+            else
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Misceláneo no puede estar vacío");
+            }
+        }
+
         #endregion
 
 
@@ -590,6 +691,11 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                 DataRow row = dt.Rows[0];
                 txtMontoTotalAbonado.Text = "$" + Utilidad_N.FormatearNumero(row["Total_Pagado"].ToString(), 2, 2);
                 txtMontoRestante.Text = "$" + Utilidad_N.FormatearNumero(row["Total_Restante"].ToString(), 2, 2);
+            }
+            else if(EDITAR_REGISTRO == true)
+            {
+                txtMontoTotalAbonado.Text = "$" + Utilidad_N.FormatearNumero("0", 2, 2);
+                txtMontoRestante.Text = "$" + Utilidad_N.FormatearNumero(txtMontoTotalPagar.Text, 2, 2);
             }
             else
             {
@@ -706,6 +812,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                             Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
                             LimpiarCamposAbonos();
                             ConsultarAbonos();
+                            Consultar();
                         }
                         else
                         {
@@ -722,6 +829,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                             Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
                             LimpiarCamposAbonos();
                             ConsultarAbonos();
+                            Consultar();
                         }
                         else
                         {
@@ -1076,28 +1184,16 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             }
         }
 
-        private void AgregarDescripcion()
-        {
-            if (txtDescripcionEgresoAgregar.Text.Length > 0)
-            {
-                Descripcion_Egreso_E entidad = new Descripcion_Egreso_E();
-                Descripcion_Egreso_N Descripcion_Egreso_N = new Descripcion_Egreso_N();
-                entidad.Descripcion_Egreso = txtDescripcionEgresoAgregar.Text;
-                entidad.Estado = true;
-                Descripcion_Egreso_N.Agregar(entidad);
-                txtDescripcionEgresoAgregar.Text = "";
-
-                LlenarComboDescripcion();
-            }
-            else
-            {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe proporcionar una descripción válida");
-            }
-        }
+       
 
         protected void btnAgregarDescripcion_Click(object sender, EventArgs e)
         {
             AgregarDescripcion();
+        }
+
+        protected void btnAgregarMiscelaneo_Click(object sender, EventArgs e)
+        {
+            AgregarMiscelaneo();
         }
         #endregion
 

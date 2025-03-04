@@ -134,6 +134,9 @@ C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bi
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\Antlr3.Runtime.dll
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\AspNet.ScriptManager.jQuery.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.CrystalReports.Engine.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportSource.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.Shared.dll
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\DocumentFormat.OpenXml.dll
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\Entidades.dll
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\Microsoft.AspNet.FriendlyUrls.dll
@@ -150,6 +153,19 @@ C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bi
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\System.Web.Optimization.dll
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\WebGrease.dll
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\Datos.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.DataDefModel.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.Controllers.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.CommLayer.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.Prompting.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.XmlSerialize.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.CubeDefModel.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
+C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\stdole.dll
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\Entidades.pdb
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\Negocio.pdb
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\DocumentFormat.OpenXml.xml
@@ -169,19 +185,3 @@ C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\ob
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\obj\Debug\Sistema Iglesia Dios Web.csproj.CopyComplete
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\obj\Debug\Sistema Iglesia Dios Web.dll
 C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\obj\Debug\Sistema Iglesia Dios Web.pdb
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.CrystalReports.Engine.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportSource.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.Shared.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.DataDefModel.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.Controllers.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.CommLayer.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.Prompting.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.XmlSerialize.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.CubeDefModel.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\bin\stdole.dll

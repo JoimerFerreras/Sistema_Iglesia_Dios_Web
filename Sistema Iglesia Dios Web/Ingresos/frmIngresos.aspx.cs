@@ -306,7 +306,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             cmbDescripcionIngreso_Consulta.DataBind();
         }
 
-
         private void ActualizarGrid()
         {
             gvDatos.DataSource = DT_DATOS;
@@ -664,7 +663,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             utilidad_C.GenerarReporteExcel(dtParametros, dtReporte, NombresColumnas, NombreReporte, this.Page, null);
         }
 
-
         private void GenerarReportePDF(string NombreArchvoReporte, string NombreSalidaReporte)
         {
             try
@@ -782,7 +780,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             gvArchivos.DataSource = DT_DATOS_ARCHIVOS;
             gvArchivos.DataBind();
         }
-
 
         private void DescargarArchivo()
         {
@@ -996,7 +993,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     DT_DATOS_ARCHIVOS.Columns.Add("Fecha_Registro");
                 }
             }
-
 
             if (ID_REGISTRO_ARCHIVO == "0" || ID_REGISTRO_ARCHIVO == "")
             {

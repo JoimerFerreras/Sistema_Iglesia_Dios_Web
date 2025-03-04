@@ -55,7 +55,7 @@ namespace Datos.Otros_Parametros
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Moneda, Nombre_Moneda FROM Monedas ORDER BY Nombre_Moneda ASC";
+                string sentencia = $@"SELECT Id_Moneda, Nombre_Moneda FROM Monedas WHERE Estado = 1 ORDER BY Nombre_Moneda ASC";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.CommandType = CommandType.Text;
                 try

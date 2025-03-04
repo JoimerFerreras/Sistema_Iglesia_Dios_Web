@@ -17,8 +17,8 @@ namespace Entidades.Egresos
         public DateTime Fecha { get; set; }
         public DateTime Fecha_Vencimiento { get; set; }
         public string No_Factura { get; set; }
-        public int Id_Beneficiario { get; set; }
-        public string Otro_Beneficiario { get; set; }
+        public int Id_Miembro { get; set; }
+        public int Id_Miscelaneo { get; set; }
         public int Id_Usuario_Registro { get; set; }
         public string Nombre_Usuario_Registro { get; set; }
         public DateTime Fecha_Registro { get; set; }

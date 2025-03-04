@@ -55,7 +55,7 @@ namespace Datos.Ingresos
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Descripcion_Ingreso, Descripcion_Ingreso FROM Descripciones_Ingreso ORDER BY Descripcion_Ingreso ASC";
+                string sentencia = $@"SELECT Id_Descripcion_Ingreso, Descripcion_Ingreso FROM Descripciones_Ingreso WHERE Estado = 1 ORDER BY Descripcion_Ingreso ASC";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.CommandType = CommandType.Text;
                 try

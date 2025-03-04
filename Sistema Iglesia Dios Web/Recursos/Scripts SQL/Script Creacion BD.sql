@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [Iglesia_Dios_Web]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Database [Iglesia_Dios_Web]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 CREATE DATABASE [Iglesia_Dios_Web]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,7 +84,7 @@ ALTER DATABASE [Iglesia_Dios_Web] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, 
 GO
 USE [Iglesia_Dios_Web]
 GO
-/****** Object:  Table [dbo].[Abonos_Cuentas_Pagar]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Abonos_Cuentas_Pagar]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -93,7 +93,6 @@ CREATE TABLE [dbo].[Abonos_Cuentas_Pagar](
 	[Id_Abono_CP] [int] IDENTITY(1,1) NOT NULL,
 	[Id_Cuenta_Pagar] [int] NULL,
 	[Monto_Abono] [float] NULL,
-	[Moneda] [int] NULL,
 	[Fecha_Abono] [datetime] NULL,
 	[Id_Usuario_Registro] [int] NULL,
 	[Fecha_Registro] [datetime] NULL,
@@ -107,7 +106,29 @@ CREATE TABLE [dbo].[Abonos_Cuentas_Pagar](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Archivos_Ingresos]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Archivos_Egresos]    Script Date: 03/03/2025 08:40:33 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Archivos_Egresos](
+	[Id_Archivo] [int] IDENTITY(1,1) NOT NULL,
+	[Id_Egreso] [int] NULL,
+	[NombreArchivo] [varchar](150) NOT NULL,
+	[NombreArchivoCarpeta] [varchar](150) NOT NULL,
+	[TipoArchivo] [varchar](50) NOT NULL,
+	[Extencion] [varchar](10) NOT NULL,
+	[Descripcion] [varchar](250) NOT NULL,
+	[Archivo] [varbinary](max) NULL,
+	[Fecha_Registro] [datetime] NULL,
+	[Tamano] [float] NULL,
+ CONSTRAINT [PK_Archivos_Egresos] PRIMARY KEY CLUSTERED 
+(
+	[Id_Archivo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Archivos_Ingresos]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -129,42 +150,41 @@ CREATE TABLE [dbo].[Archivos_Ingresos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Cuentas_Por_Pagar]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Cuentas_Por_Pagar]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Cuentas_Por_Pagar](
-	[Id_Cuenta] [int] IDENTITY(1,1) NOT NULL,
-	[Descripcion_Egreso] [int] NULL,
+	[Id_Cuenta_Pagar] [int] IDENTITY(1,1) NOT NULL,
+	[Id_Descripcion_Egreso] [int] NULL,
 	[Monto_Total_Pagar] [float] NULL,
-	[Moneda] [int] NULL,
+	[Id_Moneda] [int] NULL,
 	[Valor_Moneda] [float] NULL,
 	[Fecha] [datetime] NULL,
 	[No_Factura] [varchar](15) NULL,
-	[Beneficiario] [int] NULL,
-	[Otro_Beneficiario] [varchar](30) NULL,
+	[Id_Miembro] [int] NULL,
+	[Id_Miscelaneo] [int] NULL,
 	[Fecha_Vencimiento] [datetime] NULL,
 	[Comentario] [varchar](100) NULL,
 	[Id_Usuario_Registro] [int] NULL,
 	[Fecha_Registro] [datetime] NULL,
 	[Id_Usuario_Ultima_Modificacion] [int] NULL,
 	[Fecha_Ultima_Modificacion] [datetime] NULL,
-	[Id_Forma_Pago] [int] NULL,
  CONSTRAINT [PK_Cuentas_Por_Pagar] PRIMARY KEY CLUSTERED 
 (
-	[Id_Cuenta] ASC
+	[Id_Cuenta_Pagar] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Descripciones_Egreso]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Descripciones_Egreso]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Descripciones_Egreso](
 	[Id_Descripcion_Egreso] [int] IDENTITY(1,1) NOT NULL,
-	[Descripcion_Egreso] [varchar](50) NULL,
+	[Descripcion_Egreso] [varchar](100) NULL,
 	[Estado] [bit] NULL,
  CONSTRAINT [PK_Descripciones_Egresos] PRIMARY KEY CLUSTERED 
 (
@@ -172,7 +192,7 @@ CREATE TABLE [dbo].[Descripciones_Egreso](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Descripciones_Ingreso]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Descripciones_Ingreso]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -187,7 +207,7 @@ CREATE TABLE [dbo].[Descripciones_Ingreso](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Formas_Pago]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Formas_Pago]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -202,7 +222,7 @@ CREATE TABLE [dbo].[Formas_Pago](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Ingresos]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Ingresos]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -227,7 +247,7 @@ CREATE TABLE [dbo].[Ingresos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Miembros]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Miembros]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -265,7 +285,7 @@ CREATE TABLE [dbo].[Miembros](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Miembros_Informacion_Familiar_1]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Miembros_Informacion_Familiar_1]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -299,7 +319,7 @@ CREATE TABLE [dbo].[Miembros_Informacion_Familiar_1](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Miembros_Informacion_Familiar_2]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Miembros_Informacion_Familiar_2]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -344,7 +364,7 @@ CREATE TABLE [dbo].[Miembros_Informacion_Familiar_2](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Miembros_Informacion_Laboral]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Miembros_Informacion_Laboral]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -363,7 +383,7 @@ CREATE TABLE [dbo].[Miembros_Informacion_Laboral](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Miembros_Ministerios]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Miembros_Ministerios]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -373,7 +393,7 @@ CREATE TABLE [dbo].[Miembros_Ministerios](
 	[Id_Ministerio] [int] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Miembros_Nivel_Academico]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Miembros_Nivel_Academico]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -390,7 +410,7 @@ CREATE TABLE [dbo].[Miembros_Nivel_Academico](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Miembros_Pasatiempos]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Miembros_Pasatiempos]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -409,7 +429,7 @@ CREATE TABLE [dbo].[Miembros_Pasatiempos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Ministerios]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Ministerios]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -424,7 +444,22 @@ CREATE TABLE [dbo].[Ministerios](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Monedas]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Miscelaneos]    Script Date: 03/03/2025 08:40:33 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Miscelaneos](
+	[Id_Miscelaneo] [int] IDENTITY(1,1) NOT NULL,
+	[Descripcion_Miscelaneo] [varchar](100) NULL,
+	[Estado] [bit] NULL,
+ CONSTRAINT [PK_Miscelaneos] PRIMARY KEY CLUSTERED 
+(
+	[Id_Miscelaneo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Monedas]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -439,7 +474,7 @@ CREATE TABLE [dbo].[Monedas](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Usuarios]    Script Date: 15/07/2024 02:14:24 a.m. ******/
+/****** Object:  Table [dbo].[Usuarios]    Script Date: 03/03/2025 08:40:33 p.m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -500,6 +535,102 @@ ALTER TABLE [dbo].[Miembros_Pasatiempos]  WITH CHECK ADD  CONSTRAINT [FK_Miembro
 REFERENCES [dbo].[Miembros] ([Id_Miembro])
 GO
 ALTER TABLE [dbo].[Miembros_Pasatiempos] CHECK CONSTRAINT [FK_Miembros_Pasatiempos_Miembros]
+GO
+/****** Object:  StoredProcedure [dbo].[ReporteIngresos_Detalle]    Script Date: 03/03/2025 08:40:33 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[ReporteIngresos_Detalle]
+    @TipoFecha NVARCHAR(50),
+    @FechaInicial DATETIME,
+    @FechaFinal DATETIME,
+    @Miembro INT,
+    @Descripcion_Ingreso INT,
+    @Moneda INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @sql NVARCHAR(MAX) = N'
+        SELECT 
+            Id_Ingreso,
+            DI.Descripcion_Ingreso,
+            M.Nombres + '' '' + M.Apellidos AS Miembro,
+            Mon.Nombre_Moneda AS Moneda,
+            Monto,
+            Valor_Moneda,
+            FORMAT(Fecha_Ingreso, ''dd/MM/yyyy'') AS Fecha_Ingreso,
+            FORMAT(Fecha_Registro, ''dd/MM/yyyy'') AS Fecha_Registro
+        FROM Ingresos I
+        LEFT JOIN Descripciones_Ingreso DI ON DI.Id_Descripcion_Ingreso = I.Id_Descripcion_Ingreso
+        LEFT JOIN Miembros M ON M.Id_Miembro = I.Id_Miembro
+        LEFT JOIN Monedas Mon ON Mon.Id_Moneda = I.Id_Moneda
+        WHERE (' + QUOTENAME(@TipoFecha) + ' BETWEEN @FechaInicial AND @FechaFinal)';
+
+    IF @Miembro > 0
+        SET @sql = @sql + ' AND (M.Id_Miembro = @Miembro)';
+
+    IF @Descripcion_Ingreso > 0
+        SET @sql = @sql + ' AND (DI.Id_Descripcion_Ingreso = @Descripcion_Ingreso)';
+
+    IF @Moneda > 0
+        SET @sql = @sql + ' AND (Mon.Id_Moneda = @Moneda)';
+
+    SET @sql = @sql + ' ORDER BY Id_Ingreso DESC';
+
+    -- Ejecutar la consulta dinámica con parámetros
+    EXEC sp_executesql @sql, 
+        N'@FechaInicial DATETIME, @FechaFinal DATETIME, @Miembro INT, @Descripcion_Ingreso INT, @Moneda INT', 
+        @FechaInicial, @FechaFinal, @Miembro, @Descripcion_Ingreso, @Moneda;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[ReporteIngresos_Resumen]    Script Date: 03/03/2025 08:40:33 p.m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[ReporteIngresos_Resumen]
+    @TipoFecha NVARCHAR(50),
+    @FechaInicial DATETIME,
+    @FechaFinal DATETIME,
+    @Miembro INT = 0,
+    @Descripcion_Ingreso INT = 0,
+    @Moneda INT = 0
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @sql NVARCHAR(MAX) = N'
+        SELECT 
+            DI.Descripcion_Ingreso,
+            Mon.Nombre_Moneda AS Moneda,
+            SUM(Monto) AS Total_Monto
+        FROM Ingresos I
+        LEFT JOIN Descripciones_Ingreso DI ON DI.Id_Descripcion_Ingreso = I.Id_Descripcion_Ingreso
+        LEFT JOIN Monedas Mon ON Mon.Id_Moneda = I.Id_Moneda
+        WHERE (' + QUOTENAME(@TipoFecha) + ' BETWEEN @FechaInicial AND @FechaFinal)';
+
+    -- Filtros opcionales
+    IF @Miembro > 0
+        SET @sql = @sql + ' AND (I.Id_Miembro = @Miembro)';
+
+    IF @Descripcion_Ingreso > 0
+        SET @sql = @sql + ' AND (DI.Id_Descripcion_Ingreso = @Descripcion_Ingreso)';
+
+    IF @Moneda > 0
+        SET @sql = @sql + ' AND (Mon.Id_Moneda = @Moneda)';
+
+    -- Agrupar y ordenar
+    SET @sql = @sql + ' GROUP BY DI.Descripcion_Ingreso, Mon.Nombre_Moneda ORDER BY DI.Descripcion_Ingreso';
+
+    -- Ejecutar SQL dinámico con parámetros
+    EXEC sp_executesql @sql, 
+        N'@FechaInicial DATETIME, @FechaFinal DATETIME, @Miembro INT, @Descripcion_Ingreso INT, @Moneda INT', 
+        @FechaInicial, @FechaFinal, @Miembro, @Descripcion_Ingreso, @Moneda;
+END
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Nombre de pila' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Miembros', @level2type=N'COLUMN',@level2name=N'Nombre_Pila'
 GO

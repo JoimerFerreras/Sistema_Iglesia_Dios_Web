@@ -114,6 +114,15 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::Telerik.Web.UI.RadComboBox cmbEstado_Consulta;
 
         /// <summary>
+        /// Control cmbMiscelaneo_Consulta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbMiscelaneo_Consulta;
+
+        /// <summary>
         /// Control gvDatos.
         /// </summary>
         /// <remarks>
@@ -204,13 +213,13 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::Telerik.Web.UI.RadComboBox cmbBeneficiario;
 
         /// <summary>
-        /// Control txtOtroBeneficiario.
+        /// Control cmbMiscelaneo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtOtroBeneficiario;
+        protected global::Telerik.Web.UI.RadComboBox cmbMiscelaneo;
 
         /// <summary>
         /// Control dtpFecha_CuentaPagar.
@@ -393,6 +402,33 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::System.Web.UI.WebControls.TextBox txtComentarioAbono;
 
         /// <summary>
+        /// Control gvAbonos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid gvAbonos;
+
+        /// <summary>
+        /// Control txtMontoTotalAbonado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMontoTotalAbonado;
+
+        /// <summary>
+        /// Control txtMontoRestante.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMontoRestante;
+
+        /// <summary>
         /// Control txtUsuarioRegistroAbono.
         /// </summary>
         /// <remarks>
@@ -427,33 +463,6 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtFechaUltimaModificacion_Abono;
-
-        /// <summary>
-        /// Control gvAbonos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid gvAbonos;
-
-        /// <summary>
-        /// Control txtMontoTotalAbonado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMontoTotalAbonado;
-
-        /// <summary>
-        /// Control txtMontoRestante.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMontoRestante;
 
         /// <summary>
         /// Control btnAgregarAbono.
@@ -571,5 +580,23 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAgregarDescripcion;
+
+        /// <summary>
+        /// Control txtDescripcionMiscelaneoAgregar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDescripcionMiscelaneoAgregar;
+
+        /// <summary>
+        /// Control btnAgregarMiscelaneo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarMiscelaneo;
     }
 }

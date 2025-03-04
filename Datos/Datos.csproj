@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConexionBD\Conexion_D.cs" />
+    <Compile Include="Otros_Parametros\Miscelaneo_D.cs" />
     <Compile Include="Resumen\Resumen_D.cs" />
     <Compile Include="Egresos\Abono_Cuenta_Pagar_D.cs" />
     <Compile Include="Egresos\Archivo_Egreso_D.cs" />

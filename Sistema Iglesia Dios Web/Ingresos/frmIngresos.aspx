@@ -56,14 +56,14 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Fecha inicial
-                    <br>
+                                    <br>
                                     <telerik:RadDatePicker ID="dtpFechaDesdeFiltro" runat="server" Width="100%" Culture="es-DO" TabIndex="2" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
                                         <DateInput ID="DateInput2" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                                     </telerik:RadDatePicker>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     Fecha final
-                    <br>
+                                    <br>
                                     <telerik:RadDatePicker ID="dtpFechaHastaFiltro" runat="server" Width="100%" Culture="es-DO" TabIndex="3" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
                                         <DateInput ID="DateInput3" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                                     </telerik:RadDatePicker>
@@ -112,11 +112,11 @@
                         </div>
 
 
-                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+                        <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
                             <div>
-                                <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Detalle</span> 
-                                <asp:LinkButton runat="server" ID="btnGenerarPDF_Detalle" CssClass="btn btn-secondary" OnClick="btnGenerarPDF_Detalle_Click" OnClientClick="MostrarPanelCarga()"><i class="fa-solid fa-file-pdf"></i> Generar reporte PDF</asp:LinkButton> 
-                                <asp:LinkButton runat="server" ID="btnGenerarExcel_Detalle" CssClass="btn btn-success" OnClick="btnGenerarExcel_Detalle_Click"><i class="fa-solid fa-file-excel"></i> Generar Excel</asp:LinkButton> 
+                                <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Detalle</span>
+                                <asp:LinkButton runat="server" ID="btnGenerarPDF_Detalle" CssClass="btn btn-secondary" OnClick="btnGenerarPDF_Detalle_Click" OnClientClick="MostrarPanelCarga()"><i class="fa-solid fa-file-pdf"></i> Generar reporte PDF</asp:LinkButton>
+                                <asp:LinkButton runat="server" ID="btnGenerarExcel_Detalle" CssClass="btn btn-success" OnClick="btnGenerarExcel_Detalle_Click"><i class="fa-solid fa-file-excel"></i> Generar Excel</asp:LinkButton>
                             </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>
 
@@ -166,11 +166,11 @@
                             </div>
                         </div>
 
-                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+                        <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
                             <div>
                                 <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Resumen</span>
-                                <asp:LinkButton runat="server" ID="btnGenerarPDF_Resumen" CssClass="btn btn-secondary" OnClick="btnGenerarPDF_Resumen_Click" OnClientClick="MostrarPanelCarga()"><i class="fa-solid fa-file-pdf"></i> Generar reporte PDF</asp:LinkButton> 
-                                <asp:LinkButton runat="server" ID="btnGenerarExcel_Resumen" CssClass="btn btn-success" OnClick="btnGenerarExcel_Resumen_Click"><i class="fa-solid fa-file-excel"></i> Generar Excel</asp:LinkButton> 
+                                <asp:LinkButton runat="server" ID="btnGenerarPDF_Resumen" CssClass="btn btn-secondary" OnClick="btnGenerarPDF_Resumen_Click" OnClientClick="MostrarPanelCarga()"><i class="fa-solid fa-file-pdf"></i> Generar reporte PDF</asp:LinkButton>
+                                <asp:LinkButton runat="server" ID="btnGenerarExcel_Resumen" CssClass="btn btn-success" OnClick="btnGenerarExcel_Resumen_Click"><i class="fa-solid fa-file-excel"></i> Generar Excel</asp:LinkButton>
                             </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>
 
@@ -193,7 +193,7 @@
                                             <telerik:GridBoundColumn DataField="Moneda" HeaderText="Moneda" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
-                                            
+
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>
@@ -201,7 +201,7 @@
                         </div>
 
 
-                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+                        <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
                             <div>
                                 <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Montos totales</span>
                             </div>
@@ -321,36 +321,41 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-12">
                                     Comentario
-                    <asp:TextBox runat="server" ID="txtComentario" CssClass="form-control" Height="76" TextMode="MultiLine" MaxLength="200" Width="100%" TabIndex="2"></asp:TextBox>
+                               <asp:TextBox runat="server" ID="txtComentario" CssClass="form-control" Height="76" TextMode="MultiLine" MaxLength="200" Width="100%" TabIndex="2"></asp:TextBox>
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+                            <div>
+                                <i class="fa-solid fa-file-waveform shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Historial de registro y modificación del ingreso</span>
+                            </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Usuario que hizo el registro
-                    <asp:TextBox runat="server" ID="txtUsuarioRegistro" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                               <asp:TextBox runat="server" ID="txtUsuarioRegistro" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Fecha de registro
-                    <asp:TextBox runat="server" ID="txtFechaRegistro" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                  <asp:TextBox runat="server" ID="txtFechaRegistro" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
                                 </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Usuario de ultima modificaci&oacute;n
-                    <asp:TextBox runat="server" ID="txtUsuarioUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                  <asp:TextBox runat="server" ID="txtUsuarioUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Fecha de ultima modificaci&oacute;n
-                    <asp:TextBox runat="server" ID="txtFechaUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                 <asp:TextBox runat="server" ID="txtFechaUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
+
                         <div class="contenedor_botones">
                             <asp:LinkButton CssClass="fa-solid fa-plus fa-lg boton_formulario_Agregar" runat="server" ID="btnAgregar" OnClick="btnAgregar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
                             <asp:LinkButton CssClass="fa-solid fa-floppy-disk fa-lg boton_formulario_Guardar" runat="server" ID="btnGuardar" OnClick="btnGuardar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
@@ -368,15 +373,14 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-4">
                                     Nombre del archivo
-                            <asp:TextBox runat="server" ID="txtNombreArchivo" CssClass="form-control" MaxLength="250" Width="100%" TabIndex="2"></asp:TextBox>
+                                  <asp:TextBox runat="server" ID="txtNombreArchivo" CssClass="form-control" MaxLength="250" Width="100%" TabIndex="2"></asp:TextBox>
                                 </div>
-                                <div class="col-12 col-md-8">
-                                    Descripción
-                            <asp:TextBox runat="server" ID="txtDescripcionArchivo" CssClass="form-control" MaxLength="250" Width="100%" TabIndex="2"></asp:TextBox>
+                                <div class="col-12 col-md-6">
+                                    Descripción del archivo
+                                 <asp:TextBox runat="server" ID="txtDescripcionArchivo" CssClass="form-control" MaxLength="250" Width="100%" TabIndex="2"></asp:TextBox>
                                 </div>
-                            </div>
-                            <div class="row" style="margin-top: 20px;">
-                                <div class="col-12 col-md-12">
+                                <div class="col-12 col-md-2">
+                                    <br />
                                     <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                                         <Triggers>
                                             <asp:PostBackTrigger ControlID="btnSubirArchivo" />
@@ -389,18 +393,19 @@
 
                                 </div>
                             </div>
+                            <div class="row" style="margin-top: 20px;">
+                            </div>
                         </div>
                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-10">
                                     Archivo seleccionado
-                            <asp:TextBox runat="server" ID="txtNombreArchivoDescargar" ClientIDMode="Static" CssClass="form-control" ReadOnly="true" MaxLength="250" Width="100%" TabIndex="2"></asp:TextBox>
+                                 <asp:TextBox runat="server" ID="txtNombreArchivoDescargar" ClientIDMode="Static" CssClass="form-control" ReadOnly="true" MaxLength="250" Width="100%" TabIndex="2"></asp:TextBox>
                                 </div>
                                 <div class="col-12 col-md-2">
                                     <br />
-                                    <asp:Button runat="server" ID="btnDescargarArchivo" Text="Descargar archivo" CssClass="btn btn-primary" OnClick="btnDescargarArchivo_Click" Width="100%"></asp:Button>
+                                    <asp:Button runat="server" ID="btnDescargarArchivo" Text="Descargar archivo" CssClass="btn btn-success" OnClick="btnDescargarArchivo_Click" Width="100%"></asp:Button>
                                 </div>
-
                             </div>
 
 
@@ -457,12 +462,7 @@
                         <span class="text-light" style="text-align: center; margin-top: 5px; margin-left: 10px;">Cargando...</span>
                     </div>
                 </div>
-
-
             </div>
-
-
-
         </ContentTemplate>
     </asp:UpdatePanel>
 
