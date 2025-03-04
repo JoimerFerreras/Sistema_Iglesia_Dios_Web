@@ -453,6 +453,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                             Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
                             //LimpiarCampos();
                             rtsTabulador.Tabs[2].Visible = true;
+                            ConsultarAbonos();
                             Consultar();
                         }
                         else

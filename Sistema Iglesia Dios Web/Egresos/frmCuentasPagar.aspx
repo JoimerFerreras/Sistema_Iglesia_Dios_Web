@@ -177,10 +177,10 @@
                                             <telerik:GridBoundColumn DataField="Descripcion_Egreso" HeaderText="Descripción" HeaderStyle-Width="20%" ItemStyle-Width="20%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Beneficiario" HeaderText="Beneficiario" HeaderStyle-Width="30%" ItemStyle-Width="30%">
+                                            <telerik:GridBoundColumn DataField="Beneficiario" HeaderText="Beneficiario" HeaderStyle-Width="20%" ItemStyle-Width="20%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Otro_Beneficiario" HeaderText="Otro beneficiario" HeaderStyle-Width="30%" ItemStyle-Width="30%">
+                                            <telerik:GridBoundColumn DataField="Miscelaneo" HeaderText="Misceláneo" HeaderStyle-Width="30%" ItemStyle-Width="30%">
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="Moneda" HeaderText="Moneda" HeaderStyle-Width="10%" ItemStyle-Width="10%">
@@ -326,7 +326,7 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-12">
                                     Comentario
-                                <asp:TextBox runat="server" ID="txtComentarioCuentaPagar" CssClass="form-control" Height="76" TextMode="MultiLine" MaxLength="200" Width="100%" TabIndex="2"></asp:TextBox>
+                                <asp:TextBox runat="server" ID="txtComentarioCuentaPagar" CssClass="form-control" Height="76" TextMode="MultiLine" MaxLength="500" Width="100%" TabIndex="2"></asp:TextBox>
                                 </div>
                             </div>
                         </div>

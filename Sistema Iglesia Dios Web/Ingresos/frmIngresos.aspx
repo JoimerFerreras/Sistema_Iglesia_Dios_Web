@@ -321,7 +321,7 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-12">
                                     Comentario
-                               <asp:TextBox runat="server" ID="txtComentario" CssClass="form-control" Height="76" TextMode="MultiLine" MaxLength="200" Width="100%" TabIndex="2"></asp:TextBox>
+                               <asp:TextBox runat="server" ID="txtComentario" CssClass="form-control" Height="76" TextMode="MultiLine" MaxLength="500" Width="100%" TabIndex="2"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
