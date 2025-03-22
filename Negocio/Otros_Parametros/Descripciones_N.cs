@@ -1,6 +1,5 @@
-﻿using Datos.Ingresos;
-using Datos.Ministerios;
-using Entidades.Ingresos;
+﻿using Datos.Otros_Parametros;
+using Entidades.Otros_Parametros;
 using Negocio.Util_N;
 using System;
 using System.Collections.Generic;
@@ -9,17 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Negocio.Ingresos
+namespace Negocio.Otros_Parametros
 {
-    public class Descripcion_Ingreso_N
+    public class Descripciones_N
     {
-        Descripcion_Ingreso_D Descripcion_Ingreso_D = new Descripcion_Ingreso_D();
+        Descripciones_D Descripciones_D = new Descripciones_D();
 
         public DataTable Listar()
         {
             try
             {
-                return Descripcion_Ingreso_D.Listar();
+                return Descripciones_D.Listar();
             }
             catch (Exception ex)
             {
@@ -27,11 +26,16 @@ namespace Negocio.Ingresos
             }
         }
 
-        public DataTable ListaCombo()
+        public DataTable ListaCombo(int Tipo_Descripcion)
         {
             try
             {
-                return Descripcion_Ingreso_D.ListaCombo();
+                // 1 = Ingresos
+                // 2 = Egresos
+                // 3 = Cuentas por cobrar 
+                // 4 = Cuentas por pagar
+
+                return Descripciones_D.ListaCombo(Tipo_Descripcion);
             }
             catch (Exception ex)
             {
@@ -39,11 +43,11 @@ namespace Negocio.Ingresos
             }
         }
 
-        public Descripcion_Ingreso_E ObtenerRegistro(string Id)
+        public Descripciones_E ObtenerRegistro(string Id)
         {
             try
             {
-                return Descripcion_Ingreso_D.ObtenerRegistro(Id);
+                return Descripciones_D.ObtenerRegistro(Id);
             }
             catch (Exception ex)
             {
@@ -56,8 +60,8 @@ namespace Negocio.Ingresos
             try
             {
                 Utilidad_N utilidad = new Utilidad_N();
-                
-                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Descripcion_Ingreso", "Descripciones_Ingreso");
+
+                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Descripcion", "Descripciones");
             }
             catch (Exception ex)
             {
@@ -65,11 +69,11 @@ namespace Negocio.Ingresos
             }
         }
 
-        public bool Agregar(Descripcion_Ingreso_E entidad)
+        public bool Agregar(Descripciones_E entidad)
         {
             try
             {
-                return Descripcion_Ingreso_D.Agregar(entidad);
+                return Descripciones_D.Agregar(entidad);
             }
             catch (Exception ex)
             {
@@ -77,20 +81,24 @@ namespace Negocio.Ingresos
             }
         }
 
-        public bool Editar(Descripcion_Ingreso_E entidad)
+        public bool Editar(Descripciones_E entidad)
         {
             try
             {
-                if (entidad.Id_Descripcion_Ingreso == 0)
+                if (entidad.Id_Descripcion == 0)
                 {
                     throw new OperationCanceledException("Debe seleccionar un registro para editar");
                 }
-                if (entidad.Descripcion_Ingreso.Length == 0)
+                if (entidad.Nombre.Length == 0)
                 {
-                    throw new OperationCanceledException("La descripción del ingreso no puede estar vacía");
+                    throw new OperationCanceledException("El nombre de descripción no puede estar vacío");
+                }
+                if (entidad.Tipo_Descripcion == 0)
+                {
+                    throw new OperationCanceledException("Debe seleccionar una descripcion");
                 }
 
-                return Descripcion_Ingreso_D.Editar(entidad);
+                return Descripciones_D.Editar(entidad);
             }
             catch (Exception ex)
             {
@@ -107,7 +115,7 @@ namespace Negocio.Ingresos
                     throw new OperationCanceledException("Debe seleccionar un registro para eliminar");
                 }
 
-                return Descripcion_Ingreso_D.Eliminar(Id);
+                return Descripciones_D.Eliminar(Convert.ToInt32(Id));
             }
             catch (Exception ex)
             {

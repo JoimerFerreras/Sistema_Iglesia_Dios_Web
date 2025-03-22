@@ -114,6 +114,12 @@
                         </div>
                     </li>
 
+                    <li class="item_1" title="Cuentas por cobrar">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnCuentasCobrar" data-tippy-content="Cuentas por cobrar" title="">
+                            <i class="fa-solid fa-scale-unbalanced-flip"></i><span>Cuentas por cobrar</span>
+                        </a>
+                    </li>
+
                     <li class="item_1" id="egresos" title="Egresos">
                         <a style="text-decoration: none;" href="#egresos" class="menu_1-btn_1" data-tippy-content="Egresos" title="">
                             <i class="fa-solid fa-scale-unbalanced-flip"></i><span>Egresos<i class="fas fa-chevron-down drop-down_1"></i></span>

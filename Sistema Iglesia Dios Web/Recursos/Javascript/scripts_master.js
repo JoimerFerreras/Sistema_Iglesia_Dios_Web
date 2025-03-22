@@ -99,6 +99,7 @@ function asignarEnlace() {
     document.getElementById('btnFormas_Pago').href = url + 'Otros_Parametros/frmFormas_Pago.aspx';
     document.getElementById('btnMiscelaneos').href = url + 'Otros_Parametros/frmMiscelaneos.aspx';
     document.getElementById('btnResumen').href = url + 'Resumen/frmResumen.aspx';
+    document.getElementById('btnCuentasCobrar').href = url + 'Cuentas_Por_Cobrar/frmCuentasCobrar.aspx';
 }
 
 

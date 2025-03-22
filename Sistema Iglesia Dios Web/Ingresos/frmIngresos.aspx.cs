@@ -21,6 +21,7 @@ using Telerik.Web.UI;
 using CrystalDecisions.CrystalReports.Engine;
 using System.Data.OleDb;
 using CrystalDecisions.Shared;
+using Entidades.Otros_Parametros;
 
 namespace Sistema_Iglesia_Dios_Web.Ingresos
 {
@@ -147,7 +148,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         #region Ingresos
         private void LimpiarFiltros()
         {
-            rbtnTipoFecha.SelectedValue = "2";
+            rbtnTipoFecha.SelectedValue = "1";
 
             //Primero obtenemos el día actual
             DateTime date = DateTime.Now;
@@ -167,7 +168,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             cmbDescripcionIngreso_Consulta.SelectedValue = "0";
             cmbMiembro_Consulta.SelectedValue = "0";
-            cmbMoneda_Consulta.SelectedValue = "0";
         }
 
         private void Consultar()
@@ -185,15 +185,14 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                         dtpFechaDesdeFiltro.SelectedDate.Value,
                         dtpFechaHastaFiltro.SelectedDate.Value,
                         cmbMiembro_Consulta.SelectedValue,
-                        cmbDescripcionIngreso_Consulta.SelectedValue,
-                        cmbMoneda_Consulta.SelectedValue);
+                        cmbDescripcionIngreso_Consulta.SelectedValue);
 
                         gvDatos.DataSource = DT_DATOS;
                         gvDatos.DataBind();
 
                         ConsultarResumen();
 
-                        CalcularMontosTotalesMonedas();
+                        //CalcularMontosTotalesMonedas();
                     }
                     else
                     {
@@ -218,8 +217,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                                    dtpFechaDesdeFiltro.SelectedDate.Value,
                                    dtpFechaHastaFiltro.SelectedDate.Value,
                                    cmbMiembro_Consulta.SelectedValue,
-                                   cmbDescripcionIngreso_Consulta.SelectedValue,
-                                   cmbMoneda_Consulta.SelectedValue);
+                                   cmbDescripcionIngreso_Consulta.SelectedValue);
 
             gvResumen.DataSource = DT_DATOS_RESUMEN;
             gvResumen.DataBind();
@@ -242,19 +240,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             cmbMiembro_Consulta.DataTextField = "Nombre_Miembro";
             cmbMiembro_Consulta.DataBind();
 
-            // Moneda
-            Moneda_N Moneda_N = new Moneda_N();
-            dt = Moneda_N.ListaCombo();
-            cmbMoneda.DataSource = dt;
-            cmbMoneda.DataValueField = "Id_Moneda";
-            cmbMoneda.DataTextField = "Nombre_Moneda";
-            cmbMoneda.DataBind();
-
-            cmbMoneda_Consulta.DataSource = dt;
-            cmbMoneda_Consulta.DataValueField = "Id_Moneda";
-            cmbMoneda_Consulta.DataTextField = "Nombre_Moneda";
-            cmbMoneda_Consulta.DataBind();
-
             // Forma de pago
             Forma_Pago_N Forma_Pago_N = new Forma_Pago_N();
             dt = Forma_Pago_N.ListaCombo();
@@ -270,21 +255,21 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         {
             DataTable dt = new DataTable();
             // Descripcion de ingreso
-            Descripcion_Ingreso_N Descripcion_Ingreso_N = new Descripcion_Ingreso_N();
-            dt = Descripcion_Ingreso_N.ListaCombo();
+            Descripciones_N Descripciones_N = new Descripciones_N();
+            dt = Descripciones_N.ListaCombo(1);
 
             // Crear un nuevo DataRow para el ítem "Seleccionar..."
             DataRow dr = dt.NewRow();
-            dr["Id_Descripcion_Ingreso"] = 0; // Asegúrate de que este campo coincida con el nombre del campo Id_Miembro en tu DataTable
-            dr["Descripcion_Ingreso"] = "Seleccionar...";
+            dr["Id_Descripcion"] = 0; // Asegúrate de que este campo coincida con el nombre del campo Id_Miembro en tu DataTable
+            dr["Nombre"] = "Seleccionar...";
 
             // Insertar el nuevo DataRow al principio del DataTable
             dt.Rows.InsertAt(dr, 0);
 
             cmbDescripcion_Ingreso.Items.Clear();
             cmbDescripcion_Ingreso.DataSource = dt;
-            cmbDescripcion_Ingreso.DataValueField = "Id_Descripcion_Ingreso";
-            cmbDescripcion_Ingreso.DataTextField = "Descripcion_Ingreso";
+            cmbDescripcion_Ingreso.DataValueField = "Id_Descripcion";
+            cmbDescripcion_Ingreso.DataTextField = "Nombre";
             cmbDescripcion_Ingreso.DataBind();
 
 
@@ -292,8 +277,8 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             DataTable dtConsulta = dt.Copy();
 
             DataRow drConsulta = dtConsulta.NewRow();
-            drConsulta["Id_Descripcion_Ingreso"] = 0; // Asegúrate de que este campo coincida con el nombre del campo Id_Miembro en tu DataTable
-            drConsulta["Descripcion_Ingreso"] = "Todos";
+            drConsulta["Id_Descripcion"] = 0; // Asegúrate de que este campo coincida con el nombre del campo Id_Miembro en tu DataTable
+            drConsulta["Nombre"] = "Todos";
 
             // Insertar el nuevo DataRow al principio del DataTable
             dtConsulta.Rows.RemoveAt(0);
@@ -301,8 +286,8 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             cmbDescripcionIngreso_Consulta.Items.Clear();
             cmbDescripcionIngreso_Consulta.DataSource = dtConsulta;
-            cmbDescripcionIngreso_Consulta.DataValueField = "Id_Descripcion_Ingreso";
-            cmbDescripcionIngreso_Consulta.DataTextField = "Descripcion_Ingreso";
+            cmbDescripcionIngreso_Consulta.DataValueField = "Id_Descripcion";
+            cmbDescripcionIngreso_Consulta.DataTextField = "Nombre";
             cmbDescripcionIngreso_Consulta.DataBind();
         }
 
@@ -318,56 +303,56 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             gvResumen.DataBind();
         }
 
-        private void CalcularMontosTotalesMonedas()
-        {
-            if (DT_DATOS.Rows.Count > 0)
-            {
-                DataTable dtTotales = new DataTable();
-                dtTotales.Columns.Add("Moneda");
-                dtTotales.Columns.Add("Monto", typeof(float));
-                for (int i = 0; i < DT_DATOS.Rows.Count; i++)
-                {
-                    DataRow row = DT_DATOS.Rows[i];
-                    if (dtTotales.Rows.Count == 0)
-                    {
-                        dtTotales.Rows.Add(row["Moneda"].ToString(), 0);
-                    }
+        //private void CalcularMontosTotalesMonedas()
+        //{
+        //    if (DT_DATOS.Rows.Count > 0)
+        //    {
+        //        DataTable dtTotales = new DataTable();
+        //        dtTotales.Columns.Add("Moneda");
+        //        dtTotales.Columns.Add("Monto", typeof(float));
+        //        for (int i = 0; i < DT_DATOS.Rows.Count; i++)
+        //        {
+        //            DataRow row = DT_DATOS.Rows[i];
+        //            if (dtTotales.Rows.Count == 0)
+        //            {
+        //                dtTotales.Rows.Add(row["Moneda"].ToString(), 0);
+        //            }
 
-                    for (int j = 0; j < dtTotales.Rows.Count; j++)
-                    {
-                        DataRow rowTotales = dtTotales.Rows[j];
-                        
-                        if (row["Moneda"].ToString() == rowTotales["Moneda"].ToString())
-                        {
-                            int MontoOriginal = int.Parse(rowTotales["Monto"].ToString());
-                            int MontoTotal = MontoOriginal + int.Parse(row["Monto"].ToString());
+        //            for (int j = 0; j < dtTotales.Rows.Count; j++)
+        //            {
+        //                DataRow rowTotales = dtTotales.Rows[j];
 
-                            rowTotales["Monto"] = MontoTotal;
-                            break;
-                        }
-                        else
-                        {
-                            dtTotales.Rows.Add(row["Moneda"].ToString(), int.Parse(row["Monto"].ToString()));
-                            break;
-                        }
-                    }
-                }
+        //                if (row["Moneda"].ToString() == rowTotales["Moneda"].ToString())
+        //                {
+        //                    int MontoOriginal = int.Parse(rowTotales["Monto"].ToString());
+        //                    int MontoTotal = MontoOriginal + int.Parse(row["Monto"].ToString());
 
-                gvMontosTotales.DataSource = dtTotales;
-                gvMontosTotales.DataBind();
+        //                    rowTotales["Monto"] = MontoTotal;
+        //                    break;
+        //                }
+        //                else
+        //                {
+        //                    dtTotales.Rows.Add(row["Moneda"].ToString(), int.Parse(row["Monto"].ToString()));
+        //                    break;
+        //                }
+        //            }
+        //        }
 
-            }
-            else
-            {
-                DataTable dtTotales = new DataTable();
-                dtTotales.Columns.Add("Moneda");
-                dtTotales.Columns.Add("Monto", typeof(float));
+        //        gvMontosTotales.DataSource = dtTotales;
+        //        gvMontosTotales.DataBind();
 
-                gvMontosTotales.DataSource = dtTotales;
-                gvMontosTotales.DataBind();
-            }
+        //    }
+        //    else
+        //    {
+        //        DataTable dtTotales = new DataTable();
+        //        dtTotales.Columns.Add("Moneda");
+        //        dtTotales.Columns.Add("Monto", typeof(float));
 
-        }
+        //        gvMontosTotales.DataSource = dtTotales;
+        //        gvMontosTotales.DataBind();
+        //    }
+
+        //}
 
         private bool ValidarCampos()
         {
@@ -377,23 +362,11 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La descripción del ingreso no puede estar vacía");
             }
-            else if (cmbMoneda.SelectedValue == "0")
-            {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe seleccionar una moneda");
-            }
-            else if (cmbMoneda.SelectedValue != "1" && txtValorMoneda.Text.Length == 0)
-            {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe espesificar el tipo de cambio de la moneda");
-            }
             else if (cmbFormaPago.SelectedValue == "0")
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe espesificar el la forma de pago");
             }
-            else if (!double.TryParse(txtValorMoneda.Text, out double resultado_moneda))
-            {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El tipo de cambio no es válido");
-            }
-            else if(!double.TryParse(txtMonto.Text, out double resultado_monto))
+            else if (!double.TryParse(txtMonto.Text, out double resultado_monto))
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El monto no es válido");
             }
@@ -419,11 +392,9 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     Ingreso_E ingreso_E = new Ingreso_E();
                     ingreso_E.Id_Ingreso = int.Parse(ID_REGISTRO);
                     ingreso_E.Id_Miembro = int.Parse(cmbMiembro.SelectedValue);
-                    ingreso_E.Id_Descripcion_Ingreso = int.Parse(cmbDescripcion_Ingreso.SelectedValue);
-                    ingreso_E.Id_Moneda = int.Parse(cmbMoneda.SelectedValue);
+                    ingreso_E.Id_Descripcion = int.Parse(cmbDescripcion_Ingreso.SelectedValue);
                     ingreso_E.Monto = double.Parse(txtMonto.Text);
                     ingreso_E.Fecha_Ingreso = dtpFechaIngreso.SelectedDate.Value;
-                    ingreso_E.Valor_Moneda = double.Parse(txtValorMoneda.Text);
                     ingreso_E.Id_Usuario_Registro = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
                     ingreso_E.Fecha_Registro = DateTime.Now;
                     ingreso_E.Id_Usuario_Ultima_Modificacion = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
@@ -452,7 +423,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                         // Agregar registro
                         int Id_Ingreso = ingreso_N.Agregar(ingreso_E);
 
-                        if (Id_Ingreso > 0 )
+                        if (Id_Ingreso > 0)
                         {
                             // Agregar los archivos que estan en la tabla temporal
                             if (ListaArchivoE.Count > 0)
@@ -460,7 +431,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                                 Archivo_Ingreso_N archivo_N = new Archivo_Ingreso_N();
                                 for (int i = 0; i < ListaArchivoE.Count; i++)
                                 {
-                                    
+
                                     archivo_N.AgregarArchivo(ListaArchivoE[i], Id_Ingreso);
                                 }
                             }
@@ -492,9 +463,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             txtId_Ingreso.Text = Ingreso_E.Id_Ingreso.ToString();
             cmbMiembro.SelectedValue = Ingreso_E.Id_Miembro.ToString();
-            cmbDescripcion_Ingreso.SelectedValue = Ingreso_E.Id_Descripcion_Ingreso.ToString();
-            cmbMoneda.SelectedValue = Ingreso_E.Id_Moneda.ToString();
-            txtValorMoneda.Text = Utilidad_N.FormatearNumero(Ingreso_E.Valor_Moneda.ToString(), 2, 2);
+            cmbDescripcion_Ingreso.SelectedValue = Ingreso_E.Id_Descripcion.ToString();
             txtMonto.Text = Utilidad_N.FormatearNumero(Ingreso_E.Monto.ToString(), 2, 2);
             dtpFechaIngreso.SelectedDate = Ingreso_E.Fecha_Ingreso;
             txtUsuarioRegistro.Text = Ingreso_E.Nombre_Usuario_Registro;
@@ -506,15 +475,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             if (Ingreso_E.Fecha_Ultima_Modificacion != null)
             {
                 txtFechaUltimaModificacion.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", Ingreso_E.Fecha_Ultima_Modificacion);
-            }
-
-            if (cmbMoneda.SelectedValue != "1" || cmbMoneda.SelectedValue != "0")
-            {
-                divValorMoneda.Visible = true;
-            }
-            else
-            {
-                divValorMoneda.Visible = false;
             }
 
             // Listar archivos del ingreso
@@ -535,8 +495,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             txtId_Ingreso.Text = "(Nuevo)";
             cmbMiembro.SelectedValue = "0";
             cmbDescripcion_Ingreso.SelectedValue = "0";
-            cmbMoneda.SelectedValue = "0";
-            txtValorMoneda.Text = Utilidad_N.FormatearNumero("0", 2, 2);
             txtMonto.Text = Utilidad_N.FormatearNumero("0", 2, 2);
             dtpFechaIngreso.SelectedDate = DateTime.Now;
             txtUsuarioRegistro.Text = "";
@@ -545,15 +503,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             txtFechaUltimaModificacion.Text = "";
             cmbFormaPago.SelectedValue = "0";
             txtComentario.Text = "";
-
-            if (cmbMoneda.SelectedValue == "1" || cmbMoneda.SelectedValue == "0")
-            {
-                divValorMoneda.Visible = false;
-            }
-            else
-            {
-                divValorMoneda.Visible = true;
-            }
 
             txtNombreArchivoDescargar.Text = "";
             gvArchivos.DataSource = new DataTable();
@@ -615,7 +564,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             dtParametros.Rows.Add("Descripción de ingreso: ", cmbDescripcionIngreso_Consulta.Text);
             dtParametros.Rows.Add("Beneficiario: ", cmbMiembro_Consulta.Text);
-            dtParametros.Rows.Add("Moneda: ", cmbMoneda_Consulta.Text);
             dtParametros.Rows.Add("", "");
             dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
 
@@ -654,7 +602,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             dtParametros.Rows.Add("Descripción de ingreso: ", cmbDescripcionIngreso_Consulta.Text);
             dtParametros.Rows.Add("Beneficiario: ", cmbMiembro_Consulta.Text);
-            dtParametros.Rows.Add("Moneda: ", cmbMoneda_Consulta.Text);
             dtParametros.Rows.Add("", "");
             dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
 
@@ -699,14 +646,12 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     TipoFecha = "0";
                 }
 
-
                 //Se envian los parametros del procedimiento almacenado al reporte
                 oRep.SetParameterValue("@TipoFecha", TipoFecha);
                 oRep.SetParameterValue("@FechaInicial", string.Format("{0:yyyy-MM-dd}" + " 00:00:00", dtpFechaDesdeFiltro.SelectedDate));
                 oRep.SetParameterValue("@FechaFinal", string.Format("{0:yyyy-MM-dd}" + " 23:59:59", dtpFechaHastaFiltro.SelectedDate));
                 oRep.SetParameterValue("@Miembro", cmbMiembro_Consulta.SelectedValue);
                 oRep.SetParameterValue("@Descripcion_Ingreso", cmbDescripcionIngreso_Consulta.SelectedValue);
-                oRep.SetParameterValue("@Moneda", cmbMoneda_Consulta.SelectedValue);
 
 
                 // Se cargan el texto de los parametros en el reporte
@@ -725,7 +670,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
                 oRep.DataDefinition.FormulaFields["Miembro"].Text = string.Format("'{0}'", cmbMiembro_Consulta.Text);
                 oRep.DataDefinition.FormulaFields["Descripcion_Ingreso"].Text = string.Format("'{0}'", cmbDescripcionIngreso_Consulta.Text);
-                oRep.DataDefinition.FormulaFields["Moneda"].Text = string.Format("'{0}'", cmbMoneda_Consulta.Text);
 
                 // Se establece el nombre del reporte y se concatena al Path
                 string NombreArchivo = NombreSalidaReporte + string.Format("{0:ddMMyyyyHHmmss}", DateTime.Now) + ".pdf";
@@ -888,7 +832,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                             txtDescripcionArchivo.Text = "";
                             ListarArchivosTemporales();
                         }
-                    } 
+                    }
                     else
                     {
                         Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "Debe cargar un archivo para continuar", "warning");
@@ -1035,20 +979,20 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         }
 
         // Grid de montos totales
-        protected void gvMontosTotales_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
-        {
-            CalcularMontosTotalesMonedas();
-        }
+        //protected void gvMontosTotales_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
+        //{
+        //    CalcularMontosTotalesMonedas();
+        //}
 
-        protected void gvMontosTotales_PageSizeChanged(object sender, Telerik.Web.UI.GridPageSizeChangedEventArgs e)
-        {
-            CalcularMontosTotalesMonedas();
-        }
+        //protected void gvMontosTotales_PageSizeChanged(object sender, Telerik.Web.UI.GridPageSizeChangedEventArgs e)
+        //{
+        //    CalcularMontosTotalesMonedas();
+        //}
 
-        protected void gvMontosTotales_PageIndexChanged(object sender, Telerik.Web.UI.GridPageChangedEventArgs e)
-        {
-            CalcularMontosTotalesMonedas();
-        }
+        //protected void gvMontosTotales_PageIndexChanged(object sender, Telerik.Web.UI.GridPageChangedEventArgs e)
+        //{
+        //    CalcularMontosTotalesMonedas();
+        //}
 
         protected void btnEditar_Click(object sender, EventArgs e)
         {
@@ -1066,7 +1010,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         {
             Consultar();
         }
-       
+
         protected void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
             LimpiarFiltros();
@@ -1082,27 +1026,15 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             GuardarRegistro();
         }
 
-        protected void cmbMoneda_SelectedIndexChanged(object sender, Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            if (cmbMoneda.SelectedValue == "1" || cmbMoneda.SelectedValue == "0")
-            {
-                divValorMoneda.Visible = false;
-            }
-            else
-            {
-                divValorMoneda.Visible = true;
-            }
-        }
-
         private void AgregarDescripcion()
         {
             if (txtDescripcionIngresoAgregar.Text.Length > 0)
             {
-                Descripcion_Ingreso_E entidad = new Descripcion_Ingreso_E();
-                Descripcion_Ingreso_N Descripcion_Ingreso_N = new Descripcion_Ingreso_N();
-                entidad.Descripcion_Ingreso = txtDescripcionIngresoAgregar.Text;
+                Descripciones_E entidad = new Descripciones_E();
+                Descripciones_N Descripciones_N = new Descripciones_N();
+                entidad.Nombre = txtDescripcionIngresoAgregar.Text;
                 entidad.Estado = true;
-                Descripcion_Ingreso_N.Agregar(entidad);
+                Descripciones_N.Agregar(entidad);
                 txtDescripcionIngresoAgregar.Text = "";
 
                 LlenarComboDescripcion();

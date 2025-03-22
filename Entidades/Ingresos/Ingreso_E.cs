@@ -10,11 +10,9 @@ namespace Entidades.Ingresos
     {
         public int Id_Ingreso { get; set; }
         public int Id_Miembro { get; set; }
-        public int Id_Descripcion_Ingreso { get; set; }
-        public int Id_Moneda { get; set; }
+        public int Id_Descripcion { get; set; }
         public double Monto { get; set; }
         public DateTime Fecha_Ingreso { get; set; }
-        public double Valor_Moneda { get; set; }
         public int Id_Usuario_Registro { get; set; }
         public string Nombre_Usuario_Registro { get; set; }
         public DateTime Fecha_Registro { get; set; }

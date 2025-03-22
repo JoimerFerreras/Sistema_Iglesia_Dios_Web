@@ -248,7 +248,7 @@ namespace Datos.Egresos
                 cmd.Parameters.AddWithValue("@Id_Moneda", entidad.Id_Moneda);
                 cmd.Parameters.AddWithValue("@Valor_Moneda", entidad.Valor_Moneda);
                 cmd.Parameters.AddWithValue("@Fecha", entidad.Fecha);
-                cmd.Parameters.AddWithValue("@Fecha_Vencimiento", entidad.Fecha_Vencimiento);
+                cmd.Parameters.AddWithValue("@Fecha_Vencimiento", entidad.Fecha_Vencimiento.HasValue ? (object)entidad.Fecha_Vencimiento.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue("@No_Factura", entidad.No_Factura);
                 cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
                 cmd.Parameters.AddWithValue("@Id_Miscelaneo", entidad.Id_Miscelaneo);
@@ -307,7 +307,7 @@ namespace Datos.Egresos
                 cmd.Parameters.AddWithValue("@Id_Moneda", entidad.Id_Moneda);
                 cmd.Parameters.AddWithValue("@Valor_Moneda", entidad.Valor_Moneda);
                 cmd.Parameters.AddWithValue("@Fecha", entidad.Fecha);
-                cmd.Parameters.AddWithValue("@Fecha_Vencimiento", entidad.Fecha_Vencimiento);
+                cmd.Parameters.AddWithValue("@Fecha_Vencimiento", entidad.Fecha_Vencimiento.HasValue ? (object)entidad.Fecha_Vencimiento.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue("@No_Factura", entidad.No_Factura);
                 cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
                 cmd.Parameters.AddWithValue("@Id_Miscelaneo", entidad.Id_Miscelaneo);

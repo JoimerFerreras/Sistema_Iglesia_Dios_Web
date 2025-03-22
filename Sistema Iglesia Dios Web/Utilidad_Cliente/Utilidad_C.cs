@@ -440,7 +440,8 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
             }
             catch (Exception ex)
             {
-                MostrarAlerta_Personalizada(Pagina, Pagina.GetType(), "Error al generar el reporte", "Ocurrió un error al generar el reporte: " + ex.Message, "error");
+                throw ex;
+               
             }
         }
 

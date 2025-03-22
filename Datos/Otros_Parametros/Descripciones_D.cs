@@ -6,11 +6,11 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entidades.Ingresos;
+using Entidades.Otros_Parametros;
 
-namespace Datos.Ingresos
+namespace Datos.Otros_Parametros
 {
-    public class Descripcion_Ingreso_D
+    public class Descripciones_D
     {
         #region Declaraciones
         SqlDataReader leer;
@@ -23,14 +23,20 @@ namespace Datos.Ingresos
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Descripcion_Ingreso, 
-                                            Descripcion_Ingreso, 
-                                            CASE Estado 
-                                                WHEN '0' THEN 'Inactivo' 
-                                                WHEN '1' THEN 'Activo' 
-                                            END AS Estado 
+                string sentencia = $@"SELECT Id_Descripcion, 
+                                        Nombre, 
+                                        CASE Tipo_Descripcion 
+                                            WHEN '1' THEN 'Ingresos' 
+                                            WHEN '2' THEN 'Egresos' 
+                                            WHEN '3' THEN 'Cuentas por cobrar' 
+                                            WHEN '4' THEN 'Cuentas por pagar' 
+                                        END AS Tipo_Descripcion, 
+                                        CASE Estado 
+                                            WHEN '0' THEN 'Inactivo' 
+                                            WHEN '1' THEN 'Activo' 
+                                        END AS Estado 
 
-                                            FROM Descripciones_Ingreso";
+                                        FROM Descripciones ORDER BY Nombre, Tipo_Descripcion";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.CommandType = CommandType.Text;
                 try
@@ -51,11 +57,11 @@ namespace Datos.Ingresos
             }
         }
 
-        public DataTable ListaCombo()
+        public DataTable ListaCombo(int Tipo_Descripcion)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Descripcion_Ingreso, Descripcion_Ingreso FROM Descripciones_Ingreso WHERE Estado = 1 ORDER BY Descripcion_Ingreso ASC";
+                string sentencia = $@"SELECT Id_Descripcion, Nombre FROM Descripciones WHERE Estado = 1 AND Tipo_Descripcion = {Tipo_Descripcion} ORDER BY Nombre ASC";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.CommandType = CommandType.Text;
                 try
@@ -76,13 +82,13 @@ namespace Datos.Ingresos
             }
         }
 
-        public Descripcion_Ingreso_E ObtenerRegistro(string Id)
+        public Descripciones_E ObtenerRegistro(string Id)
         {
-            Descripcion_Ingreso_E entidad = new Descripcion_Ingreso_E();
+            Descripciones_E entidad = new Descripciones_E();
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Descripcion_Ingreso, Descripcion_Ingreso, Estado FROM Descripciones_Ingreso WHERE Id_Descripcion_Ingreso = @Id";
+                string sentencia = $@"SELECT Id_Descripcion, Nombre, Tipo_Descripcion, Estado FROM Descripciones WHERE Id_Descripcion = @Id";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 cmd.CommandType = CommandType.Text;
@@ -94,8 +100,9 @@ namespace Datos.Ingresos
                         DataTable dt = new DataTable();
                         dt.Load(dr);
                         DataRow row = dt.Rows[0];
-                        entidad.Id_Descripcion_Ingreso = int.Parse(row["Id_Descripcion_Ingreso"].ToString());
-                        entidad.Descripcion_Ingreso = row["Descripcion_Ingreso"].ToString();
+                        entidad.Id_Descripcion = int.Parse(row["Id_Descripcion"].ToString());
+                        entidad.Nombre = row["Nombre"].ToString();
+                        entidad.Tipo_Descripcion = int.Parse(row["Tipo_Descripcion"].ToString());
                         if (row["Estado"].ToString() == "True")
                             entidad.Estado = true;
                         else
@@ -117,16 +124,17 @@ namespace Datos.Ingresos
 
         #region Mantenimientos
 
-        public bool Agregar(Descripcion_Ingreso_E entidad)
+        public bool Agregar(Descripciones_E entidad)
         {
             bool Respuesta = false;
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"INSERT INTO Descripciones_Ingreso(Descripcion_Ingreso, Estado) VALUES(@Descripcion_Ingreso, @Estado);";
+                string sentencia = $@"INSERT INTO Descripciones(Nombre, Tipo_Descripcion, Estado) VALUES(@Nombre, @Tipo_Descripcion, @Estado);";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                cmd.Parameters.AddWithValue("@Descripcion_Ingreso", entidad.Descripcion_Ingreso);
+                cmd.Parameters.AddWithValue("@Nombre", entidad.Nombre);
+                cmd.Parameters.AddWithValue("@Tipo_Descripcion", entidad.Tipo_Descripcion);
                 cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
                 cmd.CommandType = CommandType.Text;
                 try
@@ -145,17 +153,18 @@ namespace Datos.Ingresos
             }
         }
 
-        public bool Editar(Descripcion_Ingreso_E entidad)
+        public bool Editar(Descripciones_E entidad)
         {
             bool Respuesta = false;
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"UPDATE Descripciones_Ingreso SET Descripcion_Ingreso = @Descripcion_Ingreso, Estado = @Estado WHERE Id_Descripcion_Ingreso = @Id_Descripcion_Ingreso";
+                string sentencia = $@"UPDATE Descripciones SET Nombre = @Nombre, Tipo_Descripcion = @Tipo_Descripcion, Estado = @Estado WHERE Id_Descripcion = @Id_Descripcion";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                cmd.Parameters.AddWithValue("@Id_Descripcion_Ingreso", entidad.Id_Descripcion_Ingreso);
-                cmd.Parameters.AddWithValue("@Descripcion_Ingreso", entidad.Descripcion_Ingreso);
+                cmd.Parameters.AddWithValue("@Id_Descripcion", entidad.Id_Descripcion);
+                cmd.Parameters.AddWithValue("@Nombre", entidad.Nombre);
+                cmd.Parameters.AddWithValue("@Tipo_Descripcion", entidad.Tipo_Descripcion);
                 cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
                 cmd.CommandType = CommandType.Text;
                 try
@@ -180,7 +189,7 @@ namespace Datos.Ingresos
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = "DELETE FROM Descripciones_Ingreso WHERE Id_Descripcion_Ingreso = @id;";
+                string sentencia = "DELETE FROM Descripciones WHERE Id_Descripcion = @id;";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.CommandType = CommandType.Text;

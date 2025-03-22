@@ -44,12 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cuentas_Por_Cobrar\Archivo_Cuenta_Cobrar_N.cs" />
+    <Compile Include="Cuentas_Por_Cobrar\Cuenta_Cobrar_N.cs" />
     <Compile Include="Egresos\Abono_Cuenta_Pagar_N.cs" />
     <Compile Include="Egresos\Archivo_Egreso_N.cs" />
     <Compile Include="Egresos\Descripcion_Egreso_N.cs" />
     <Compile Include="Egresos\Cuenta_Pagar_N.cs" />
     <Compile Include="Ingresos\Archivo_Ingreso_N.cs" />
-    <Compile Include="Ingresos\Descripcion_Ingreso_N.cs" />
+    <Compile Include="Otros_Parametros\Descripciones_N.cs" />
     <Compile Include="Otros_Parametros\Forma_Pago_N.cs" />
     <Compile Include="Otros_Parametros\Miscelaneo_N.cs" />
     <Compile Include="Otros_Parametros\Moneda_N.cs" />

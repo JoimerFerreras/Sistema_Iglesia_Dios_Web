@@ -13,7 +13,7 @@ namespace Negocio.Ingresos
     {
         Ingreso_D Ingreso_D = new Ingreso_D();
 
-        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Descripcion_Ingreso, string Moneda)
+        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Descripcion_Ingreso)
         {
             try
             {
@@ -27,7 +27,10 @@ namespace Negocio.Ingresos
                 {
                     TextoTipoFecha = "Fecha_Registro";
                 }
-                return Ingreso_D.Listar(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Descripcion_Ingreso), int.Parse(Moneda));
+
+                FechaFinal = FechaFinal.Date.AddDays(1).AddTicks(-1);
+
+                return Ingreso_D.Listar(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Descripcion_Ingreso));
             }
             catch (Exception ex)
             {
@@ -35,7 +38,7 @@ namespace Negocio.Ingresos
             }
         }
 
-        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Descripcion_Ingreso, string Moneda)
+        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Descripcion_Ingreso)
         {
             try
             {
@@ -49,7 +52,7 @@ namespace Negocio.Ingresos
                 {
                     TextoTipoFecha = "Fecha_Registro";
                 }
-                return Ingreso_D.ListarResumen(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Descripcion_Ingreso), int.Parse(Moneda));
+                return Ingreso_D.ListarResumen(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Descripcion_Ingreso));
             }
             catch (Exception ex)
             {
@@ -89,9 +92,9 @@ namespace Negocio.Ingresos
                 {
                     throw new OperationCanceledException("Debe seleccionar un registro para editar");
                 }
-                if (entidad.Id_Descripcion_Ingreso == 0)
+                if (entidad.Id_Descripcion == 0)
                 {
-                    throw new OperationCanceledException("La descripcion del ingreso no puede estar vacía");
+                    throw new OperationCanceledException("La descripcion no puede estar vacía");
                 }
 
                 return Ingreso_D.Editar(entidad);

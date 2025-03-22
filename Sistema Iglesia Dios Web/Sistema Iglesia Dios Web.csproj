@@ -173,11 +173,11 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Cuentas_Por_Cobrar\frmCuentasCobrar.aspx" />
     <Content Include="Egresos\frmDescripcion_Egresos.aspx" />
     <Content Include="Egresos\frmCuentasPagar.aspx" />
     <Content Include="frmLogin.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Ingresos\frmDescripcion_Ingresos.aspx" />
     <Content Include="Ingresos\frmIngresos.aspx" />
     <Content Include="Miembros\frmMiembros.aspx" />
     <Content Include="Otros_Parametros\frmFormas_Pago.aspx" />
@@ -262,6 +262,13 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Cuentas_Por_Cobrar\frmCuentasCobrar.aspx.cs">
+      <DependentUpon>frmCuentasCobrar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cuentas_Por_Cobrar\frmCuentasCobrar.aspx.designer.cs">
+      <DependentUpon>frmCuentasCobrar.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Egresos\frmDescripcion_Egresos.aspx.cs">
       <DependentUpon>frmDescripcion_Egresos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -285,13 +292,6 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Ingresos\frmDescripcion_Ingresos.aspx.cs">
-      <DependentUpon>frmDescripcion_Ingresos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Ingresos\frmDescripcion_Ingresos.aspx.designer.cs">
-      <DependentUpon>frmDescripcion_Ingresos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ingresos\frmIngresos.aspx.cs">
       <DependentUpon>frmIngresos.aspx</DependentUpon>

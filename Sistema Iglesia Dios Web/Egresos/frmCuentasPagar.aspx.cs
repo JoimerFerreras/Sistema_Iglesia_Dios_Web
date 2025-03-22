@@ -389,7 +389,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             }
             else if (cmbBeneficiario.SelectedValue == "0" && cmbMiscelaneo.SelectedValue == "0")
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Si no va a seleccionar un beneficiario, entonces el campo Misceláneo no puede estar vacío");
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Si no va a seleccionar un miembro, entonces el campo Misceláneo no puede estar vacío");
             }
             else if (cmbMoneda_CuentaPagar.SelectedValue != "1" && txtValorMoneda_CuentaPagar.Text.Length == 0)
             {
@@ -406,10 +406,6 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             else if (dtpFecha_CuentaPagar.SelectedDate.Value == null)
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La fecha no es válida");
-            }
-            else if (dtpFechaVencimiento.SelectedDate.ToString().Length == 0)
-            {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La fecha de vencimiento no es válida");
             }
             else
             {
@@ -433,7 +429,16 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                     cuenta_pagar_E.Id_Moneda = int.Parse(cmbMoneda_CuentaPagar.SelectedValue);
                     cuenta_pagar_E.Valor_Moneda = float.Parse(txtValorMoneda_CuentaPagar.Text);
                     cuenta_pagar_E.Fecha = dtpFecha_CuentaPagar.SelectedDate.Value;
-                    cuenta_pagar_E.Fecha_Vencimiento = dtpFechaVencimiento.SelectedDate.Value;
+
+                    if (dtpFechaVencimiento.SelectedDate.HasValue)
+                    {
+                        cuenta_pagar_E.Fecha_Vencimiento = dtpFechaVencimiento.SelectedDate.Value;
+                    }
+                    else
+                    {
+                        cuenta_pagar_E.Fecha_Vencimiento = null;
+                    }
+
                     cuenta_pagar_E.No_Factura = txtNo_Factura.Text;
                     cuenta_pagar_E.Id_Miembro = int.Parse(cmbBeneficiario.SelectedValue);
                     cuenta_pagar_E.Id_Miscelaneo = int.Parse(cmbMiscelaneo.SelectedValue);
@@ -472,10 +477,10 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                             // Agregar los archivos que estan en la tabla temporal
                             if (ListaArchivoE.Count > 0)
                             {
-                                Archivo_Egreso_N archivo_N = new Archivo_Egreso_N();
+                                //Archivo_Cuenta_Cobrar_N archivo_N = new Archivo_Cuenta_Cobrar_N();
                                 for (int i = 0; i < ListaArchivoE.Count; i++)
                                 {
-                                    archivo_N.AgregarArchivo(ListaArchivoE[i], Id_Egreso);
+                                    //archivo_N.AgregarArchivo(ListaArchivoE[i], Id_Egreso);
                                 }
                             }
 
@@ -723,11 +728,8 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             txtUsuarioUltimaModificacion_Abono.Text = "";
             txtFechaUltimaModificacion_Abono.Text = "";
 
-            txtMontoTotalAbonado.Text = "$" + Utilidad_N.FormatearNumero("0", 2, 2);
-            txtMontoRestante.Text = "$" + Utilidad_N.FormatearNumero("0", 2, 2);
-
-            gvAbonos.DataSource = new DataTable();
-            gvAbonos.DataBind();
+            //txtMontoTotalAbonado.Text = "$" + Utilidad_N.FormatearNumero("0", 2, 2);
+            //txtMontoRestante.Text = "$" + Utilidad_N.FormatearNumero("0", 2, 2);
         }
 
         private void VerRegistroAbono()
@@ -743,7 +745,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             txtComentarioAbono.Text = abono_E.Comentario;
 
             txtUsuarioRegistroAbono.Text = abono_E.Nombre_Usuario_Registro;
-            txtFechaRegistro_CuentaPagar.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", abono_E.Fecha_Registro);
+            txtFechaRegistroAbono.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", abono_E.Fecha_Registro);
             txtUsuarioUltimaModificacion_Abono.Text = abono_E.Nombre_Usuario_Ultima_Modificacion;
 
             if (abono_E.Fecha_Ultima_Modificacion != null)
@@ -768,11 +770,11 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             }
             else if (cmbFormaPagoAbono.SelectedValue == "0")
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe espesificar la forma de pago del abono");
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe espesificar el Medio de pago del abono");
             }
             else if (!double.TryParse(txtMontoAbono.Text, out double resultado_monto))
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El monto de abono a pagar no es válido");
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El Valor a pagar no es válido");
             }
             else
             {
@@ -844,7 +846,6 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                 string a = ex.Message;
                 Utilidad_C.MostrarAlerta_Guardar_Error_Fatal(this, this.GetType());
             }
-
         }
 
         private void EliminarAbono()
@@ -876,13 +877,13 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         #region Archivos
         private void ListarArchivos(string Id_Ingreso)
         {
-            // Listar archivos del ingreso
-            DataTable dtArchivos = new DataTable();
-            Archivo_Egreso_N archivo_Ingreso_N = new Archivo_Egreso_N();
-            dtArchivos = archivo_Ingreso_N.Listar(Id_Ingreso);
+            //// Listar archivos del ingreso
+            //DataTable dtArchivos = new DataTable();
+            ////Archivo_Cuenta_Cobrar_N archivo_Ingreso_N = new Archivo_Cuenta_Cobrar_N();
+            //dtArchivos = archivo_Ingreso_N.Listar(Id_Ingreso);
 
-            gvArchivos.DataSource = dtArchivos;
-            gvArchivos.DataBind();
+            //gvArchivos.DataSource = dtArchivos;
+            //gvArchivos.DataBind();
         }
 
         private void ListarArchivosTemporales()
@@ -907,8 +908,8 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
 
                     // Llenado de datos generales
                     Archivo_Egreso_E Archivo_E = new Archivo_Egreso_E();
-                    Archivo_Egreso_N Archivo_N = new Archivo_Egreso_N();
-                    Archivo_E = Archivo_N.ObtenerArchivo(Id_Archivo);
+                    //Archivo_Cuenta_Cobrar_N Archivo_N = new Archivo_Cuenta_Cobrar_N();
+                    //Archivo_E = Archivo_N.ObtenerArchivo(Id_Archivo);
 
                     // Simular obtener los bytes del archivo (reemplazar con tu lógica real)
                     byte[] archivoBytes = Archivo_E.Archivo;
@@ -940,125 +941,125 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
 
         private void SeleccionarArchivoDescargar(int Id_Archivo)
         {
-            if (EDITAR_REGISTRO == true)
-            {
-                // Llenado de datos generales
-                Archivo_Egreso_E Archivo_E = new Archivo_Egreso_E();
-                Archivo_Egreso_N Archivo_N = new Archivo_Egreso_N();
-                Archivo_E = Archivo_N.ObtenerArchivo(Id_Archivo);
+            //if (EDITAR_REGISTRO == true)
+            //{
+            //    // Llenado de datos generales
+            //    Archivo_Egreso_E Archivo_E = new Archivo_Egreso_E();
+            //    //Archivo_Cuenta_Cobrar_N Archivo_N = new Archivo_Cuenta_Cobrar_N();
+            //    Archivo_E = Archivo_N.ObtenerArchivo(Id_Archivo);
 
-                // Nombre del archivo para la descarga
-                string nombreArchivo = Archivo_E.NombreArchivoCarpeta + Archivo_E.Extencion; // Puedes obtener el nombre original del archivo aquí
+            //    // Nombre del archivo para la descarga
+            //    string nombreArchivo = Archivo_E.NombreArchivoCarpeta + Archivo_E.Extencion; // Puedes obtener el nombre original del archivo aquí
 
-                txtNombreArchivoDescargar.Text = "(" + Id_Archivo.ToString() + ") " + nombreArchivo;
+            //    txtNombreArchivoDescargar.Text = "(" + Id_Archivo.ToString() + ") " + nombreArchivo;
 
-                ID_REGISTRO_ARCHIVO = Id_Archivo.ToString();
-                txtNombreArchivoDescargar.Focus();
-            }
+            //    ID_REGISTRO_ARCHIVO = Id_Archivo.ToString();
+            //    txtNombreArchivoDescargar.Focus();
+            //}
         }
 
         private void SubirArchivo()
         {
-            try
-            {
-                // Se revisa que corresponda a un nuevo registro de ingreso
-                if (ID_REGISTRO.ToString() == "0" || ID_REGISTRO.ToString() == "")
-                {
-                    // Se verifica que el FileUpload tenga un archivo
-                    if (FileUpload1.HasFile == true)
-                    {
-                        // Se verifica que tamaño del archivo en MB que tiene el FileUpload no supere el limite permitido
-                        double TamanoArchivo = FileUpload1.PostedFile.ContentLength;
-                        if (TamanoArchivo / (1024.0 * 1024.0) > 30)
-                        {
-                            Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "No puede subir archivos con tamaño mayor a 30MB", "warning");
-                        }
-                        else
-                        {
-                            Archivo_Egreso_N archivo_Egreso_N = new Archivo_Egreso_N();
-                            HttpPostedFile postedFile = FileUpload1.PostedFile;
+            //try
+            //{
+            //    // Se revisa que corresponda a un nuevo registro de ingreso
+            //    if (ID_REGISTRO.ToString() == "0" || ID_REGISTRO.ToString() == "")
+            //    {
+            //        // Se verifica que el FileUpload tenga un archivo
+            //        if (FileUpload1.HasFile == true)
+            //        {
+            //            // Se verifica que tamaño del archivo en MB que tiene el FileUpload no supere el limite permitido
+            //            double TamanoArchivo = FileUpload1.PostedFile.ContentLength;
+            //            if (TamanoArchivo / (1024.0 * 1024.0) > 30)
+            //            {
+            //                Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "No puede subir archivos con tamaño mayor a 30MB", "warning");
+            //            }
+            //            else
+            //            {
+            //                //Archivo_Cuenta_Cobrar_N archivo_Egreso_N = new Archivo_Cuenta_Cobrar_N();
+            //                HttpPostedFile postedFile = FileUpload1.PostedFile;
 
-                            // Se crea la estructura del objeto del archvo, se le inserta los datos del archivo del FileUpload y luego se agrega el objeto a la lista de archivos
-                            int Numero_Lista = ListaArchivoE.Count;
-                            Archivo_Egreso_E ArchivoTemp = new Archivo_Egreso_E();
-                            ArchivoTemp = archivo_Egreso_N.EstructurarArchivo(postedFile, txtNombreArchivo.Text, txtDescripcionArchivo.Text, Numero_Lista, "0");
-                            ListaArchivoE.Add(ArchivoTemp);
+            //                // Se crea la estructura del objeto del archvo, se le inserta los datos del archivo del FileUpload y luego se agrega el objeto a la lista de archivos
+            //                int Numero_Lista = ListaArchivoE.Count;
+            //                Archivo_Egreso_E ArchivoTemp = new Archivo_Egreso_E();
+            //                ArchivoTemp = archivo_Egreso_N.EstructurarArchivo(postedFile, txtNombreArchivo.Text, txtDescripcionArchivo.Text, Numero_Lista, "0");
+            //                ListaArchivoE.Add(ArchivoTemp);
 
-                            // Lista de campos para Grid de archivos:
+            //                // Lista de campos para Grid de archivos:
 
-                            // Id_Archivo
-                            // NombreArchivo
-                            // Descripcion
-                            // NombreArchivoCarpeta
-                            // Tamano
-                            // Fecha_Registro
+            //                // Id_Archivo
+            //                // NombreArchivo
+            //                // Descripcion
+            //                // NombreArchivoCarpeta
+            //                // Tamano
+            //                // Fecha_Registro
 
-                            // Se agrega tambien el objeto al datatable de archivos temporales para presentarlos en el grid de archivos
-                            DT_DATOS_ARCHIVOS.Rows.Add(ArchivoTemp.Id_Archivo, ArchivoTemp.NombreArchivo, ArchivoTemp.Descripcion, ArchivoTemp.NombreArchivoCarpeta + ArchivoTemp.Extencion, (float)Math.Round(ArchivoTemp.Tamano, 4), ArchivoTemp.Fecha_Registro.ToString("dd/MM/yyyy"));
+            //                // Se agrega tambien el objeto al datatable de archivos temporales para presentarlos en el grid de archivos
+            //                DT_DATOS_ARCHIVOS.Rows.Add(ArchivoTemp.Id_Archivo, ArchivoTemp.NombreArchivo, ArchivoTemp.Descripcion, ArchivoTemp.NombreArchivoCarpeta + ArchivoTemp.Extencion, (float)Math.Round(ArchivoTemp.Tamano, 4), ArchivoTemp.Fecha_Registro.ToString("dd/MM/yyyy"));
 
-                            txtNombreArchivo.Text = "";
-                            txtDescripcionArchivo.Text = "";
-                            ListarArchivosTemporales();
-                        }
-                    }
-                    else
-                    {
-                        Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "Debe cargar un archivo para continuar", "warning");
-                    }
-                }
-                else
-                {
-                    if (FileUpload1.HasFile == true)
-                    {
-                        double TamanoArchivo = FileUpload1.PostedFile.ContentLength;
-                        if (TamanoArchivo / (1024.0 * 1024.0) > 30)
-                        {
-                            Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "No puede subir archivos con tamaño mayor a 30MB", "warning");
-                        }
-                        else
-                        {
-                            Archivo_Egreso_N archivo_Egreso_N = new Archivo_Egreso_N();
-                            HttpPostedFile postedFile = FileUpload1.PostedFile;
+            //                txtNombreArchivo.Text = "";
+            //                txtDescripcionArchivo.Text = "";
+            //                ListarArchivosTemporales();
+            //            }
+            //        }
+            //        else
+            //        {
+            //            Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "Debe cargar un archivo para continuar", "warning");
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (FileUpload1.HasFile == true)
+            //        {
+            //            double TamanoArchivo = FileUpload1.PostedFile.ContentLength;
+            //            if (TamanoArchivo / (1024.0 * 1024.0) > 30)
+            //            {
+            //                Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "No puede subir archivos con tamaño mayor a 30MB", "warning");
+            //            }
+            //            else
+            //            {
+            //                Archivo_Cuenta_Cobrar_N archivo_Egreso_N = new Archivo_Cuenta_Cobrar_N();
+            //                HttpPostedFile postedFile = FileUpload1.PostedFile;
 
-                            archivo_Egreso_N.AgregarArchivo(archivo_Egreso_N.EstructurarArchivo(postedFile, txtNombreArchivo.Text, txtDescripcionArchivo.Text, 0, ID_REGISTRO), 0);
+            //                archivo_Egreso_N.AgregarArchivo(archivo_Egreso_N.EstructurarArchivo(postedFile, txtNombreArchivo.Text, txtDescripcionArchivo.Text, 0, ID_REGISTRO), 0);
 
-                            txtNombreArchivo.Text = "";
-                            txtDescripcionArchivo.Text = "";
-                            ListarArchivos(ID_REGISTRO);
-                        }
-                    }
-                    else
-                    {
-                        Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "Debe cargar un archivo para continuar", "warning");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                string A = ex.Message;
-                throw ex;
-            }
+            //                txtNombreArchivo.Text = "";
+            //                txtDescripcionArchivo.Text = "";
+            //                ListarArchivos(ID_REGISTRO);
+            //            }
+            //        }
+            //        else
+            //        {
+            //            Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "Debe cargar un archivo para continuar", "warning");
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    string A = ex.Message;
+            //    throw ex;
+            //}
         }
 
         private void EliminarArchivo(int Id_Archivo)
         {
-            Archivo_Egreso_N archivo_N = new Archivo_Egreso_N();
-            if (EDITAR_REGISTRO == false)
-            {
-                ListaArchivoE.RemoveAt(Id_Archivo);
-                DT_DATOS_ARCHIVOS.Rows.RemoveAt(Id_Archivo);
-                ListarArchivosTemporales();
-                Utilidad_C.MostrarAlerta_Eliminar_Success(this, this.GetType());
-            }
-            else
-            {
-                bool respuesta = archivo_N.Eliminar(Id_Archivo);
-                ListarArchivos(ID_REGISTRO);
-                Utilidad_C.MostrarAlerta_Eliminar_Success(this, this.GetType());
-            }
+            //Archivo_Cuenta_Cobrar_N archivo_N = new Archivo_Cuenta_Cobrar_N();
+            //if (EDITAR_REGISTRO == false)
+            //{
+            //    ListaArchivoE.RemoveAt(Id_Archivo);
+            //    DT_DATOS_ARCHIVOS.Rows.RemoveAt(Id_Archivo);
+            //    ListarArchivosTemporales();
+            //    Utilidad_C.MostrarAlerta_Eliminar_Success(this, this.GetType());
+            //}
+            //else
+            //{
+            //    bool respuesta = archivo_N.Eliminar(Id_Archivo);
+            //    ListarArchivos(ID_REGISTRO);
+            //    Utilidad_C.MostrarAlerta_Eliminar_Success(this, this.GetType());
+            //}
 
-            ID_REGISTRO_ARCHIVO = "0";
-            txtNombreArchivoDescargar.Text = "";
+            //ID_REGISTRO_ARCHIVO = "0";
+            //txtNombreArchivoDescargar.Text = "";
         }
         #endregion
 
@@ -1234,7 +1235,6 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             int Id_Archivo;
             Id_Archivo = System.Convert.ToInt32(btn.CommandArgument.ToString());
             SeleccionarArchivoDescargar(Id_Archivo);
-
         }
 
         protected void btnEliminarArchivo_Click(object sender, EventArgs e)
@@ -1268,11 +1268,11 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             }
             else if (statusText == "2")
             {
-                return "En Abono";
+                return "En proceso";
             }
             else
             {
-                return "Sin Abonos";
+                return "Sin pagos";
             }
         }
 

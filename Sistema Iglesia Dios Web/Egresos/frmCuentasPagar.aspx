@@ -25,7 +25,7 @@
                     <Tabs>
                         <telerik:RadTab Text="Consulta" Font-Bold="true"></telerik:RadTab>
                         <telerik:RadTab Text="Registro" Font-Bold="true"></telerik:RadTab>
-                        <telerik:RadTab Text="Abonos" Font-Bold="true" Visible="false"></telerik:RadTab>
+                        <telerik:RadTab Text="Pagos efectuados" Font-Bold="true" Visible="false"></telerik:RadTab>
                         <telerik:RadTab Text="Archivos" Font-Bold="true"></telerik:RadTab>
                     </Tabs>
                 </telerik:RadTabStrip>
@@ -83,7 +83,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6">
-                                    Beneficiarios
+                                    Miembro
                                 <telerik:RadComboBox ID="cmbBeneficiarios_Consulta" runat="server" Width="100%" ClientIDMode="Static"
                                     MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
                                     MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
@@ -119,7 +119,7 @@
                                             <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
                                             <telerik:RadComboBoxItem Text="Pagado" Value="1" Selected="false" />
                                             <telerik:RadComboBoxItem Text="En Proceso" Value="2" Selected="false" />
-                                            <telerik:RadComboBoxItem Text="Sin Abonos" Value="3" Selected="false" />
+                                            <telerik:RadComboBoxItem Text="Sin Pagos" Value="3" Selected="false" />
                                         </Items>
                                     </telerik:RadComboBox>
                                 </div>
@@ -165,19 +165,16 @@
                                             <telerik:GridBoundColumn DataField="Id_Cuenta_Pagar" HeaderText="ID" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Fecha" HeaderText="Fecha de egreso" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="Fecha_Vencimiento" HeaderText="Fecha de vencimiento" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Fecha_Registro" HeaderText="Fecha de registro" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
-                                            </telerik:GridBoundColumn>
-
                                             <telerik:GridBoundColumn DataField="Descripcion_Egreso" HeaderText="Descripción" HeaderStyle-Width="20%" ItemStyle-Width="20%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Beneficiario" HeaderText="Beneficiario" HeaderStyle-Width="20%" ItemStyle-Width="20%">
+                                            <telerik:GridBoundColumn DataField="Beneficiario" HeaderText="Miembro" HeaderStyle-Width="20%" ItemStyle-Width="20%">
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="Miscelaneo" HeaderText="Misceláneo" HeaderStyle-Width="30%" ItemStyle-Width="30%">
@@ -201,6 +198,9 @@
                                                     </div>
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
+
+                                             <telerik:GridBoundColumn DataField="Fecha_Registro" HeaderText="Fecha de registro" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
                                 </telerik:RadGrid>
@@ -251,7 +251,7 @@
                             <div class="row" style="margin-top: 20px;">
 
                                 <div class="col-12 col-md-6">
-                                    Beneficiario
+                                    Miembro
                                     <telerik:RadComboBox ID="cmbBeneficiario" runat="server" Width="100%" ClientIDMode="Static"
                                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
                                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
@@ -291,7 +291,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6">
-                                    Fecha de vencimiento <span class="LabelCampoObligatorio">*</span>
+                                    Fecha de vencimiento
                                     <br />
                                     <telerik:RadDatePicker ID="dtpFechaVencimiento" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
                                         <DateInput ID="DateInput5" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
@@ -374,14 +374,14 @@
                         <div class="shadowed-div-body" style="width: 100%;">
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
-                                    ID Abono
+                                    ID de pago efectuado
                                  <asp:TextBox runat="server" ID="txtIdAbono" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
                                 </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
-                                    Fecha de Abono <span class="LabelCampoObligatorio">*</span>
+                                    Fecha de pago efectuado <span class="LabelCampoObligatorio">*</span>
                                     <br />
                                     <telerik:RadDatePicker ID="dtpFechaAbono" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
                                         <DateInput ID="DateInput4" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
@@ -389,7 +389,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6">
-                                    Forma de pago <span class="LabelCampoObligatorio">*</span>
+                                    Medio de pago <span class="LabelCampoObligatorio">*</span>
                                     <telerik:RadComboBox ID="cmbFormaPagoAbono" runat="server" Width="100%" ClientIDMode="Static"
                                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
                                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
@@ -403,7 +403,7 @@
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-4">
-                                    Monto de Abono<span class="LabelCampoObligatorio">*</span>
+                                    Valor <span class="LabelCampoObligatorio">*</span>
                                     <asp:TextBox runat="server" ID="txtMontoAbono" CssClass="form-control" Width="100%" MaxLength="30" TabIndex="2"></asp:TextBox>
                                 </div>
 
@@ -437,19 +437,19 @@
                                                     <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Abono_CP") %>' OnClick="btnEditarAbono_Click" CssClass="btn btn-sm btn-primary fa-solid fa-pen boton_formulario_editar" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px; margin-bottom: 3px;"></asp:LinkButton>
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
-                                            <telerik:GridBoundColumn DataField="Id_Abono_CP" HeaderText="ID de abono" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Id_Abono_CP" HeaderText="ID de pago efectuado" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Fecha_Abono" HeaderText="Fecha de abono" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Fecha_Abono" HeaderText="Fecha de pago efectuado" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="Fecha_Registro" HeaderText="Fecha de registro" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Descripcion_Forma_Pago" HeaderText="Forma de pago" HeaderStyle-Width="40%" ItemStyle-Width="40%">
+                                            <telerik:GridBoundColumn DataField="Descripcion_Forma_Pago" HeaderText="Medio de pago" HeaderStyle-Width="40%" ItemStyle-Width="40%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Monto_Abono" HeaderText="Monto Abonado" DataFormatString="{0:0,0.00}" HeaderStyle-Width="20%" ItemStyle-Width="20%">
+                                            <telerik:GridBoundColumn DataField="Monto_Abono" HeaderText="Valor" DataFormatString="{0:0,0.00}" HeaderStyle-Width="20%" ItemStyle-Width="20%">
                                             </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
@@ -457,7 +457,7 @@
                             </div>
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
-                                    <a style="color: green; font-weight: bold;">Monto total abonado</a>
+                                    <a style="color: green; font-weight: bold;">Total de pagos efectuados</a>
                                     <asp:TextBox runat="server" ID="txtMontoTotalAbonado" CssClass="form-control" Width="200px" TabIndex="2" ReadOnly="true"></asp:TextBox>
                                 </div>
 

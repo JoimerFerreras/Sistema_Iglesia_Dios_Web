@@ -96,15 +96,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::Telerik.Web.UI.RadComboBox cmbMiembro_Consulta;
 
         /// <summary>
-        /// Control cmbMoneda_Consulta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbMoneda_Consulta;
-
-        /// <summary>
         /// Control btnGenerarPDF_Detalle.
         /// </summary>
         /// <remarks>
@@ -159,15 +150,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::Telerik.Web.UI.RadGrid gvResumen;
 
         /// <summary>
-        /// Control gvMontosTotales.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid gvMontosTotales;
-
-        /// <summary>
         /// Control btnBuscar.
         /// </summary>
         /// <remarks>
@@ -213,13 +195,13 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::Telerik.Web.UI.RadComboBox cmbMiembro;
 
         /// <summary>
-        /// Control cmbDescripcion_Ingreso.
+        /// Control cmbMiscelaneo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbDescripcion_Ingreso;
+        protected global::Telerik.Web.UI.RadComboBox cmbMiscelaneo;
 
         /// <summary>
         /// Control dtpFechaIngreso.
@@ -231,6 +213,15 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::Telerik.Web.UI.RadDatePicker dtpFechaIngreso;
 
         /// <summary>
+        /// Control cmbDescripcion_Ingreso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbDescripcion_Ingreso;
+
+        /// <summary>
         /// Control cmbFormaPago.
         /// </summary>
         /// <remarks>
@@ -238,33 +229,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox cmbFormaPago;
-
-        /// <summary>
-        /// Control cmbMoneda.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbMoneda;
-
-        /// <summary>
-        /// Control divValorMoneda.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divValorMoneda;
-
-        /// <summary>
-        /// Control txtValorMoneda.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtValorMoneda;
 
         /// <summary>
         /// Control txtMonto.

@@ -73,7 +73,7 @@ namespace Negocio.Egresos
                 }
                 if (entidad.Id_Descripcion_Egreso == 0)
                 {
-                    throw new OperationCanceledException("La descripcion de la cuenta por cobrar no puede estar vacía");
+                    throw new OperationCanceledException("La descripcion de la cuenta por pagar no puede estar vacía");
                 }
 
                 return cuenta_pagar_D.Editar(entidad);

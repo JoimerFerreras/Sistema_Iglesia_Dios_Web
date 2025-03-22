@@ -19,25 +19,22 @@ namespace Datos.Ingresos
 
         #region Consultas
 
-        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion_Ingreso, int Moneda)
+        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
                 string sentencia = "";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 sentencia = @"SELECT Id_Ingreso,
-                                        DI.Descripcion_Ingreso,
+                                        D.Nombre AS Descripcion,
                                         M.Nombres + ' ' + M.Apellidos AS Miembro,
-                                        Mon.Nombre_Moneda AS Moneda,
                                         Monto,
-                                        Valor_Moneda,
                                         FORMAT(Fecha_Ingreso, 'dd/MM/yyyy') AS Fecha_Ingreso,
                                         FORMAT(Fecha_Registro, 'dd/MM/yyyy') AS Fecha_Registro
 
                                         FROM Ingresos I
-                                        LEFT JOIN Descripciones_Ingreso DI ON DI.Id_Descripcion_Ingreso = I.Id_Descripcion_Ingreso
-                                        LEFT JOIN Miembros M ON M.Id_Miembro = I.Id_Miembro
-                                        LEFT JOIN Monedas Mon ON Mon.Id_Moneda = I.Id_Moneda ";
+                                        LEFT JOIN Descripciones D ON D.Id_Descripcion = I.Id_Descripcion
+                                        LEFT JOIN Miembros M ON M.Id_Miembro = I.Id_Miembro";
 
                 // Tipo de fecha
                 sentencia += $@" WHERE ({TipoFecha} BETWEEN @FechaInicial AND @FechaFinal) ";
@@ -51,18 +48,11 @@ namespace Datos.Ingresos
                     cmd.Parameters.AddWithValue("@Miembro", Miembro);
                 }
 
-                //Descripcion de ingreso
-                if (Descripcion_Ingreso > 0)
+                //Descripcion
+                if (Descripcion > 0)
                 {
-                    sentencia += $" AND (DI.Id_Descripcion_Ingreso = @Descripcion_Ingreso) ";
-                    cmd.Parameters.AddWithValue("@Descripcion_Ingreso", Descripcion_Ingreso);
-                }
-
-                //Moneda
-                if (Moneda > 0)
-                {
-                    sentencia += $" AND (Mon.Id_Moneda = @Moneda) ";
-                    cmd.Parameters.AddWithValue("@Moneda", Moneda);
+                    sentencia += $" AND (D.Id_Descripcion = @Id_Descripcion) ";
+                    cmd.Parameters.AddWithValue("@Id_Descripcion", Descripcion);
                 }
 
                 sentencia += $@"ORDER BY Id_Ingreso DESC";
@@ -89,18 +79,16 @@ namespace Datos.Ingresos
         }
 
 
-        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion_Ingreso, int Moneda)
+        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
                 string sentencia = @"
                     SELECT 
-                        DI.Descripcion_Ingreso,
-                        Mon.Nombre_Moneda AS Moneda,
+                        D.Nombre AS Descripcion,
                         SUM(Monto) AS Total_Monto
                     FROM Ingresos I
-                    LEFT JOIN Descripciones_Ingreso DI ON DI.Id_Descripcion_Ingreso = I.Id_Descripcion_Ingreso
-                    LEFT JOIN Monedas Mon ON Mon.Id_Moneda = I.Id_Moneda
+                    LEFT JOIN Descripciones D ON D.Id_Descripcion = I.Id_Descripcion
                     WHERE (" + TipoFecha + " BETWEEN @FechaInicial AND @FechaFinal) ";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
@@ -115,20 +103,13 @@ namespace Datos.Ingresos
                 }
 
                 // Filtrar por Descripción de Ingreso
-                if (Descripcion_Ingreso > 0)
+                if (Descripcion > 0)
                 {
-                    sentencia += " AND (DI.Id_Descripcion_Ingreso = @Descripcion_Ingreso) ";
-                    cmd.Parameters.AddWithValue("@Descripcion_Ingreso", Descripcion_Ingreso);
+                    sentencia += " AND (D.Id_Descripcion = @Id_Descripcion) ";
+                    cmd.Parameters.AddWithValue("@Id_Descripcion", Descripcion);
                 }
 
-                // Filtrar por Moneda
-                if (Moneda > 0)
-                {
-                    sentencia += " AND (Mon.Id_Moneda = @Moneda) ";
-                    cmd.Parameters.AddWithValue("@Moneda", Moneda);
-                }
-
-                sentencia += " GROUP BY DI.Descripcion_Ingreso, Mon.Nombre_Moneda ORDER BY DI.Descripcion_Ingreso";
+                sentencia += "GROUP BY D.Nombre ORDER BY D.Nombre";
 
                 cmd.CommandText = sentencia;
                 cmd.Connection = conexion;
@@ -159,12 +140,11 @@ namespace Datos.Ingresos
             {
                 string sentencia = $@"SELECT I.Id_Ingreso,
                                         I.Id_Miembro,
-                                        I.Id_Descripcion_Ingreso,
-                                        I.Id_Moneda,
+                                        I.Id_Descripcion,
                                         I.Monto,
                                         I.Fecha_Ingreso,
-                                        I.Valor_Moneda,
                                         I.Id_Forma_Pago,
+                                        I.Comentario,
                                         I.Id_Usuario_Registro,
                                         U1.Nombre1 + ' ' + U1.Apellido1 AS Nombre_Usuario_Registro,
                                         I.Fecha_Registro,
@@ -189,12 +169,11 @@ namespace Datos.Ingresos
                         DataRow row = dt.Rows[0];
                         entidad.Id_Ingreso = int.Parse(row["Id_Ingreso"].ToString());
                         entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
-                        entidad.Id_Descripcion_Ingreso = int.Parse(row["Id_Descripcion_Ingreso"].ToString());
-                        entidad.Id_Moneda = int.Parse(row["Id_Moneda"].ToString());
+                        entidad.Id_Descripcion = int.Parse(row["Id_Descripcion"].ToString());
                         entidad.Monto = double.Parse(row["Monto"].ToString());
                         entidad.Fecha_Ingreso = DateTime.Parse(row["Fecha_Ingreso"].ToString());
-                        entidad.Valor_Moneda = double.Parse(row["Valor_Moneda"].ToString());
                         entidad.Id_Forma_Pago = int.Parse(row["Id_Forma_Pago"].ToString());
+                        entidad.Comentario = row["Comentario"].ToString();
                         entidad.Id_Usuario_Registro = int.Parse(row["Id_Usuario_Registro"].ToString());
                         entidad.Nombre_Usuario_Registro = row["Nombre_Usuario_Registro"].ToString();
                         entidad.Fecha_Registro = DateTime.Parse(row["Fecha_Registro"].ToString());
@@ -229,11 +208,9 @@ namespace Datos.Ingresos
             {
                 string sentencia = $@"INSERT INTO Ingresos(
                                         Id_Miembro,
-                                        Id_Descripcion_Ingreso,
-                                        Id_Moneda,
+                                        Id_Descripcion,
                                         Monto,
                                         Fecha_Ingreso,
-                                        Valor_Moneda,
                                         Id_Usuario_Registro,
                                         Fecha_Registro,
                                         Id_Usuario_Ultima_Modificacion,
@@ -242,11 +219,9 @@ namespace Datos.Ingresos
 
                                     VALUES(
                                         @Id_Miembro,
-                                        @Id_Descripcion_Ingreso,
-                                        @Id_Moneda,
+                                        @Id_Descripcion,
                                         @Monto,
                                         @Fecha_Ingreso,
-                                        @Valor_Moneda,
                                         @Id_Usuario_Registro,
                                         @Fecha_Registro,
                                         @Id_Usuario_Ultima_Modificacion,
@@ -257,11 +232,9 @@ namespace Datos.Ingresos
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
-                cmd.Parameters.AddWithValue("@Id_Descripcion_Ingreso", entidad.Id_Descripcion_Ingreso);
-                cmd.Parameters.AddWithValue("@Id_Moneda", entidad.Id_Moneda);
+                cmd.Parameters.AddWithValue("@Id_Descripcion", entidad.Id_Descripcion);
                 cmd.Parameters.AddWithValue("@Monto", entidad.Monto);
                 cmd.Parameters.AddWithValue("@Fecha_Ingreso", entidad.Fecha_Ingreso);
-                cmd.Parameters.AddWithValue("@Valor_Moneda", entidad.Valor_Moneda);
                 cmd.Parameters.AddWithValue("@Id_Usuario_Registro", entidad.Id_Usuario_Registro);
                 cmd.Parameters.AddWithValue("@Fecha_Registro", entidad.Fecha_Registro);
                 cmd.Parameters.AddWithValue("@Id_Usuario_Ultima_Modificacion", "0");
@@ -297,11 +270,9 @@ namespace Datos.Ingresos
             {
                 string sentencia = $@"UPDATE Ingresos SET 
                                         Id_Miembro = @Id_Miembro, 
-                                        Id_Descripcion_Ingreso = @Id_Descripcion_Ingreso, 
-                                        Id_Moneda = @Id_Moneda, 
+                                        Id_Descripcion = @Id_Descripcion, 
                                         Monto = @Monto, 
-                                        Fecha_Ingreso = @Fecha_Ingreso,
-                                        Valor_Moneda = @Valor_Moneda, 
+                                        Fecha_Ingreso = @Fecha_Ingreso, 
                                         Id_Usuario_Ultima_Modificacion = @Id_Usuario_Ultima_Modificacion, 
                                         Fecha_Ultima_Modificacion = @Fecha_Ultima_Modificacion, 
                                         Id_Forma_Pago = @Id_Forma_Pago, 
@@ -312,11 +283,9 @@ namespace Datos.Ingresos
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id_Ingreso", entidad.Id_Ingreso);
                 cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
-                cmd.Parameters.AddWithValue("@Id_Descripcion_Ingreso", entidad.Id_Descripcion_Ingreso);
-                cmd.Parameters.AddWithValue("@Id_Moneda", entidad.Id_Moneda);
+                cmd.Parameters.AddWithValue("@Id_Descripcion", entidad.Id_Descripcion);
                 cmd.Parameters.AddWithValue("@Monto", entidad.Monto);
                 cmd.Parameters.AddWithValue("@Fecha_Ingreso", entidad.Fecha_Ingreso);
-                cmd.Parameters.AddWithValue("@Valor_Moneda", entidad.Valor_Moneda);
                 cmd.Parameters.AddWithValue("@Id_Usuario_Ultima_Modificacion", entidad.Id_Usuario_Ultima_Modificacion);
                 cmd.Parameters.AddWithValue("@Fecha_Ultima_Modificacion", entidad.Fecha_Ultima_Modificacion);
                 cmd.Parameters.AddWithValue("@Id_Forma_Pago", entidad.Id_Forma_Pago);
