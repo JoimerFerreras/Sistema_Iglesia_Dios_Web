@@ -95,7 +95,7 @@ function asignarEnlace() {
     document.getElementById('btnDescripcionIngresos').href = url + 'Ingresos/frmDescripcion_Ingresos.aspx';
     document.getElementById('btnCuentasPagar').href = url + 'Egresos/frmCuentasPagar.aspx';
     document.getElementById('btnDescripcionEgresos').href = url + 'Egresos/frmDescripcion_Egresos.aspx';
-    document.getElementById('btnMonedas').href = url + 'Otros_Parametros/frmMonedas.aspx';
+    document.getElementById('btnDescripciones').href = url + 'Otros_Parametros/frmDescripciones.aspx';
     document.getElementById('btnFormas_Pago').href = url + 'Otros_Parametros/frmFormas_Pago.aspx';
     document.getElementById('btnMiscelaneos').href = url + 'Otros_Parametros/frmMiscelaneos.aspx';
     document.getElementById('btnResumen').href = url + 'Resumen/frmResumen.aspx';

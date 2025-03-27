@@ -155,16 +155,19 @@
                         <a style="text-decoration: none;" href="#otros_parametros" class="menu_1-btn_1" data-tippy-content="Otros parámetros" title="">
                             <i class="fa-solid fa-sliders"></i><span>Otros Parametros<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
-                        <div class="sub-menu_1">
-                            <a href="#" id="btnFormas_Pago" data-tippy-content="Formas de pago" title=""><i class="fa-solid fa-money-bill"></i><span>Formas de pago</span></a>
+
+                         <div class="sub-menu_1">
+                            <a href="#" id="btnDescripciones" data-tippy-content="Descripciones" title=""><i class="fa-solid fa-dollar-sign"></i><span>Descripciones</span></a>
                         </div>
 
                           <div class="sub-menu_1">
-                            <a href="#" id="btnMonedas" data-tippy-content="Monedas" title=""><i class="fa-solid fa-dollar-sign"></i><span>Monedas</span></a>
-                        </div>
-                         <div class="sub-menu_1">
                             <a href="#" id="btnMiscelaneos" data-tippy-content="Misceláneos" title=""><i class="fa-solid fa-shuffle"></i><span>Misceláneos</span></a>
                         </div>
+
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnFormas_Pago" data-tippy-content="Formas de pago" title=""><i class="fa-solid fa-money-bill"></i><span>Formas de pago</span></a>
+                        </div>
+                        
                     </li>
 
                     <li class="item_1" title="Ayuda">

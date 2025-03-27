@@ -1,9 +1,7 @@
 ﻿// Autor: Joimer Ferreras
 
-using Entidades.Egresos;
-using Entidades.Ingresos;
-using Negocio.Egresos;
-using Negocio.Ingresos;
+using Entidades.Otros_Parametros;
+using Negocio.Otros_Parametros;
 using Negocio.Util_N;
 using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
@@ -16,12 +14,12 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Sistema_Iglesia_Dios_Web.Egresos
+namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
 {
-    public partial class frmDescripcion_Egresos : System.Web.UI.Page
+    public partial class frmDescripciones : System.Web.UI.Page
     {
         #region Declaraciones
-        Descripcion_Egreso_N Descripcion_Egreso_N = new Descripcion_Egreso_N();
+        Descripciones_N Descripciones_N = new Descripciones_N();
         public string ID_REGISTRO
         {
             get
@@ -75,7 +73,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         #region Metodos/ Procedimientos
         private void Consultar()
         {
-            DT_DATOS = Descripcion_Egreso_N.Listar();
+            DT_DATOS = Descripciones_N.Listar(cmbTipoDescripcion_Consulta.SelectedValue);
 
             gvDatos.DataSource = DT_DATOS;
             gvDatos.DataBind();
@@ -91,9 +89,13 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         {
             bool Validacion = false;
 
-            if (txtDescripcion.Text.Length == 0)
+            if (txtNombreDescripcion.Text.Length == 0)
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La descripción no puede estar vacía");
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El nombre descripción no puede estar vacío");
+            }
+            else if (cmbTipoDescripcion.SelectedValue == "0")
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe espesificar el módulo al que pertenece la descripción");
             }
             else
             {
@@ -110,16 +112,17 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                 if (ValidarCampos() == true)
                 {
                     // Agregacion de la informacion basica del miembro
-                    Descripcion_Egreso_E Descripcion_Egreso_E = new Descripcion_Egreso_E();
-                    Descripcion_Egreso_E.Id_Descripcion_Egreso = int.Parse(ID_REGISTRO);
-                    Descripcion_Egreso_E.Descripcion_Egreso = txtDescripcion.Text;
-                    Descripcion_Egreso_E.Estado = Convert.ToBoolean(cmbEstado.SelectedValue);
+                    Descripciones_E Descripciones_E = new Descripciones_E();
+                    Descripciones_E.Id_Descripcion = int.Parse(ID_REGISTRO);
+                    Descripciones_E.Nombre = txtNombreDescripcion.Text;
+                    Descripciones_E.Tipo_Descripcion = int.Parse(cmbTipoDescripcion.SelectedValue);
+                    Descripciones_E.Estado = Convert.ToBoolean(cmbEstado.SelectedValue);
 
                     if (EDITAR_REGISTRO == true)
                     {
                         
                         // Guardar registro existente
-                        bool salida = Descripcion_Egreso_N.Editar(Descripcion_Egreso_E);
+                        bool salida = Descripciones_N.Editar(Descripciones_E);
 
                         if (salida == true)
                         {
@@ -135,7 +138,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                     else
                     {
                         // Agregar registro
-                        bool salida = Descripcion_Egreso_N.Agregar(Descripcion_Egreso_E);
+                        bool salida = Descripciones_N.Agregar(Descripciones_E);
 
                         if (salida == true)
                         {
@@ -160,12 +163,13 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         private void VerRegistro()
         {
             // Llenado de datos generales
-            Descripcion_Egreso_E Descripcion_Egreso_E = new Descripcion_Egreso_E();
-            Descripcion_Egreso_E = Descripcion_Egreso_N.ObtenerRegistro(ID_REGISTRO);
+            Descripciones_E Descripciones_E = new Descripciones_E();
+            Descripciones_E = Descripciones_N.ObtenerRegistro(ID_REGISTRO);
 
-            txtId_Egreso.Text = Descripcion_Egreso_E.Id_Descripcion_Egreso.ToString();
-            txtDescripcion.Text = Descripcion_Egreso_E.Descripcion_Egreso.ToString();
-            cmbEstado.SelectedValue = Descripcion_Egreso_E.Estado.ToString();
+            txtId_Descripcion.Text = Descripciones_E.Id_Descripcion.ToString();
+            txtNombreDescripcion.Text = Descripciones_E.Nombre.ToString();
+            cmbTipoDescripcion.SelectedValue = Descripciones_E.Tipo_Descripcion.ToString();
+            cmbEstado.SelectedValue = Descripciones_E.Estado.ToString();
         }
 
         private void Eliminar(int Id_Registro)
@@ -176,9 +180,9 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             }
             else
             {
-                if (Descripcion_Egreso_N.RegistrosExistentes(Id_Registro) == false)
+                if (Descripciones_N.RegistrosExistentes(Id_Registro) == false)
                 {
-                    bool respuesta = Descripcion_Egreso_N.Eliminar(Id_Registro);
+                    bool respuesta = Descripciones_N.Eliminar(Id_Registro);
 
                     if (respuesta)
                     {
@@ -204,11 +208,12 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             ID_REGISTRO = "0";
             EDITAR_REGISTRO = false;
 
-            txtId_Egreso.Text = "(Nuevo)";
-            txtDescripcion.Text = "";
+            txtId_Descripcion.Text = "(Nuevo)";
+            txtNombreDescripcion.Text = "";
+            cmbTipoDescripcion.SelectedValue = "0";
             cmbEstado.SelectedValue = "True";
 
-            txtDescripcion.Focus();
+            txtNombreDescripcion.Focus();
         }
 
         #endregion
@@ -221,7 +226,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
 
             if (!Page.IsPostBack)
             {
-                ((SiteMaster)Master).EstablecerNombrePantalla("Descripción de egresos");
+                ((SiteMaster)Master).EstablecerNombrePantalla("Descripciones");
                 LimpiarCampos();
                 Consultar();
             }
@@ -280,5 +285,10 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             return statusText == "Activo" ? "status-green" : "status-red";
         }
         #endregion
+
+        protected void cmbTipoDescripcion_Consulta_SelectedIndexChanged(object sender, Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            Consultar();
+        }
     }
 }

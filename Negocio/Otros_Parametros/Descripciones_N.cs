@@ -14,11 +14,11 @@ namespace Negocio.Otros_Parametros
     {
         Descripciones_D Descripciones_D = new Descripciones_D();
 
-        public DataTable Listar()
+        public DataTable Listar(string Tipo_Descripcion)
         {
             try
             {
-                return Descripciones_D.Listar();
+                return Descripciones_D.Listar(int.Parse(Tipo_Descripcion));
             }
             catch (Exception ex)
             {

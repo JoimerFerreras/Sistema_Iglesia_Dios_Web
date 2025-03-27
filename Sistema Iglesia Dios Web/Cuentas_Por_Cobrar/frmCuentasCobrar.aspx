@@ -213,7 +213,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6">
-                                    Misceláneo <span class="LabelCampoObligatorio">*</span>
+                                    Misceláneo 
                                     <div class="d-flex align-items-center">
                                         <telerik:RadComboBox ID="cmbMiscelaneo" runat="server" Width="100%" ClientIDMode="Static"
                                             MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"

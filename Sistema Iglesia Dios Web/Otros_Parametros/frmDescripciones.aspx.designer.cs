@@ -7,30 +7,39 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Sistema_Iglesia_Dios_Web.Egresos
+namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
 {
 
 
-    public partial class frmDescripcion_Egresos
+    public partial class frmDescripciones
     {
 
         /// <summary>
-        /// Control txtId_Egreso.
+        /// Control txtId_Descripcion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtId_Egreso;
+        protected global::System.Web.UI.WebControls.TextBox txtId_Descripcion;
 
         /// <summary>
-        /// Control txtDescripcion.
+        /// Control txtNombreDescripcion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
+        protected global::System.Web.UI.WebControls.TextBox txtNombreDescripcion;
+
+        /// <summary>
+        /// Control cmbTipoDescripcion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbTipoDescripcion;
 
         /// <summary>
         /// Control cmbEstado.
@@ -40,6 +49,15 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox cmbEstado;
+
+        /// <summary>
+        /// Control cmbTipoDescripcion_Consulta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbTipoDescripcion_Consulta;
 
         /// <summary>
         /// Control gvDatos.

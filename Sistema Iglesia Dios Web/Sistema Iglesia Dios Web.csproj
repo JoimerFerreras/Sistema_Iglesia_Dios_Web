@@ -174,13 +174,13 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Cuentas_Por_Cobrar\frmCuentasCobrar.aspx" />
-    <Content Include="Egresos\frmDescripcion_Egresos.aspx" />
     <Content Include="Egresos\frmCuentasPagar.aspx" />
     <Content Include="frmLogin.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Ingresos\frmIngresos.aspx" />
     <Content Include="Miembros\frmMiembros.aspx" />
     <Content Include="Otros_Parametros\frmFormas_Pago.aspx" />
+    <Content Include="Otros_Parametros\frmDescripciones.aspx" />
     <Content Include="Otros_Parametros\frmMiscelaneos.aspx" />
     <Content Include="Otros_Parametros\frmMonedas.aspx" />
     <Content Include="Recursos\CSS\botones.css" />
@@ -269,13 +269,6 @@
     <Compile Include="Cuentas_Por_Cobrar\frmCuentasCobrar.aspx.designer.cs">
       <DependentUpon>frmCuentasCobrar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Egresos\frmDescripcion_Egresos.aspx.cs">
-      <DependentUpon>frmDescripcion_Egresos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Egresos\frmDescripcion_Egresos.aspx.designer.cs">
-      <DependentUpon>frmDescripcion_Egresos.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Egresos\frmCuentasPagar.aspx.cs">
       <DependentUpon>frmCuentasPagar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -313,6 +306,13 @@
     </Compile>
     <Compile Include="Otros_Parametros\frmFormas_Pago.aspx.designer.cs">
       <DependentUpon>frmFormas_Pago.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Otros_Parametros\frmDescripciones.aspx.cs">
+      <DependentUpon>frmDescripciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Otros_Parametros\frmDescripciones.aspx.designer.cs">
+      <DependentUpon>frmDescripciones.aspx</DependentUpon>
     </Compile>
     <Compile Include="Otros_Parametros\frmMiscelaneos.aspx.cs">
       <DependentUpon>frmMiscelaneos.aspx</DependentUpon>

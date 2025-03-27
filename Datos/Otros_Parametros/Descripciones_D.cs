@@ -19,7 +19,7 @@ namespace Datos.Otros_Parametros
 
         #region Consultas
 
-        public DataTable Listar()
+        public DataTable Listar(int Tipo_Descripcion)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
@@ -36,17 +36,28 @@ namespace Datos.Otros_Parametros
                                             WHEN '1' THEN 'Activo' 
                                         END AS Estado 
 
-                                        FROM Descripciones ORDER BY Nombre, Tipo_Descripcion";
+                                        FROM Descripciones ";
+
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                // Miembro
+                if (Tipo_Descripcion > 0)
+                {
+                    sentencia += $" WHERE (Tipo_Descripcion = @Tipo_Descripcion) ";
+                    cmd.Parameters.AddWithValue("@Tipo_Descripcion", Tipo_Descripcion);
+                }
+
+                sentencia += $" ORDER BY Tipo_Descripcion, Nombre";
+
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
                 cmd.CommandType = CommandType.Text;
+
                 try
                 {
                     conexion.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
-
                     DataTable dt = new DataTable();
                     dt.Load(dr);
-
                     conexion.Close();
                     return dt;
                 }
