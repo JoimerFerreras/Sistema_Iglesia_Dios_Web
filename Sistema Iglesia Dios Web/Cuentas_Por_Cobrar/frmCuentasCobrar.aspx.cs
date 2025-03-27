@@ -553,7 +553,7 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
 
             txtIdCuentaCobrar.Focus();
 
-            //btnEliminar.Visible = true;
+            btnEliminar.Visible = true;
         }
 
         private void LimpiarCampos()
@@ -579,11 +579,10 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
             txtFechaUltimaModificacion.Text = "";
             cmbFormaPago.SelectedValue = "0";
 
-            txtNombreArchivoDescargar.Text = "";
             gvArchivos.DataSource = new DataTable();
             gvArchivos.DataBind();
 
-            //btnEliminar.Visible = false;
+            btnEliminar.Visible = false;
 
             cmbMiembro.Focus();
         }
@@ -880,7 +879,6 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
                     string nombreArchivo = Archivo_E.NombreArchivoCarpeta + Archivo_E.Extencion; // Puedes obtener el nombre original del archivo aquí
 
                     ID_REGISTRO_ARCHIVO = "0";
-                    txtNombreArchivoDescargar.Text = "";
 
                     HttpResponse response = HttpContext.Current.Response;
 
@@ -909,14 +907,9 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
                 Archivo_Cuenta_Cobrar_E Archivo_E = new Archivo_Cuenta_Cobrar_E();
                 Archivo_Cuenta_Cobrar_N Archivo_N = new Archivo_Cuenta_Cobrar_N();
                 Archivo_E = Archivo_N.ObtenerArchivo(Id_Archivo);
-
-                // Nombre del archivo para la descarga
-                string nombreArchivo = Archivo_E.NombreArchivoCarpeta + Archivo_E.Extencion; // Puedes obtener el nombre original del archivo aquí
-
-                txtNombreArchivoDescargar.Text = "(" + Id_Archivo.ToString() + ") " + nombreArchivo;
-
                 ID_REGISTRO_ARCHIVO = Id_Archivo.ToString();
-                txtNombreArchivoDescargar.Focus();
+
+                DescargarArchivo();
             }
         }
 
@@ -1021,7 +1014,6 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
             }
 
             ID_REGISTRO_ARCHIVO = "0";
-            txtNombreArchivoDescargar.Text = "";
         }
         #endregion
 
@@ -1068,11 +1060,6 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
                     DT_DATOS_ARCHIVOS.Columns.Add("Fecha_Registro");
                 }
             }
-
-            if (ID_REGISTRO_ARCHIVO == "0" || ID_REGISTRO_ARCHIVO == "")
-            {
-                txtNombreArchivoDescargar.Text = "";
-            }
         }
 
         #region Cuentas por pagar
@@ -1092,38 +1079,6 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
         {
             ActualizarGrid();
         }
-
-        // Grid resumen
-        //protected void gvResumen_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
-        //{
-        //    ActualizarGridResumen();
-        //}
-
-        //protected void gvResumen_PageSizeChanged(object sender, Telerik.Web.UI.GridPageSizeChangedEventArgs e)
-        //{
-        //    ActualizarGridResumen();
-        //}
-
-        //protected void gvResumen_PageIndexChanged(object sender, Telerik.Web.UI.GridPageChangedEventArgs e)
-        //{
-        //    ActualizarGridResumen();
-        //}
-
-        // Grid de montos totales
-        //protected void gvMontosTotales_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
-        //{
-        //    CalcularMontosTotalesMonedas();
-        //}
-
-        //protected void gvMontosTotales_PageSizeChanged(object sender, Telerik.Web.UI.GridPageSizeChangedEventArgs e)
-        //{
-        //    CalcularMontosTotalesMonedas();
-        //}
-
-        //protected void gvMontosTotales_PageIndexChanged(object sender, Telerik.Web.UI.GridPageChangedEventArgs e)
-        //{
-        //    CalcularMontosTotalesMonedas();
-        //}
 
         protected void btnEditar_Click(object sender, EventArgs e)
         {
@@ -1166,6 +1121,16 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
         {
             AgregarMiscelaneo();
         }
+
+        protected void btnGenerarPDF_Detalle_Click(object sender, EventArgs e)
+        {
+            //GenerarReportePDF("ReporteIngresos_Detalle", "Reporte_Ingresos_Detalle");
+        }
+
+        protected void btnGenerarExcel_Detalle_Click(object sender, EventArgs e)
+        {
+            GenerarReporteExcel_Detalle();
+        }
         #endregion
 
 
@@ -1177,7 +1142,6 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
             int Id_Archivo;
             Id_Archivo = System.Convert.ToInt32(btn.CommandArgument.ToString());
             SeleccionarArchivoDescargar(Id_Archivo);
-
         }
 
         protected void btnEliminarArchivo_Click(object sender, EventArgs e)
@@ -1197,18 +1161,29 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
         {
             DescargarArchivo();
         }
+
+        protected void gvArchivos_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item is GridDataItem) // Asegura que es una fila de datos
+            {
+                GridDataItem dataItem = (GridDataItem)e.Item;
+
+                // Encuentra el botón de la fila actual
+                LinkButton btnDescargar = (LinkButton)dataItem.FindControl("btnDescargarArchivo");
+
+                if (btnDescargar != null)
+                {
+                    // Registrar el botón como PostBackTrigger para que funcione fuera del UpdatePanel
+                    ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
+                    if (scriptManager != null)
+                    {
+                        scriptManager.RegisterPostBackControl(btnDescargar);
+                    }
+                }
+            }
+        }
         #endregion
 
         #endregion
-
-        protected void btnGenerarPDF_Detalle_Click(object sender, EventArgs e)
-        {
-            //GenerarReportePDF("ReporteIngresos_Detalle", "Reporte_Ingresos_Detalle");
-        }
-
-        protected void btnGenerarExcel_Detalle_Click(object sender, EventArgs e)
-        {
-            GenerarReporteExcel_Detalle();
-        }
     }
 }

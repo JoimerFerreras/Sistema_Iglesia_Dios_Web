@@ -19,22 +19,24 @@ namespace Datos.Ingresos
 
         #region Consultas
 
-        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion)
+        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion, int Miscelaneo)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
                 string sentencia = "";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 sentencia = @"SELECT Id_Ingreso,
-                                        D.Nombre AS Descripcion,
-                                        M.Nombres + ' ' + M.Apellidos AS Miembro,
-                                        Monto,
-                                        FORMAT(Fecha_Ingreso, 'dd/MM/yyyy') AS Fecha_Ingreso,
-                                        FORMAT(Fecha_Registro, 'dd/MM/yyyy') AS Fecha_Registro
+                                    FORMAT(Fecha_Ingreso, 'dd/MM/yyyy') AS Fecha_Ingreso,
+                                    D.Nombre AS Descripcion,
+                                    M.Nombres + ' ' + M.Apellidos AS Miembro,
+                                    MC.Descripcion_Miscelaneo AS Miscelaneo,
+                                    Monto,
+                                    FORMAT(Fecha_Registro, 'dd/MM/yyyy') AS Fecha_Registro
 
-                                        FROM Ingresos I
-                                        LEFT JOIN Descripciones D ON D.Id_Descripcion = I.Id_Descripcion
-                                        LEFT JOIN Miembros M ON M.Id_Miembro = I.Id_Miembro";
+                                    FROM Ingresos I
+                                    LEFT JOIN Descripciones D ON D.Id_Descripcion = I.Id_Descripcion
+                                    LEFT JOIN Miembros M ON M.Id_Miembro = I.Id_Miembro
+                                    LEFT JOIN Miscelaneos MC ON MC.Id_Miscelaneo = I.Id_Miscelaneo";
 
                 // Tipo de fecha
                 sentencia += $@" WHERE ({TipoFecha} BETWEEN @FechaInicial AND @FechaFinal) ";
@@ -46,6 +48,13 @@ namespace Datos.Ingresos
                 {
                     sentencia += $" AND (M.Id_Miembro = @Miembro) ";
                     cmd.Parameters.AddWithValue("@Miembro", Miembro);
+                }
+
+                //Miscelaneo
+                if (Miscelaneo > 0)
+                {
+                    sentencia += $" AND (I.Id_Miscelaneo = @Id_Miscelaneo) ";
+                    cmd.Parameters.AddWithValue("@Id_Miscelaneo", Miscelaneo);
                 }
 
                 //Descripcion
@@ -79,7 +88,7 @@ namespace Datos.Ingresos
         }
 
 
-        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion)
+        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion, int Miscelaneo)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
@@ -100,6 +109,13 @@ namespace Datos.Ingresos
                 {
                     sentencia += " AND (I.Id_Miembro = @Miembro) ";
                     cmd.Parameters.AddWithValue("@Miembro", Miembro);
+                }
+
+                //Miscelaneo
+                if (Miscelaneo > 0)
+                {
+                    sentencia += $" AND (I.Id_Miscelaneo = @Id_Miscelaneo) ";
+                    cmd.Parameters.AddWithValue("@Id_Miscelaneo", Miscelaneo);
                 }
 
                 // Filtrar por Descripción de Ingreso
@@ -145,6 +161,7 @@ namespace Datos.Ingresos
                                         I.Fecha_Ingreso,
                                         I.Id_Forma_Pago,
                                         I.Comentario,
+                                        I.Id_Miscelaneo,
                                         I.Id_Usuario_Registro,
                                         U1.Nombre1 + ' ' + U1.Apellido1 AS Nombre_Usuario_Registro,
                                         I.Fecha_Registro,
@@ -174,6 +191,7 @@ namespace Datos.Ingresos
                         entidad.Fecha_Ingreso = DateTime.Parse(row["Fecha_Ingreso"].ToString());
                         entidad.Id_Forma_Pago = int.Parse(row["Id_Forma_Pago"].ToString());
                         entidad.Comentario = row["Comentario"].ToString();
+                        entidad.Id_Miscelaneo = int.Parse(row["Id_Miscelaneo"].ToString());
                         entidad.Id_Usuario_Registro = int.Parse(row["Id_Usuario_Registro"].ToString());
                         entidad.Nombre_Usuario_Registro = row["Nombre_Usuario_Registro"].ToString();
                         entidad.Fecha_Registro = DateTime.Parse(row["Fecha_Registro"].ToString());
@@ -215,7 +233,8 @@ namespace Datos.Ingresos
                                         Fecha_Registro,
                                         Id_Usuario_Ultima_Modificacion,
                                         Id_Forma_Pago,
-                                        Comentario)
+                                        Comentario,
+                                        Id_Miscelaneo)
 
                                     VALUES(
                                         @Id_Miembro,
@@ -226,7 +245,8 @@ namespace Datos.Ingresos
                                         @Fecha_Registro,
                                         @Id_Usuario_Ultima_Modificacion,
                                         @Id_Forma_Pago,
-                                        @Comentario);
+                                        @Comentario,
+                                        @Id_Miscelaneo);
 
                                         SELECT SCOPE_IDENTITY() AS UltimoRegistroAgregado;";
 
@@ -240,6 +260,7 @@ namespace Datos.Ingresos
                 cmd.Parameters.AddWithValue("@Id_Usuario_Ultima_Modificacion", "0");
                 cmd.Parameters.AddWithValue("@Id_Forma_Pago", entidad.Id_Forma_Pago);
                 cmd.Parameters.AddWithValue("@Comentario", entidad.Comentario);
+                cmd.Parameters.AddWithValue("@Id_Miscelaneo", entidad.Id_Miscelaneo);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -276,7 +297,8 @@ namespace Datos.Ingresos
                                         Id_Usuario_Ultima_Modificacion = @Id_Usuario_Ultima_Modificacion, 
                                         Fecha_Ultima_Modificacion = @Fecha_Ultima_Modificacion, 
                                         Id_Forma_Pago = @Id_Forma_Pago, 
-                                        Comentario = @Comentario 
+                                        Comentario = @Comentario, 
+                                        Id_Miscelaneo = @Id_Miscelaneo 
 
                                         WHERE Id_Ingreso = @Id_Ingreso";
 
@@ -290,6 +312,7 @@ namespace Datos.Ingresos
                 cmd.Parameters.AddWithValue("@Fecha_Ultima_Modificacion", entidad.Fecha_Ultima_Modificacion);
                 cmd.Parameters.AddWithValue("@Id_Forma_Pago", entidad.Id_Forma_Pago);
                 cmd.Parameters.AddWithValue("@Comentario", entidad.Comentario);
+                cmd.Parameters.AddWithValue("@Id_Miscelaneo", entidad.Id_Miscelaneo);
                 cmd.CommandType = CommandType.Text;
                 try
                 {

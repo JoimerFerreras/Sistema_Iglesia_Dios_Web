@@ -168,6 +168,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             cmbDescripcionIngreso_Consulta.SelectedValue = "0";
             cmbMiembro_Consulta.SelectedValue = "0";
+            cmbMiscelaneo_Consulta.SelectedValue = "0";
         }
 
         private void Consultar()
@@ -185,14 +186,13 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                         dtpFechaDesdeFiltro.SelectedDate.Value,
                         dtpFechaHastaFiltro.SelectedDate.Value,
                         cmbMiembro_Consulta.SelectedValue,
-                        cmbDescripcionIngreso_Consulta.SelectedValue);
+                        cmbDescripcionIngreso_Consulta.SelectedValue, 
+                        cmbMiscelaneo_Consulta.SelectedValue);
 
                         gvDatos.DataSource = DT_DATOS;
                         gvDatos.DataBind();
 
                         ConsultarResumen();
-
-                        //CalcularMontosTotalesMonedas();
                     }
                     else
                     {
@@ -217,7 +217,8 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                                    dtpFechaDesdeFiltro.SelectedDate.Value,
                                    dtpFechaHastaFiltro.SelectedDate.Value,
                                    cmbMiembro_Consulta.SelectedValue,
-                                   cmbDescripcionIngreso_Consulta.SelectedValue);
+                                   cmbDescripcionIngreso_Consulta.SelectedValue, 
+                                   cmbMiscelaneo_Consulta.SelectedValue);
 
             gvResumen.DataSource = DT_DATOS_RESUMEN;
             gvResumen.DataBind();
@@ -249,6 +250,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             cmbFormaPago.DataBind();
 
             LlenarComboDescripcion();
+            LlenarComboMiscelaneo();
         }
 
         private void LlenarComboDescripcion()
@@ -291,6 +293,45 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             cmbDescripcionIngreso_Consulta.DataBind();
         }
 
+        private void LlenarComboMiscelaneo()
+        {
+            // Registro
+            Miscelaneo_N Miscelaneo_N = new Miscelaneo_N();
+            DataTable dt = new DataTable();
+            dt = Miscelaneo_N.ListaCombo();
+
+            // Crear un nuevo DataRow para el ítem "Seleccionar..."
+            DataRow dr = dt.NewRow();
+            dr["Id_Miscelaneo"] = 0;
+            dr["Descripcion_Miscelaneo"] = "Seleccionar...";
+
+            // Insertar el nuevo DataRow al principio del DataTable
+            dt.Rows.InsertAt(dr, 0);
+
+            cmbMiscelaneo.Items.Clear();
+            cmbMiscelaneo.DataSource = dt;
+            cmbMiscelaneo.DataValueField = "Id_Miscelaneo";
+            cmbMiscelaneo.DataTextField = "Descripcion_Miscelaneo";
+            cmbMiscelaneo.DataBind();
+
+            // Consulta
+            DataTable dtConsulta = dt.Copy();
+
+            DataRow drConsulta = dtConsulta.NewRow();
+            drConsulta["Id_Miscelaneo"] = 0;
+            drConsulta["Descripcion_Miscelaneo"] = "Todos";
+
+            // Insertar el nuevo DataRow al principio del DataTable
+            dtConsulta.Rows.RemoveAt(0);
+            dtConsulta.Rows.InsertAt(drConsulta, 0);
+
+            cmbMiscelaneo_Consulta.Items.Clear();
+            cmbMiscelaneo_Consulta.DataSource = dtConsulta;
+            cmbMiscelaneo_Consulta.DataValueField = "Id_Miscelaneo";
+            cmbMiscelaneo_Consulta.DataTextField = "Descripcion_Miscelaneo";
+            cmbMiscelaneo_Consulta.DataBind();
+        }
+
         private void ActualizarGrid()
         {
             gvDatos.DataSource = DT_DATOS;
@@ -302,57 +343,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             gvResumen.DataSource = DT_DATOS_RESUMEN;
             gvResumen.DataBind();
         }
-
-        //private void CalcularMontosTotalesMonedas()
-        //{
-        //    if (DT_DATOS.Rows.Count > 0)
-        //    {
-        //        DataTable dtTotales = new DataTable();
-        //        dtTotales.Columns.Add("Moneda");
-        //        dtTotales.Columns.Add("Monto", typeof(float));
-        //        for (int i = 0; i < DT_DATOS.Rows.Count; i++)
-        //        {
-        //            DataRow row = DT_DATOS.Rows[i];
-        //            if (dtTotales.Rows.Count == 0)
-        //            {
-        //                dtTotales.Rows.Add(row["Moneda"].ToString(), 0);
-        //            }
-
-        //            for (int j = 0; j < dtTotales.Rows.Count; j++)
-        //            {
-        //                DataRow rowTotales = dtTotales.Rows[j];
-
-        //                if (row["Moneda"].ToString() == rowTotales["Moneda"].ToString())
-        //                {
-        //                    int MontoOriginal = int.Parse(rowTotales["Monto"].ToString());
-        //                    int MontoTotal = MontoOriginal + int.Parse(row["Monto"].ToString());
-
-        //                    rowTotales["Monto"] = MontoTotal;
-        //                    break;
-        //                }
-        //                else
-        //                {
-        //                    dtTotales.Rows.Add(row["Moneda"].ToString(), int.Parse(row["Monto"].ToString()));
-        //                    break;
-        //                }
-        //            }
-        //        }
-
-        //        gvMontosTotales.DataSource = dtTotales;
-        //        gvMontosTotales.DataBind();
-
-        //    }
-        //    else
-        //    {
-        //        DataTable dtTotales = new DataTable();
-        //        dtTotales.Columns.Add("Moneda");
-        //        dtTotales.Columns.Add("Monto", typeof(float));
-
-        //        gvMontosTotales.DataSource = dtTotales;
-        //        gvMontosTotales.DataBind();
-        //    }
-
-        //}
 
         private bool ValidarCampos()
         {
@@ -401,6 +391,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     ingreso_E.Fecha_Ultima_Modificacion = DateTime.Now;
                     ingreso_E.Id_Forma_Pago = int.Parse(cmbFormaPago.SelectedValue);
                     ingreso_E.Comentario = txtComentario.Text;
+                    ingreso_E.Id_Miscelaneo = int.Parse(cmbMiscelaneo.SelectedValue);
 
                     if (EDITAR_REGISTRO == true)
                     {
@@ -452,7 +443,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 string a = ex.Message;
                 Utilidad_C.MostrarAlerta_Guardar_Error_Fatal(this, this.GetType());
             }
-
         }
 
         private void VerRegistro()
@@ -471,6 +461,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             txtUsuarioUltimaModificacion.Text = Ingreso_E.Nombre_Usuario_Ultima_Modificacion;
             cmbFormaPago.SelectedValue = Ingreso_E.Id_Forma_Pago.ToString();
             txtComentario.Text = Ingreso_E.Comentario;
+            cmbMiscelaneo.SelectedValue = Ingreso_E.Id_Miscelaneo.ToString();
 
             if (Ingreso_E.Fecha_Ultima_Modificacion != null)
             {
@@ -503,8 +494,8 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             txtFechaUltimaModificacion.Text = "";
             cmbFormaPago.SelectedValue = "0";
             txtComentario.Text = "";
+            cmbMiscelaneo.SelectedValue = "0";
 
-            txtNombreArchivoDescargar.Text = "";
             gvArchivos.DataSource = new DataTable();
             gvArchivos.DataBind();
 
@@ -704,6 +695,45 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             }
         }
 
+        private void AgregarDescripcion()
+        {
+            if (txtDescripcionAgregar.Text.Length > 0)
+            {
+                Descripciones_E entidad = new Descripciones_E();
+                Descripciones_N Descripciones_N = new Descripciones_N();
+                entidad.Nombre = txtDescripcionAgregar.Text;
+                entidad.Tipo_Descripcion = 1;
+                entidad.Estado = true;
+                Descripciones_N.Agregar(entidad);
+                txtDescripcionAgregar.Text = "";
+
+                LlenarComboDescripcion();
+            }
+            else
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe proporcionar una descripción válida");
+            }
+        }
+
+        private void AgregarMiscelaneo()
+        {
+            if (txtMiscelaneoAgregar.Text.Length > 0)
+            {
+                Miscelaneo_E entidad = new Miscelaneo_E();
+                Miscelaneo_N Miscelaneo_N = new Miscelaneo_N();
+                entidad.Descripcion_Miscelaneo = txtMiscelaneoAgregar.Text;
+                entidad.Estado = true;
+                Miscelaneo_N.Agregar(entidad);
+                txtMiscelaneoAgregar.Text = "";
+
+                LlenarComboMiscelaneo();
+            }
+            else
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Misceláneo no puede estar vacío");
+            }
+        }
+
         #endregion
 
         #region Archivos
@@ -749,7 +779,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     string nombreArchivo = Archivo_E.NombreArchivoCarpeta + Archivo_E.Extencion; // Puedes obtener el nombre original del archivo aquí
 
                     ID_REGISTRO_ARCHIVO = "0";
-                    txtNombreArchivoDescargar.Text = "";
 
                     HttpResponse response = HttpContext.Current.Response;
 
@@ -765,7 +794,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     response.Flush(); // Envía todo al cliente
                     response.SuppressContent = true; // Impide cualquier contenido adicional
                     HttpContext.Current.ApplicationInstance.CompleteRequest(); // Finaliza la solicitud correctamente
-
                 }
             }
         }
@@ -778,14 +806,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 Archivo_Ingreso_E Archivo_E = new Archivo_Ingreso_E();
                 Archivo_Ingreso_N Archivo_N = new Archivo_Ingreso_N();
                 Archivo_E = Archivo_N.ObtenerArchivo(Id_Archivo);
-
-                // Nombre del archivo para la descarga
-                string nombreArchivo = Archivo_E.NombreArchivoCarpeta + Archivo_E.Extencion; // Puedes obtener el nombre original del archivo aquí
-
-                txtNombreArchivoDescargar.Text = "(" + Id_Archivo.ToString() + ") " + nombreArchivo;
-
                 ID_REGISTRO_ARCHIVO = Id_Archivo.ToString();
-                txtNombreArchivoDescargar.Focus();
             }
         }
 
@@ -890,7 +911,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             }
 
             ID_REGISTRO_ARCHIVO = "0";
-            txtNombreArchivoDescargar.Text = "";
         }
         #endregion
 
@@ -936,11 +956,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     DT_DATOS_ARCHIVOS.Columns.Add("Tamano");
                     DT_DATOS_ARCHIVOS.Columns.Add("Fecha_Registro");
                 }
-            }
-
-            if (ID_REGISTRO_ARCHIVO == "0" || ID_REGISTRO_ARCHIVO == "")
-            {
-                txtNombreArchivoDescargar.Text = "";
             }
         }
 
@@ -1026,63 +1041,17 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             GuardarRegistro();
         }
 
-        private void AgregarDescripcion()
-        {
-            if (txtDescripcionIngresoAgregar.Text.Length > 0)
-            {
-                Descripciones_E entidad = new Descripciones_E();
-                Descripciones_N Descripciones_N = new Descripciones_N();
-                entidad.Nombre = txtDescripcionIngresoAgregar.Text;
-                entidad.Estado = true;
-                Descripciones_N.Agregar(entidad);
-                txtDescripcionIngresoAgregar.Text = "";
-
-                LlenarComboDescripcion();
-            }
-            else
-            {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe proporcionar una descripción válida");
-            }
-        }
+       
 
         protected void btnAgregarDescripcion_Click(object sender, EventArgs e)
         {
             AgregarDescripcion();
         }
-        #endregion
 
-
-        #region Archivos
-
-        protected void btnSeleccionarArchivoDescargar_Click(object sender, EventArgs e)
+        protected void btnAgregarMiscelaneo_Click(object sender, EventArgs e)
         {
-            LinkButton btn = (LinkButton)sender;
-            int Id_Archivo;
-            Id_Archivo = System.Convert.ToInt32(btn.CommandArgument.ToString());
-            SeleccionarArchivoDescargar(Id_Archivo);
-
+            AgregarMiscelaneo();
         }
-
-        protected void btnEliminarArchivo_Click(object sender, EventArgs e)
-        {
-            LinkButton btn = (LinkButton)sender;
-            int Id_Archivo;
-            Id_Archivo = System.Convert.ToInt32(btn.CommandArgument.ToString());
-            EliminarArchivo(Id_Archivo);
-        }
-
-        protected void btnSubirArchivo_Click(object sender, EventArgs e)
-        {
-            SubirArchivo();
-        }
-
-        protected void btnDescargarArchivo_Click(object sender, EventArgs e)
-        {
-            DescargarArchivo();
-        }
-        #endregion
-
-        #endregion
 
         protected void btnGenerarPDF_Detalle_Click(object sender, EventArgs e)
         {
@@ -1103,5 +1072,64 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         {
             GenerarReporteExcel_Resumen();
         }
+        #endregion
+
+
+        #region Archivos
+
+        protected void btnSeleccionarArchivoDescargar_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            int Id_Archivo;
+            Id_Archivo = System.Convert.ToInt32(btn.CommandArgument.ToString());
+            SeleccionarArchivoDescargar(Id_Archivo);
+
+            DescargarArchivo();
+        }
+
+        protected void btnEliminarArchivo_Click(object sender, EventArgs e)
+        {
+            LinkButton btn = (LinkButton)sender;
+            int Id_Archivo;
+            Id_Archivo = System.Convert.ToInt32(btn.CommandArgument.ToString());
+            EliminarArchivo(Id_Archivo);
+        }
+
+        protected void btnSubirArchivo_Click(object sender, EventArgs e)
+        {
+            SubirArchivo();
+        }
+
+        protected void btnDescargarArchivo_Click(object sender, EventArgs e)
+        {
+            DescargarArchivo();
+        }
+
+        protected void gvArchivos_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item is GridDataItem) // Asegura que es una fila de datos
+            {
+                GridDataItem dataItem = (GridDataItem)e.Item;
+
+                // Encuentra el botón de la fila actual
+                LinkButton btnDescargar = (LinkButton)dataItem.FindControl("btnDescargarArchivo");
+
+                if (btnDescargar != null)
+                {
+                    // Registrar el botón como PostBackTrigger para que funcione fuera del UpdatePanel
+                    ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
+                    if (scriptManager != null)
+                    {
+                        scriptManager.RegisterPostBackControl(btnDescargar);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+
     }
 }

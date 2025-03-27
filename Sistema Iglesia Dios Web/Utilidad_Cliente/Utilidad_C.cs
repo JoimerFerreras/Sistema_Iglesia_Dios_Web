@@ -124,7 +124,7 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
             });
 
             tippy('.boton_formulario_descargar_archivo', {
-                content: 'Seleccionar archivo',
+                content: 'Descargar archivo',
                 placement: 'left',
                 arrow: true,
             });

@@ -16,7 +16,6 @@
     </style>
     <asp:UpdatePanel runat="server" UpdateMode="Conditional" ID="upPrincipal">
         <Triggers>
-            <asp:PostBackTrigger ControlID="btnDescargarArchivo" />
             <asp:PostBackTrigger ControlID="btnGenerarPDF_Detalle" />
             <asp:PostBackTrigger ControlID="btnGenerarExcel_Detalle" />
             <asp:PostBackTrigger ControlID="btnGenerarPDF_Resumen" />
@@ -73,20 +72,35 @@
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
-                                    Descripción de ingreso 
-                                        <telerik:RadComboBox ID="cmbDescripcionIngreso_Consulta" runat="server" Width="100%" ClientIDMode="Static"
-                                            MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
-                                            MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
-                                            Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
-                                            <Items>
-                                                <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
-                                            </Items>
-                                        </telerik:RadComboBox>
+                                    Miembro
+                                    <telerik:RadComboBox ID="cmbMiembro_Consulta" runat="server" Width="100%" ClientIDMode="Static"
+                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
+                                        </Items>
+                                    </telerik:RadComboBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
-                                    Beneficiario
-                                    <telerik:RadComboBox ID="cmbMiembro_Consulta" runat="server" Width="100%" ClientIDMode="Static"
+                                    Misceláneo 
+                                    <telerik:RadComboBox ID="cmbMiscelaneo_Consulta" runat="server" Width="100%" ClientIDMode="Static"
+                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 20px;">
+
+                                <div class="col-12 col-md-6">
+                                    Descripción de ingreso 
+                                    <telerik:RadComboBox ID="cmbDescripcionIngreso_Consulta" runat="server" Width="100%" ClientIDMode="Static"
                                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
                                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                                         Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
@@ -127,16 +141,19 @@
                                             <telerik:GridBoundColumn DataField="Id_Ingreso" HeaderText="ID" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
+                                            <telerik:GridBoundColumn DataField="Fecha_Ingreso" HeaderText="Fecha de ingreso" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            </telerik:GridBoundColumn>
+
                                             <telerik:GridBoundColumn DataField="Descripcion" HeaderText="Descripción" HeaderStyle-Width="20%" ItemStyle-Width="20%">
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="Miembro" HeaderText="Miembro" HeaderStyle-Width="30%" ItemStyle-Width="30%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Monto" HeaderText="Monto" DataFormatString="{0:0,0.00}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Miscelaneo" HeaderText="Misceláneo" HeaderStyle-Width="30%" ItemStyle-Width="30%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Fecha_Ingreso" HeaderText="Fecha de ingreso" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Monto" HeaderText="Monto" DataFormatString="{0:0,0.00}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="Fecha_Registro" HeaderText="Fecha de registro" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
@@ -176,7 +193,7 @@
                             </div>
                         </div>
 
-                         <div class="contenedor_botones">
+                        <div class="contenedor_botones">
                             <asp:LinkButton CssClass="fa-solid fa-magnifying-glass fa-lg boton_formulario_Buscar" runat="server" ID="btnBuscar" OnClientClick="MostrarPanelCarga()" OnClick="btnBuscar_Click"></asp:LinkButton>
                             <asp:LinkButton CssClass="fa-solid fa-filter-circle-xmark fa-lg boton_formulario_LimpiarFiltros" runat="server" ID="btnLimpiarFiltros" OnClick="btnLimpiarFiltros_Click"></asp:LinkButton>
                         </div>
@@ -232,7 +249,7 @@
                                     </telerik:RadDatePicker>
                                 </div>
 
-                                 <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-6">
                                     Descripción <span class="LabelCampoObligatorio">*</span>
                                     <div class="d-flex align-items-center">
                                         <telerik:RadComboBox ID="cmbDescripcion_Ingreso" runat="server" Width="100%" ClientIDMode="Static"
@@ -243,14 +260,16 @@
                                                 <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
                                             </Items>
                                         </telerik:RadComboBox>
-                                        <button type="button" id="btnAbrirPanelDescripcion" class="btn btn-primary ml-2 fa-solid fa-plus fa-lg" style="margin-left: 10px; height: 37px;" data-toggle="modal" data-target="#exampleModal" data-tippy-content="Agregar descripción" data-whatever="@mdo"></button>
+                                        <button type="button" class="btn btn-primary ml-2 fa-solid fa-plus fa-lg" onclick="mostrarContenido(1)"
+                                            style="margin-left: 10px; height: 37px;" data-toggle="modal" data-target="#exampleModal" data-tippy-content="Agregar descripción" data-whatever="@mdo">
+                                        </button>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
 
-                                 <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-6">
                                     Forma de pago <span class="LabelCampoObligatorio">*</span><br />
                                     <telerik:RadComboBox ID="cmbFormaPago" runat="server" Width="300px" ClientIDMode="Static"
                                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
@@ -344,21 +363,8 @@
 
                                 </div>
                             </div>
-                            <div class="row" style="margin-top: 20px;">
-                            </div>
                         </div>
                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
-                            <div class="row" style="margin-top: 20px;">
-                                <div class="col-12 col-md-10">
-                                    Archivo seleccionado
-                                 <asp:TextBox runat="server" ID="txtNombreArchivoDescargar" ClientIDMode="Static" CssClass="form-control" ReadOnly="true" MaxLength="250" Width="100%" TabIndex="2"></asp:TextBox>
-                                </div>
-                                <div class="col-12 col-md-2">
-                                    <br />
-                                    <asp:Button runat="server" ID="btnDescargarArchivo" Text="Descargar archivo" CssClass="btn btn-success" OnClick="btnDescargarArchivo_Click" Width="100%"></asp:Button>
-                                </div>
-                            </div>
-
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-12">
@@ -366,7 +372,7 @@
                                         AllowPaging="True" AllowAutomaticUpdates="True" AllowAutomaticInserts="False" MasterTableView-PagerStyle-PageSizeLabelText="Registros" Skin="Bootstrap" HeaderStyle-BackColor="#F1F5FF" PagerStyle-AlwaysVisible="true"
                                         AllowAutomaticDeletes="True" AllowSorting="True" PagerStyle-BorderStyle="None" BorderStyle="None" FooterStyle-BorderStyle="None" HeaderStyle-BorderStyle="None" MasterTableView-PagerStyle-NextPagesToolTip="" MasterTableView-PagerStyle-PrevPagesToolTip=""
                                         FooterStyle-ForeColor="Black" HeaderStyle-ForeColor="Black" ItemStyle-ForeColor="Black" AlternatingItemStyle-ForeColor="Black" MasterTableView-PagerStyle-PagerTextFormat="{4} <strong>{5}</strong> Registros en <strong>{1}</strong> Páginas"
-                                        MasterTableView-PagerStyle-FirstPageToolTip="" MasterTableView-PagerStyle-PrevPageToolTip="" MasterTableView-PagerStyle-NextPageToolTip="" MasterTableView-PagerStyle-LastPageToolTip=""
+                                        MasterTableView-PagerStyle-FirstPageToolTip="" MasterTableView-PagerStyle-PrevPageToolTip="" MasterTableView-PagerStyle-NextPageToolTip="" MasterTableView-PagerStyle-LastPageToolTip="" OnItemDataBound="gvArchivos_ItemDataBound"
                                         OnPageIndexChanged="gvDatos_PageIndexChanged" OnPageSizeChanged="gvDatos_PageSizeChanged" OnSortCommand="gvDatos_SortCommand">
                                         <PagerStyle Mode="NextPrevAndNumeric" />
                                         <MasterTableView AutoGenerateColumns="False">
@@ -375,7 +381,7 @@
                                                     <HeaderStyle HorizontalAlign="Center" />
                                                     <ItemStyle HorizontalAlign="Center" Width="7%" />
                                                     <ItemTemplate>
-                                                        <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Archivo") %>' OnClick="btnSeleccionarArchivoDescargar_Click" ID="btnDescargarArchivo" ClientIDMode="Static" CssClass="btn btn-sm btn-primary fa-solid fa-file-export boton_formulario_descargar_archivo" Style="height: 30px; width: 30px; padding: 7px; padding-left: 6px; border-radius: 15px; margin-bottom: 3px;"></asp:LinkButton>
+                                                        <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Archivo") %>' OnClick="btnSeleccionarArchivoDescargar_Click" ID="btnDescargarArchivo" ClientIDMode="Static" CssClass="btn btn-sm btn-success fa-solid fa-cloud-arrow-down boton_formulario_descargar_archivo"></asp:LinkButton>
                                                         <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Archivo") %>' OnClick="btnEliminarArchivo_Click" OnClientClick="return delalert(this);" CssClass="btn btn-sm btn-danger fa-solid fa-trash" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px;"></asp:LinkButton>
                                                     </ItemTemplate>
                                                 </telerik:GridTemplateColumn>
@@ -421,20 +427,37 @@
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content" id="conten1" style="display: none;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Descripción de ingreso</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Descripción</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="col-12 col-md-12">
                         Descripción
-                    <asp:TextBox runat="server" ID="txtDescripcionIngresoAgregar" CssClass="form-control" MaxLength="100" Width="100%" TabIndex="2"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="txtDescripcionAgregar" CssClass="form-control" MaxLength="100" Width="100%" TabIndex="2"></asp:TextBox>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <asp:Button runat="server" ID="btnAgregarDescripcion" CssClass="btn btn-primary" OnClick="btnAgregarDescripcion_Click" Text="Agregar descripción" data-bs-dismiss="modal"></asp:Button>
+                </div>
+            </div>
+
+            <div class="modal-content" id="conten2" style="display: none;">
+                <div class="modal-header">
+                    <h5 class="modal-title">Misceláneo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12 col-md-12">
+                        Misceláneo
+                    <asp:TextBox runat="server" ID="txtMiscelaneoAgregar" CssClass="form-control" MaxLength="100" Width="100%" TabIndex="2"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <asp:Button runat="server" ID="btnAgregarMiscelaneo" CssClass="btn btn-primary" OnClick="btnAgregarMiscelaneo_Click" Text="Agregar misceláneo" data-bs-dismiss="modal"></asp:Button>
                 </div>
             </div>
         </div>
@@ -459,4 +482,24 @@
                 color: #005181;
             }
     </style>
+
+    <script>
+        function mostrarContenido(numero) {
+            // Ocultar ambos contenidos
+            document.getElementById("conten1").style.display = "none";
+            document.getElementById("conten2").style.display = "none";
+
+            // Mostrar el contenido correspondiente
+            if (numero === 1) {
+                document.getElementById("conten1").style.display = "flex";
+            } else if (numero === 2) {
+                document.getElementById("conten2").style.display = "flex";
+            }
+
+            // Mostrar el modal
+            var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+            modal.show();
+        }
+
+    </script>
 </asp:Content>

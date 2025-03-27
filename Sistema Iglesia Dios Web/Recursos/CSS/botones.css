@@ -75,8 +75,12 @@
 }
 
 .boton_formulario_descargar_archivo {
-    background-color: #1E90FF;
-    border-color: #1E90FF;
+    height: 30px;
+    width: 30px;
+    padding: 7px;
+    padding-left: 5px;
+    border-radius: 15px;
+    margin-bottom: 3px;
 }
 
 

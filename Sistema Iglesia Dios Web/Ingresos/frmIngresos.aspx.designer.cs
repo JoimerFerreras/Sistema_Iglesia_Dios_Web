@@ -78,15 +78,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::Telerik.Web.UI.RadDatePicker dtpFechaHastaFiltro;
 
         /// <summary>
-        /// Control cmbDescripcionIngreso_Consulta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbDescripcionIngreso_Consulta;
-
-        /// <summary>
         /// Control cmbMiembro_Consulta.
         /// </summary>
         /// <remarks>
@@ -94,6 +85,24 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox cmbMiembro_Consulta;
+
+        /// <summary>
+        /// Control cmbMiscelaneo_Consulta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbMiscelaneo_Consulta;
+
+        /// <summary>
+        /// Control cmbDescripcionIngreso_Consulta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbDescripcionIngreso_Consulta;
 
         /// <summary>
         /// Control btnGenerarPDF_Detalle.
@@ -357,24 +366,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::System.Web.UI.WebControls.Button btnSubirArchivo;
 
         /// <summary>
-        /// Control txtNombreArchivoDescargar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombreArchivoDescargar;
-
-        /// <summary>
-        /// Control btnDescargarArchivo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDescargarArchivo;
-
-        /// <summary>
         /// Control gvArchivos.
         /// </summary>
         /// <remarks>
@@ -384,13 +375,13 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::Telerik.Web.UI.RadGrid gvArchivos;
 
         /// <summary>
-        /// Control txtDescripcionIngresoAgregar.
+        /// Control txtDescripcionAgregar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescripcionIngresoAgregar;
+        protected global::System.Web.UI.WebControls.TextBox txtDescripcionAgregar;
 
         /// <summary>
         /// Control btnAgregarDescripcion.
@@ -400,5 +391,23 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAgregarDescripcion;
+
+        /// <summary>
+        /// Control txtMiscelaneoAgregar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMiscelaneoAgregar;
+
+        /// <summary>
+        /// Control btnAgregarMiscelaneo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarMiscelaneo;
     }
 }

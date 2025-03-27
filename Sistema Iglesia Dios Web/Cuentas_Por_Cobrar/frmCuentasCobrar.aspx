@@ -16,7 +16,6 @@
     </style>
     <asp:UpdatePanel runat="server" UpdateMode="Conditional" ID="upPrincipal">
         <Triggers>
-            <asp:PostBackTrigger ControlID="btnDescargarArchivo" />
             <asp:PostBackTrigger ControlID="btnGenerarPDF_Detalle" />
             <asp:PostBackTrigger ControlID="btnGenerarExcel_Detalle" />
         </Triggers>
@@ -118,7 +117,7 @@
                                         <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
                                         <telerik:RadComboBoxItem Text="FT" Value="FT" />
                                         <telerik:RadComboBoxItem Text="NC" Value="NC" />
-                                        <telerik:RadComboBoxItem Text="RS" Value="RS" />
+                                        <telerik:RadComboBoxItem Text="RI" Value="RI" />
                                         <telerik:RadComboBoxItem Text="ND" Value="ND" />
                                     </Items>
                                 </telerik:RadComboBox>
@@ -288,7 +287,7 @@
                                             <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
                                             <telerik:RadComboBoxItem Text="FT" Value="FT" />
                                             <telerik:RadComboBoxItem Text="NC" Value="NC" />
-                                            <telerik:RadComboBoxItem Text="RS" Value="RS" />
+                                            <telerik:RadComboBoxItem Text="RI" Value="RI" />
                                             <telerik:RadComboBoxItem Text="ND" Value="ND" />
                                         </Items>
                                     </telerik:RadComboBox>
@@ -375,29 +374,15 @@
 
                                 </div>
                             </div>
-                            <div class="row" style="margin-top: 20px;">
-                            </div>
                         </div>
                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
-                            <div class="row" style="margin-top: 20px;">
-                                <div class="col-12 col-md-10">
-                                    Archivo seleccionado
-                                 <asp:TextBox runat="server" ID="txtNombreArchivoDescargar" ClientIDMode="Static" CssClass="form-control" ReadOnly="true" MaxLength="250" Width="100%" TabIndex="2"></asp:TextBox>
-                                </div>
-                                <div class="col-12 col-md-2">
-                                    <br />
-                                    <asp:Button runat="server" ID="btnDescargarArchivo" Text="Descargar archivo" CssClass="btn btn-success" OnClick="btnDescargarArchivo_Click" Width="100%"></asp:Button>
-                                </div>
-                            </div>
-
-
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-12">
                                     <telerik:RadGrid RenderMode="Lightweight" ID="gvArchivos" runat="server" Culture="es-DO" Style="overflow-x: auto;" BorderColor="White" MasterTableView-Width="100%" Width="100%" HeaderStyle-Font-Bold="true" AlternatingItemStyle-BackColor="#F1F5FF"
                                         AllowPaging="True" AllowAutomaticUpdates="True" AllowAutomaticInserts="False" MasterTableView-PagerStyle-PageSizeLabelText="Registros" Skin="Bootstrap" HeaderStyle-BackColor="#F1F5FF" PagerStyle-AlwaysVisible="true"
                                         AllowAutomaticDeletes="True" AllowSorting="True" PagerStyle-BorderStyle="None" BorderStyle="None" FooterStyle-BorderStyle="None" HeaderStyle-BorderStyle="None" MasterTableView-PagerStyle-NextPagesToolTip="" MasterTableView-PagerStyle-PrevPagesToolTip=""
                                         FooterStyle-ForeColor="Black" HeaderStyle-ForeColor="Black" ItemStyle-ForeColor="Black" AlternatingItemStyle-ForeColor="Black" MasterTableView-PagerStyle-PagerTextFormat="{4} <strong>{5}</strong> Registros en <strong>{1}</strong> Páginas"
-                                        MasterTableView-PagerStyle-FirstPageToolTip="" MasterTableView-PagerStyle-PrevPageToolTip="" MasterTableView-PagerStyle-NextPageToolTip="" MasterTableView-PagerStyle-LastPageToolTip=""
+                                        MasterTableView-PagerStyle-FirstPageToolTip="" MasterTableView-PagerStyle-PrevPageToolTip="" MasterTableView-PagerStyle-NextPageToolTip="" MasterTableView-PagerStyle-LastPageToolTip="" OnItemDataBound="gvArchivos_ItemDataBound"
                                         OnPageIndexChanged="gvDatos_PageIndexChanged" OnPageSizeChanged="gvDatos_PageSizeChanged" OnSortCommand="gvDatos_SortCommand">
                                         <PagerStyle Mode="NextPrevAndNumeric" />
                                         <MasterTableView AutoGenerateColumns="False">
@@ -406,7 +391,7 @@
                                                     <HeaderStyle HorizontalAlign="Center" />
                                                     <ItemStyle HorizontalAlign="Center" Width="7%" />
                                                     <ItemTemplate>
-                                                        <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Archivo") %>' OnClick="btnSeleccionarArchivoDescargar_Click" ID="btnDescargarArchivo" ClientIDMode="Static" CssClass="btn btn-sm btn-primary fa-solid fa-file-export boton_formulario_descargar_archivo" Style="height: 30px; width: 30px; padding: 7px; padding-left: 6px; border-radius: 15px; margin-bottom: 3px;"></asp:LinkButton>
+                                                        <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Archivo") %>' OnClick="btnSeleccionarArchivoDescargar_Click" ID="btnDescargarArchivo" ClientIDMode="Static" CssClass="btn btn-sm btn-success fa-solid fa-cloud-arrow-down boton_formulario_descargar_archivo"></asp:LinkButton>
                                                         <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Archivo") %>' OnClick="btnEliminarArchivo_Click" OnClientClick="return delalert(this);" CssClass="btn btn-sm btn-danger fa-solid fa-trash" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px;"></asp:LinkButton>
                                                     </ItemTemplate>
                                                 </telerik:GridTemplateColumn>
