@@ -16,6 +16,10 @@ En próximas versiones se contempla la integración de módulos para:
 - Gestión de servicios y actividades especiales
 
 ---
+
+Esta principalmente construido utilizando lenguaje C#, y como gestor de base de datos SQL Server.
+
+
 ![image](https://github.com/user-attachments/assets/a7f49efa-129d-4d1e-9812-f90b30deb391)
 
 ![image](https://github.com/user-attachments/assets/6c677ac5-ce2e-44f3-bd87-c2f6424add5c)
