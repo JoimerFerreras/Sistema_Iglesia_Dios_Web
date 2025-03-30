@@ -1,6 +1,6 @@
 # Sistema_Iglesia_Dios_Web
 
-Este es un sistema administrativo desarrollado para una iglesia cristiana. La aplicación permite gestionar de manera eficiente:
+Este es un sistema administrativo en desarrollo para una iglesia cristiana. La aplicación permite gestionar de manera eficiente:
 
 - Los miembros de la congregación  
 - Los ministerios  
