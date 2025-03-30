@@ -30,6 +30,9 @@ En próximas versiones se contempla la integración de módulos para:
 
 ![image](https://github.com/user-attachments/assets/e46dba93-f09e-41be-b34f-ebdd0406a361)
 
+![image](https://github.com/user-attachments/assets/b31ef079-3534-4335-8cb4-69d0d631a28e)
+
+
 
 
 
