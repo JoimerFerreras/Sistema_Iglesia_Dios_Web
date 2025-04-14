@@ -1160,6 +1160,7 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
         protected void btnDescargarArchivo_Click(object sender, EventArgs e)
         {
             DescargarArchivo();
+            string a = "sfsf";
         }
 
         protected void gvArchivos_ItemDataBound(object sender, GridItemEventArgs e)
