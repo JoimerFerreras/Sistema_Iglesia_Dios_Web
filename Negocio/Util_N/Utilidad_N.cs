@@ -445,7 +445,7 @@ namespace Negocio.Util_N
             {
                 DataTable dt = utilidad.ObtenerCantidadRegistros(Id_Valor, NombreCampo, NombreTablaExcluir);
                 if (dt.Rows.Count > 0)
-                { 
+                {
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
                         DataRow row = dt.Rows[i];

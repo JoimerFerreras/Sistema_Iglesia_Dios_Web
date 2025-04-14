@@ -1,6 +1,6 @@
-﻿using Datos.Cuenta_Por_Cobrar;
+﻿using Datos.Cuenta_Por_Pagar;
 using Datos.Util_D;
-using Entidades.Cuentas_Por_Cobrar;
+using Entidades.Cuentas_Por_Pagar;
 using Negocio.Util_N;
 using System;
 using System.Collections.Generic;
@@ -11,17 +11,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Negocio.Cuentas_Por_Cobrar
+namespace Negocio.Cuentas_Por_Pagar
 {
-    public class Archivo_Cuenta_Cobrar_N
+    public class Archivo_Cuenta_Pagar_N
     {
-        Archivo_Cuenta_Cobrar_D Archivo_Cuenta_Cobrar_D = new Archivo_Cuenta_Cobrar_D();
+        Archivo_Cuenta_Pagar_D Archivo_Cuenta_Pagar_D = new Archivo_Cuenta_Pagar_D();
 
-        public DataTable Listar(string Id_Cuenta_Cobrar)
+        public DataTable Listar(string Id_Cuenta_Pagar)
         {
             try
             {
-                return Archivo_Cuenta_Cobrar_D.Listar(int.Parse(Id_Cuenta_Cobrar));
+                return Archivo_Cuenta_Pagar_D.Listar(int.Parse(Id_Cuenta_Pagar));
             }
             catch (Exception ex)
             {
@@ -29,11 +29,11 @@ namespace Negocio.Cuentas_Por_Cobrar
             }
         }
 
-        public Archivo_Cuenta_Cobrar_E ObtenerArchivo(int Id_Archivo)
+        public Archivo_Cuenta_Pagar_E ObtenerArchivo(int Id_Archivo)
         {
             try
             {
-                return Archivo_Cuenta_Cobrar_D.ObtenerArchivo(Id_Archivo);
+                return Archivo_Cuenta_Pagar_D.ObtenerArchivo(Id_Archivo);
             }
             catch (Exception ex)
             {
@@ -41,12 +41,12 @@ namespace Negocio.Cuentas_Por_Cobrar
             }
         }
 
-        public Archivo_Cuenta_Cobrar_E EstructurarArchivo(HttpPostedFile postedFile, string NombreArchivo, string DescripcionArchivo, int Numero_Lista, string Id_Cuenta_Cobrar)
+        public Archivo_Cuenta_Pagar_E EstructurarArchivo(HttpPostedFile postedFile, string NombreArchivo, string DescripcionArchivo, int Numero_Lista, string Id_Cuenta_Pagar)
         {
             try
             {
                 Utilidad_N utilidad_N = new Utilidad_N();
-                Archivo_Cuenta_Cobrar_E archivo_E = new Archivo_Cuenta_Cobrar_E();
+                Archivo_Cuenta_Pagar_E archivo_E = new Archivo_Cuenta_Pagar_E();
 
                 // Obtener el nombre del archivo
                 archivo_E.NombreArchivoCarpeta = Path.GetFileNameWithoutExtension(postedFile.FileName);
@@ -66,7 +66,7 @@ namespace Negocio.Cuentas_Por_Cobrar
                 archivo_E.NombreArchivo = NombreArchivo;
                 archivo_E.Descripcion = DescripcionArchivo;
                 archivo_E.Fecha_Registro = DateTime.Now;
-                archivo_E.Id_Cuenta_Cobrar = int.Parse(Id_Cuenta_Cobrar);
+                archivo_E.Id_Cuenta_Pagar = int.Parse(Id_Cuenta_Pagar);
 
                 archivo_E.Id_Archivo = Numero_Lista;
 
@@ -78,15 +78,15 @@ namespace Negocio.Cuentas_Por_Cobrar
             }
         }
 
-        public int AgregarArchivo(Archivo_Cuenta_Cobrar_E archivo_E, int Id_Cuenta_Cobrar)
+        public int AgregarArchivo(Archivo_Cuenta_Pagar_E archivo_E, int Id_Cuenta_Pagar)
         {
             try
             {
-                if (Id_Cuenta_Cobrar > 0)
+                if (Id_Cuenta_Pagar > 0)
                 {
-                    archivo_E.Id_Cuenta_Cobrar = Id_Cuenta_Cobrar;
+                    archivo_E.Id_Cuenta_Pagar = Id_Cuenta_Pagar;
                 }
-                int Id_Archivo = Archivo_Cuenta_Cobrar_D.Agregar(archivo_E);
+                int Id_Archivo = Archivo_Cuenta_Pagar_D.Agregar(archivo_E);
 
                 return Id_Archivo;
             }
@@ -105,7 +105,7 @@ namespace Negocio.Cuentas_Por_Cobrar
                     throw new OperationCanceledException("Debe seleccionar un registro para eliminar");
                 }
 
-                return Archivo_Cuenta_Cobrar_D.Eliminar(Id);
+                return Archivo_Cuenta_Pagar_D.Eliminar(Id);
             }
             catch (Exception ex)
             {

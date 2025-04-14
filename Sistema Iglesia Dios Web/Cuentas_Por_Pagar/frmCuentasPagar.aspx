@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="frmCuentasCobrar.aspx.cs" Inherits="Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar.frmCuentasCobrar" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="frmCuentasPagar.aspx.cs" Inherits="Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar.frmCuentasPagar" %>
 
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 <%@ Register Assembly="System.Web.Extensions, Version=1.0.61025.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI" TagPrefix="asp" %>
@@ -148,13 +148,13 @@
                                                 <HeaderStyle HorizontalAlign="Center" />
                                                 <ItemStyle HorizontalAlign="Center" />
                                                 <ItemTemplate>
-                                                    <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Cuenta_Cobrar") %>' OnClick="btnEditar_Click" CssClass="btn btn-sm btn-primary fa-solid fa-pen boton_formulario_editar" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px; margin-bottom: 3px;"></asp:LinkButton>
+                                                    <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Cuenta_Pagar") %>' OnClick="btnEditar_Click" CssClass="btn btn-sm btn-primary fa-solid fa-pen boton_formulario_editar" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px; margin-bottom: 3px;"></asp:LinkButton>
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
-                                            <telerik:GridBoundColumn DataField="Id_Cuenta_Cobrar" HeaderText="ID" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Id_Cuenta_Pagar" HeaderText="ID" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Fecha_CC" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Fecha_CP" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="Descripcion" HeaderText="Descripción" HeaderStyle-Width="20%" ItemStyle-Width="20%">
@@ -204,7 +204,7 @@
                                             <telerik:GridBoundColumn DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridBoundColumn DataField="Id_Cuenta_Cobrar" HeaderText="ID" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridBoundColumn DataField="Id_Cuenta_Pagar" HeaderText="ID" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="No_Documento" HeaderText="No. Documento" HeaderStyle-Width="10%" ItemStyle-Width="10%">
@@ -245,7 +245,7 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     ID
-                               <asp:TextBox runat="server" ID="txtIdCuentaCobrar" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
+                               <asp:TextBox runat="server" ID="txtIdCuentaPagar" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
                                 </div>
                             </div>
 
@@ -274,7 +274,7 @@
                                             </Items>
                                         </telerik:RadComboBox>
                                         <button type="button" class="btn btn-primary ml-2 fa-solid fa-plus fa-lg" onclick="mostrarContenido(2)"
-                                            style="margin-left: 10px; height: 37px;" data-toggle="modal" data-target="#exampleModal" data-tippy-content="Cuentas por cobrar" title="" data-whatever="@mdo">
+                                            style="margin-left: 10px; height: 37px;" data-toggle="modal" data-target="#exampleModal" data-tippy-content="Cuentas por Pagar" title="" data-whatever="@mdo">
                                         </button>
                                     </div>
                                 </div>

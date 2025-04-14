@@ -78,13 +78,13 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
         protected global::Telerik.Web.UI.RadDatePicker dtpFechaHastaFiltro;
 
         /// <summary>
-        /// Control cmbDescripcion_Consulta.
+        /// Control cmbMiembro_Consulta.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbDescripcion_Consulta;
+        protected global::Telerik.Web.UI.RadComboBox cmbMiembro_Consulta;
 
         /// <summary>
         /// Control cmbMiscelaneo_Consulta.
@@ -96,13 +96,13 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
         protected global::Telerik.Web.UI.RadComboBox cmbMiscelaneo_Consulta;
 
         /// <summary>
-        /// Control cmbMiembro_Consulta.
+        /// Control cmbDescripcion_Consulta.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbMiembro_Consulta;
+        protected global::Telerik.Web.UI.RadComboBox cmbDescripcion_Consulta;
 
         /// <summary>
         /// Control cmbTipoDocumento_Consulta.
@@ -139,6 +139,33 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid gvDatos;
+
+        /// <summary>
+        /// Control btnGenerarPDF_Resumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnGenerarPDF_Resumen;
+
+        /// <summary>
+        /// Control btnGenerarExcel_Resumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnGenerarExcel_Resumen;
+
+        /// <summary>
+        /// Control gvResumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid gvResumen;
 
         /// <summary>
         /// Control btnBuscar.

@@ -7,7 +7,7 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Sistema_Iglesia_Dios_Web.Egresos
+namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 {
 
 
@@ -60,58 +60,31 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::Telerik.Web.UI.RadRadioButtonList rbtnTipoFecha;
 
         /// <summary>
-        /// Control dtpFechaDesde.
+        /// Control dtpFechaDesdeFiltro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpFechaDesde;
+        protected global::Telerik.Web.UI.RadDatePicker dtpFechaDesdeFiltro;
 
         /// <summary>
-        /// Control dtpFechaHasta.
+        /// Control dtpFechaHastaFiltro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpFechaHasta;
+        protected global::Telerik.Web.UI.RadDatePicker dtpFechaHastaFiltro;
 
         /// <summary>
-        /// Control cmbDescripcionEgreso_Consulta.
+        /// Control cmbMiembro_Consulta.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbDescripcionEgreso_Consulta;
-
-        /// <summary>
-        /// Control cmbBeneficiarios_Consulta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbBeneficiarios_Consulta;
-
-        /// <summary>
-        /// Control cmbMoneda_Consulta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbMoneda_Consulta;
-
-        /// <summary>
-        /// Control cmbEstado_Consulta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbEstado_Consulta;
+        protected global::Telerik.Web.UI.RadComboBox cmbMiembro_Consulta;
 
         /// <summary>
         /// Control cmbMiscelaneo_Consulta.
@@ -123,6 +96,42 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::Telerik.Web.UI.RadComboBox cmbMiscelaneo_Consulta;
 
         /// <summary>
+        /// Control cmbDescripcion_Consulta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbDescripcion_Consulta;
+
+        /// <summary>
+        /// Control cmbTipoDocumento_Consulta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbTipoDocumento_Consulta;
+
+        /// <summary>
+        /// Control btnGenerarPDF_Detalle.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnGenerarPDF_Detalle;
+
+        /// <summary>
+        /// Control btnGenerarExcel_Detalle.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnGenerarExcel_Detalle;
+
+        /// <summary>
         /// Control gvDatos.
         /// </summary>
         /// <remarks>
@@ -130,6 +139,33 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid gvDatos;
+
+        /// <summary>
+        /// Control btnGenerarPDF_Resumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnGenerarPDF_Resumen;
+
+        /// <summary>
+        /// Control btnGenerarExcel_Resumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnGenerarExcel_Resumen;
+
+        /// <summary>
+        /// Control gvResumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid gvResumen;
 
         /// <summary>
         /// Control btnBuscar.
@@ -150,24 +186,6 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::System.Web.UI.WebControls.LinkButton btnLimpiarFiltros;
 
         /// <summary>
-        /// Control btnGenerarPDF.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnGenerarPDF;
-
-        /// <summary>
-        /// Control btnGenerarExcel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnGenerarExcel;
-
-        /// <summary>
         /// Control rpvRegistro.
         /// </summary>
         /// <remarks>
@@ -177,40 +195,22 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::Telerik.Web.UI.RadPageView rpvRegistro;
 
         /// <summary>
-        /// Control txtId_CuentaPagar.
+        /// Control txtIdCuentaPagar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtId_CuentaPagar;
+        protected global::System.Web.UI.WebControls.TextBox txtIdCuentaPagar;
 
         /// <summary>
-        /// Control cmbDescripcion_Egreso.
+        /// Control cmbMiembro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbDescripcion_Egreso;
-
-        /// <summary>
-        /// Control txtNo_Factura.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNo_Factura;
-
-        /// <summary>
-        /// Control cmbBeneficiario.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbBeneficiario;
+        protected global::Telerik.Web.UI.RadComboBox cmbMiembro;
 
         /// <summary>
         /// Control cmbMiscelaneo.
@@ -222,103 +222,103 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::Telerik.Web.UI.RadComboBox cmbMiscelaneo;
 
         /// <summary>
-        /// Control dtpFecha_CuentaPagar.
+        /// Control cmbDescripcion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpFecha_CuentaPagar;
+        protected global::Telerik.Web.UI.RadComboBox cmbDescripcion;
 
         /// <summary>
-        /// Control dtpFechaVencimiento.
+        /// Control cmbFormaPago.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpFechaVencimiento;
+        protected global::Telerik.Web.UI.RadComboBox cmbFormaPago;
 
         /// <summary>
-        /// Control cmbMoneda_CuentaPagar.
+        /// Control dtpFechaCC.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbMoneda_CuentaPagar;
+        protected global::Telerik.Web.UI.RadDatePicker dtpFechaCC;
 
         /// <summary>
-        /// Control divValorMoneda.
+        /// Control txtValor.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divValorMoneda;
+        protected global::System.Web.UI.WebControls.TextBox txtValor;
 
         /// <summary>
-        /// Control txtValorMoneda_CuentaPagar.
+        /// Control cmbTipoDocumento.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtValorMoneda_CuentaPagar;
+        protected global::Telerik.Web.UI.RadComboBox cmbTipoDocumento;
 
         /// <summary>
-        /// Control txtMontoTotalPagar.
+        /// Control txtNo_Documento.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMontoTotalPagar;
+        protected global::System.Web.UI.WebControls.TextBox txtNo_Documento;
 
         /// <summary>
-        /// Control txtComentarioCuentaPagar.
+        /// Control txtComentario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtComentarioCuentaPagar;
+        protected global::System.Web.UI.WebControls.TextBox txtComentario;
 
         /// <summary>
-        /// Control txtUsuarioRegistro_CuentaPagar.
+        /// Control txtUsuarioRegistro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUsuarioRegistro_CuentaPagar;
+        protected global::System.Web.UI.WebControls.TextBox txtUsuarioRegistro;
 
         /// <summary>
-        /// Control txtFechaRegistro_CuentaPagar.
+        /// Control txtFechaRegistro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFechaRegistro_CuentaPagar;
+        protected global::System.Web.UI.WebControls.TextBox txtFechaRegistro;
 
         /// <summary>
-        /// Control txtUsuarioUltimaModificacion_CuentaPagar.
+        /// Control txtUsuarioUltimaModificacion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUsuarioUltimaModificacion_CuentaPagar;
+        protected global::System.Web.UI.WebControls.TextBox txtUsuarioUltimaModificacion;
 
         /// <summary>
-        /// Control txtFechaUltimaModificacion_CuentaPagar.
+        /// Control txtFechaUltimaModificacion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFechaUltimaModificacion_CuentaPagar;
+        protected global::System.Web.UI.WebControls.TextBox txtFechaUltimaModificacion;
 
         /// <summary>
         /// Control btnAgregar.
@@ -346,150 +346,6 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnEliminar;
-
-        /// <summary>
-        /// Control rpvAbonos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadPageView rpvAbonos;
-
-        /// <summary>
-        /// Control txtIdAbono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtIdAbono;
-
-        /// <summary>
-        /// Control dtpFechaAbono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpFechaAbono;
-
-        /// <summary>
-        /// Control cmbFormaPagoAbono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox cmbFormaPagoAbono;
-
-        /// <summary>
-        /// Control txtMontoAbono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMontoAbono;
-
-        /// <summary>
-        /// Control txtComentarioAbono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtComentarioAbono;
-
-        /// <summary>
-        /// Control gvAbonos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid gvAbonos;
-
-        /// <summary>
-        /// Control txtMontoTotalAbonado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMontoTotalAbonado;
-
-        /// <summary>
-        /// Control txtMontoRestante.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMontoRestante;
-
-        /// <summary>
-        /// Control txtUsuarioRegistroAbono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUsuarioRegistroAbono;
-
-        /// <summary>
-        /// Control txtFechaRegistroAbono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFechaRegistroAbono;
-
-        /// <summary>
-        /// Control txtUsuarioUltimaModificacion_Abono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUsuarioUltimaModificacion_Abono;
-
-        /// <summary>
-        /// Control txtFechaUltimaModificacion_Abono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFechaUltimaModificacion_Abono;
-
-        /// <summary>
-        /// Control btnAgregarAbono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnAgregarAbono;
-
-        /// <summary>
-        /// Control btnGuardarAbono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnGuardarAbono;
-
-        /// <summary>
-        /// Control btnEliminarAbono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnEliminarAbono;
 
         /// <summary>
         /// Control rpvArchivos.
@@ -537,24 +393,6 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::System.Web.UI.WebControls.Button btnSubirArchivo;
 
         /// <summary>
-        /// Control txtNombreArchivoDescargar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombreArchivoDescargar;
-
-        /// <summary>
-        /// Control btnDescargarArchivo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDescargarArchivo;
-
-        /// <summary>
         /// Control gvArchivos.
         /// </summary>
         /// <remarks>
@@ -564,13 +402,13 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::Telerik.Web.UI.RadGrid gvArchivos;
 
         /// <summary>
-        /// Control txtDescripcionEgresoAgregar.
+        /// Control txtDescripcionAgregar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescripcionEgresoAgregar;
+        protected global::System.Web.UI.WebControls.TextBox txtDescripcionAgregar;
 
         /// <summary>
         /// Control btnAgregarDescripcion.
@@ -582,13 +420,13 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         protected global::System.Web.UI.WebControls.Button btnAgregarDescripcion;
 
         /// <summary>
-        /// Control txtDescripcionMiscelaneoAgregar.
+        /// Control txtMiscelaneoAgregar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescripcionMiscelaneoAgregar;
+        protected global::System.Web.UI.WebControls.TextBox txtMiscelaneoAgregar;
 
         /// <summary>
         /// Control btnAgregarMiscelaneo.

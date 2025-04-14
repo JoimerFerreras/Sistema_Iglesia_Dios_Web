@@ -1,7 +1,6 @@
 ﻿// Autor: Joimer Ferreras
 
-using Entidades.Ingresos;
-using Negocio.Ingresos;
+using Entidades.Cuentas_Por_Pagar;
 using Negocio.Otros_Parametros;
 using Negocio.Miembros;
 using Negocio.Util_N;
@@ -22,13 +21,14 @@ using CrystalDecisions.CrystalReports.Engine;
 using System.Data.OleDb;
 using CrystalDecisions.Shared;
 using Entidades.Otros_Parametros;
+using Negocio.Cuentas_Por_Pagar;
 
-namespace Sistema_Iglesia_Dios_Web.Ingresos
+namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 {
-    public partial class frmIngresos : System.Web.UI.Page
+    public partial class frmCuentasPagar : System.Web.UI.Page
     {
         #region Declaraciones
-        Ingreso_N ingreso_N = new Ingreso_N();
+        Cuenta_Pagar_N Cuenta_Pagar_N = new Cuenta_Pagar_N();
         public string ID_REGISTRO
         {
             get
@@ -109,15 +109,15 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             }
         }
 
-        public List<Archivo_Ingreso_E> ListaArchivoE
+        public List<Archivo_Cuenta_Pagar_E> ListaArchivoE
         {
             get
             {
                 if (Utilidad_N.ValidarNull(ViewState["ListaArchivoE"]))
                 {
-                    ViewState["ListaArchivoE"] = new List<Archivo_Ingreso_E>();
+                    ViewState["ListaArchivoE"] = new List<Archivo_Cuenta_Pagar_E>();
                 }
-                return (List<Archivo_Ingreso_E>)ViewState["ListaArchivoE"];
+                return (List<Archivo_Cuenta_Pagar_E>)ViewState["ListaArchivoE"];
             }
             set
             {
@@ -145,7 +145,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
         #region Metodos/ Procedimientos
 
-        #region Ingresos
+        #region Cuentas por pagar
         private void LimpiarFiltros()
         {
             rbtnTipoFecha.SelectedValue = "1";
@@ -166,9 +166,10 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             dtpFechaDesdeFiltro.SelectedDate = PrimerDiaMes;
             dtpFechaHastaFiltro.SelectedDate = DateTime.Now;
 
-            cmbDescripcionIngreso_Consulta.SelectedValue = "0";
-            cmbMiembro_Consulta.SelectedValue = "0";
+            cmbDescripcion_Consulta.SelectedValue = "0";
             cmbMiscelaneo_Consulta.SelectedValue = "0";
+            cmbMiembro_Consulta.SelectedValue = "0";
+            cmbTipoDocumento_Consulta.SelectedValue = "0";
         }
 
         private void Consultar()
@@ -181,13 +182,14 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 {
                     if (DateTime.TryParse(dtpFechaHastaFiltro.SelectedDate.Value.ToString(), out fecha) == true)
                     {
-                        DT_DATOS = ingreso_N.Listar(
+                        DT_DATOS = Cuenta_Pagar_N.ListarDetalle(
                         rbtnTipoFecha.SelectedValue,
                         dtpFechaDesdeFiltro.SelectedDate.Value,
                         dtpFechaHastaFiltro.SelectedDate.Value,
                         cmbMiembro_Consulta.SelectedValue,
-                        cmbDescripcionIngreso_Consulta.SelectedValue,
-                        cmbMiscelaneo_Consulta.SelectedValue);
+                        cmbMiscelaneo_Consulta.SelectedValue,
+                        cmbDescripcion_Consulta.SelectedValue,
+                        cmbTipoDocumento_Consulta.SelectedValue);
 
                         gvDatos.DataSource = DT_DATOS;
                         gvDatos.DataBind();
@@ -212,13 +214,14 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
         private void ConsultarResumen()
         {
-            DT_DATOS_RESUMEN = ingreso_N.ListarResumen(
+            DT_DATOS_RESUMEN = Cuenta_Pagar_N.ListarResumen(
                                    rbtnTipoFecha.SelectedValue,
-                                   dtpFechaDesdeFiltro.SelectedDate.Value,
-                                   dtpFechaHastaFiltro.SelectedDate.Value,
-                                   cmbMiembro_Consulta.SelectedValue,
-                                   cmbDescripcionIngreso_Consulta.SelectedValue,
-                                   cmbMiscelaneo_Consulta.SelectedValue);
+                        dtpFechaDesdeFiltro.SelectedDate.Value,
+                        dtpFechaHastaFiltro.SelectedDate.Value,
+                        cmbMiembro_Consulta.SelectedValue,
+                        cmbMiscelaneo_Consulta.SelectedValue,
+                        cmbDescripcion_Consulta.SelectedValue,
+                        cmbTipoDocumento_Consulta.SelectedValue);
 
             gvResumen.DataSource = DT_DATOS_RESUMEN;
             gvResumen.DataBind();
@@ -256,9 +259,11 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         private void LlenarComboDescripcion()
         {
             DataTable dt = new DataTable();
-            // Descripcion de ingreso
+            // Descripcion
             Descripciones_N Descripciones_N = new Descripciones_N();
-            dt = Descripciones_N.ListaCombo(1);
+
+            // Tipo de descripripcion "3" = Cuentas por pagar
+            dt = Descripciones_N.ListaCombo(3);
 
             // Crear un nuevo DataRow para el ítem "Seleccionar..."
             DataRow dr = dt.NewRow();
@@ -268,11 +273,11 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             // Insertar el nuevo DataRow al principio del DataTable
             dt.Rows.InsertAt(dr, 0);
 
-            cmbDescripcion_Ingreso.Items.Clear();
-            cmbDescripcion_Ingreso.DataSource = dt;
-            cmbDescripcion_Ingreso.DataValueField = "Id_Descripcion";
-            cmbDescripcion_Ingreso.DataTextField = "Nombre";
-            cmbDescripcion_Ingreso.DataBind();
+            cmbDescripcion.Items.Clear();
+            cmbDescripcion.DataSource = dt;
+            cmbDescripcion.DataValueField = "Id_Descripcion";
+            cmbDescripcion.DataTextField = "Nombre";
+            cmbDescripcion.DataBind();
 
 
             // Consulta
@@ -286,11 +291,11 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             dtConsulta.Rows.RemoveAt(0);
             dtConsulta.Rows.InsertAt(drConsulta, 0);
 
-            cmbDescripcionIngreso_Consulta.Items.Clear();
-            cmbDescripcionIngreso_Consulta.DataSource = dtConsulta;
-            cmbDescripcionIngreso_Consulta.DataValueField = "Id_Descripcion";
-            cmbDescripcionIngreso_Consulta.DataTextField = "Nombre";
-            cmbDescripcionIngreso_Consulta.DataBind();
+            cmbDescripcion_Consulta.Items.Clear();
+            cmbDescripcion_Consulta.DataSource = dtConsulta;
+            cmbDescripcion_Consulta.DataValueField = "Id_Descripcion";
+            cmbDescripcion_Consulta.DataTextField = "Nombre";
+            cmbDescripcion_Consulta.DataBind();
         }
 
         private void LlenarComboMiscelaneo()
@@ -348,21 +353,29 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         {
             bool Validacion = false;
 
-            if (cmbDescripcion_Ingreso.SelectedValue == "0")
+            if (cmbMiembro.SelectedValue == "0" && cmbMiscelaneo.SelectedValue == "0")
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La descripción del ingreso no puede estar vacía");
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Si no va a seleccionar un miembro, entonces el campo Misceláneo no puede estar vacío");
+            }
+            else if (cmbDescripcion.SelectedValue == "0")
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe especificar una descripción");
+            }
+            else if (dtpFechaCC.SelectedDate.Value == null)
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La fecha no es válida");
             }
             else if (cmbFormaPago.SelectedValue == "0")
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe especificar el la forma de pago");
             }
-            else if (!double.TryParse(txtMonto.Text, out double resultado_monto))
+            else if (cmbTipoDocumento.SelectedValue == "0")
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El monto no es válido");
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe especificar el tipo de documento");
             }
-            else if (dtpFechaIngreso.SelectedDate.Value == null)
+            else if (!double.TryParse(txtValor.Text, out double valor))
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La fecha de ingreso no es válida");
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El tipo de cambio no es válido");
             }
             else
             {
@@ -379,24 +392,28 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 if (ValidarCampos() == true)
                 {
                     // Agregacion de la informacion basica del miembro
-                    Ingreso_E ingreso_E = new Ingreso_E();
-                    ingreso_E.Id_Ingreso = int.Parse(ID_REGISTRO);
-                    ingreso_E.Id_Miembro = int.Parse(cmbMiembro.SelectedValue);
-                    ingreso_E.Id_Descripcion = int.Parse(cmbDescripcion_Ingreso.SelectedValue);
-                    ingreso_E.Monto = double.Parse(txtMonto.Text);
-                    ingreso_E.Fecha_Ingreso = dtpFechaIngreso.SelectedDate.Value;
-                    ingreso_E.Id_Usuario_Registro = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
-                    ingreso_E.Fecha_Registro = DateTime.Now;
-                    ingreso_E.Id_Usuario_Ultima_Modificacion = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
-                    ingreso_E.Fecha_Ultima_Modificacion = DateTime.Now;
-                    ingreso_E.Id_Forma_Pago = int.Parse(cmbFormaPago.SelectedValue);
-                    ingreso_E.Comentario = txtComentario.Text;
-                    ingreso_E.Id_Miscelaneo = int.Parse(cmbMiscelaneo.SelectedValue);
+                    Cuenta_Pagar_E Cuenta_Pagar_E = new Cuenta_Pagar_E();
+                    Cuenta_Pagar_E.Id_Cuenta_Pagar = int.Parse(ID_REGISTRO);
+                    Cuenta_Pagar_E.Id_Descripcion = int.Parse(cmbDescripcion.SelectedValue);
+                    Cuenta_Pagar_E.Id_Miembro = int.Parse(cmbMiembro.SelectedValue);
+                    Cuenta_Pagar_E.Id_Miscelaneo = int.Parse(cmbMiscelaneo.SelectedValue);
+                    Cuenta_Pagar_E.Fecha_CP = dtpFechaCC.SelectedDate.Value;
+                    Cuenta_Pagar_E.Valor = float.Parse(txtValor.Text);
+                    Cuenta_Pagar_E.Id_Forma_Pago = int.Parse(cmbFormaPago.SelectedValue);
+                    Cuenta_Pagar_E.Tipo_Documento = cmbTipoDocumento.SelectedValue;
+                    Cuenta_Pagar_E.No_Documento = txtNo_Documento.Text;
+                    Cuenta_Pagar_E.Comentario = txtComentario.Text;
+
+                    Cuenta_Pagar_E.Id_Usuario_Registro = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
+                    Cuenta_Pagar_E.Fecha_Registro = DateTime.Now;
+                    Cuenta_Pagar_E.Id_Usuario_Ultima_Modificacion = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
+                    Cuenta_Pagar_E.Fecha_Ultima_Modificacion = DateTime.Now;
+                    Cuenta_Pagar_E.Id_Forma_Pago = int.Parse(cmbFormaPago.SelectedValue);
 
                     if (EDITAR_REGISTRO == true)
                     {
                         // Guardar registro existente
-                        bool salida = ingreso_N.Editar(ingreso_E);
+                        bool salida = Cuenta_Pagar_N.Editar(Cuenta_Pagar_E);
 
                         if (salida == true)
                         {
@@ -412,18 +429,18 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     else
                     {
                         // Agregar registro
-                        int Id_Ingreso = ingreso_N.Agregar(ingreso_E);
+                        int Id_Cuenta_Pagar = Cuenta_Pagar_N.Agregar(Cuenta_Pagar_E);
 
-                        if (Id_Ingreso > 0)
+                        if (Id_Cuenta_Pagar > 0 )
                         {
                             // Agregar los archivos que estan en la tabla temporal
                             if (ListaArchivoE.Count > 0)
                             {
-                                Archivo_Ingreso_N archivo_N = new Archivo_Ingreso_N();
+                                Archivo_Cuenta_Pagar_N archivo_N = new Archivo_Cuenta_Pagar_N();
                                 for (int i = 0; i < ListaArchivoE.Count; i++)
                                 {
-
-                                    archivo_N.AgregarArchivo(ListaArchivoE[i], Id_Ingreso);
+                                    
+                                    archivo_N.AgregarArchivo(ListaArchivoE[i], Id_Cuenta_Pagar);
                                 }
                             }
 
@@ -443,38 +460,46 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 string a = ex.Message;
                 Utilidad_C.MostrarAlerta_Guardar_Error_Fatal(this, this.GetType());
             }
+
         }
 
         private void VerRegistro()
         {
             // Llenado de datos generales
-            Ingreso_E Ingreso_E = new Ingreso_E();
-            Ingreso_E = ingreso_N.ObtenerRegistro(ID_REGISTRO);
+            Cuenta_Pagar_E Cuenta_Pagar_E = new Cuenta_Pagar_E();
+            Cuenta_Pagar_E = Cuenta_Pagar_N.ObtenerRegistro(ID_REGISTRO);
 
-            txtId_Ingreso.Text = Ingreso_E.Id_Ingreso.ToString();
-            cmbMiembro.SelectedValue = Ingreso_E.Id_Miembro.ToString();
-            cmbDescripcion_Ingreso.SelectedValue = Ingreso_E.Id_Descripcion.ToString();
-            txtMonto.Text = Utilidad_N.FormatearNumero(Ingreso_E.Monto.ToString(), 2, 2);
-            dtpFechaIngreso.SelectedDate = Ingreso_E.Fecha_Ingreso;
-            txtUsuarioRegistro.Text = Ingreso_E.Nombre_Usuario_Registro;
-            txtFechaRegistro.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", Ingreso_E.Fecha_Registro);
-            txtUsuarioUltimaModificacion.Text = Ingreso_E.Nombre_Usuario_Ultima_Modificacion;
-            cmbFormaPago.SelectedValue = Ingreso_E.Id_Forma_Pago.ToString();
-            txtComentario.Text = Ingreso_E.Comentario;
-            cmbMiscelaneo.SelectedValue = Ingreso_E.Id_Miscelaneo.ToString();
+            txtIdCuentaPagar.Text = Cuenta_Pagar_E.Id_Cuenta_Pagar.ToString();
+            cmbMiembro.SelectedValue = Cuenta_Pagar_E.Id_Miembro.ToString();
+            cmbMiscelaneo.SelectedValue = Cuenta_Pagar_E.Id_Miscelaneo.ToString();
+            cmbDescripcion.SelectedValue = Cuenta_Pagar_E.Id_Descripcion.ToString();
+            dtpFechaCC.SelectedDate = Cuenta_Pagar_E.Fecha_CP;
+            cmbFormaPago.SelectedValue = Cuenta_Pagar_E.Id_Forma_Pago.ToString();
+            cmbTipoDocumento.SelectedValue = Cuenta_Pagar_E.Tipo_Documento.ToString();
+            txtValor.Text = Cuenta_Pagar_E.Valor.ToString();
+            txtNo_Documento.Text = Cuenta_Pagar_E.No_Documento;
+            txtComentario.Text = Cuenta_Pagar_E.Comentario;
 
-            if (Ingreso_E.Fecha_Ultima_Modificacion != null)
+            txtUsuarioRegistro.Text = Cuenta_Pagar_E.Nombre_Usuario_Registro;
+            txtFechaRegistro.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", Cuenta_Pagar_E.Fecha_Registro);
+            txtUsuarioUltimaModificacion.Text = Cuenta_Pagar_E.Nombre_Usuario_Ultima_Modificacion;
+            cmbFormaPago.SelectedValue = Cuenta_Pagar_E.Id_Forma_Pago.ToString();
+            txtComentario.Text = Cuenta_Pagar_E.Comentario;
+
+            if (Cuenta_Pagar_E.Fecha_Ultima_Modificacion != null)
             {
-                txtFechaUltimaModificacion.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", Ingreso_E.Fecha_Ultima_Modificacion);
+                txtFechaUltimaModificacion.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", Cuenta_Pagar_E.Fecha_Ultima_Modificacion);
             }
 
-            // Listar archivos del ingreso
+            // Listar archivos
             ListarArchivos(ID_REGISTRO);
 
             rtsTabulador.Tabs[1].Selected = true;
             rmpTabs.SelectedIndex = 1;
 
-            txtId_Ingreso.Focus();
+            txtIdCuentaPagar.Focus();
+
+            btnEliminar.Visible = true;
         }
 
         private void LimpiarCampos()
@@ -483,21 +508,27 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             ID_REGISTRO_ARCHIVO = "0";
             EDITAR_REGISTRO = false;
 
-            txtId_Ingreso.Text = "(Nuevo)";
+            txtIdCuentaPagar.Text = "(Nuevo)";
             cmbMiembro.SelectedValue = "0";
-            cmbDescripcion_Ingreso.SelectedValue = "0";
-            txtMonto.Text = Utilidad_N.FormatearNumero("0", 2, 2);
-            dtpFechaIngreso.SelectedDate = DateTime.Now;
+            cmbMiscelaneo.SelectedValue = "0";
+            cmbDescripcion.SelectedValue = "0";
+            dtpFechaCC.SelectedDate = DateTime.Now;
+            cmbFormaPago.SelectedValue = "0";
+            cmbTipoDocumento.SelectedValue = "0";
+            txtValor.Text = Utilidad_N.FormatearNumero("0", 2, 2);
+            txtNo_Documento.Text = "";
+            txtComentario.Text = "";
+
             txtUsuarioRegistro.Text = "";
             txtFechaRegistro.Text = "";
             txtUsuarioUltimaModificacion.Text = "";
             txtFechaUltimaModificacion.Text = "";
             cmbFormaPago.SelectedValue = "0";
-            txtComentario.Text = "";
-            cmbMiscelaneo.SelectedValue = "0";
 
             gvArchivos.DataSource = new DataTable();
             gvArchivos.DataBind();
+
+            btnEliminar.Visible = false;
 
             cmbMiembro.Focus();
         }
@@ -510,7 +541,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             }
             else
             {
-                bool respuesta = ingreso_N.Eliminar(ID_REGISTRO);
+                bool respuesta = Cuenta_Pagar_N.Eliminar(ID_REGISTRO);
 
                 if (respuesta)
                 {
@@ -527,167 +558,92 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
         private void GenerarReporteExcel_Detalle()
         {
-            // Se establece una lista con el nombre de las columnas del grid
-            List<string> NombresColumnas = new List<string>();
-            for (int i = 1; i < gvDatos.MasterTableView.Columns.Count; i++)
+            try
             {
-                NombresColumnas.Add(gvDatos.MasterTableView.Columns[i].HeaderText);
+                // Se establece una lista con el nombre de las columnas del grid
+                List<string> NombresColumnas = new List<string>();
+                for (int i = 1; i < gvDatos.MasterTableView.Columns.Count; i++)
+                {
+                    NombresColumnas.Add(gvDatos.MasterTableView.Columns[i].HeaderText);
+                }
+
+                // Se establece el nombre del reporte
+                string NombreReporte = "Reporte_Cuentas_Pagar_Detalle";
+                DataTable dtReporte = DT_DATOS.Copy();
+
+                // Se crea una tabla con los parametros de los filtross
+                DataTable dtParametros = new DataTable();
+                dtParametros.Columns.Add("Parametro");
+                dtParametros.Columns.Add("Valor");
+
+                dtParametros.Rows.Add("Iglesia de Dios La 33 Casa de Fe", "");
+                dtParametros.Rows.Add("Relación de Cuentas por Pagar (Detalle)");
+                dtParametros.Rows.Add("Fecha/Hora de reporte: " + string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", DateTime.Now));
+                dtParametros.Rows.Add("", "");
+                dtParametros.Rows.Add("Filtros");
+                dtParametros.Rows.Add("Tipo de fecha: ", rbtnTipoFecha.Items[rbtnTipoFecha.SelectedIndex].Text);
+
+                dtParametros.Rows.Add("Fecha inicial: ", string.Format("{0:dd/MM/yyyy}", dtpFechaDesdeFiltro.SelectedDate));
+                dtParametros.Rows.Add("Fecha final: ", string.Format("{0:dd/MM/yyyy}", dtpFechaHastaFiltro.SelectedDate));
+
+                dtParametros.Rows.Add("Descripción: ", cmbDescripcion_Consulta.Text);
+                dtParametros.Rows.Add("Miscelaneo: ", cmbMiscelaneo_Consulta.Text);
+                dtParametros.Rows.Add("Miembro: ", cmbMiembro_Consulta.Text);
+                dtParametros.Rows.Add("Tipo de documento: ", cmbTipoDocumento_Consulta.Text);
+                dtParametros.Rows.Add("", "");
+                dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
+
+                // Se llama al metodo de generar reporte de Utilidad_C
+                Utilidad_C utilidad_C = new Utilidad_C();
+                utilidad_C.GenerarReporteExcel(dtParametros, dtReporte, NombresColumnas, NombreReporte, this.Page, null);
             }
-
-            // Se establece el nombre del reporte
-            string NombreReporte = "Reporte_Ingresos_Detalle";
-            DataTable dtReporte = DT_DATOS.Copy();
-
-            // Se crea una tabla con los parametros de los filtros
-            DataTable dtParametros = new DataTable();
-            dtParametros.Columns.Add("Parametro");
-            dtParametros.Columns.Add("Valor");
-
-            dtParametros.Rows.Add("Iglesia de Dios La 33 Casa de Fe", "");
-            dtParametros.Rows.Add("Relación de Ingresos (Detalle)");
-            dtParametros.Rows.Add("Fecha/Hora de reporte: " + string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", DateTime.Now));
-            dtParametros.Rows.Add("", "");
-            dtParametros.Rows.Add("Filtros");
-            dtParametros.Rows.Add("Tipo de fecha: ", rbtnTipoFecha.Items[rbtnTipoFecha.SelectedIndex].Text);
-
-            dtParametros.Rows.Add("Fecha inicial: ", string.Format("{0:dd/MM/yyyy}", dtpFechaDesdeFiltro.SelectedDate));
-            dtParametros.Rows.Add("Fecha final: ", string.Format("{0:dd/MM/yyyy}", dtpFechaHastaFiltro.SelectedDate));
-
-            dtParametros.Rows.Add("Descripción de ingreso: ", cmbDescripcionIngreso_Consulta.Text);
-            dtParametros.Rows.Add("Beneficiario: ", cmbMiembro_Consulta.Text);
-            dtParametros.Rows.Add("", "");
-            dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
-
-            // Se llama al metodo de generar reporte de Utilidad_C
-            Utilidad_C utilidad_C = new Utilidad_C();
-            utilidad_C.GenerarReporteExcel(dtParametros, dtReporte, NombresColumnas, NombreReporte, this.Page, null);
+            catch (Exception ex)
+            {
+                Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "Error al generar el reporte", "Ocurrió un error al generar el reporte: " + ex.Message, "error");
+            }
         }
 
         private void GenerarReporteExcel_Resumen()
         {
-            // Se establece una lista con el nombre de las columnas del grid
-            List<string> NombresColumnas = new List<string>();
-            for (int i = 0; i < gvResumen.MasterTableView.Columns.Count; i++)
-            {
-                NombresColumnas.Add(gvResumen.MasterTableView.Columns[i].HeaderText);
-            }
-
-            // Se establece el nombre del reporte
-            string NombreReporte = "Reporte_Ingresos_Resumen";
-            DataTable dtReporte = DT_DATOS_RESUMEN.Copy();
-
-            // Se crea una tabla con los parametros de los filtros
-            DataTable dtParametros = new DataTable();
-            dtParametros.Columns.Add("Parametro");
-            dtParametros.Columns.Add("Valor");
-
-            dtParametros.Rows.Add("Iglesia de Dios La 33 Casa de Fe", "");
-            dtParametros.Rows.Add("Relación de Ingresos (Resumen)");
-            dtParametros.Rows.Add("Fecha/Hora de reporte: " + string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", DateTime.Now));
-            dtParametros.Rows.Add("", "");
-            dtParametros.Rows.Add("Filtros");
-            dtParametros.Rows.Add("Tipo de fecha: ", rbtnTipoFecha.Items[rbtnTipoFecha.SelectedIndex].Text);
-
-            dtParametros.Rows.Add("Fecha inicial: ", string.Format("{0:dd/MM/yyyy}", dtpFechaDesdeFiltro.SelectedDate));
-            dtParametros.Rows.Add("Fecha final: ", string.Format("{0:dd/MM/yyyy}", dtpFechaHastaFiltro.SelectedDate));
-
-            dtParametros.Rows.Add("Descripción de ingreso: ", cmbDescripcionIngreso_Consulta.Text);
-            dtParametros.Rows.Add("Beneficiario: ", cmbMiembro_Consulta.Text);
-            dtParametros.Rows.Add("", "");
-            dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
-
-            // Se llama al metodo de generar reporte de Utilidad_C
-            Utilidad_C utilidad_C = new Utilidad_C();
-            utilidad_C.GenerarReporteExcel(dtParametros, dtReporte, NombresColumnas, NombreReporte, this.Page, null);
-        }
-
-        private void GenerarReportePDF(string NombreArchvoReporte, string NombreSalidaReporte)
-        {
             try
             {
-                // Se establecen la ruta del reporte de Crystal y la de creacion del reporte en PDF
-                string Path = Server.MapPath(@"~/Reportes/");
-                string PathPDF = Server.MapPath(@"~/Recursos/Archivos_Temp/");
-
-                if (!Directory.Exists(PathPDF))
+                // Se establece una lista con el nombre de las columnas del grid
+                List<string> NombresColumnas = new List<string>();
+                for (int i = 0; i < gvResumen.MasterTableView.Columns.Count; i++)
                 {
-                    Directory.CreateDirectory(PathPDF);
+                    NombresColumnas.Add(gvResumen.MasterTableView.Columns[i].HeaderText);
                 }
 
-                // Se carga el reporte y se loguea con la base de datos
-                ReportDocument oRep = new ReportDocument();
-                var cadena = new OleDbConnectionStringBuilder();
-                cadena = Utilidad_C.LoginReport();
-                oRep.Load(Path + NombreArchvoReporte + ".rpt", OpenReportMethod.OpenReportByTempCopy);
-                Utilidad_C.SetLoginReport(oRep, cadena["Initial Catalog"].ToString(), cadena["Data Source"].ToString(), cadena["USER ID"].ToString(), cadena["Password"].ToString());
+                // Se establece el nombre del reporte
+                string NombreReporte = "Reporte_Cuentas_Pagar_Resumen";
+                DataTable dtReporte = DT_DATOS_RESUMEN.Copy();
+                dtReporte.Columns.RemoveAt(3); // Removiendo la columna "Tipo_Documento"
 
+                // Se crea una tabla con los parametros de los filtross
+                DataTable dtParametros = new DataTable();
+                dtParametros.Columns.Add("Parametro");
+                dtParametros.Columns.Add("Valor");
 
-                // Se formatea los parametros que seran utilizados por el procedimiento almacenado del reporte
-                string TipoFecha = "";
-                if (rbtnTipoFecha.SelectedValue == "1")
-                {
-                    TipoFecha = "Fecha_Ingreso";
-                }
-                else if (rbtnTipoFecha.SelectedValue == "2")
-                {
-                    TipoFecha = "Fecha_Registro";
-                }
-                else
-                {
-                    TipoFecha = "0";
-                }
+                dtParametros.Rows.Add("Iglesia de Dios La 33 Casa de Fe", "");
+                dtParametros.Rows.Add("Relación de Cuentas por Pagar (Resumen)");
+                dtParametros.Rows.Add("Fecha/Hora de reporte: " + string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", DateTime.Now));
+                dtParametros.Rows.Add("", "");
+                dtParametros.Rows.Add("Filtros");
+                dtParametros.Rows.Add("Tipo de fecha: ", rbtnTipoFecha.Items[rbtnTipoFecha.SelectedIndex].Text);
 
-                //Se envian los parametros del procedimiento almacenado al reporte
-                oRep.SetParameterValue("@TipoFecha", TipoFecha);
-                oRep.SetParameterValue("@FechaInicial", string.Format("{0:yyyy-MM-dd}" + " 00:00:00", dtpFechaDesdeFiltro.SelectedDate));
-                oRep.SetParameterValue("@FechaFinal", string.Format("{0:yyyy-MM-dd}" + " 23:59:59", dtpFechaHastaFiltro.SelectedDate));
-                oRep.SetParameterValue("@Miembro", cmbMiembro_Consulta.SelectedValue);
-                oRep.SetParameterValue("@Descripcion_Ingreso", cmbDescripcionIngreso_Consulta.SelectedValue);
+                dtParametros.Rows.Add("Fecha inicial: ", string.Format("{0:dd/MM/yyyy}", dtpFechaDesdeFiltro.SelectedDate));
+                dtParametros.Rows.Add("Fecha final: ", string.Format("{0:dd/MM/yyyy}", dtpFechaHastaFiltro.SelectedDate));
 
+                dtParametros.Rows.Add("Descripción: ", cmbDescripcion_Consulta.Text);
+                dtParametros.Rows.Add("Miscelaneo: ", cmbMiscelaneo_Consulta.Text);
+                dtParametros.Rows.Add("Miembro: ", cmbMiembro_Consulta.Text);
+                dtParametros.Rows.Add("Tipo de documento: ", cmbTipoDocumento_Consulta.Text);
+                dtParametros.Rows.Add("", "");
+                dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
 
-                // Se cargan el texto de los parametros en el reporte
-                oRep.DataDefinition.FormulaFields["TipoFecha"].Text = string.Format("'{0}'", rbtnTipoFecha.Items[rbtnTipoFecha.SelectedIndex].Text);
-
-                if (rbtnTipoFecha.SelectedValue == "0")
-                {
-                    oRep.DataDefinition.FormulaFields["FechaInicial"].Text = "''";
-                    oRep.DataDefinition.FormulaFields["FechaFinal"].Text = "''";
-                }
-                else
-                {
-                    oRep.DataDefinition.FormulaFields["FechaInicial"].Text = "'" + string.Format("{0:dd/MM/yyyy}", dtpFechaDesdeFiltro.SelectedDate) + "'";
-                    oRep.DataDefinition.FormulaFields["FechaFinal"].Text = "'" + string.Format("{0:dd/MM/yyyy}", dtpFechaHastaFiltro.SelectedDate) + "'";
-                }
-
-                oRep.DataDefinition.FormulaFields["Miembro"].Text = string.Format("'{0}'", cmbMiembro_Consulta.Text);
-                oRep.DataDefinition.FormulaFields["Descripcion_Ingreso"].Text = string.Format("'{0}'", cmbDescripcionIngreso_Consulta.Text);
-
-                // Se establece el nombre del reporte y se concatena al Path
-                string NombreArchivo = NombreSalidaReporte + string.Format("{0:ddMMyyyyHHmmss}", DateTime.Now) + ".pdf";
-                PathPDF = PathPDF + NombreArchivo;
-
-                // Se establece las opciones del reporte y se exporta
-                ExportOptions crExportOption = oRep.ExportOptions;
-                DiskFileDestinationOptions crDiskFileDestinationOptions = new DiskFileDestinationOptions();
-
-                crDiskFileDestinationOptions.DiskFileName = PathPDF;
-
-                crExportOption.ExportDestinationType = ExportDestinationType.DiskFile;
-                crExportOption.ExportFormatType = ExportFormatType.PortableDocFormat;
-                crExportOption.DestinationOptions = crDiskFileDestinationOptions;
-                oRep.Export();
-
-                oRep.Refresh();
-
-                if (System.IO.File.Exists(PathPDF))
-                {
-                    // Exportacion del reporte en PDF a una nueva pestaña del navegador para poder ser descargado
-                    Utilidad_C.EjecutarScript(this, "window.open('../Recursos/Archivos_Temp/" + NombreArchivo + "','_blank');");
-                }
-                else
-                {
-                    Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "Error al generar el reporte", "No se pudo generar el reporte", "error");
-                }
+                // Se llama al metodo de generar reporte de Utilidad_C
+                Utilidad_C utilidad_C = new Utilidad_C();
+                utilidad_C.GenerarReporteExcel(dtParametros, dtReporte, NombresColumnas, NombreReporte, this.Page, null);
             }
             catch (Exception ex)
             {
@@ -702,7 +658,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 Descripciones_E entidad = new Descripciones_E();
                 Descripciones_N Descripciones_N = new Descripciones_N();
                 entidad.Nombre = txtDescripcionAgregar.Text;
-                entidad.Tipo_Descripcion = 1;
+                entidad.Tipo_Descripcion = 3;
                 entidad.Estado = true;
                 Descripciones_N.Agregar(entidad);
                 txtDescripcionAgregar.Text = "";
@@ -737,12 +693,12 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         #endregion
 
         #region Archivos
-        private void ListarArchivos(string Id_Ingreso)
+        private void ListarArchivos(string Id_Cuenta_Pagar)
         {
-            // Listar archivos del ingreso
+            // Listar archivos
             DataTable dtArchivos = new DataTable();
-            Archivo_Ingreso_N archivo_Ingreso_N = new Archivo_Ingreso_N();
-            dtArchivos = archivo_Ingreso_N.Listar(Id_Ingreso);
+            Archivo_Cuenta_Pagar_N Archivo_Cuenta_Pagar_N = new Archivo_Cuenta_Pagar_N();
+            dtArchivos = Archivo_Cuenta_Pagar_N.Listar(Id_Cuenta_Pagar);
 
             gvArchivos.DataSource = dtArchivos;
             gvArchivos.DataBind();
@@ -768,8 +724,8 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     int Id_Archivo = int.Parse(ID_REGISTRO_ARCHIVO);
 
                     // Llenado de datos generales
-                    Archivo_Ingreso_E Archivo_E = new Archivo_Ingreso_E();
-                    Archivo_Ingreso_N Archivo_N = new Archivo_Ingreso_N();
+                    Archivo_Cuenta_Pagar_E Archivo_E = new Archivo_Cuenta_Pagar_E();
+                    Archivo_Cuenta_Pagar_N Archivo_N = new Archivo_Cuenta_Pagar_N();
                     Archivo_E = Archivo_N.ObtenerArchivo(Id_Archivo);
 
                     // Simular obtener los bytes del archivo (reemplazar con tu lógica real)
@@ -794,6 +750,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     response.Flush(); // Envía todo al cliente
                     response.SuppressContent = true; // Impide cualquier contenido adicional
                     HttpContext.Current.ApplicationInstance.CompleteRequest(); // Finaliza la solicitud correctamente
+
                 }
             }
         }
@@ -803,10 +760,12 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             if (EDITAR_REGISTRO == true)
             {
                 // Llenado de datos generales
-                Archivo_Ingreso_E Archivo_E = new Archivo_Ingreso_E();
-                Archivo_Ingreso_N Archivo_N = new Archivo_Ingreso_N();
+                Archivo_Cuenta_Pagar_E Archivo_E = new Archivo_Cuenta_Pagar_E();
+                Archivo_Cuenta_Pagar_N Archivo_N = new Archivo_Cuenta_Pagar_N();
                 Archivo_E = Archivo_N.ObtenerArchivo(Id_Archivo);
                 ID_REGISTRO_ARCHIVO = Id_Archivo.ToString();
+
+                DescargarArchivo();
             }
         }
 
@@ -814,7 +773,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         {
             try
             {
-                // Se revisa que corresponda a un nuevo registro de ingreso
+                // Se revisa que corresponda a un nuevo registro
                 if (ID_REGISTRO.ToString() == "0" || ID_REGISTRO.ToString() == "")
                 {
                     // Se verifica que el FileUpload tenga un archivo
@@ -828,13 +787,13 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                         }
                         else
                         {
-                            Archivo_Ingreso_N archivo_Ingreso_N = new Archivo_Ingreso_N();
+                            Archivo_Cuenta_Pagar_N Archivo_Cuenta_Pagar_N = new Archivo_Cuenta_Pagar_N();
                             HttpPostedFile postedFile = FileUpload1.PostedFile;
 
                             // Se crea la estructura del objeto del archvo, se le inserta los datos del archivo del FileUpload y luego se agrega el objeto a la lista de archivos
                             int Numero_Lista = ListaArchivoE.Count;
-                            Archivo_Ingreso_E ArchivoTemp = new Archivo_Ingreso_E();
-                            ArchivoTemp = archivo_Ingreso_N.EstructurarArchivo(postedFile, txtNombreArchivo.Text, txtDescripcionArchivo.Text, Numero_Lista, "0");
+                            Archivo_Cuenta_Pagar_E ArchivoTemp = new Archivo_Cuenta_Pagar_E();
+                            ArchivoTemp = Archivo_Cuenta_Pagar_N.EstructurarArchivo(postedFile, txtNombreArchivo.Text, txtDescripcionArchivo.Text, Numero_Lista, "0");
                             ListaArchivoE.Add(ArchivoTemp);
 
                             // Lista de campos para Grid de archivos:
@@ -853,7 +812,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                             txtDescripcionArchivo.Text = "";
                             ListarArchivosTemporales();
                         }
-                    }
+                    } 
                     else
                     {
                         Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo cargar el archivo", "Debe cargar un archivo para continuar", "warning");
@@ -870,10 +829,10 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                         }
                         else
                         {
-                            Archivo_Ingreso_N archivo_Ingreso_N = new Archivo_Ingreso_N();
+                            Archivo_Cuenta_Pagar_N Archivo_Cuenta_Pagar_N = new Archivo_Cuenta_Pagar_N();
                             HttpPostedFile postedFile = FileUpload1.PostedFile;
 
-                            archivo_Ingreso_N.AgregarArchivo(archivo_Ingreso_N.EstructurarArchivo(postedFile, txtNombreArchivo.Text, txtDescripcionArchivo.Text, 0, ID_REGISTRO), 0);
+                            Archivo_Cuenta_Pagar_N.AgregarArchivo(Archivo_Cuenta_Pagar_N.EstructurarArchivo(postedFile, txtNombreArchivo.Text, txtDescripcionArchivo.Text, 0, ID_REGISTRO), 0);
 
                             txtNombreArchivo.Text = "";
                             txtDescripcionArchivo.Text = "";
@@ -895,7 +854,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
         private void EliminarArchivo(int Id_Archivo)
         {
-            Archivo_Ingreso_N archivo_N = new Archivo_Ingreso_N();
+            Archivo_Cuenta_Pagar_N archivo_N = new Archivo_Cuenta_Pagar_N();
             if (EDITAR_REGISTRO == false)
             {
                 ListaArchivoE.RemoveAt(Id_Archivo);
@@ -940,7 +899,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             if (!Page.IsPostBack)
             {
-                ((SiteMaster)Master).EstablecerNombrePantalla("Ingresos");
+                ((SiteMaster)Master).EstablecerNombrePantalla("Cuentas por pagar");
                 LlenerCombos();
                 LimpiarFiltros();
                 LimpiarCampos();
@@ -959,7 +918,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             }
         }
 
-        #region Ingresos
+        #region Cuentas por pagar
 
         // Grid principal
         protected void gvDatos_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
@@ -977,38 +936,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             ActualizarGrid();
         }
 
-        // Grid resumen
-        protected void gvResumen_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
-        {
-            ActualizarGridResumen();
-        }
-
-        protected void gvResumen_PageSizeChanged(object sender, Telerik.Web.UI.GridPageSizeChangedEventArgs e)
-        {
-            ActualizarGridResumen();
-        }
-
-        protected void gvResumen_PageIndexChanged(object sender, Telerik.Web.UI.GridPageChangedEventArgs e)
-        {
-            ActualizarGridResumen();
-        }
-
-        // Grid de montos totales
-        //protected void gvMontosTotales_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
-        //{
-        //    CalcularMontosTotalesMonedas();
-        //}
-
-        //protected void gvMontosTotales_PageSizeChanged(object sender, Telerik.Web.UI.GridPageSizeChangedEventArgs e)
-        //{
-        //    CalcularMontosTotalesMonedas();
-        //}
-
-        //protected void gvMontosTotales_PageIndexChanged(object sender, Telerik.Web.UI.GridPageChangedEventArgs e)
-        //{
-        //    CalcularMontosTotalesMonedas();
-        //}
-
         protected void btnEditar_Click(object sender, EventArgs e)
         {
             LinkButton btn = (LinkButton)sender;
@@ -1025,7 +952,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         {
             Consultar();
         }
-
+       
         protected void btnLimpiarFiltros_Click(object sender, EventArgs e)
         {
             LimpiarFiltros();
@@ -1041,8 +968,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             GuardarRegistro();
         }
 
-
-
         protected void btnAgregarDescripcion_Click(object sender, EventArgs e)
         {
             AgregarDescripcion();
@@ -1055,7 +980,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
         protected void btnGenerarPDF_Detalle_Click(object sender, EventArgs e)
         {
-            GenerarReportePDF("ReporteIngresos_Detalle", "Reporte_Ingresos_Detalle");
+            //GenerarReportePDF("ReporteIngresos_Detalle", "Reporte_Ingresos_Detalle");
         }
 
         protected void btnGenerarExcel_Detalle_Click(object sender, EventArgs e)
@@ -1063,14 +988,19 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             GenerarReporteExcel_Detalle();
         }
 
-        protected void btnGenerarPDF_Resumen_Click(object sender, EventArgs e)
+        protected void gvResumen_PageIndexChanged(object sender, GridPageChangedEventArgs e)
         {
-            GenerarReportePDF("ReporteIngresos_Resumen", "Reporte_Ingresos_Resumen");
+            ActualizarGridResumen();
         }
 
-        protected void btnGenerarExcel_Resumen_Click(object sender, EventArgs e)
+        protected void gvResumen_PageSizeChanged(object sender, GridPageSizeChangedEventArgs e)
         {
-            GenerarReporteExcel_Resumen();
+            ActualizarGridResumen();
+        }
+
+        protected void gvResumen_SortCommand(object sender, GridSortCommandEventArgs e)
+        {
+            ActualizarGridResumen();
         }
         #endregion
 
@@ -1083,8 +1013,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             int Id_Archivo;
             Id_Archivo = System.Convert.ToInt32(btn.CommandArgument.ToString());
             SeleccionarArchivoDescargar(Id_Archivo);
-
-            DescargarArchivo();
         }
 
         protected void btnEliminarArchivo_Click(object sender, EventArgs e)
@@ -1125,11 +1053,18 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                 }
             }
         }
-
-        #endregion
-
         #endregion
 
 
+        #endregion
+        protected void btnGenerarExcel_Resumen_Click(object sender, EventArgs e)
+        {
+            GenerarReporteExcel_Resumen();
+        }
+
+        protected void btnGenerarPDF_Resumen_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -6,11 +6,11 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entidades.Cuentas_Por_Cobrar;
+using Entidades.Cuentas_Por_Pagar;
 
-namespace Datos.Cuenta_Por_Cobrar
+namespace Datos.Cuenta_Por_Pagar
 {
-    public class Cuenta_Cobrar_D
+    public class Cuenta_Pagar_D
     {
         #region Declaraciones
         SqlDataReader leer;
@@ -25,33 +25,33 @@ namespace Datos.Cuenta_Por_Cobrar
             {
                 // Nota: Es necesario el orden en que está desarrollada esta consulta para que funcione correctamente
                 string sentencia = "";
-
+                
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                sentencia = @"SELECT 
-                                                    CPC.Id_Cuenta_Cobrar,
-                                                    FORMAT(CPC.Fecha_CC, 'dd/MM/yyyy') AS Fecha_CC,
+                                    sentencia = @"SELECT 
+                                                    CPP.Id_Cuenta_Pagar,
+                                                    FORMAT(CPP.Fecha_CP, 'dd/MM/yyyy') AS Fecha_CP,
                                                     D.Nombre AS Descripcion,
                                                     M.Nombres + ' ' + M.Apellidos AS Miembro,
                                                     MC.Descripcion_Miscelaneo AS Miscelaneo,
     
                                                     -- Aplica signo según el tipo de documento
                                                     CASE 
-                                                        WHEN CPC.Tipo_Documento IN ('FT', 'ND') THEN CPC.Valor
-                                                        WHEN CPC.Tipo_Documento IN ('NC', 'RI') THEN -CPC.Valor
+                                                        WHEN CPP.Tipo_Documento IN ('FT', 'ND') THEN CPP.Valor
+                                                        WHEN CPP.Tipo_Documento IN ('NC', 'RI') THEN -CPP.Valor
                                                         ELSE 0
                                                     END AS Valor,
     
-                                                    CPC.Tipo_Documento,
+                                                    CPP.Tipo_Documento,
                                                     FP.Descripcion_Forma_Pago,
-                                                    FORMAT(CPC.Fecha_Registro, 'dd/MM/yyyy') AS Fecha_Registro
+                                                    FORMAT(CPP.Fecha_Registro, 'dd/MM/yyyy') AS Fecha_Registro
 
-                                                FROM Cuentas_Por_Cobrar CPC
-                                                LEFT JOIN Descripciones D ON D.Id_Descripcion = CPC.Id_Descripcion
-                                                LEFT JOIN Miembros M ON M.Id_Miembro = CPC.Id_Miembro
-                                                LEFT JOIN Formas_Pago FP ON FP.Id_Forma_Pago = CPC.Id_Forma_Pago
-                                                LEFT JOIN Miscelaneos MC ON MC.Id_Miscelaneo = CPC.Id_Miscelaneo";
-
-
+                                                FROM Cuentas_Por_Pagar CPP
+                                                LEFT JOIN Descripciones D ON D.Id_Descripcion = CPP.Id_Descripcion
+                                                LEFT JOIN Miembros M ON M.Id_Miembro = CPP.Id_Miembro
+                                                LEFT JOIN Formas_Pago FP ON FP.Id_Forma_Pago = CPP.Id_Forma_Pago
+                                                LEFT JOIN Miscelaneos MC ON MC.Id_Miscelaneo = CPP.Id_Miscelaneo";
+                              
+                
                 // Tipo de fecha
                 sentencia += $@" WHERE ({TipoFecha} BETWEEN @FechaInicial AND @FechaFinal) ";
                 cmd.Parameters.AddWithValue("@FechaInicial", FechaInicial);
@@ -67,7 +67,7 @@ namespace Datos.Cuenta_Por_Cobrar
                 //Miscelaneo
                 if (Miscelaneo > 0)
                 {
-                    sentencia += $" AND (CPC.Id_Miscelaneo = @Id_Miscelaneo) ";
+                    sentencia += $" AND (CPP.Id_Miscelaneo = @Id_Miscelaneo) ";
                     cmd.Parameters.AddWithValue("@Id_Miscelaneo", Miscelaneo);
                 }
 
@@ -81,11 +81,11 @@ namespace Datos.Cuenta_Por_Cobrar
                 //Tipo de documento
                 if (Tipo_Documento > 0)
                 {
-                    sentencia += $" AND (CPC.Tipo_Documento = @Tipo_Documento) ";
+                    sentencia += $" AND (CPP.Tipo_Documento = @Tipo_Documento) ";
                     cmd.Parameters.AddWithValue("@Tipo_Documento", Tipo_Documento);
                 }
 
-                sentencia += $@"ORDER BY Id_Cuenta_Cobrar ASC";
+                sentencia += $@"ORDER BY Id_Cuenta_Pagar ASC";
 
                 cmd.CommandText = sentencia;
                 cmd.Connection = conexion;
@@ -117,40 +117,40 @@ namespace Datos.Cuenta_Por_Cobrar
 
                 sentencia = @"
                         SELECT 
-                        FORMAT(CPC.Fecha_CC, 'dd/MM/yyyy') AS Fecha,
-	                    CPC.Id_Cuenta_Cobrar,
-                        CPC.No_Documento,
-	                    CPC.Tipo_Documento,
+                        FORMAT(CPP.Fecha_CP, 'dd/MM/yyyy') AS Fecha,
+	                    CPP.Id_Cuenta_Pagar,
+                        CPP.No_Documento,
+	                    CPP.Tipo_Documento,
                         D.Nombre AS Descripcion_Cuenta,
 
                         -- Debe: valor positivo si aplica, de lo contrario cadena vacía
                         ISNULL(
                             CASE 
-                                WHEN CPC.Tipo_Documento IN ('FT', 'ND') THEN CPC.Valor
+                                WHEN CPP.Tipo_Documento IN ('FT', 'ND') THEN CPP.Valor
                             END, ''
                         ) AS Debito,
 
                         -- Haber: valor negativo si aplica, de lo contrario cadena vacía
                         ISNULL(
                             CASE 
-                                WHEN CPC.Tipo_Documento IN ('NC', 'RI') THEN -CPC.Valor
+                                WHEN CPP.Tipo_Documento IN ('NC', 'RI') THEN -CPP.Valor
                             END, ''
                         ) AS Credito,
 
                         -- Balance acumulado con signo
                         SUM(
                             CASE 
-                                WHEN CPC.Tipo_Documento IN ('FT', 'ND') THEN CPC.Valor
-                                WHEN CPC.Tipo_Documento IN ('NC', 'RI') THEN -CPC.Valor
+                                WHEN CPP.Tipo_Documento IN ('FT', 'ND') THEN CPP.Valor
+                                WHEN CPP.Tipo_Documento IN ('NC', 'RI') THEN -CPP.Valor
                                 ELSE 0
                             END
                         ) OVER (
-                            ORDER BY CPC.Fecha_CC, CPC.Id_Cuenta_Cobrar 
+                            ORDER BY CPP.Fecha_CP, CPP.Id_Cuenta_Pagar 
                             ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
                         ) AS Balance
 
-                    FROM Cuentas_Por_Cobrar CPC
-                    LEFT JOIN Descripciones D ON D.Id_Descripcion = CPC.Id_Descripcion ";
+                    FROM Cuentas_Por_Pagar CPP
+                    LEFT JOIN Descripciones D ON D.Id_Descripcion = CPP.Id_Descripcion ";
 
                 // Tipo de fecha
                 sentencia += $@" WHERE ({TipoFecha} BETWEEN @FechaInicial AND @FechaFinal) ";
@@ -160,14 +160,14 @@ namespace Datos.Cuenta_Por_Cobrar
                 // Miembro
                 if (Miembro > 0)
                 {
-                    sentencia += $" AND (CPC.Id_Miembro = @Miembro) ";
+                    sentencia += $" AND (CPP.Id_Miembro = @Miembro) ";
                     cmd.Parameters.AddWithValue("@Miembro", Miembro);
                 }
 
                 //Miscelaneo
                 if (Miscelaneo > 0)
                 {
-                    sentencia += $" AND (CPC.Id_Miscelaneo = @Id_Miscelaneo) ";
+                    sentencia += $" AND (CPP.Id_Miscelaneo = @Id_Miscelaneo) ";
                     cmd.Parameters.AddWithValue("@Id_Miscelaneo", Miscelaneo);
                 }
 
@@ -181,11 +181,11 @@ namespace Datos.Cuenta_Por_Cobrar
                 //Tipo de documento
                 if (Tipo_Documento > 0)
                 {
-                    sentencia += $" AND (CPC.Tipo_Documento = @Tipo_Documento) ";
+                    sentencia += $" AND (CPP.Tipo_Documento = @Tipo_Documento) ";
                     cmd.Parameters.AddWithValue("@Tipo_Documento", Tipo_Documento);
                 }
 
-                sentencia += $@"ORDER BY CPC.Fecha_CC ASC;";
+                sentencia += $@"ORDER BY CPP.Fecha_CP ASC;";
 
                 cmd.CommandText = sentencia;
                 cmd.Connection = conexion;
@@ -208,34 +208,34 @@ namespace Datos.Cuenta_Por_Cobrar
         }
 
 
-        public Cuenta_Cobrar_E ObtenerRegistro(string Id)
+        public Cuenta_Pagar_E ObtenerRegistro(string Id)
         {
-            Cuenta_Cobrar_E entidad = new Cuenta_Cobrar_E();
+            Cuenta_Pagar_E entidad = new Cuenta_Pagar_E();
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
                 string sentencia = $@"SELECT 
-                                            CPC.Id_Cuenta_Cobrar,
-                                            CPC.Id_Descripcion,
-                                            CPC.Id_Miembro,
-                                            CPC.Id_Miscelaneo,
-                                            CPC.Fecha_CC,
-                                            CPC.Valor,
-                                            CPC.Id_Forma_Pago,
-                                            CPC.Tipo_Documento,
-                                            CPC.No_Documento,
-                                            CPC.Comentario,
+                                            CPP.Id_Cuenta_Pagar,
+                                            CPP.Id_Descripcion,
+                                            CPP.Id_Miembro,
+                                            CPP.Id_Miscelaneo,
+                                            CPP.Fecha_CP,
+                                            CPP.Valor,
+                                            CPP.Id_Forma_Pago,
+                                            CPP.Tipo_Documento,
+                                            CPP.No_Documento,
+                                            CPP.Comentario,
                                             Id_Usuario_Registro,
 	                                        U1.Nombre1 + ' ' + U1.Apellido1 AS Nombre_Usuario_Registro,
-	                                        CPC.Fecha_Registro,
+	                                        CPP.Fecha_Registro,
                                             Id_Usuario_Ultima_Modificacion,
 	                                        U2.Nombre1 + ' ' + U2.Apellido1 AS Nombre_Usuario_Ultima_Modificacion,
-	                                        CPC.Fecha_Ultima_Modificacion
-                                        FROM Cuentas_Por_Cobrar CPC
-                                        LEFT JOIN Usuarios U1 ON U1.Id_Usuario = CPc.Id_Usuario_Registro
-                                        LEFT JOIN Usuarios U2 ON U2.Id_Usuario = CPc.Id_Usuario_Ultima_Modificacion
+	                                        CPP.Fecha_Ultima_Modificacion
+                                        FROM Cuentas_Por_Pagar CPP
+                                        LEFT JOIN Usuarios U1 ON U1.Id_Usuario = CPP.Id_Usuario_Registro
+                                        LEFT JOIN Usuarios U2 ON U2.Id_Usuario = CPP.Id_Usuario_Ultima_Modificacion
 
-                                        WHERE CPC.Id_Cuenta_Cobrar = @Id";
+                                        WHERE CPP.Id_Cuenta_Pagar = @Id";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 cmd.CommandType = CommandType.Text;
@@ -247,11 +247,11 @@ namespace Datos.Cuenta_Por_Cobrar
                         DataTable dt = new DataTable();
                         dt.Load(dr);
                         DataRow row = dt.Rows[0];
-                        entidad.Id_Cuenta_Cobrar = int.Parse(row["Id_Cuenta_Cobrar"].ToString());
+                        entidad.Id_Cuenta_Pagar = int.Parse(row["Id_Cuenta_Pagar"].ToString());
                         entidad.Id_Descripcion = int.Parse(row["Id_Descripcion"].ToString());
                         entidad.Id_Miembro = int.Parse(row["Id_Miembro"].ToString());
                         entidad.Id_Miscelaneo = int.Parse(row["Id_Miscelaneo"].ToString());
-                        entidad.Fecha_CC = DateTime.Parse(row["Fecha_CC"].ToString());
+                        entidad.Fecha_CP = DateTime.Parse(row["Fecha_CP"].ToString());
                         entidad.Valor = float.Parse(row["Valor"].ToString());
                         entidad.Id_Forma_Pago = int.Parse(row["Id_Forma_Pago"].ToString());
                         entidad.Tipo_Documento = row["Tipo_Documento"].ToString();
@@ -284,17 +284,17 @@ namespace Datos.Cuenta_Por_Cobrar
 
         #region Mantenimientos
 
-        public int Agregar(Cuenta_Cobrar_E entidad)
+        public int Agregar(Cuenta_Pagar_E entidad)
         {
             int Id = 0;
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"INSERT INTO Cuentas_Por_Cobrar(
+                string sentencia = $@"INSERT INTO Cuentas_Por_Pagar(
                                         Id_Descripcion,
                                         Id_Miembro,
                                         Id_Miscelaneo,
-                                        Fecha_CC,
+                                        Fecha_CP,
                                         Valor,
                                         Id_Forma_Pago,
                                         Tipo_Documento,
@@ -308,7 +308,7 @@ namespace Datos.Cuenta_Por_Cobrar
                                         @Id_Descripcion,
                                         @Id_Miembro,
                                         @Id_Miscelaneo,
-                                        @Fecha_CC,
+                                        @Fecha_CP,
                                         @Valor,
                                         @Id_Forma_Pago,
                                         @Tipo_Documento,
@@ -324,7 +324,7 @@ namespace Datos.Cuenta_Por_Cobrar
                 cmd.Parameters.AddWithValue("@Id_Descripcion", entidad.Id_Descripcion);
                 cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
                 cmd.Parameters.AddWithValue("@Id_Miscelaneo", entidad.Id_Miscelaneo);
-                cmd.Parameters.AddWithValue("@Fecha_CC", entidad.Fecha_CC);
+                cmd.Parameters.AddWithValue("@Fecha_CP", entidad.Fecha_CP);
                 cmd.Parameters.AddWithValue("@Valor", entidad.Valor);
                 cmd.Parameters.AddWithValue("@Id_Forma_Pago", entidad.Id_Forma_Pago);
                 cmd.Parameters.AddWithValue("@Tipo_Documento", entidad.Tipo_Documento);
@@ -355,17 +355,17 @@ namespace Datos.Cuenta_Por_Cobrar
             }
         }
 
-        public bool Editar(Cuenta_Cobrar_E entidad)
+        public bool Editar(Cuenta_Pagar_E entidad)
         {
             bool Respuesta = false;
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"UPDATE Cuentas_Por_Cobrar SET 
+                string sentencia = $@"UPDATE Cuentas_Por_Pagar SET 
                                         Id_Descripcion = @Id_Descripcion, 
                                         Id_Miembro = @Id_Miembro, 
                                         Id_Miscelaneo = @Id_Miscelaneo, 
-                                        Fecha_CC = @Fecha_CC, 
+                                        Fecha_CP = @Fecha_CP, 
                                         Valor = @Valor, 
                                         Id_Forma_Pago = @Id_Forma_Pago, 
                                         Tipo_Documento = @Tipo_Documento, 
@@ -374,14 +374,14 @@ namespace Datos.Cuenta_Por_Cobrar
                                         Id_Usuario_Ultima_Modificacion = @Id_Usuario_Ultima_Modificacion, 
                                         Fecha_Ultima_Modificacion = @Fecha_Ultima_Modificacion 
 
-                                        WHERE Id_Cuenta_Cobrar = @Id_Cuenta_Cobrar";
+                                        WHERE Id_Cuenta_Pagar = @Id_Cuenta_Pagar";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                cmd.Parameters.AddWithValue("@Id_Cuenta_Cobrar", entidad.Id_Cuenta_Cobrar);
+                cmd.Parameters.AddWithValue("@Id_Cuenta_Pagar", entidad.Id_Cuenta_Pagar);
                 cmd.Parameters.AddWithValue("@Id_Descripcion", entidad.Id_Descripcion);
                 cmd.Parameters.AddWithValue("@Id_Miembro", entidad.Id_Miembro);
                 cmd.Parameters.AddWithValue("@Id_Miscelaneo", entidad.Id_Miscelaneo);
-                cmd.Parameters.AddWithValue("@Fecha_CC", entidad.Fecha_CC);
+                cmd.Parameters.AddWithValue("@Fecha_CP", entidad.Fecha_CP);
                 cmd.Parameters.AddWithValue("@Valor", entidad.Valor);
                 cmd.Parameters.AddWithValue("@Id_Forma_Pago", entidad.Id_Forma_Pago);
                 cmd.Parameters.AddWithValue("@Tipo_Documento", entidad.Tipo_Documento);
@@ -412,7 +412,7 @@ namespace Datos.Cuenta_Por_Cobrar
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = "DELETE FROM Cuentas_Por_Cobrar WHERE Id_Cuenta_Cobrar = @id;";
+                string sentencia = "DELETE FROM Cuentas_Por_Pagar WHERE Id_Cuenta_Pagar = @id;";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.CommandType = CommandType.Text;

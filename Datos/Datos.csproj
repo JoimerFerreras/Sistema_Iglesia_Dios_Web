@@ -46,6 +46,8 @@
     <Compile Include="ConexionBD\Conexion_D.cs" />
     <Compile Include="Cuentas_Por_Cobrar\Archivo_Cuenta_Cobrar_D.cs" />
     <Compile Include="Cuentas_Por_Cobrar\Cuenta_Cobrar_D.cs" />
+    <Compile Include="Cuentas_Por_Pagar\Archivo_Cuenta_Pagar_D.cs" />
+    <Compile Include="Cuentas_Por_Pagar\Cuenta_Pagar_D.cs" />
     <Compile Include="Otros_Parametros\Descripciones_D.cs" />
     <Compile Include="Otros_Parametros\Miscelaneo_D.cs" />
     <Compile Include="Resumen\Resumen_D.cs" />

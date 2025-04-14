@@ -90,18 +90,15 @@ function asignarEnlace() {
     url = window.location.protocol.replace(/\:/g, '') + "://" + window.location.host + '/'
     // Obtener la etiqueta <a> mediante su ID
 
-    document.getElementById('btnMiembros').href = url + 'Miembros/frmMiembros.aspx';
+    document.getElementById('btnResumen').href = url + 'Resumen/frmResumen.aspx';
     document.getElementById('btnIngresos').href = url + 'Ingresos/frmIngresos.aspx';
-    document.getElementById('btnDescripcionIngresos').href = url + 'Ingresos/frmDescripcion_Ingresos.aspx';
-    document.getElementById('btnCuentasPagar').href = url + 'Egresos/frmCuentasPagar.aspx';
-    document.getElementById('btnDescripcionEgresos').href = url + 'Egresos/frmDescripcion_Egresos.aspx';
+    document.getElementById('btnCuentasCobrar').href = url + 'Cuentas_Por_Cobrar/frmCuentasCobrar.aspx';
+    document.getElementById('btnCuentasPagar').href = url + 'Cuentas_Por_Pagar/frmCuentasPagar.aspx';
+    document.getElementById('btnMiembros').href = url + 'Miembros/frmMiembros.aspx';
     document.getElementById('btnDescripciones').href = url + 'Otros_Parametros/frmDescripciones.aspx';
     document.getElementById('btnFormas_Pago').href = url + 'Otros_Parametros/frmFormas_Pago.aspx';
     document.getElementById('btnMiscelaneos').href = url + 'Otros_Parametros/frmMiscelaneos.aspx';
-    document.getElementById('btnResumen').href = url + 'Resumen/frmResumen.aspx';
-    document.getElementById('btnCuentasCobrar').href = url + 'Cuentas_Por_Cobrar/frmCuentasCobrar.aspx';
 }
-
 
 
 // Tooltip

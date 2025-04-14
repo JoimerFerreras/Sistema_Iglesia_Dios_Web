@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cuentas_Por_Cobrar\Archivo_Cuenta_Cobrar_E.cs" />
+    <Compile Include="Cuentas_Por_Pagar\Archivo_Cuenta_Pagar_E.cs" />
+    <Compile Include="Cuentas_Por_Pagar\Cuenta_Pagar_E.cs" />
     <Compile Include="Egresos\Archivo_Egreso_E.cs" />
     <Compile Include="Cuentas_Por_Cobrar\Cuenta_Cobrar_E.cs" />
     <Compile Include="Egresos\Cuenta_Pagar_E.cs" />

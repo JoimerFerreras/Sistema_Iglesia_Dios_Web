@@ -174,7 +174,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Cuentas_Por_Cobrar\frmCuentasCobrar.aspx" />
-    <Content Include="Egresos\frmCuentasPagar.aspx" />
+    <Content Include="Cuentas_Por_Pagar\frmCuentasPagar.aspx" />
     <Content Include="frmLogin.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Ingresos\frmIngresos.aspx" />
@@ -269,11 +269,11 @@
     <Compile Include="Cuentas_Por_Cobrar\frmCuentasCobrar.aspx.designer.cs">
       <DependentUpon>frmCuentasCobrar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Egresos\frmCuentasPagar.aspx.cs">
+    <Compile Include="Cuentas_Por_Pagar\frmCuentasPagar.aspx.cs">
       <DependentUpon>frmCuentasPagar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Egresos\frmCuentasPagar.aspx.designer.cs">
+    <Compile Include="Cuentas_Por_Pagar\frmCuentasPagar.aspx.designer.cs">
       <DependentUpon>frmCuentasPagar.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmLogin.aspx.cs">
@@ -380,6 +380,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Egresos\" />
     <Folder Include="Recursos\Recursos_Utiles\" />
     <Folder Include="Recursos\Scripts SQL\" />
     <Folder Include="Usuarios\" />

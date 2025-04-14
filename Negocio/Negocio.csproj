@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="Cuentas_Por_Cobrar\Archivo_Cuenta_Cobrar_N.cs" />
     <Compile Include="Cuentas_Por_Cobrar\Cuenta_Cobrar_N.cs" />
+    <Compile Include="Cuentas_Por_Pagar\Archivo_Cuenta_Pagar_N.cs" />
+    <Compile Include="Cuentas_Por_Pagar\Cuenta_Pagar_N.cs" />
     <Compile Include="Egresos\Abono_Cuenta_Pagar_N.cs" />
     <Compile Include="Egresos\Archivo_Egreso_N.cs" />
     <Compile Include="Egresos\Descripcion_Egreso_N.cs" />
