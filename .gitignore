@@ -1,0 +1,16 @@
+# Archivos de Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build results
+bin/
+obj/
+*.dll
+*.pdb
+
+# Archivos temporales
+*.tmp
+*.bak
+*.log
+*.xlsx
