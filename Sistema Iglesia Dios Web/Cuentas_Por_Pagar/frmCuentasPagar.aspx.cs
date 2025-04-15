@@ -658,7 +658,7 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
                 Descripciones_E entidad = new Descripciones_E();
                 Descripciones_N Descripciones_N = new Descripciones_N();
                 entidad.Nombre = txtDescripcionAgregar.Text;
-                entidad.Tipo_Descripcion = 3;
+                entidad.Tipo_Descripcion = 4;
                 entidad.Estado = true;
                 Descripciones_N.Agregar(entidad);
                 txtDescripcionAgregar.Text = "";

@@ -14,6 +14,12 @@ namespace Negocio.Otros_Parametros
     {
         Descripciones_D Descripciones_D = new Descripciones_D();
 
+        // ID de descripciones:
+        // 1 = Ingresos
+        // 2 = Egresos
+        // 3 = Cuentas por cobrar 
+        // 4 = Cuentas por pagar
+
         public DataTable Listar(string Tipo_Descripcion)
         {
             try
@@ -30,11 +36,6 @@ namespace Negocio.Otros_Parametros
         {
             try
             {
-                // 1 = Ingresos
-                // 2 = Egresos
-                // 3 = Cuentas por cobrar 
-                // 4 = Cuentas por pagar
-
                 return Descripciones_D.ListaCombo(Tipo_Descripcion);
             }
             catch (Exception ex)
