@@ -1064,9 +1064,7 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
         protected void btnGenerarPDF_Resumen_Click(object sender, EventArgs e)
         {
-            string abc = "2";
-
-            string b = abc;
+         
         }
     }
 }
