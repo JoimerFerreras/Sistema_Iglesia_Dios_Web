@@ -258,7 +258,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             DataTable dt = new DataTable();
             // Descripcion de egreso
             Descripciones_N Descripciones_N = new Descripciones_N();
-            dt = Descripciones_N.ListaCombo(1);
+            dt = Descripciones_N.ListaCombo(2);
 
             // Crear un nuevo DataRow para el ítem "Seleccionar..."
             DataRow dr = dt.NewRow();

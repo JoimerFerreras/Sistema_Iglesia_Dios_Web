@@ -263,7 +263,7 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
             Descripciones_N Descripciones_N = new Descripciones_N();
 
             // Tipo de descripripcion "3" = Cuentas por pagar
-            dt = Descripciones_N.ListaCombo(3);
+            dt = Descripciones_N.ListaCombo(4);
 
             // Crear un nuevo DataRow para el ítem "Seleccionar..."
             DataRow dr = dt.NewRow();
