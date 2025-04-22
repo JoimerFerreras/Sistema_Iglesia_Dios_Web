@@ -4,14 +4,8 @@ using Negocio.Resumen;
 using Negocio.Util_N;
 using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Sistema_Iglesia_Dios_Web.Resumen
 {

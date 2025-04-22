@@ -9,14 +9,10 @@ using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
-using System.Net;
 using Telerik.Web.UI;
 using CrystalDecisions.CrystalReports.Engine;
 using System.Data.OleDb;
@@ -378,7 +374,6 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             {
                 if (ValidarCampos() == true)
                 {
-                    // Agregacion de la informacion basica del miembro
                     Egreso_E egreso_E = new Egreso_E();
                     egreso_E.Id_Egreso = int.Parse(ID_REGISTRO);
                     egreso_E.Id_Miembro = int.Parse(cmbMiembro.SelectedValue);
@@ -457,7 +452,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             txtMonto.Text = Utilidad_N.FormatearNumero(Egreso_E.Monto.ToString(), 2, 2);
             dtpFechaEgreso.SelectedDate = Egreso_E.Fecha_Egreso;
             txtUsuarioRegistro.Text = Egreso_E.Nombre_Usuario_Registro;
-            txtFechaRegistro.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", Egreso_E.Fecha_Registro);
+            txtFechaRegistro.Text = string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", Egreso_E.Fecha_Registro);
             txtUsuarioUltimaModificacion.Text = Egreso_E.Nombre_Usuario_Ultima_Modificacion;
             cmbFormaPago.SelectedValue = Egreso_E.Id_Forma_Pago.ToString();
             txtComentario.Text = Egreso_E.Comentario;
@@ -465,7 +460,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
 
             if (Egreso_E.Fecha_Ultima_Modificacion != null)
             {
-                txtFechaUltimaModificacion.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", Egreso_E.Fecha_Ultima_Modificacion);
+                txtFechaUltimaModificacion.Text = string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", Egreso_E.Fecha_Ultima_Modificacion);
             }
 
             // Listar archivos del egreso

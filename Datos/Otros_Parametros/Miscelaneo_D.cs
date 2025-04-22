@@ -1,11 +1,7 @@
 ﻿using Datos.ConexionBD;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Entidades.Otros_Parametros;
 
 namespace Datos.Otros_Parametros

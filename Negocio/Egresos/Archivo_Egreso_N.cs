@@ -1,14 +1,9 @@
 ﻿using Datos.Egresos;
-using Datos.Util_D;
 using Entidades.Egresos;
 using Negocio.Util_N;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace Negocio.Egresos

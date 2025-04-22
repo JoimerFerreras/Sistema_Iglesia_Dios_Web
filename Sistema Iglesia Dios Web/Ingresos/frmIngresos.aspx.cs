@@ -9,14 +9,10 @@ using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
-using System.Net;
 using Telerik.Web.UI;
 using CrystalDecisions.CrystalReports.Engine;
 using System.Data.OleDb;
@@ -378,7 +374,6 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             {
                 if (ValidarCampos() == true)
                 {
-                    // Agregacion de la informacion basica del miembro
                     Ingreso_E ingreso_E = new Ingreso_E();
                     ingreso_E.Id_Ingreso = int.Parse(ID_REGISTRO);
                     ingreso_E.Id_Miembro = int.Parse(cmbMiembro.SelectedValue);
@@ -457,7 +452,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             txtMonto.Text = Utilidad_N.FormatearNumero(Ingreso_E.Monto.ToString(), 2, 2);
             dtpFechaIngreso.SelectedDate = Ingreso_E.Fecha_Ingreso;
             txtUsuarioRegistro.Text = Ingreso_E.Nombre_Usuario_Registro;
-            txtFechaRegistro.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", Ingreso_E.Fecha_Registro);
+            txtFechaRegistro.Text = string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", Ingreso_E.Fecha_Registro);
             txtUsuarioUltimaModificacion.Text = Ingreso_E.Nombre_Usuario_Ultima_Modificacion;
             cmbFormaPago.SelectedValue = Ingreso_E.Id_Forma_Pago.ToString();
             txtComentario.Text = Ingreso_E.Comentario;
@@ -465,7 +460,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             if (Ingreso_E.Fecha_Ultima_Modificacion != null)
             {
-                txtFechaUltimaModificacion.Text = string.Format("{0:dd/MM/yyyy HH:mm:ss tt}", Ingreso_E.Fecha_Ultima_Modificacion);
+                txtFechaUltimaModificacion.Text = string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", Ingreso_E.Fecha_Ultima_Modificacion);
             }
 
             // Listar archivos del ingreso

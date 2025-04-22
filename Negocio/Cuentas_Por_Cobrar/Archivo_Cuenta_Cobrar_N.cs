@@ -1,14 +1,9 @@
 ﻿using Datos.Cuenta_Por_Cobrar;
-using Datos.Util_D;
 using Entidades.Cuentas_Por_Cobrar;
 using Negocio.Util_N;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace Negocio.Cuentas_Por_Cobrar

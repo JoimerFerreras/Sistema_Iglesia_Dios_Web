@@ -1,11 +1,7 @@
 ﻿using Datos.ConexionBD;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Entidades.Otros_Parametros;
 
 namespace Datos.Otros_Parametros
@@ -23,7 +19,7 @@ namespace Datos.Otros_Parametros
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Moneda, 
+                string sentencia = $@"SELECT Id_Rol, 
                                         Nombre_Moneda, 
                                         CASE Estado 
                                             WHEN '0' THEN 'Inactivo' 

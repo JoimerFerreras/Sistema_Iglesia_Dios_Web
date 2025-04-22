@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using Datos.Miembros;
 using Entidades.Miembros;
-using Datos.Ministerios;
-using Entidades.Ministerios;
-using Negocio.Ministerios;
 
 namespace Negocio.Miembros
 {

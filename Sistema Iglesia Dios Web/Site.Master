@@ -12,9 +12,9 @@
 <head runat="server">
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Iglesia de Dios La 33</title>
+    <title>Iglesia de Dios La 33 Casa de Fe</title>
     <link rel="shortcut icon" href="/Recursos/Imagenes/logo_iglesia_de_dios_color_ico.ico" />
 
     <asp:PlaceHolder runat="server">
@@ -75,8 +75,8 @@
             <!--header_1 menu_1 start-->
             <div class="header_1">
                 <div class="header_1-menu_1">
-                    <div class="title_1">Iglesia de Dios <span style="color:#108df7">La 33</span></div>
-                    <div class="sidebar_1-btn_1" id="BotonMenu" >
+                    <div class="title_1">Iglesia de Dios <span style="color: #108df7">La 33</span></div>
+                    <div class="sidebar_1-btn_1" id="BotonMenu">
                         <i class="fas fa-bars"></i>
                     </div>
                     <ul>
@@ -85,7 +85,7 @@
                             <div id="divContenedorInfoUsuario" style="display: inline-block; margin: 0 15px; line-height: 16px; margin-top: 15px;">
                                 <i class="fa-solid fa-circle-user" style="font-size: 40px; color: #2F323A;"></i>
                                 <div style="display: inline-block;">
-                                    <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label><asp:Label runat="server" ID="lblTipoUsuario" Style="display: block; font-size: 12px;">Tipo de usuario (Offline)</asp:Label>
+                                    <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label><asp:Label runat="server" ID="lblTipoUsuario" Style="display: block; font-size: 12px;">Rol de usuario (Offline)</asp:Label>
                                 </div>
                             </div>
                             <a href="#" id="btnCerrarSesion" style="display: inline-block;" onclick="return CerrarSesionAlert(this);"><i class="fa-solid fa-right-from-bracket" style="margin-bottom: 10px;"></i></a></li>
@@ -122,7 +122,13 @@
 
                     <li class="item_1" title="Cuentas por pagar">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnCuentasPagar" data-tippy-content="Cuentas por pagar" title="">
-                            <i class="fa-solid fa-file-invoice-dollar"></i></i><span>Cuentas por pagar</span>
+                            <i class="fa-solid fa-file-invoice-dollar"></i><span>Cuentas por pagar</span>
+                        </a>
+                    </li>
+
+                    <li class="item_1" title="Inventario de activos fijos">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnInventarioActivosFijos" data-tippy-content="Inventario de activos fijos" title="">
+                            <i class="fa-solid fa-box-archive"></i><span>Inventario de activos fijos</span>
                         </a>
                     </li>
 
@@ -135,29 +141,61 @@
                         </div>
                     </li>
 
-                     <li class="item_1" id="otros_parametros" title="Otros parámetros">
+                    <li class="item_1" id="otros_parametros" title="Otros parámetros">
                         <a style="text-decoration: none;" href="#otros_parametros" class="menu_1-btn_1" data-tippy-content="Otros parámetros" title="">
                             <i class="fa-solid fa-sliders"></i><span>Otros Parametros<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
 
-                         <div class="sub-menu_1">
+                        <div class="sub-menu_1">
                             <a href="#" id="btnDescripciones" data-tippy-content="Descripciones" title=""><i class="fa-solid fa-file-signature"></i><span>Descripciones</span></a>
                         </div>
 
-                          <div class="sub-menu_1">
+                        <div class="sub-menu_1">
                             <a href="#" id="btnMiscelaneos" data-tippy-content="Misceláneos" title=""><i class="fa-solid fa-shuffle"></i><span>Misceláneos</span></a>
                         </div>
 
                         <div class="sub-menu_1">
                             <a href="#" id="btnFormas_Pago" data-tippy-content="Formas de pago" title=""><i class="fa-solid fa-money-bill"></i><span>Formas de pago</span></a>
                         </div>
-                        
+
                     </li>
 
-                    <li class="item_1" title="Ayuda">
-                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnAyuda" data-tippy-content="Ayuda" title="">
-                            <i class="fa-solid fa-circle-question"></i><span>Ayuda</span>
+                    <li class="item_1" id="configuracion" title="Configuración">
+                        <a style="text-decoration: none;" href="#configuracion" class="menu_1-btn_1" data-tippy-content="Configuración" title="">
+                            <i class="fa-solid fa-gear"></i><span>Configuración<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
+
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnCambiarPassword" data-tippy-content="Cambiar contraseña" title=""><i class="fa-solid fa-key"></i><span>Cambiar contraseña</span></a>
+                        </div>
+
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnUsusarios" data-tippy-content="Usuarios y permisos" title=""><i class="fa-solid fa-users"></i><span>Usuarios y permisos</span></a>
+                        </div>
+
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnRoles" data-tippy-content="Roles de usuarios" title=""><i class="fa-solid fa-user-gear"></i><span>Roles de usuario</span></a>
+                        </div>
+
+                    </li>
+
+                    <li class="item_1" id="acerca_de" title="Acerca de">
+                        <a style="text-decoration: none;" href="#acerca_de" class="menu_1-btn_1" data-tippy-content="Acerca de" title="">
+                            <i class="fa-solid fa-circle-info"></i><span>Acerca de<i class="fas fa-chevron-down drop-down_1"></i></span>
+                        </a>
+
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnInformacionSistema" data-tippy-content="Información del sistema" title=""><i class="fa-solid fa-info"></i><span>Información del sistema</span></a>
+                        </div>
+
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnNovedades" data-tippy-content="Novedades" title=""><i class="fa-solid fa-newspaper"></i><span>Novedades</span></a>
+                        </div>
+
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnAyuda" data-tippy-content="Ayuda" title=""><i class="fa-solid fa-question"></i><span>Ayuda</span></a>
+                        </div>
+
                     </li>
                 </div>
             </div>

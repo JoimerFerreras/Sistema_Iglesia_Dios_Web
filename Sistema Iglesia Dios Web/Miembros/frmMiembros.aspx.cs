@@ -7,8 +7,6 @@ using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Negocio.Ministerios;
