@@ -32,7 +32,7 @@ namespace Datos.Egresos
                                         CAST(ROUND(Tamano, 4) AS DECIMAL(18, 4)) AS Tamano,
                                         Fecha_Registro
 
-                                        FROM Archivos_Egresos
+                                        FROM Archivos_Egresos 
                                         WHERE Id_Egreso = @Id_Egreso ORDER BY Id_Archivo";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
@@ -68,7 +68,7 @@ namespace Datos.Egresos
                                         Extencion,
                                         Archivo
 
-                                        FROM Archivos_Egresos
+                                        FROM Archivos_Egresos 
                                         WHERE Id_Archivo = @Id_Archivo";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);

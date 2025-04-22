@@ -92,6 +92,7 @@ function asignarEnlace() {
 
     document.getElementById('btnResumen').href = url + 'Resumen/frmResumen.aspx';
     document.getElementById('btnIngresos').href = url + 'Ingresos/frmIngresos.aspx';
+    document.getElementById('btnEgresos').href = url + 'Egresos/frmEgresos.aspx';
     document.getElementById('btnCuentasCobrar').href = url + 'Cuentas_Por_Cobrar/frmCuentasCobrar.aspx';
     document.getElementById('btnCuentasPagar').href = url + 'Cuentas_Por_Pagar/frmCuentasPagar.aspx';
     document.getElementById('btnMiembros').href = url + 'Miembros/frmMiembros.aspx';

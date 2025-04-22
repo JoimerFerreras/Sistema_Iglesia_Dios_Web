@@ -175,6 +175,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Cuentas_Por_Cobrar\frmCuentasCobrar.aspx" />
     <Content Include="Cuentas_Por_Pagar\frmCuentasPagar.aspx" />
+    <Content Include="Egresos\frmEgresos.aspx" />
     <Content Include="frmLogin.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Ingresos\frmIngresos.aspx" />
@@ -275,6 +276,13 @@
     </Compile>
     <Compile Include="Cuentas_Por_Pagar\frmCuentasPagar.aspx.designer.cs">
       <DependentUpon>frmCuentasPagar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Egresos\frmEgresos.aspx.cs">
+      <DependentUpon>frmEgresos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Egresos\frmEgresos.aspx.designer.cs">
+      <DependentUpon>frmEgresos.aspx</DependentUpon>
     </Compile>
     <Compile Include="frmLogin.aspx.cs">
       <DependentUpon>frmLogin.aspx</DependentUpon>
@@ -380,7 +388,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Egresos\" />
     <Folder Include="Recursos\Recursos_Utiles\" />
     <Folder Include="Recursos\Scripts SQL\" />
     <Folder Include="Usuarios\" />

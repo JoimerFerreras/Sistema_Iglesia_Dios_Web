@@ -108,6 +108,12 @@
                         </a>
                     </li>
 
+                    <li class="item_1" title="Egresos">
+                        <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnEgresos" data-tippy-content="Egresos" title="">
+                            <i class="fa-solid fa-cash-register"></i><span>Egresos</span>
+                        </a>
+                    </li>
+
                     <li class="item_1" title="Cuentas por cobrar">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnCuentasCobrar" data-tippy-content="Cuentas por cobrar" title="">
                             <i class="fa-solid fa-scale-unbalanced-flip"></i><span>Cuentas por cobrar</span>
@@ -122,20 +128,10 @@
 
                     <li class="item_1" id="miembros" title="Miembros">
                         <a style="text-decoration: none;" href="#miembros" class="menu_1-btn_1" data-tippy-content="Miembros" title="">
-                            <i class="fa-solid fa-users"></i><span>Miembros<i class="fas fa-chevron-down drop-down_1"></i></span>
+                            <i class="fa-solid fa-church"></i><span>Miembros<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
                         <div class="sub-menu_1">
-                            <a href="#" id="btnMiembros" data-tippy-content="Miembros" title=""><i class="fa-solid fa-id-card"></i><span>Miembros</span></a>
-                        </div>
-                    </li>
-
-
-                    <li class="item_1" id="consultas" title="Consultas">
-                        <a style="text-decoration: none;" href="#consultas" class="menu_1-btn_1" data-tippy-content="Consultas" title="">
-                            <i class="fa-solid fa-table"></i><span>Consultas<i class="fas fa-chevron-down drop-down_1"></i></span>
-                        </a>
-                        <div class="sub-menu_1">
-                            <a href="#" id="btnConsulta_Miembros" data-tippy-content="Miembros" title=""><i class="fa-solid fa-user-group"></i><span>Miembros</span></a>
+                            <a href="#" id="btnMiembros" data-tippy-content="Miembros" title=""><i class="fa-solid fa-church"></i><span>Miembros</span></a>
                         </div>
                     </li>
 
@@ -160,7 +156,7 @@
 
                     <li class="item_1" title="Ayuda">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnAyuda" data-tippy-content="Ayuda" title="">
-                            <i class="fa-solid fa-question"></i><span>Ayuda</span>
+                            <i class="fa-solid fa-circle-question"></i><span>Ayuda</span>
                         </a>
                     </li>
                 </div>
