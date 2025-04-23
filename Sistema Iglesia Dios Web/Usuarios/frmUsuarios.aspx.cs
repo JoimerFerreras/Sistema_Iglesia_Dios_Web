@@ -123,9 +123,12 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Para habilitar la verificación en dos pasos es necesario proporcionar un correo electrónico válido");
             }
-            else if (Utilidad_N.ValidarEmail(txtCorreo.Text) == false)
+            else if (chkVerificacionDosPasos.Checked == true && txtCorreo.Text.Length > 0)
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El correo electrónico no es válido");
+                if (Utilidad_N.ValidarEmail(txtCorreo.Text) == false)
+                {
+                    Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El correo electrónico no es válido");
+                }
             }
             else if (txtPassword.Text.Length == 0)
             {

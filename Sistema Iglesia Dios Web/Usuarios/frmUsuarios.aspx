@@ -142,44 +142,44 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Primer nombre <span class="LabelCampoObligatorio">*</span>
-                                    <asp:TextBox runat="server" ID="txtNombre1" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="2"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtNombre1" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="2" style="max-width: 400px"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Segundo nombre
-                                    <asp:TextBox runat="server" ID="txtNombre2" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="3"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtNombre2" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="3" style="max-width: 400px"></asp:TextBox>
                                 </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Primer apellido <span class="LabelCampoObligatorio">*</span>
-                                    <asp:TextBox runat="server" ID="txtApellido1" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="4"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtApellido1" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="4" style="max-width: 400px"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Segundo apellido
-                                    <asp:TextBox runat="server" ID="txtApellido2" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="5"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtApellido2" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="5" style="max-width: 400px"></asp:TextBox>
                                 </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Celular
-                                    <telerik:RadMaskedTextBox runat="server" ID="txtCelular" CssClass="form-control form-control" Width="100%" TabIndex="6" Mask="(000) 000-0000" AutoCompleteType="Cellular" ClientIDMode="Static" Skin="Bootstrap"></telerik:RadMaskedTextBox>
+                                    <telerik:RadMaskedTextBox runat="server" ID="txtCelular" CssClass="form-control form-control" Width="100%" TabIndex="6" Mask="(###) ###-####" AutoCompleteType="Cellular" ClientIDMode="Static" Skin="Bootstrap" Font-Size="12" style="max-width: 200px"></telerik:RadMaskedTextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Tel&eacute;fono
-                                    <telerik:RadMaskedTextBox runat="server" ID="txtTelefono" CssClass="form-control form-control" Width="100%" TabIndex="7" Mask="(000) 000-0000" AutoCompleteType="HomePhone" ClientIDMode="Static" Skin="Bootstrap"></telerik:RadMaskedTextBox>
+                                    <telerik:RadMaskedTextBox runat="server" ID="txtTelefono" CssClass="form-control form-control" Width="100%" TabIndex="7" Mask="(###) ###-####" AutoCompleteType="HomePhone" ClientIDMode="Static" Skin="Bootstrap" Font-Size="12" style="max-width: 200px"></telerik:RadMaskedTextBox>
                                 </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
-                                    Sexo <span class="LabelCampoObligatorio">*</span>
-                                    <telerik:RadComboBox ID="cmbSexo" runat="server" Width="100%" ClientIDMode="Static"
-                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                    Sexo <span class="LabelCampoObligatorio">*</span><br />
+                                    <telerik:RadComboBox ID="cmbSexo" runat="server" Width="100%" ClientIDMode="Static" 
+                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="8" style="max-width: 200px"
                                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                                         Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
                                         <Items>
@@ -201,7 +201,7 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Nombre de usuario <span class="LabelCampoObligatorio">*</span>
-                                    <asp:TextBox runat="server" ID="txtUsuario" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="1"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtUsuario" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="9" style="max-width: 400px"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
@@ -210,7 +210,7 @@
                                          dígitos y al menos un carácter especial como @, $, !, %, *, #, ?. Esta combinación de elementos garantiza una mayor robustez en la seguridad de la contraseña, 
                                          reduciendo el riesgo de ser adivinada fácilmente por potenciales atacantes."></i>
                                     <div class="contenedor-btn-pass">
-                                        <asp:TextBox runat="server" ID="txtPassword" CssClass="form-control form-control" Width="100%" TextMode="Password" MaxLength="30" TabIndex="3" Style="padding-right: 35px;" oncopy="return false;"></asp:TextBox>
+                                        <asp:TextBox runat="server" ID="txtPassword" CssClass="form-control form-control" Width="100%" TextMode="Password" MaxLength="30" TabIndex="10" Style="padding-right: 35px; max-width: 400px;" oncopy="return false;"></asp:TextBox>
 
                                         <asp:LinkButton CssClass="fa-solid fa-eye btnMostrarPassword" runat="server" ID="btnMostrarPassword" OnClick="btnMostrarPassword_Click"></asp:LinkButton>
                                     </div>
@@ -222,13 +222,13 @@
                                     Correo electr&oacute;nico <i class="fa-solid fa-circle-info  btnInfoControl"
                                         data-tippy-content="Un e-mail válido debe contener caracteres alfanuméricos (letras y números) y algunos caracteres especiales, 
                                     como puntos, guiones y guiones bajos. Por ejemplo: usuario123@gmail.com"></i>
-                                    <asp:TextBox runat="server" ID="txtCorreo" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="3"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtCorreo" CssClass="form-control form-control" MaxLength="80" Width="100%" TabIndex="11"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Rol de usuario <span class="LabelCampoObligatorio">*</span>
                                     <telerik:RadComboBox ID="cmbRol" runat="server" Width="100%" ClientIDMode="Static"
-                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="4"
+                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="12"
                                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                                         Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
                                         <Items>
@@ -239,16 +239,16 @@
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
-                                <div class="col-12 col-md-4">
-                                    <asp:CheckBox runat="server" ID="chkBloqueo" Text="&nbsp; Bloquear usuario" />
+                                <div class="col-12 col-md-3">
+                                    <asp:CheckBox runat="server" ID="chkBloqueo" Text="&nbsp; Bloquear usuario" TabIndex="13"/>
                                 </div>
 
-                                <div class="col-12 col-md-4">
-                                    <asp:CheckBox runat="server" ID="chkVerificacionDosPasos" Text="&nbsp; Verificación en dos pasos" />
+                                <div class="col-12 col-md-3">
+                                    <asp:CheckBox runat="server" ID="chkVerificacionDosPasos" Text="&nbsp; Verificación en dos pasos" TabIndex="14"/>
                                 </div>
 
-                                <div class="col-12 col-md-4">
-                                    <asp:CheckBox runat="server" ID="chkRestablecerPassword" Text="&nbsp; Restablecer contraseña" />
+                                <div class="col-12 col-md-3">
+                                    <asp:CheckBox runat="server" ID="chkRestablecerPassword" Text="&nbsp; Restablecer contraseña" TabIndex="15"/>
                                 </div>
                             </div>
                         </div>
@@ -263,12 +263,12 @@
 
                                 <div class="col-12 col-md-6">
                                     Fecha de registro
-                                    <asp:TextBox runat="server" ID="txtFechaRegistro" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtFechaRegistro" CssClass="form-control" Width="100%" TabIndex="16" ReadOnly="true"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Fecha de ultima modificaci&oacute;n
-                                    <asp:TextBox runat="server" ID="txtFechaUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtFechaUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="17" ReadOnly="true"></asp:TextBox>
                                 </div>
                             </div>
                         </div>

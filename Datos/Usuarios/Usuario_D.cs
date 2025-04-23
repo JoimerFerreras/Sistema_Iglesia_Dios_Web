@@ -8,19 +8,18 @@ namespace Datos.Usuarios
 {
     public class Usuario_D
     {
-        public Usuario_E Login(string Username, byte[] Password)
+        public Usuario_E Login(string Username)
         {
             Usuario_E entidad = new Usuario_E();
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = "SELECT Id_Usuario, Nombre1, Apellido1, Usuario, Correo, Id_Rol, Bloqueo, Verificacion_Dos_Pasos, RestablecerPassword FROM Usuarios WHERE Usuario = @usuario ";
+                string sentencia = "SELECT Id_Usuario, Nombre1, Apellido1, Usuario, Password, Correo, Id_Rol, Bloqueo, Verificacion_Dos_Pasos, RestablecerPassword FROM Usuarios WHERE Usuario = @usuario ";
 
                 // AND Password = @password
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@usuario", Username);
-                cmd.Parameters.AddWithValue("@password", Password);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -30,9 +29,10 @@ namespace Datos.Usuarios
                         if (dr.Read()) // Si el DataReader tiene filas
                         {
                             entidad.Id_Usuario = Convert.ToInt32(dr["Id_Usuario"].ToString());
-                            entidad.Nombre1 = Username = dr["Nombre1"].ToString();
-                            entidad.Apellido1 = Username = dr["Apellido1"].ToString();
-                            entidad.Usuario = Username = dr["Usuario"].ToString();
+                            entidad.Nombre1 = dr["Nombre1"].ToString();
+                            entidad.Apellido1 = dr["Apellido1"].ToString();
+                            entidad.Usuario = dr["Usuario"].ToString();
+                            entidad.Password = (byte[])dr["Password"];
                             entidad.Correo = dr["Correo"].ToString();
                             entidad.Id_Rol = Convert.ToInt32(dr["Id_Rol"].ToString());
                             entidad.Bloqueo = bool.Parse(dr["Bloqueo"].ToString());
@@ -70,16 +70,16 @@ namespace Datos.Usuarios
                           WHEN '0' THEN 'Sin bloqueo' 
                       END AS Bloqueo,
                       CASE U.Verificacion_Dos_Pasos 
-                          WHEN '1' THEN 'Desactivado' 
-                          WHEN '0' THEN 'Activado' 
+                          WHEN '0' THEN 'Desactivado' 
+                          WHEN '1' THEN 'Activado' 
                       END AS Verificacion_Dos_Pasos,
                       CASE U.RestablecerPassword 
-                          WHEN '1' THEN 'Desactivado' 
-                          WHEN '0' THEN 'Activado' 
+                          WHEN '0' THEN 'Desactivado' 
+                          WHEN '1' THEN 'Activado' 
                       END AS RestablecerPassword
 
                     FROM Usuarios U
-                    LEFT JOIN Roles R ON R.Id_Rol = U.Id_Rol ";
+                    LEFT JOIN Roles R ON R.Id_Rol = U.Id_Rol";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
 
@@ -157,7 +157,6 @@ namespace Datos.Usuarios
                         entidad.Apellido1 = row["Apellido1"].ToString();
                         entidad.Apellido2 = row["Apellido2"].ToString();
                         entidad.Sexo = int.Parse(row["Sexo"].ToString());
-                        entidad.Bloqueo = bool.Parse(row["Bloqueo"].ToString());
                         entidad.Id_Rol = int.Parse(row["Id_Rol"].ToString());
                         entidad.Fecha_Creacion = DateTime.Parse(row["Fecha_Creacion"].ToString());
                         if (row["Fecha_Ultima_Modificacion"] != DBNull.Value)
@@ -174,8 +173,33 @@ namespace Datos.Usuarios
                         {
                             entidad.Password = (byte[])row["Password"];
                         }
-                        entidad.Verificacion_Dos_Pasos = bool.Parse(row["Verificacion_Dos_Pasos"].ToString());
-                        entidad.RestablecerPassword = bool.Parse(row["RestablecerPassword"].ToString());
+
+                        if (row["Bloqueo"].ToString() == "True")
+                        {
+                            entidad.Bloqueo = true;
+                        }
+                        else
+                        {
+                            entidad.Bloqueo = false;
+                        }
+
+                        if (row["Verificacion_Dos_Pasos"].ToString() == "True")
+                        {
+                            entidad.Verificacion_Dos_Pasos = true;
+                        }
+                        else
+                        {
+                            entidad.Verificacion_Dos_Pasos = false;
+                        }
+
+                        if (row["RestablecerPassword"].ToString() == "True")
+                        {
+                            entidad.RestablecerPassword = true;
+                        }
+                        else
+                        {
+                            entidad.RestablecerPassword = false;
+                        }
                     }
                     conexion.Close();
                     return entidad;

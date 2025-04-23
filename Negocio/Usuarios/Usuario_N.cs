@@ -10,11 +10,11 @@ namespace Negocio.Usuarios
     {
         Usuario_D Usuario_D = new Usuario_D();
 
-        public Usuario_E Login(string Usuario, string Password)
+        public Usuario_E Login(string Usuario)
         {
             try
             {
-                return Usuario_D.Login(Usuario, Utilidad_N.Encriptar(Password));
+                return Usuario_D.Login(Usuario);
             }
             catch (Exception ex)
             {

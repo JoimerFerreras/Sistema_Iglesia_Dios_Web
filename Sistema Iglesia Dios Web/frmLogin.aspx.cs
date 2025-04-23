@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 
 using Negocio.Util_N;
 using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
+using Microsoft.Ajax.Utilities;
 
 namespace Sistema_Iglesia_Dios_Web
 {
@@ -157,33 +158,48 @@ namespace Sistema_Iglesia_Dios_Web
             else
             {
                 // Se realiza el login buscando coincidencias con las credenciales proporciandas en los textboxs
-                var usuario = usuario_N.Login(txtUsuario.Text, txtPassword.Text);
+                var usuario = usuario_N.Login(txtUsuario.Text);
 
                 // Si el usuario es diferente a 0, entonces se encontro una conincidencia
                 if (usuario.Id_Usuario != 0)
                 {
-                    // Si el Estatus del usuario es falso significa que el usuario fue deshabilitado y no podrá ingresar a la aplicacion
-                    if (usuario.Bloqueo == true)
+                    // Validar contraseña digitada con la contraseña del usuario encontrado
+                    if (txtPassword.Text == Utilidad_N.Desencriptar(usuario.Password))
                     {
-                        Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo iniciar sesión", "Su usuario ha sido deshabilitado", "warning");
+                        // Si el estatus de bloqueo del usuario es falso significa que el usuario fue deshabilitado y no podrá ingresar a la aplicacion
+                        if (usuario.Bloqueo == true)
+                        {
+                            Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo iniciar sesión", "Su usuario ha sido deshabilitado", "warning");
+                        }
+                        // De lo contrario, se guardaran la informacion necesaria del usuario en variables de sesion y se redireciona a la pantalla principal
+                        else
+                        {
+                            // Variables de sesión de usuario
+                            Session["ID_USUARIO_SESSION"] = usuario.Id_Usuario.ToString();
+                            Session["USERNAME_SESSION"] = usuario.Usuario.ToString();
+                            Session["ID_ROL_SESSION"] = usuario.Id_Rol.ToString();
+                            Session["EMAIL_USUARIO_SESSION"] = usuario.Correo.ToString();
+                            Session["BLOQUEO_USUARIO_SESSION"] = usuario.Bloqueo.ToString();
+
+                            GuardarPasswordCookie();
+                            Response.Redirect(Utilidad_N.ObtenerRutaServer() + "/Utilidad_Cliente/frmPaginaPrincipal.aspx");
+                        }
                     }
-                    // De lo contrario, se guardaran la informacion correspondiente del usuario en variables de sesion y se redireciona a la pantalla principal
                     else
                     {
-                        // Variables de sesión de usuario
-                        Session["ID_USUARIO_SESSION"] = usuario.Id_Usuario.ToString();
-                        Session["USERNAME_SESSION"] = usuario.Usuario.ToString();
-                        Session["ID_ROL_SESSION"] = usuario.Id_Rol.ToString();
-                        Session["EMAIL_USUARIO_SESSION"] = usuario.Correo.ToString();
-                        Session["BLOQUEO_USUARIO_SESSION"] = usuario.Bloqueo.ToString();
+                        // De lo contrario, devolverá una alerta de credenciales incorrectras
+                        string script = @"var input1 = document.getElementById('" + txtUsuario.ClientID + @"');
+                                    input1.style.borderColor = 'red'; 
+                                    var input2 = document.getElementById('" + txtPassword.ClientID + @"');
+                                    input2.style.borderColor = 'red';";
 
-                        GuardarPasswordCookie();
-                        Response.Redirect(Utilidad_N.ObtenerRutaServer() + "/Utilidad_Cliente/frmPaginaPrincipal.aspx");
+                        Utilidad_C.EjecutarScript(this, "CambiarBorderColor", script, false);
+                        Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "No se pudo iniciar sesión", "El usuario o la contraseña son incorrectos", "warning");
                     }
                 }
-                // De lo contrario, devolverá una alerta de credenciales incorrectras
                 else
                 {
+                    // De lo contrario, devolverá una alerta de credenciales incorrectras
                     string script = @"var input1 = document.getElementById('" + txtUsuario.ClientID + @"');
                                     input1.style.borderColor = 'red'; 
                                     var input2 = document.getElementById('" + txtPassword.ClientID + @"');
