@@ -220,35 +220,35 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Correo electr&oacute;nico <i class="fa-solid fa-circle-info  btnInfoControl"
-                                    data-tippy-content="Un e-mail válido debe contener caracteres alfanuméricos (letras y números) y algunos caracteres especiales, 
+                                        data-tippy-content="Un e-mail válido debe contener caracteres alfanuméricos (letras y números) y algunos caracteres especiales, 
                                     como puntos, guiones y guiones bajos. Por ejemplo: usuario123@gmail.com"></i>
                                     <asp:TextBox runat="server" ID="txtCorreo" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="3"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Rol de usuario <span class="LabelCampoObligatorio">*</span>
-                                   <telerik:RadComboBox ID="cmbRol" runat="server" Width="100%" ClientIDMode="Static"
-                                       MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="4"
-                                       MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
-                                       Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
-                                       <Items>
-                                           <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
-                                       </Items>
-                                   </telerik:RadComboBox>
+                                    <telerik:RadComboBox ID="cmbRol" runat="server" Width="100%" ClientIDMode="Static"
+                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="4"
+                                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                                        </Items>
+                                    </telerik:RadComboBox>
                                 </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-4">
-                                    <asp:CheckBox runat="server" ID="chkBloqueo" Text="Bloquear usuario " />
+                                    <asp:CheckBox runat="server" ID="chkBloqueo" Text="&nbsp; Bloquear usuario" />
                                 </div>
 
                                 <div class="col-12 col-md-4">
-                                    <asp:CheckBox runat="server" ID="chkVerificacionDosPasos" Text="Verificación en dos pasos " />
+                                    <asp:CheckBox runat="server" ID="chkVerificacionDosPasos" Text="&nbsp; Verificación en dos pasos" />
                                 </div>
 
                                 <div class="col-12 col-md-4">
-                                    <asp:CheckBox runat="server" ID="chkRestablecerPassword" Text="Restablecer contraseña " />
+                                    <asp:CheckBox runat="server" ID="chkRestablecerPassword" Text="&nbsp; Restablecer contraseña" />
                                 </div>
                             </div>
                         </div>

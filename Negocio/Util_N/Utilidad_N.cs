@@ -200,46 +200,91 @@ namespace Negocio.Util_N
 
 
         #region Cifrado/Descrifado
-
-        public static byte[] Encriptar(string TextoOriginal)
+        private static byte[] GetKeyFromConfig()
         {
-            byte[] key;
-            byte[] iv;
-            // Encriptar con claves aleatorias
-            //key = GenerateRandomKey();
-            //iv = GenerateRandomIV();
-
-            // Encriptar con claves fijas (Ideal para passwords)
-            key = Encoding.UTF8.GetBytes("86s7kbE/zERKfJq6"); // Clave fija
-            iv = Encoding.UTF8.GetBytes("1+rrHZyjeqyP0tR0"); // IV fijo
-
-            // Devuelve un string que se guarda en una variable varbinary
-            return EncryptStringToBytes_Aes(TextoOriginal);
+            string base64Key = ConfigurationManager.AppSettings["AESKey"];
+            return Encoding.UTF8.GetBytes(base64Key);
         }
 
-        public static string Desencriptar(byte[] TextoEncriptado)
+        public static byte[] Encriptar(string plainText)
         {
-            return DecryptStringFromBytes_Aes(TextoEncriptado);
-        }
+            byte[] key = GetKeyFromConfig();
 
-        static byte[] GenerateRandomKey()
-        {
-            using (AesCryptoServiceProvider aes = new AesCryptoServiceProvider())
+            using (Aes aes = Aes.Create())
             {
-                aes.GenerateKey();
-                return aes.Key;
+                aes.Key = key;
+                aes.GenerateIV(); // IV aleatorio
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    // Guardar el IV al principio
+                    ms.Write(aes.IV, 0, aes.IV.Length);
+
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                    using (StreamWriter sw = new StreamWriter(cs))
+                    {
+                        sw.Write(plainText);
+                    }
+
+                    return ms.ToArray(); // contiene: IV + texto cifrado
+                }
             }
         }
-        private static byte[] GenerateRandomIV()
+
+        public static string Desencriptar(byte[] encryptedData)
         {
-            /* IV significa "Initial Vector" o "Vector de Inicialización" en español.
-               Es un valor aleatorio que se utiliza en el cifrado simétrico para asegurar que el mismo mensaje cifrado con la misma clave no se vea igual cada vez que se cifra. */
-            using (AesCryptoServiceProvider aes = new AesCryptoServiceProvider())
+            byte[] key = GetKeyFromConfig();
+
+            using (Aes aes = Aes.Create())
             {
-                aes.GenerateIV();
-                return aes.IV;
+                aes.Key = key;
+
+                // Extraer el IV de los primeros 16 bytes
+                byte[] iv = new byte[16];
+                Array.Copy(encryptedData, 0, iv, 0, iv.Length);
+                aes.IV = iv;
+
+                // Extraer el texto cifrado desde el byte 17 hasta el final
+                using (MemoryStream ms = new MemoryStream(encryptedData, 16, encryptedData.Length - 16))
+                using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Read))
+                using (StreamReader sr = new StreamReader(cs))
+                {
+                    string a = sr.ReadToEnd();
+                    return a;
+                }
             }
         }
+
+
+
+
+
+
+
+        //public static byte[] Encriptar(string TextoOriginal)
+        //{
+        //    byte[] key;
+        //    byte[] iv;
+        //    // Encriptar con claves aleatorias
+        //    //key = GenerateRandomKey();
+        //    //iv = GenerateRandomIV();
+
+        //    // Encriptar con claves fijas (Ideal para passwords)
+        //    key = Encoding.UTF8.GetBytes("86s7kbE/zERKfJq6"); // Clave fija
+        //    iv = Encoding.UTF8.GetBytes("1+rrHZyjeqyP0tR0"); // IV fijo
+
+        //    // Devuelve un string que se guarda en una variable varbinary
+        //    return EncryptStringToBytes_Aes(TextoOriginal);
+        //}
+
+        //public static string Desencriptar(byte[] TextoEncriptado)
+        //{
+        //    return DecryptStringFromBytes_Aes(TextoEncriptado);
+        //}
+
+
+
+
         private static byte[] EncryptStringToBytes_Aes(string plainText)
         {
             try

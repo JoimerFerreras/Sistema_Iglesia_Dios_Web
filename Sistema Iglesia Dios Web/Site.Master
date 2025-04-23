@@ -170,7 +170,7 @@
                         </div>
 
                         <div class="sub-menu_1">
-                            <a href="#" id="btnUsusarios" data-tippy-content="Usuarios" title=""><i class="fa-solid fa-users"></i><span>Usuarios</span></a>
+                            <a href="#" id="btnUsuarios" data-tippy-content="Usuarios" title=""><i class="fa-solid fa-users"></i><span>Usuarios</span></a>
                         </div>
 
                         <div class="sub-menu_1">

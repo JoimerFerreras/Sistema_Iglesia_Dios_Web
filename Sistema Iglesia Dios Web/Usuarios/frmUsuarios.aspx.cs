@@ -250,6 +250,9 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
                 txtFechaUltimaModificacion.Text = string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", Usuario_E.Fecha_Ultima_Modificacion);
             }
 
+            rtsTabulador.Tabs[1].Selected = true;
+            rmpTabs.SelectedIndex = 1;
+
             txtNombre1.Focus();
         }
 
@@ -313,6 +316,10 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             txtNombre1.Focus();
         }
 
+        private void LimpiarFiltros()
+        {
+            cmbRol_Filtro.SelectedValue = "0";
+        }
         #endregion
 
 
@@ -371,6 +378,16 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             int Id_Registro;
             Id_Registro = System.Convert.ToInt32(btn.CommandArgument.ToString());
             Eliminar(Id_Registro);
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            Consultar();
+        }
+
+        protected void btnLimpiarFiltros_Click(object sender, EventArgs e)
+        {
+            LimpiarFiltros();
         }
 
         protected void btnMostrarPassword_Click(object sender, EventArgs e)

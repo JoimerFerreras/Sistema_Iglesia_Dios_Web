@@ -14,7 +14,9 @@ namespace Datos.Usuarios
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = "SELECT Id_Usuario, Nombre1, Apellido1, Usuario, Correo, Id_Rol, Bloqueo, Verificacion_Dos_Pasos, RestablecerPassword FROM Usuarios WHERE Usuario = @usuario AND Password = @password";
+                string sentencia = "SELECT Id_Usuario, Nombre1, Apellido1, Usuario, Correo, Id_Rol, Bloqueo, Verificacion_Dos_Pasos, RestablecerPassword FROM Usuarios WHERE Usuario = @usuario ";
+
+                // AND Password = @password
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@usuario", Username);
@@ -137,7 +139,7 @@ namespace Datos.Usuarios
                                             RestablecerPassword
                                         FROM Usuarios
 
-                                        WHERE I.Id_Usuario = @Id";
+                                        WHERE Id_Usuario = @Id";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 cmd.CommandType = CommandType.Text;

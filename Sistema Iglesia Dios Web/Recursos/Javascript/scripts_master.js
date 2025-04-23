@@ -100,6 +100,7 @@ function asignarEnlace() {
     document.getElementById('btnFormas_Pago').href = url + 'Otros_Parametros/frmFormas_Pago.aspx';
     document.getElementById('btnMiscelaneos').href = url + 'Otros_Parametros/frmMiscelaneos.aspx';
     document.getElementById('btnRoles').href = url + 'Usuarios/frmRoles.aspx';
+    document.getElementById('btnUsuarios').href = url + 'Usuarios/frmUsuarios.aspx';
 }
 
 
