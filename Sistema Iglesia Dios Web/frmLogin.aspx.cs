@@ -18,7 +18,7 @@ namespace Sistema_Iglesia_Dios_Web
         #region Declaraciones
         Usuario_N usuario_N = new Usuario_N();
 
-        public Usuario_E Entidad_Usuario
+        private Usuario_E Entidad_Usuario
         {
             get
             {
@@ -31,6 +31,54 @@ namespace Sistema_Iglesia_Dios_Web
             set
             {
                 ViewState["Entidad_Usuario"] = value;
+            }
+        }
+
+        private string IPV4
+        {
+            get
+            {
+                if (Utilidad_N.ValidarNull(ViewState["IPV4"]))
+                {
+                    return "";
+                }
+                return ViewState["IPV4"].ToString();
+            }
+            set
+            {
+                ViewState["IPV4"] = value;
+            }
+        }
+
+        private string LATITUD_COORD
+        {
+            get
+            {
+                if (Utilidad_N.ValidarNull(ViewState["LATITUD_COORD"]))
+                {
+                    return "";
+                }
+                return ViewState["LATITUD_COORD"].ToString();
+            }
+            set
+            {
+                ViewState["LATITUD_COORD"] = value;
+            }
+        }
+
+        private string LONGITUD_COORD
+        {
+            get
+            {
+                if (Utilidad_N.ValidarNull(ViewState["LONGITUD_COORD"]))
+                {
+                    return "";
+                }
+                return ViewState["LONGITUD_COORD"].ToString();
+            }
+            set
+            {
+                ViewState["LONGITUD_COORD"] = value;
             }
         }
         #endregion
@@ -181,7 +229,12 @@ namespace Sistema_Iglesia_Dios_Web
                             Session["EMAIL_USUARIO_SESSION"] = usuario.Correo.ToString();
                             Session["BLOQUEO_USUARIO_SESSION"] = usuario.Bloqueo.ToString();
 
+                            // Se guardan las cookies de usuario y password
                             GuardarPasswordCookie();
+
+                            // Se guarda el log de acceso del usuario
+                            GuardarLog(usuario.Id_Usuario);
+
                             Response.Redirect(Utilidad_N.ObtenerRutaServer() + "/Utilidad_Cliente/frmPaginaPrincipal.aspx");
                         }
                     }
@@ -210,6 +263,38 @@ namespace Sistema_Iglesia_Dios_Web
                 }
             }
         }
+
+        private void GuardarLog(int Id_Usuario)
+        {
+            Log_Usuario_Acceso_N log_Usuario_Acceso_N = new Log_Usuario_Acceso_N();
+            Log_Usuario_Acceso_E log_Usuario_Acceso_E = new Log_Usuario_Acceso_E();
+
+            // Asignar el ID de usuario y la fecha/hora de inicio de sesión
+            log_Usuario_Acceso_E.Id_Usuario = Id_Usuario;
+            log_Usuario_Acceso_E.FechaHora_Login = DateTime.Now;
+            log_Usuario_Acceso_E.IPv4 = IPV4;
+            log_Usuario_Acceso_E.Latitud_Coord = Convert.ToDecimal(LATITUD_COORD);
+            log_Usuario_Acceso_E.Longitud_Coord = Convert.ToDecimal(LONGITUD_COORD);
+
+            // Guardar el log de acceso
+            log_Usuario_Acceso_N.Agregar(log_Usuario_Acceso_E);
+        }
+
+        private async void ObtenerUbicacionIP()
+        {
+            // Obtener la dirección IP y la ubicación
+            var info = await Utilidad_N.ObtenerUbicacionIP();
+            if (info != null)
+            {
+                IPV4 = info.IP;
+                LATITUD_COORD = info.Latitud;
+                LONGITUD_COORD = info.Longitud;
+            }
+            else
+            {
+                Console.WriteLine("No se pudo obtener la ubicación.");
+            }
+        }   
         #endregion
 
 
@@ -229,6 +314,8 @@ namespace Sistema_Iglesia_Dios_Web
             if (!Page.IsPostBack)
             {
                 LeerCookies();
+
+                ObtenerUbicacionIP();
             }
 
             // Aqui se registra el script para controlar los colores de los textbox

@@ -14,9 +14,23 @@ namespace Datos.Usuarios
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = "SELECT Id_Usuario, Nombre1, Apellido1, Usuario, Password, Correo, Id_Rol, Bloqueo, Verificacion_Dos_Pasos, RestablecerPassword FROM Usuarios WHERE Usuario = @usuario ";
+                string sentencia = @"SELECT 
+                                        U.Id_Usuario, 
+                                        U.Nombre1, 
+                                        U.Apellido1, 
+                                        U.Usuario, 
+                                        U.Password, 
+                                        U.Correo, 
+                                        U.Id_Rol, 
+                                        R.Nombre_Rol,
+                                        U.Bloqueo, 
+                                        U.Verificacion_Dos_Pasos, 
+                                        U.RestablecerPassword 
 
-                // AND Password = @password
+                                        FROM Usuarios U 
+                                        LEFT JOIN Roles R ON R.Id_Rol = U.Id_Rol
+
+                                        WHERE U.Usuario = @usuario ";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@usuario", Username);
@@ -297,8 +311,7 @@ namespace Datos.Usuarios
                                         Apellido2 = @Apellido2, 
                                         Sexo = @Sexo, 
                                         Bloqueo = @Bloqueo, 
-                                        Id_Rol = @Id_Rol, 
-                                        Fecha_Creacion = @Fecha_Creacion, 
+                                        Id_Rol = @Id_Rol,  
                                         Fecha_Ultima_Modificacion = @Fecha_Ultima_Modificacion, 
                                         Celular = @Celular, 
                                         Telefono = @Telefono, 
@@ -319,7 +332,6 @@ namespace Datos.Usuarios
                 cmd.Parameters.AddWithValue("@Sexo", entidad.Sexo);
                 cmd.Parameters.AddWithValue("@Bloqueo", entidad.Bloqueo);
                 cmd.Parameters.AddWithValue("@Id_Rol", entidad.Id_Rol);
-                cmd.Parameters.AddWithValue("@Fecha_Creacion", entidad.Fecha_Creacion);
                 cmd.Parameters.AddWithValue("@Fecha_Ultima_Modificacion", entidad.Fecha_Ultima_Modificacion);
                 cmd.Parameters.AddWithValue("@Celular", entidad.Celular);
                 cmd.Parameters.AddWithValue("@Telefono", entidad.Telefono);

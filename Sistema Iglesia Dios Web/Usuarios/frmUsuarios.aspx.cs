@@ -109,7 +109,7 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             }
             else if (txtApellido1.Text.Length == 0)
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El campo Segundo nombre no puede estar vacío");
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El campo Primer apellido no puede estar vacío");
             }
             else if (cmbSexo.SelectedValue == "0")
             {
@@ -123,12 +123,9 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Para habilitar la verificación en dos pasos es necesario proporcionar un correo electrónico válido");
             }
-            else if (chkVerificacionDosPasos.Checked == true && txtCorreo.Text.Length > 0)
+            else if (chkVerificacionDosPasos.Checked == true && txtCorreo.Text.Length > 0 && Utilidad_N.ValidarEmail(txtCorreo.Text) == false)
             {
-                if (Utilidad_N.ValidarEmail(txtCorreo.Text) == false)
-                {
-                    Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El correo electrónico no es válido");
-                }
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El correo electrónico no es válido");
             }
             else if (txtPassword.Text.Length == 0)
             {
@@ -141,6 +138,10 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             else if (Utilidad_N.ValidarPassword(txtPassword.Text) == false)
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La contraseña no es válida");
+            }
+            else if (cmbRol.SelectedValue == "0")
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe seleccionar un rol");
             }
             else
             {

@@ -12,6 +12,10 @@ using System.Web;
 using System.Configuration;
 using System.Data;
 using Datos.Util_D;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace Negocio.Util_N
 {
@@ -194,6 +198,66 @@ namespace Negocio.Util_N
             NumeroAleatorio = rnd.Next(100150, 998735);
 
             return NumeroAleatorio;
+        }
+
+        public static async Task<InfoUbicacionIP> ObtenerUbicacionIP()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    string url = "http://ip-api.com/json/";
+
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    response.EnsureSuccessStatusCode();
+
+                    string json = await response.Content.ReadAsStringAsync();
+                    JObject data = JObject.Parse(json);
+
+                    var ubicacion = new InfoUbicacionIP
+                    {
+                        IP = data["query"]?.ToString(),
+                        Latitud = data["lat"]?.ToString(),
+                        Longitud = data["lon"]?.ToString()
+                    };
+
+                    return ubicacion;
+                }
+                catch
+                {
+                    return null; // o puedes lanzar una excepción si prefieres
+                }
+            }
+        }
+
+
+        static async Task<string> ObtenerIpPublica()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    // Puedes usar uno de estos:
+                    // string url = "https://api.ipify.org";
+                    // string url = "https://checkip.amazonaws.com";
+
+                    // Para IPv4:
+                    //string url = @"https://api64.ipify.org"; // Soporta IPv6 e IPv4
+
+                    // Para IPv6
+                    string url = @"https://api.ipify.org?format=text"; // Soporta IPv6 e IPv4
+
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    response.EnsureSuccessStatusCode();
+
+                    string ip = await response.Content.ReadAsStringAsync();
+                    return ip.Trim();
+                }
+                catch (Exception ex)
+                {
+                    return "Error: " + ex.Message;
+                }
+            }
         }
 
         #endregion
