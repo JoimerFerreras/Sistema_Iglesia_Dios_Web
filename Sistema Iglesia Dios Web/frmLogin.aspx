@@ -109,7 +109,7 @@
                                         <a style="font-size: 14px; display: none;">Contraseña</a>
                                         <div>
                                             <div class="contenedor-btn-pass">
-                                                <asp:TextBox runat="server" ID="txtPassword" MaxLength="30" Width="300" CssClass="form-control" TextMode="Password" placeholder="Contraseña" Style="padding-right: 35px;" oncopy="return false;"></asp:TextBox>
+                                                <asp:TextBox runat="server" ID="txtPassword" MaxLength="30" Width="300" CssClass="form-control" TextMode="Password" placeholder="Contraseña" Style="padding-right: 40px;" oncopy="return false;"></asp:TextBox>
                                                 <asp:LinkButton CssClass="fa-solid fa-eye btnMostrarPassword" runat="server" ID="btnMostrarPassword" OnClick="btnMostrarPassword_Click"></asp:LinkButton>
                                             </div>
                                             <div class="divRecordarPassword">

@@ -334,7 +334,7 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
 
             if (!Page.IsPostBack)
             {
-                ((SiteMaster)Master).EstablecerNombrePantalla("Roles y permisos");
+                ((SiteMaster)Master).EstablecerNombrePantalla("Usuarios");
                 LlenerCombos();
                 LimpiarCampos();
                 Consultar();

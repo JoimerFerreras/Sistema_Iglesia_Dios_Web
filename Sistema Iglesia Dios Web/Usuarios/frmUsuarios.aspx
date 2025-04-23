@@ -210,9 +210,9 @@
                                          dígitos y al menos un carácter especial como @, $, !, %, *, #, ?. Esta combinación de elementos garantiza una mayor robustez en la seguridad de la contraseña, 
                                          reduciendo el riesgo de ser adivinada fácilmente por potenciales atacantes."></i>
                                     <div class="contenedor-btn-pass">
-                                        <asp:TextBox runat="server" ID="txtPassword" CssClass="form-control form-control" Width="100%" TextMode="Password" MaxLength="30" TabIndex="10" Style="padding-right: 35px; max-width: 400px;" oncopy="return false;"></asp:TextBox>
-
+                                        <asp:TextBox runat="server" ID="txtPassword" CssClass="form-control form-control" Width="100%" TextMode="Password" MaxLength="30" TabIndex="10" Style="padding-right: 40px; max-width: 400px;" oncopy="return false;"></asp:TextBox>
                                         <asp:LinkButton CssClass="fa-solid fa-eye btnMostrarPassword" runat="server" ID="btnMostrarPassword" OnClick="btnMostrarPassword_Click"></asp:LinkButton>
+                                        
                                     </div>
                                 </div>
                             </div>
