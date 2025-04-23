@@ -101,6 +101,7 @@ function asignarEnlace() {
     document.getElementById('btnMiscelaneos').href = url + 'Otros_Parametros/frmMiscelaneos.aspx';
     document.getElementById('btnRoles').href = url + 'Usuarios/frmRoles.aspx';
     document.getElementById('btnUsuarios').href = url + 'Usuarios/frmUsuarios.aspx';
+    document.getElementById('btnLogUsuariosAccesos').href = url + 'Usuarios/frmLogUsuariosAccesos.aspx';
 }
 
 

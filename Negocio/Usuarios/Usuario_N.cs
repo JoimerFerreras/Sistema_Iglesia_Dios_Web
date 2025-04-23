@@ -34,6 +34,18 @@ namespace Negocio.Usuarios
             }
         }
 
+        public DataTable ListaCombo()
+        {
+            try
+            {
+                return Usuario_D.ListaCombo();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public Usuario_E ObtenerRegistro(string Id)
         {
             try

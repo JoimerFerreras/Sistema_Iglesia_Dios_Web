@@ -15,32 +15,50 @@ namespace Datos.Usuarios
 
         #region Consultas
 
-        public DataTable Listar()
+        public DataTable Listar(DateTime FechaInicial, DateTime FechaFinal, int Id_Usuario)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT 
-                                        LUA.Id_Log,
-                                        LUA.Id_Usuario,
-                                        U.Nombre1 + ' ' + U.Nombre2 + ' ' + U.Apellido1 + ' ' + U.Apellido2 AS NombreCompleto,
-                                        U.Usuario,
-                                        LUA.IPv4,
-                                        LUA.FechaHora_Login,
-                                        LUA.Latitud_Coord,
-                                        LUA.Longitud_Coord
-
-                                        FROM Log_Usuarios_Accesos LUA
-                                        LEFT JOIN Usuarios U ON U.Id_Usuario = LUA.Id_Usuario";
+                string sentencia = "";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
+
+                sentencia = $@"SELECT 
+                                LUA.Id_Log,
+                                LUA.Id_Usuario,
+                                U.Nombre1 + ' ' + U.Nombre2 + ' ' + U.Apellido1 + ' ' + U.Apellido2 AS NombreCompleto,
+                                U.Usuario,
+                                LUA.IPv4,
+                                LUA.FechaHora_Login,
+                                LUA.Latitud_Coord,
+                                LUA.Longitud_Coord
+
+                                FROM Log_Usuarios_Accesos LUA
+                                LEFT JOIN Usuarios U ON U.Id_Usuario = LUA.Id_Usuario ";
+
+
+                sentencia += $@" WHERE (LUA.FechaHora_Login BETWEEN @FechaInicial AND @FechaFinal) ";
+                cmd.Parameters.AddWithValue("@FechaInicial", FechaInicial);
+                cmd.Parameters.AddWithValue("@FechaFinal", FechaFinal);
+
+                // Usuario
+                if (Id_Usuario > 0)
+                {
+                    sentencia += $" AND (LUA.Id_Usuario = @Id_Usuario) ";
+                    cmd.Parameters.AddWithValue("@Id_Usuario", Id_Usuario);
+                }
+
+                sentencia += $" ORDER BY LUA.FechaHora_Login DESC";
+
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
                 cmd.CommandType = CommandType.Text;
+
                 try
                 {
                     conexion.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
-
                     DataTable dt = new DataTable();
                     dt.Load(dr);
-
                     conexion.Close();
                     return dt;
                 }
@@ -81,7 +99,6 @@ namespace Datos.Usuarios
                 }
             }
         }
-
         #endregion
 
 

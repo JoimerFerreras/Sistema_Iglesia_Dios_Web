@@ -10,11 +10,11 @@ namespace Negocio.Usuarios
     {
         Log_Usuario_Acceso_D Log_Usuario_Acceso_D = new Log_Usuario_Acceso_D();
 
-        public DataTable Listar()
+        public DataTable Listar(DateTime FechaInicial, DateTime FechaFinal, string Id_Usuario)
         {
             try
             {
-                return Log_Usuario_Acceso_D.Listar();
+                return Log_Usuario_Acceso_D.Listar(FechaInicial, FechaFinal, int.Parse(Id_Usuario));
             }
             catch (Exception ex)
             {

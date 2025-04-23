@@ -14,7 +14,6 @@ using System.Data;
 using Datos.Util_D;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace Negocio.Util_N
@@ -202,6 +201,7 @@ namespace Negocio.Util_N
 
         public static async Task<InfoUbicacionIP> ObtenerUbicacionIP()
         {
+            // Obtencion de la ubicacion ip del usuario
             using (HttpClient client = new HttpClient())
             {
                 try
@@ -230,9 +230,9 @@ namespace Negocio.Util_N
             }
         }
 
-
         static async Task<string> ObtenerIpPublica()
         {
+            // Codigo solo para obtener ip publica
             using (HttpClient client = new HttpClient())
             {
                 try

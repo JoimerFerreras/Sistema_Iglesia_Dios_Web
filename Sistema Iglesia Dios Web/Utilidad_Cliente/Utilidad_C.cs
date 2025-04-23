@@ -10,6 +10,7 @@ using SpreadsheetLight;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using Table = CrystalDecisions.CrystalReports.Engine.Table;
+using Entidades;
 
 namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
 {
@@ -225,7 +226,7 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
             });
 
             tippy('.boton_formulario_LimpiarFiltros', {
-                content: 'Restaurar filtros de búsqueda',
+                content: 'Limpiar filtros de búsqueda',
                 placement: 'left',
                 arrow: true,
             });
@@ -256,6 +257,25 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
         </script>";
 
             ScriptManager.RegisterStartupScript(pagina, type.GetType(), "RecargarTooltips", script, false);
+        }
+
+        public static void RecargarTooltipPersonalizado(Page pagina, Type type, List<Entidades.Util_E.TooltipPersonalizado> ParametrosTooltip)
+        {
+            string script = $@"<script>";
+            foreach (var tooltip in ParametrosTooltip)
+            {
+                script += $@" 
+                            tippy('{tooltip.NombreIdentificador}', {{
+                                content: '{tooltip.Texto}',
+                                placement: '{tooltip.Posicion}',
+                                arrow: {tooltip.Arrow},
+                            }});;
+                        ";
+            }
+
+            script += "</script>";
+
+            ScriptManager.RegisterStartupScript(pagina, type.GetType(), "RecargarTooltipPersonalizado", script, false);
         }
         #endregion
 

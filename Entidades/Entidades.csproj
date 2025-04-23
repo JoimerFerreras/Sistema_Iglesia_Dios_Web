@@ -66,9 +66,8 @@
     <Compile Include="Usuarios\Log_Usuario_Acceso_E.cs" />
     <Compile Include="Usuarios\Rol_E.cs" />
     <Compile Include="Usuarios\Usuario_E.cs" />
+    <Compile Include="Util_E\TooltipPersonalizado.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Util_E\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

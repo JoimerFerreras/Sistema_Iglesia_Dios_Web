@@ -177,6 +177,9 @@
                             <a href="#" id="btnRoles" data-tippy-content="Roles y permisos" title=""><i class="fa-solid fa-user-gear"></i><span>Roles y permisos</span></a>
                         </div>
 
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnLogUsuariosAccesos" data-tippy-content="Log de accesos de usuarios" title=""><i class="fa-regular fa-address-book"></i><span>Log de accesos de usuarios</span></a>
+                        </div>
                     </li>
 
                     <li class="item_1" id="acerca_de" title="Acerca de">
@@ -195,7 +198,6 @@
                         <div class="sub-menu_1">
                             <a href="#" id="btnAyuda" data-tippy-content="Ayuda" title=""><i class="fa-solid fa-question"></i><span>Ayuda</span></a>
                         </div>
-
                     </li>
                 </div>
             </div>

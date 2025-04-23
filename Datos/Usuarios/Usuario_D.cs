@@ -126,6 +126,31 @@ namespace Datos.Usuarios
             }
         }
 
+        public DataTable ListaCombo()
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"SELECT Id_Usuario,  '(' + CAST(Id_Usuario AS varchar) + ') ' + Usuario AS NombreUsuario  FROM Usuarios ORDER BY Usuario ASC";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
 
         public Usuario_E ObtenerRegistro(string Id)
         {
