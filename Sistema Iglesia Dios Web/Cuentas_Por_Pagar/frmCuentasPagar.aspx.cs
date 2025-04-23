@@ -20,6 +20,7 @@ using Negocio.Cuentas_Por_Pagar;
 
 namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 {
+    [CodigoFuncionalidad("Cuentas_Por_Pagar")]
     public partial class frmCuentasPagar : System.Web.UI.Page
     {
         #region Declaraciones

@@ -13,6 +13,7 @@ using Negocio.Ministerios;
 
 namespace Sistema_Iglesia_Dios_Web.Miembros
 {
+    [CodigoFuncionalidad("Miembros")]
     public partial class frmMiembros : System.Web.UI.Page
     {
         #region Declaraciones

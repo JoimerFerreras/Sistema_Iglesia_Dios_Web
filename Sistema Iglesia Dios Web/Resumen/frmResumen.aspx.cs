@@ -9,6 +9,7 @@ using System.Web.UI;
 
 namespace Sistema_Iglesia_Dios_Web.Resumen
 {
+    [CodigoFuncionalidad("Resumen")]
     public partial class frmResumen : System.Web.UI.Page
     {
         #region Declaraciones

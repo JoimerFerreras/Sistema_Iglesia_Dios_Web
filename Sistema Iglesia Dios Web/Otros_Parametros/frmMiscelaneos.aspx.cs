@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
 {
+    [CodigoFuncionalidad("Miscelaneos")]
     public partial class frmMiscelaneos : System.Web.UI.Page
     {
         #region Declaraciones

@@ -1,9 +1,0 @@
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Datos\bin\Debug\Datos.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Datos\bin\Debug\Datos.pdb
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Datos\bin\Debug\Entidades.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Datos\bin\Debug\Entidades.pdb
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Datos\obj\Debug\Datos.csproj.AssemblyReference.cache
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Datos\obj\Debug\Datos.csproj.CoreCompileInputs.cache
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Datos\obj\Debug\Datos.csproj.Up2Date
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Datos\obj\Debug\Datos.dll
-C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Datos\obj\Debug\Datos.pdb

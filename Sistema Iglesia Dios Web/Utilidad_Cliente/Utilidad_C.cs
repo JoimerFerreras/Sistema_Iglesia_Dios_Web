@@ -486,8 +486,16 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
                 throw;
             }
         }
+        #endregion
 
 
+        #region Manejo de usuarios, roles y funcionalidades
+        public static string ObtenerCodigoPantalla(Page pagina) 
+        {
+            // Optencion del nombre de la funcionalidad asignado a la pantalla
+            CodigoFuncionalidadAttribute attribute = (CodigoFuncionalidadAttribute)Attribute.GetCustomAttribute(pagina.GetType(), typeof(CodigoFuncionalidadAttribute));
+            return attribute.Codigo;
+        }
         #endregion
     }
 }

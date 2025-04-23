@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 
 namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
 {
+    [CodigoFuncionalidad("Descripciones")]
     public partial class frmDescripciones : System.Web.UI.Page
     {
         #region Declaraciones

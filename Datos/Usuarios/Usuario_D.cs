@@ -49,32 +49,46 @@ namespace Datos.Usuarios
         }
 
 
-        public DataTable Listar()
+        public DataTable Listar(int Rol)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
                 string sentencia = @"
-                   SELECT 
-	                Id_Usuario,
-                    Nombre1 + ' ' + Nombre2 + ' ' + Apellido1 + ' ' + Apellido2 AS NombreCompleto,
-                    CASE Sexo 
-                    WHEN '1' THEN 'Masculino' 
-                    WHEN '2' THEN 'Femenino' 
-                    END AS Sexo,
-                    Bloqueo,
-                    Id_Rol,
-                    Celular,
-                    Telefono,
-                    Correo,
-                    Usuario,
-                    Verificacion_Dos_Pasos,
-                    RestablecerPassword
+                    SELECT 
+                      U.Id_Usuario,
+                      U.Nombre1 + ' ' + U.Nombre2 + ' ' + U.Apellido1 + ' ' + U.Apellido2 AS NombreCompleto,
+                      CASE U.Sexo 
+                          WHEN '1' THEN 'Masculino' 
+                          WHEN '2' THEN 'Femenino' 
+                      END AS Sexo,
+                      R.Nombre_Rol,
+                      U.Usuario,
+                       CASE U.Bloqueo 
+                          WHEN '1' THEN 'Bloqueado' 
+                          WHEN '0' THEN 'Sin bloqueo' 
+                      END AS Bloqueo,
+                      CASE U.Verificacion_Dos_Pasos 
+                          WHEN '1' THEN 'Desactivado' 
+                          WHEN '0' THEN 'Activado' 
+                      END AS Verificacion_Dos_Pasos,
+                      CASE U.RestablecerPassword 
+                          WHEN '1' THEN 'Desactivado' 
+                          WHEN '0' THEN 'Activado' 
+                      END AS RestablecerPassword
 
-                  FROM Usuarios";
+                    FROM Usuarios U
+                    LEFT JOIN Roles R ON R.Id_Rol = U.Id_Rol ";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
 
-                //sentencia += "GROUP BY D.Nombre ORDER BY D.Nombre";
+                // Rol
+                if (Rol > 0)
+                {
+                    sentencia += $" WHERE (U.Id_Rol = @Id_Rol) ";
+                    cmd.Parameters.AddWithValue("@Id_Rol", Rol);
+                }
+
+                sentencia += " ORDER BY NombreCompleto ASC";
 
                 cmd.CommandText = sentencia;
                 cmd.Connection = conexion;
@@ -171,9 +185,9 @@ namespace Datos.Usuarios
             }
         }
 
-        public int Agregar(Usuario_E entidad)
+        public bool Agregar(Usuario_E entidad)
         {
-            int Id = 0;
+            bool Respuesta = false;
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
@@ -209,9 +223,7 @@ namespace Datos.Usuarios
                                         @Usuario,
                                         @Password,
                                         @Verificacion_Dos_Pasos,
-                                        @RestablecerPassword);
-
-                                        SELECT SCOPE_IDENTITY() AS UltimoRegistroAgregado;";
+                                        @RestablecerPassword);";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Nombre1", entidad.Nombre1);
@@ -233,16 +245,11 @@ namespace Datos.Usuarios
                 try
                 {
                     conexion.Open();
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        if (dr.Read()) // Si el DataReader tiene filas entonces hacer lo siguiente
-                        {
-                            Id = Convert.ToInt32(dr["UltimoRegistroAgregado"].ToString());
-                        }
-                    }
+                    int FilasAfectadas = cmd.ExecuteNonQuery();
                     conexion.Close();
+                    if (FilasAfectadas > 0) Respuesta = true;
 
-                    return Id;
+                    return Respuesta;
                 }
                 catch (Exception ex)
                 {

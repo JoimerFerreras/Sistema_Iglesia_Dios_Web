@@ -22,11 +22,11 @@ namespace Negocio.Usuarios
             }
         }
 
-        public DataTable Listar()
+        public DataTable Listar(string Id_Rol)
         {
             try
             {
-                return Usuario_D.Listar();
+                return Usuario_D.Listar(int.Parse(Id_Rol));
             }
             catch (Exception ex)
             {
@@ -60,7 +60,7 @@ namespace Negocio.Usuarios
             }
         }
 
-        public int Agregar(Usuario_E entidad)
+        public bool Agregar(Usuario_E entidad)
         {
             try
             {

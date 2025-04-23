@@ -21,6 +21,7 @@ using Entidades.Otros_Parametros;
 
 namespace Sistema_Iglesia_Dios_Web.Egresos
 {
+    [CodigoFuncionalidad("Egresos")]
     public partial class frmEgresos : System.Web.UI.Page
     {
         #region Declaraciones

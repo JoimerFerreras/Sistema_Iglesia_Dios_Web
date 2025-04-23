@@ -20,6 +20,7 @@ using Entidades.Otros_Parametros;
 
 namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
 {
+    [CodigoFuncionalidad("Cuentas_Por_Cobrar")]
     public partial class frmCuentasCobrar : System.Web.UI.Page
     {
         #region Declaraciones
