@@ -75,7 +75,7 @@ namespace Datos.Usuarios
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Latitud_Coord, Longitud_Coord FROM Log_Usuarios_Accesos WHERE Id_Log = @Id";
+                string sentencia = $@"SELECT Id_Log, Id_Usuario, IPv4, FechaHora_Login, Latitud_Coord, Longitud_Coord FROM Log_Usuarios_Accesos WHERE Id_Log = @Id";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id", Id);
                 cmd.CommandType = CommandType.Text;
@@ -87,6 +87,10 @@ namespace Datos.Usuarios
                         DataTable dt = new DataTable();
                         dt.Load(dr);
                         DataRow row = dt.Rows[0];
+                        entidad.Id_Usuario = int.Parse(row["Id_Usuario"].ToString());
+                        entidad.Id_Log = int.Parse(row["Id_Log"].ToString());
+                        entidad.IPv4 = row["IPv4"].ToString();
+                        entidad.FechaHora_Login = DateTime.Parse(row["FechaHora_Login"].ToString());
                         entidad.Latitud_Coord = decimal.Parse(row["Latitud_Coord"].ToString());
                         entidad.Longitud_Coord = decimal.Parse(row["Longitud_Coord"].ToString());
                     }

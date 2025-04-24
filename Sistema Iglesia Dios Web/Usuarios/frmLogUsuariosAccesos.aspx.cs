@@ -8,9 +8,13 @@ using Negocio.Util_N;
 using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
+using Telerik.Web.UI.Skins;
 
 namespace Sistema_Iglesia_Dios_Web.Usuarios
 {
@@ -93,27 +97,6 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             gvDatos.DataSource = DT_DATOS;
             gvDatos.DataBind();
         }
-
-        private void LlenerCombo()
-        {
-            DataTable dt = new DataTable();
-
-            // Usuario
-            Usuario_N Usuario_N = new Usuario_N();
-            dt = Usuario_N.ListaCombo();
-            cmbUsuario_Filtro.DataSource = dt;
-            cmbUsuario_Filtro.DataValueField = "Id_Usuario";
-            cmbUsuario_Filtro.DataTextField = "NombreUsuario";
-            cmbUsuario_Filtro.DataBind();
-        }
-
-        private void VerRegistro()
-        {
-            // Llenado de datos generales
-            Log_Usuario_Acceso_E Log_Usuario_Acceso_E = new Log_Usuario_Acceso_E();
-            Log_Usuario_Acceso_E = Log_Usuario_Acceso_N.ObtenerRegistro(ID_REGISTRO);
-        }
-
         private void LimpiarFiltros()
         {
             //Primero obtenemos el día actual
@@ -135,6 +118,89 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             cmbUsuario_Filtro.SelectedValue = "0";
         }
 
+        private void LlenerCombo()
+        {
+            DataTable dt = new DataTable();
+
+            // Usuario
+            Usuario_N Usuario_N = new Usuario_N();
+            dt = Usuario_N.ListaCombo();
+            cmbUsuario_Filtro.DataSource = dt;
+            cmbUsuario_Filtro.DataValueField = "Id_Usuario";
+            cmbUsuario_Filtro.DataTextField = "NombreUsuario";
+            cmbUsuario_Filtro.DataBind();
+        }
+
+        private void VerRegistro()
+        {
+            // Llenado de datos generales
+            Log_Usuario_Acceso_E Log_Usuario_Acceso_E = new Log_Usuario_Acceso_E();
+            Log_Usuario_Acceso_E = Log_Usuario_Acceso_N.ObtenerRegistro(ID_REGISTRO);
+
+            RadMap1.MarkersCollection.Clear();
+
+            RadMap1.CenterSettings.Latitude = 18.4861;
+            RadMap1.CenterSettings.Longitude = -69.9312;
+
+            MapMarker marker = new MapMarker();
+
+            marker.LocationSettings.Latitude = double.Parse(Log_Usuario_Acceso_E.Latitud_Coord.ToString());
+            marker.LocationSettings.Longitude = double.Parse(Log_Usuario_Acceso_E.Longitud_Coord.ToString());
+
+            string TextoMark = $@"Ubicación del acceso No.{Log_Usuario_Acceso_E.Id_Log}  |  
+                                ID Usuario: {Log_Usuario_Acceso_E.Id_Usuario}  | 
+                                IPv4: {Log_Usuario_Acceso_E.IPv4}  | 
+                                Latitud: {Log_Usuario_Acceso_E.Latitud_Coord}, Longitud: {Log_Usuario_Acceso_E.Longitud_Coord}  |  
+                                Fecha: {Log_Usuario_Acceso_E.FechaHora_Login}";
+
+            
+
+            marker.Title = TextoMark;
+
+            RadMap1.MarkersCollection.Add(marker);
+            RadMap1.CenterSettings.Latitude = double.Parse(Log_Usuario_Acceso_E.Latitud_Coord.ToString());
+            RadMap1.CenterSettings.Longitude = double.Parse(Log_Usuario_Acceso_E.Longitud_Coord.ToString());
+
+            rtsTabulador.Tabs[1].Selected = true;
+            rmpTabs.SelectedIndex = 1;
+        }
+
+        private MapLayer ObtenerLayerMapa(string serviceListValue, string serviceListText)
+        {
+            string provider = serviceListValue;
+            string providerName = serviceListText;
+
+            MapLayer mapLayer = new MapLayer();
+
+            if (provider != "Bing")
+            {
+                mapLayer.Type = Telerik.Web.UI.Map.LayerType.Tile;
+                mapLayer.UrlTemplate = provider;
+
+                mapLayer.Attribution = "&copy; <a href='https://www.openstreetmap.org' title='OpenStreetMap contributors' target='_blank'>OpenStreetMap contributors</a>.";
+
+            }
+            else
+            {
+                mapLayer.Type = Telerik.Web.UI.Map.LayerType.Bing;
+                mapLayer.Key = ConfigurationManager.AppSettings["BingMapKey"].ToString(); // The key used for a local demo on your end should be provided by Microsoft as described in the description of this demo
+            }
+
+            return mapLayer;
+        }
+
+        private void CargarMapa()
+        {
+            string serviceListValue = "https://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png";
+            string serviceListText = "OpenStreetMap";
+
+            MapLayer mapLayer = ObtenerLayerMapa(serviceListValue, serviceListText);
+
+            RadMap1.LayersCollection.Clear();
+            RadMap1.LayersCollection.Add(mapLayer);
+            RadMap1.CenterSettings.Latitude = 18.461500;
+            RadMap1.CenterSettings.Longitude = -69.896500;
+        }
         #endregion
 
 
@@ -156,6 +222,8 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
                 LimpiarFiltros();
 
                 Consultar();
+
+                CargarMapa();
             }
         }
 
