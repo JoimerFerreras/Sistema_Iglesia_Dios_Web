@@ -176,7 +176,6 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             {
                 mapLayer.Type = Telerik.Web.UI.Map.LayerType.Tile;
                 mapLayer.UrlTemplate = provider;
-
                 mapLayer.Attribution = "&copy; <a href='https://www.openstreetmap.org' title='OpenStreetMap contributors' target='_blank'>OpenStreetMap contributors</a>.";
 
             }
