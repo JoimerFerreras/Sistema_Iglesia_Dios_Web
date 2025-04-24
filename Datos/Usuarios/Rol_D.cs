@@ -126,7 +126,15 @@ namespace Datos.Usuarios
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"INSERT INTO Roles(Nombre_Rol, Fecha_Registro, Estado) VALUES(@Nombre_Rol, @Fecha_Registro, @Estado);
+                string sentencia = $@"INSERT INTO Roles(
+                                        Nombre_Rol, 
+                                        Fecha_Registro, 
+                                        Estado) 
+
+                                        VALUES(
+                                        @Nombre_Rol,
+                                        @Fecha_Registro,
+                                        @Estado);
 
                                         SELECT SCOPE_IDENTITY() AS UltimoRegistroAgregado;";
 

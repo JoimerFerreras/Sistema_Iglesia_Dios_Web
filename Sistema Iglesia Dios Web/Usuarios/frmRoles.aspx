@@ -43,7 +43,6 @@
                                                 <ItemStyle HorizontalAlign="Center" />
                                                 <ItemTemplate>
                                                     <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Rol") %>' OnClick="btnEditar_Click" CssClass="btn btn-sm btn-primary fa-solid fa-pen boton_formulario_editar" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px; margin-bottom: 3px;"></asp:LinkButton>
-                                                    <asp:LinkButton runat="server" CommandArgument='<%#Eval("Id_Rol") %>' OnClick="btnEliminar_Click" OnClientClick="return delalert(this);" CssClass="btn btn-sm btn-danger fa-solid fa-trash" Style="height: 30px; width: 30px; padding: 7px; border-radius: 15px;"></asp:LinkButton>
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
                                             <telerik:GridBoundColumn DataField="Id_Rol" HeaderText="ID" HeaderStyle-Width="10%" ItemStyle-Width="10%">
@@ -130,7 +129,6 @@
                                         </asp:TemplateField>
                                     </Columns>
                                 </asp:GridView>
-
                             </div>
                         </div>
 
@@ -156,6 +154,7 @@
                         <div class="contenedor_botones">
                             <asp:LinkButton CssClass="fa-solid fa-plus fa-lg boton_formulario_Agregar" runat="server" ID="btnAgregar" OnClick="btnAgregar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
                             <asp:LinkButton CssClass="fa-solid fa-floppy-disk fa-lg boton_formulario_Guardar" runat="server" ID="btnGuardar" OnClick="btnGuardar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
+                            <asp:LinkButton CssClass="fa-solid fa-trash fa-lg boton_formulario_Eliminar" runat="server" ID="btnEliminar" OnClick="btnEliminar_Click" OnClientClick="return delalert(this);"></asp:LinkButton>
                         </div>
                     </telerik:RadPageView>
                 </telerik:RadMultiPage>

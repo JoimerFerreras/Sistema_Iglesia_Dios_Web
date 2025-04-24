@@ -22,6 +22,18 @@ namespace Negocio.Usuarios
             }
         }
 
+        public DataTable ListarPlantillaPermisos()
+        {
+            try
+            {
+                return Permiso_D.ListarPlantillaPermisos();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool Agregar(DataTable dtInsert)
         {
             try

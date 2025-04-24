@@ -18,6 +18,7 @@ using CrystalDecisions.Shared;
 using Entidades.Otros_Parametros;
 using Entidades.Ingresos;
 using Telerik.Web.UI.PivotGrid.Core.Fields;
+using Microsoft.Ajax.Utilities;
 
 namespace Sistema_Iglesia_Dios_Web.Usuarios
 {
@@ -154,7 +155,7 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
         {
             bool Validacion = false;
 
-            if (txtIdRol.Text.Length == 0)
+            if (txtNombreRol.Text.Length == 0)
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El nombre del rol no puede estar vacío");
             }
@@ -186,10 +187,18 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
 
                         if (salida == true)
                         {
-                            Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
-                            LimpiarCampos();
-                            Consultar();
-                            GuardarPermisos();
+                            salida = GuardarPermisos(ObtenerEstadoGridViewPermisos(Rol_E.Id_Rol));
+
+                            if (salida == true)
+                            {
+                                Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
+                                LimpiarCampos();
+                                Consultar();
+                            }
+                            else
+                            {
+                                Utilidad_C.MostrarAlerta_Guardar_Error(this, this.GetType());
+                            }
                         }
                         else
                         {
@@ -199,14 +208,22 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
                     else
                     {
                         // Agregar registro
-                        int salida = Rol_N.Agregar(Rol_E);
+                        int Id_Rol = Rol_N.Agregar(Rol_E);
 
-                        if (salida > 0)
+                        if (Id_Rol > 0)
                         {
-                            Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
-                            LimpiarCampos();
-                            Consultar();
-                            GuardarPermisos();
+                            bool salida = GuardarPermisos(ObtenerEstadoGridViewPermisos(Id_Rol));
+
+                            if (salida == true)
+                            {
+                                Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
+                                LimpiarCampos();
+                                Consultar();
+                            }
+                            else
+                            {
+                                Utilidad_C.MostrarAlerta_Guardar_Error(this, this.GetType());
+                            }
                         }
                         else
                         {
@@ -238,30 +255,42 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             }
             ConsultarPermisos(ID_REGISTRO);
 
+            btnEliminar.Visible = true;
+
             rtsTabulador.Tabs[1].Selected = true;
             rmpTabs.SelectedIndex = 1;
 
             txtNombreRol.Focus();
         }
 
-        private void Eliminar(int Id_Registro)
+        private void Eliminar()
         {
-            if (Id_Registro == 0)
+            if (EDITAR_REGISTRO == false)
             {
                 Utilidad_C.MostrarAlerta_Eliminar_Error(this, this.GetType(), "Primero seleccione un registro para poder eliminarlo");
             }
             else
             {
-                if (Rol_N.RegistrosExistentes(Id_Registro) == false)
+                int Id_Rol = int.Parse(ID_REGISTRO);
+                if (Rol_N.RegistrosExistentes(Id_Rol) == false)
                 {
-                    bool respuesta = Rol_N.Eliminar(Id_Registro);
+                    bool respuesta = Rol_N.Eliminar(Id_Rol);
 
-                    if (respuesta)
+                    if (respuesta == true)
                     {
-                        Utilidad_C.MostrarAlerta_Eliminar_Success(this, this.GetType());
-                        Consultar();
-                        DT_PERMISOS.Rows.Clear();
-                        ConsultarPermisos("0");
+                        Permiso_N Permiso_N = new Permiso_N();
+                        respuesta = Permiso_N.Eliminar(Id_Rol);
+
+                        if (respuesta == true)
+                        {
+                            Utilidad_C.MostrarAlerta_Eliminar_Success(this, this.GetType());
+                            LimpiarCampos();
+                            Consultar();
+                        }
+                        else
+                        {
+                            Utilidad_C.MostrarAlerta_Eliminar_Error_Fatal(this, this.GetType());
+                        }
                     }
                     else
                     {
@@ -287,6 +316,10 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             cmbEstado.SelectedValue = "True";
             txtFechaRegistro.Text = "";
             txtFechaUltimaModificacion.Text = "";
+
+            btnEliminar.Visible = false;
+
+            ObtenerPlantillaPermisos();
 
             txtNombreRol.Focus();
         }
@@ -333,14 +366,21 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             gvPermisos.DataBind();
         }
 
-        private bool GuardarPermisos()
+        private void ObtenerPlantillaPermisos()
         {
-            DataTable dtOriginal = DT_PERMISOS;
+            Permiso_N Permiso_N = new Permiso_N();
+            DT_PERMISOS = Permiso_N.ListarPlantillaPermisos();
 
-            DataTable dtUpdate = dtOriginal.Clone(); // Estructura igual
-            DataTable dtInsert = dtOriginal.Clone();
+            gvPermisos.DataSource = DT_PERMISOS;
+            gvPermisos.DataBind();
+        }
 
-            foreach (DataRow row in dtOriginal.Rows)
+        private bool GuardarPermisos(DataTable dtPermisos)
+        {
+            DataTable dtUpdate = dtPermisos.Clone(); // Estructura igual
+            DataTable dtInsert = dtPermisos.Clone();
+
+            foreach (DataRow row in dtPermisos.Rows)
             {
                 bool existe = Convert.ToBoolean(row["RegistroExistente"]);
                 if (existe)
@@ -348,8 +388,8 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
                 else
                     dtInsert.ImportRow(row);
             }
-            bool RespuestaInsert = false;
-            bool RespuestaUpdate = false;
+            bool RespuestaInsert = true;
+            bool RespuestaUpdate = true;
             Permiso_N Permiso_N = new Permiso_N();  
             
             if (dtInsert.Rows.Count >0)
@@ -370,6 +410,48 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             {
                 return false;
             }
+        }
+
+        private DataTable ObtenerEstadoGridViewPermisos(int Id_Rol)
+        {
+            // Obtener el DataTable original desde ViewState
+            DataTable dtOriginal = DT_PERMISOS;
+
+            // Clonar la estructura
+            DataTable dtCopia = dtOriginal.Clone();
+
+            for (int i = 0; i < gvPermisos.Rows.Count; i++)
+            {
+                GridViewRow fila = gvPermisos.Rows[i];
+
+                // Acceder a los valores desde los controles en el GridView
+                CheckBox chkVer = (CheckBox)fila.FindControl("chkVisualizar");
+                CheckBox chkEditar = (CheckBox)fila.FindControl("chkEditar");
+                CheckBox chkEliminar = (CheckBox)fila.FindControl("chkEliminar");
+
+                // Obtener la fila correspondiente del original
+                DataRow filaOriginal = dtOriginal.Rows[i];
+
+                // Crear una nueva fila en la copia
+                DataRow nuevaFila = dtCopia.NewRow();
+
+                // Copiar columnas necesarias
+                nuevaFila["Id_Rol"] = Id_Rol;
+                nuevaFila["Id_Funcionalidad"] = filaOriginal["Id_Funcionalidad"];
+                nuevaFila["Nombre_Funcionalidad"] = filaOriginal["Nombre_Funcionalidad"];
+                nuevaFila["Nombre_Archivo"] = filaOriginal["Nombre_Archivo"];
+                nuevaFila["RegistroExistente"] = filaOriginal["RegistroExistente"];
+
+                // Asignar los valores actualizados de los CheckBox
+                nuevaFila["Permiso_Visualizar"] = chkVer.Checked;
+                nuevaFila["Permiso_Editar"] = chkEditar.Checked;
+                nuevaFila["Permiso_Eliminar"] = chkEliminar.Checked;
+
+                // Agregar a la tabla copia
+                dtCopia.Rows.Add(nuevaFila);
+            }
+            return dtCopia;
+            // Ahora `dtCopia` tiene todos los permisos con los estados actuales desde el GridView
         }
         #endregion
 
@@ -415,10 +497,7 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
         }
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            LinkButton btn = (LinkButton)sender;
-            int Id_Registro;
-            Id_Registro = System.Convert.ToInt32(btn.CommandArgument.ToString());
-            Eliminar(Id_Registro);
+            Eliminar();
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)

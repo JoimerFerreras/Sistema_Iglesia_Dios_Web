@@ -64,6 +64,52 @@ namespace Datos.Usuarios
             }
         }
 
+        public DataTable ListarPlantillaPermisos()
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"SELECT 
+                                        @Id_Rol AS Id_Rol,
+                                        F.Id_Funcionalidad,
+                                        F.Nombre_Funcionalidad,
+                                        F.Nombre_Archivo,
+                                        ISNULL(P.Permiso_Visualizar, 0) AS Permiso_Visualizar,
+                                        ISNULL(P.Permiso_Editar, 0) AS Permiso_Editar,
+                                        ISNULL(P.Permiso_Eliminar, 0) AS Permiso_Eliminar,
+                                        CASE 
+                                            WHEN P.Id_Rol IS NOT NULL AND P.Id_Funcionalidad IS NOT NULL THEN 1
+                                            ELSE 0
+                                        END AS RegistroExistente
+                                    FROM 
+                                        Funcionalidades F
+                                    LEFT JOIN 
+                                        Permisos P ON P.Id_Funcionalidad = F.Id_Funcionalidad AND P.Id_Rol = @Id_Rol
+                                    WHERE 
+                                        F.Estado = 1
+                                    ORDER BY 
+                                        F.Id_Funcionalidad;";
+
+                    SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id_Rol", 0);
+                cmd.CommandType = CommandType.Text;
+                    try
+                    {
+                        conexion.Open();
+                        SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
         //public Permiso_E ObtenerRegistro(int Id_Rol, int Id_Funcionalidad)
         //{
         //    Permiso_E entidad = new Permiso_E();
@@ -107,12 +153,11 @@ namespace Datos.Usuarios
 
         public bool Agregar(DataTable dtInsert)
         {
-            bool Respuesta = false;
-
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
                 try
                 {
+                    conexion.Open();
                     if (dtInsert.Rows.Count > 0)
                     {
                         using (SqlBulkCopy bulk = new SqlBulkCopy(conexion))
@@ -126,11 +171,12 @@ namespace Datos.Usuarios
 
                             bulk.WriteToServer(dtInsert);
                         }
-
+                        conexion.Close();
                         return true;
                     }
                     else
                     {
+                        conexion.Close();
                         return false;
                     }
                 }
