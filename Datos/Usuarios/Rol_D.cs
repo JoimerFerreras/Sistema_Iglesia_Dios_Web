@@ -120,13 +120,15 @@ namespace Datos.Usuarios
 
         #region Mantenimientos
 
-        public bool Agregar(Rol_E entidad)
+        public int Agregar(Rol_E entidad)
         {
-            bool Respuesta = false;
+            int Id = 0;
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"INSERT INTO Roles(Nombre_Rol, Fecha_Registro, Estado) VALUES(@Nombre_Rol, @Fecha_Registro, @Estado);";
+                string sentencia = $@"INSERT INTO Roles(Nombre_Rol, Fecha_Registro, Estado) VALUES(@Nombre_Rol, @Fecha_Registro, @Estado);
+
+                                        SELECT SCOPE_IDENTITY() AS UltimoRegistroAgregado;";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Nombre_Rol", entidad.Nombre_Rol);
@@ -136,11 +138,16 @@ namespace Datos.Usuarios
                 try
                 {
                     conexion.Open();
-                    int FilasAfectadas = cmd.ExecuteNonQuery();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read()) // Si el DataReader tiene filas entonces hacer lo siguiente
+                        {
+                            Id = Convert.ToInt32(dr["UltimoRegistroAgregado"].ToString());
+                        }
+                    }
                     conexion.Close();
-                    if (FilasAfectadas > 0) Respuesta = true;
 
-                    return Respuesta;
+                    return Id;
                 }
                 catch (Exception ex)
                 {

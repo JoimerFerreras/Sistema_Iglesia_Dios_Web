@@ -60,7 +60,7 @@ namespace Negocio.Usuarios
             }
         }
 
-        public bool Agregar(Rol_E entidad)
+        public int Agregar(Rol_E entidad)
         {
             try
             {

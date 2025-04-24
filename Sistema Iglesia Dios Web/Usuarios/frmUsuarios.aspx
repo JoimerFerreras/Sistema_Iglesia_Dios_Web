@@ -240,7 +240,7 @@
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-3">
-                                    <asp:CheckBox runat="server" ID="chkBloqueo" Text="&nbsp; Bloquear usuario" TabIndex="13"/>
+                                    <asp:CheckBox runat="server" CssClass="form-check-input" ID="chkBloqueo" Text="&nbsp; Bloquear usuario" TabIndex="13"/>
                                 </div>
 
                                 <div class="col-12 col-md-3">

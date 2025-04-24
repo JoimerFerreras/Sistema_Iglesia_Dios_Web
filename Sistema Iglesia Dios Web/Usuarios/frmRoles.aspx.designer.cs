@@ -105,6 +105,15 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
         protected global::Telerik.Web.UI.RadComboBox cmbEstado;
 
         /// <summary>
+        /// Control gvPermisos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvPermisos;
+
+        /// <summary>
         /// Control txtFechaRegistro.
         /// </summary>
         /// <remarks>

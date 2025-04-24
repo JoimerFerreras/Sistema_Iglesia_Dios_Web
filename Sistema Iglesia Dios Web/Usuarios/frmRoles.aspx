@@ -105,6 +105,36 @@
                         </div>
 
                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+                            <div class="col-12 div-gridview">
+                                <asp:GridView ID="gvPermisos" runat="server" AutoGenerateColumns="False" Width="100%">
+                                    <Columns>
+                                        <asp:BoundField DataField="Nombre_Funcionalidad" HeaderText="Nombre de Función" HeaderStyle-Width="20%" ItemStyle-Width="30%" />
+                                        <asp:BoundField DataField="Nombre_Archivo" HeaderText="Pantalla" HeaderStyle-Width="30%" ItemStyle-Width="30%" />
+
+                                        <asp:TemplateField HeaderText="Visualizar">
+                                            <ItemTemplate>
+                                                <asp:CheckBox ID="chkVisualizar" runat="server" Checked='<%# Convert.ToBoolean(Eval("Permiso_Visualizar")) %>' HeaderStyle-Width="10%" ItemStyle-Width="10%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Editar">
+                                            <ItemTemplate>
+                                                <asp:CheckBox ID="chkEditar" runat="server" Checked='<%# Convert.ToBoolean(Eval("Permiso_Editar")) %>' HeaderStyle-Width="10%" ItemStyle-Width="10%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Eliminar">
+                                            <ItemTemplate>
+                                                <asp:CheckBox ID="chkEliminar" runat="server" Checked='<%# Convert.ToBoolean(Eval("Permiso_Eliminar")) %>' HeaderStyle-Width="10%" ItemStyle-Width="10%" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
+
+                            </div>
+                        </div>
+
+                        <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
                             <div>
                                 <i class="fa-solid fa-file-waveform shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Historial de registro y modificación del ingreso</span>
                             </div>

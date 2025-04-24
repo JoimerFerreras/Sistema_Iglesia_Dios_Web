@@ -17,6 +17,7 @@ using System.Data.OleDb;
 using CrystalDecisions.Shared;
 using Entidades.Otros_Parametros;
 using Entidades.Ingresos;
+using Telerik.Web.UI.PivotGrid.Core.Fields;
 
 namespace Sistema_Iglesia_Dios_Web.Usuarios
 {
@@ -70,6 +71,22 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             set
             {
                 ViewState["DT_DATOS"] = value;
+            }
+        }
+
+        public DataTable DT_PERMISOS
+        {
+            get
+            {
+                if (Utilidad_N.ValidarNull(ViewState["DT_PERMISOS"]))
+                {
+                    ViewState["DT_PERMISOS"] = new DataTable();
+                }
+                return (DataTable)ViewState["DT_PERMISOS"];
+            }
+            set
+            {
+                ViewState["DT_PERMISOS"] = value;
             }
         }
 
@@ -172,6 +189,7 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
                             Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
                             LimpiarCampos();
                             Consultar();
+                            GuardarPermisos();
                         }
                         else
                         {
@@ -181,13 +199,14 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
                     else
                     {
                         // Agregar registro
-                        bool salida = Rol_N.Agregar(Rol_E);
+                        int salida = Rol_N.Agregar(Rol_E);
 
-                        if (salida == true)
+                        if (salida > 0)
                         {
                             Utilidad_C.MostrarAlerta_Guardar_Success(this, this.GetType());
                             LimpiarCampos();
                             Consultar();
+                            GuardarPermisos();
                         }
                         else
                         {
@@ -217,6 +236,7 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             {
                 txtFechaUltimaModificacion.Text = string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", Rol_E.Fecha_Ultima_Modificacion);
             }
+            ConsultarPermisos(ID_REGISTRO);
 
             rtsTabulador.Tabs[1].Selected = true;
             rmpTabs.SelectedIndex = 1;
@@ -240,6 +260,8 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
                     {
                         Utilidad_C.MostrarAlerta_Eliminar_Success(this, this.GetType());
                         Consultar();
+                        DT_PERMISOS.Rows.Clear();
+                        ConsultarPermisos("0");
                     }
                     else
                     {
@@ -302,6 +324,53 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             utilidad_C.GenerarReporteExcel(dtParametros, dtReporte, NombresColumnas, NombreReporte, this.Page, null);
         }
 
+        private void ConsultarPermisos(string Id_Rol)
+        {
+            Permiso_N Permiso_N = new Permiso_N();
+            DT_PERMISOS = Permiso_N.Listar(Id_Rol);
+
+            gvPermisos.DataSource = DT_PERMISOS;
+            gvPermisos.DataBind();
+        }
+
+        private bool GuardarPermisos()
+        {
+            DataTable dtOriginal = DT_PERMISOS;
+
+            DataTable dtUpdate = dtOriginal.Clone(); // Estructura igual
+            DataTable dtInsert = dtOriginal.Clone();
+
+            foreach (DataRow row in dtOriginal.Rows)
+            {
+                bool existe = Convert.ToBoolean(row["RegistroExistente"]);
+                if (existe)
+                    dtUpdate.ImportRow(row);
+                else
+                    dtInsert.ImportRow(row);
+            }
+            bool RespuestaInsert = false;
+            bool RespuestaUpdate = false;
+            Permiso_N Permiso_N = new Permiso_N();  
+            
+            if (dtInsert.Rows.Count >0)
+            {
+              RespuestaInsert = Permiso_N.Agregar(dtInsert);
+            }
+
+            if (dtUpdate.Rows.Count > 0)
+            {
+                RespuestaUpdate = Permiso_N.Editar(dtUpdate);
+            }
+
+            if (RespuestaInsert == true && RespuestaUpdate == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         #endregion
 
 
