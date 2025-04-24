@@ -34,7 +34,7 @@
     </style>
     <asp:UpdatePanel runat="server" UpdateMode="Conditional" ID="upPrincipal">
         <Triggers>
-            <%-- <asp:PostBackTrigger ControlID="btnGenerarExcel_Detalle" />--%>
+            <asp:PostBackTrigger ControlID="btnGenerarExcel" />
         </Triggers>
         <ContentTemplate>
 
@@ -84,6 +84,11 @@
                         </div>
 
                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+                            <div>
+                                <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Consulta</span>
+                                <asp:LinkButton runat="server" ID="btnGenerarExcel" CssClass="btn btn-success" OnClick="btnGenerarExcel_Click"><i class="fa-solid fa-file-excel"></i> Generar Excel</asp:LinkButton>
+                            </div>
+                            <div class="linea-separador" style="margin-top: 20px;"></div>
                             <div class="col-12 div-gridview">
                                 <telerik:RadGrid RenderMode="Lightweight" ID="gvDatos" runat="server" Culture="es-DO" Style="overflow-x: auto;" BorderColor="White" MasterTableView-Width="100%" Width="100%" HeaderStyle-Font-Bold="true" AlternatingItemStyle-BackColor="#F1F5FF"
                                     AllowPaging="True" AllowAutomaticUpdates="True" AllowAutomaticInserts="False" MasterTableView-PagerStyle-PageSizeLabelText="Registros" Skin="Bootstrap" HeaderStyle-BackColor="#F1F5FF" PagerStyle-AlwaysVisible="true"

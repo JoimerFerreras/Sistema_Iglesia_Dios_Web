@@ -200,6 +200,42 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             RadMap1.CenterSettings.Latitude = 18.461500;
             RadMap1.CenterSettings.Longitude = -69.896500;
         }
+
+        private void GenerarReporteExcel()
+        {
+            // Se establece una lista con el nombre de las columnas del grid
+            List<string> NombresColumnas = new List<string>();
+            for (int i = 1; i < gvDatos.MasterTableView.Columns.Count; i++)
+            {
+                NombresColumnas.Add(gvDatos.MasterTableView.Columns[i].HeaderText);
+            }
+
+            // Se establece el nombre del reporte
+            string NombreReporte = "Reporte_Log_Accesos_Usuarios";
+            DataTable dtReporte = DT_DATOS.Copy();
+
+            // Se crea una tabla con los parametros de los filtros
+            DataTable dtParametros = new DataTable();
+            dtParametros.Columns.Add("Parametro");
+            dtParametros.Columns.Add("Valor");
+
+            dtParametros.Rows.Add("Iglesia de Dios La 33 Casa de Fe", "");
+            dtParametros.Rows.Add("Log de Accesos de Usuarios");
+            dtParametros.Rows.Add("Fecha/Hora de reporte: " + string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", DateTime.Now));
+            dtParametros.Rows.Add("", "");
+            dtParametros.Rows.Add("Filtros");
+
+            dtParametros.Rows.Add("Fecha inicial: ", string.Format("{0:dd/MM/yyyy}", dtpFechaDesdeFiltro.SelectedDate));
+            dtParametros.Rows.Add("Fecha final: ", string.Format("{0:dd/MM/yyyy}", dtpFechaHastaFiltro.SelectedDate));
+
+            dtParametros.Rows.Add("Usuario: ", cmbUsuario_Filtro.Text);
+            dtParametros.Rows.Add("", "");
+            dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
+
+            // Se llama al metodo de generar reporte de Utilidad_C
+            Utilidad_C utilidad_C = new Utilidad_C();
+            utilidad_C.GenerarReporteExcel(dtParametros, dtReporte, NombresColumnas, NombreReporte, this.Page, null);
+        }
         #endregion
 
 
@@ -257,6 +293,11 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             ID_REGISTRO = btn.CommandArgument.ToString();
             
             VerRegistro();
+        }
+
+        protected void btnGenerarExcel_Click(object sender, EventArgs e)
+        {
+            GenerarReporteExcel();
         }
         #endregion
     }

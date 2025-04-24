@@ -85,7 +85,7 @@
                             <div id="divContenedorInfoUsuario" style="display: inline-block; margin: 0 15px; line-height: 16px; margin-top: 15px;">
                                 <i class="fa-solid fa-circle-user" style="font-size: 40px; color: #2F323A;"></i>
                                 <div style="display: inline-block;">
-                                    <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label><asp:Label runat="server" ID="lblTipoUsuario" Style="display: block; font-size: 12px;">Rol de usuario (Offline)</asp:Label>
+                                    <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label><asp:Label runat="server" ID="lblRolUsuario" Style="display: block; font-size: 12px;">Rol de usuario (Offline)</asp:Label>
                                 </div>
                             </div>
                             <a href="#" id="btnCerrarSesion" style="display: inline-block;" onclick="return CerrarSesionAlert(this);"><i class="fa-solid fa-right-from-bracket" style="margin-bottom: 10px;"></i></a></li>
@@ -177,6 +177,9 @@
                             <a href="#" id="btnRoles" data-tippy-content="Roles y permisos" title=""><i class="fa-solid fa-user-gear"></i><span>Roles y permisos</span></a>
                         </div>
 
+                        <div class="sub-menu_1">
+                            <a href="#" id="btnLogUsuariosAccesos" data-tippy-content="Log de accesos de usuarios" title=""><i class="fa-regular fa-address-book"></i><span>Log de accesos de usuarios</span></a>
+                        </div>
                     </li>
 
                     <li class="item_1" id="acerca_de" title="Acerca de">
@@ -195,7 +198,6 @@
                         <div class="sub-menu_1">
                             <a href="#" id="btnAyuda" data-tippy-content="Ayuda" title=""><i class="fa-solid fa-question"></i><span>Ayuda</span></a>
                         </div>
-
                     </li>
                 </div>
             </div>

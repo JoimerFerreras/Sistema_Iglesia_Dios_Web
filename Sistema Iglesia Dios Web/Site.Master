@@ -85,7 +85,7 @@
                             <div id="divContenedorInfoUsuario" style="display: inline-block; margin: 0 15px; line-height: 16px; margin-top: 15px;">
                                 <i class="fa-solid fa-circle-user" style="font-size: 40px; color: #2F323A;"></i>
                                 <div style="display: inline-block;">
-                                    <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label><asp:Label runat="server" ID="lblTipoUsuario" Style="display: block; font-size: 12px;">Rol de usuario (Offline)</asp:Label>
+                                    <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label><asp:Label runat="server" ID="lblRolUsuario" Style="display: block; font-size: 12px;">Rol de usuario (Offline)</asp:Label>
                                 </div>
                             </div>
                             <a href="#" id="btnCerrarSesion" style="display: inline-block;" onclick="return CerrarSesionAlert(this);"><i class="fa-solid fa-right-from-bracket" style="margin-bottom: 10px;"></i></a></li>

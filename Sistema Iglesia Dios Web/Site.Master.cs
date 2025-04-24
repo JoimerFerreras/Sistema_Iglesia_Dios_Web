@@ -18,15 +18,16 @@ namespace Sistema_Iglesia_Dios_Web
             {
                 //if (Session["TIPO_USUARIO_SESSION"] != null && Session["TIPO_USUARIO_SESSION"].ToString() == "1")
                 //{
-                //    lblTipoUsuario.Text = "Administrador";
+                //    lblRolUsuario.Text = "Administrador";
                 //}
                 //else if (Session["TIPO_USUARIO_SESSION"] != null && Session["TIPO_USUARIO_SESSION"].ToString() == "2")
                 //{
-                //    lblTipoUsuario.Text = "Operativo";
+                //    lblRolUsuario.Text = "Operativo";
                 //    btnConfiguracion_Usuarios.Visible = false;
                 //    btnCambiarPassword.HRef = Utilidad_N.ObtenerRutaServer() + "Usuarios/frmCambiarPassword.aspx";
                 //}
                 lblNombreUsuario.Text = Session["USERNAME_SESSION"].ToString();
+                lblRolUsuario.Text = Session["NOMBRE_ROL_SESSION"].ToString();
             }
             else
             {

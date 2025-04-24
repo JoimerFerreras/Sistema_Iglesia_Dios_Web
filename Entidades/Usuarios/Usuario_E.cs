@@ -13,7 +13,7 @@ namespace Entidades.Usuarios
         public bool Bloqueo { get; set; }
         public int Id_Rol { get; set; }
         public DateTime Fecha_Creacion { get; set; }
-        public DateTime Fecha_Ultima_Modificacion { get; set; }
+        public DateTime? Fecha_Ultima_Modificacion { get; set; }
         public string Celular { get; set; }
         public string Telefono { get; set; }
         public string Correo { get; set; }
@@ -21,5 +21,7 @@ namespace Entidades.Usuarios
         public byte[] Password { get; set; }
         public bool Verificacion_Dos_Pasos { get; set; }
         public bool RestablecerPassword { get; set; }
+
+        public string Nombre_Rol { get; set; }
     }
 }

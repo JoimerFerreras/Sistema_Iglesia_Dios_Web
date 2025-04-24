@@ -27,7 +27,7 @@ namespace Datos.Usuarios
                                             WHEN '1' THEN 'Activo' 
                                         END AS Estado 
 
-                                        FROM Roles";
+                                        FROM Roles ORDER BY Nombre_Rol ASC";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.CommandType = CommandType.Text;
                 try
@@ -94,7 +94,11 @@ namespace Datos.Usuarios
                         entidad.Id_Rol = int.Parse(row["Id_Rol"].ToString());
                         entidad.Nombre_Rol = row["Nombre_Rol"].ToString();
                         entidad.Fecha_Registro = DateTime.Parse(row["Fecha_Registro"].ToString());
-                        entidad.Fecha_Ultima_Modificacion = DateTime.Parse(row["Fecha_Ultima_Modificacion"].ToString());
+                        if (row["Fecha_Ultima_Modificacion"] != DBNull.Value)
+                        {
+                            entidad.Fecha_Ultima_Modificacion = DateTime.Parse(row["Fecha_Ultima_Modificacion"].ToString());
+                        }
+
                         if (row["Estado"].ToString() == "True")
                             entidad.Estado = true;
                         else

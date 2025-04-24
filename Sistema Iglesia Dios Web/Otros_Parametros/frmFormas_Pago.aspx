@@ -25,12 +25,12 @@
                     <div>
                         Estado
                     </div>
-                    <telerik:RadComboBox ID="cmbEstado" runat="server" Width="100%" ClientIDMode="Static" style="max-width: 230px;"
+                    <telerik:RadComboBox ID="cmbEstado" runat="server" Width="100%" ClientIDMode="Static" Style="max-width: 230px;"
                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                         Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
                         <Items>
-                            <telerik:RadComboBoxItem Text="Activo" Value="True" Selected="true"/>
+                            <telerik:RadComboBoxItem Text="Activo" Value="True" Selected="true" />
                             <telerik:RadComboBoxItem Text="Inactivo" Value="False" />
                         </Items>
                     </telerik:RadComboBox>
@@ -71,14 +71,14 @@
                             </telerik:GridBoundColumn>
 
                             <telerik:GridTemplateColumn HeaderText="Estado">
-                                    <HeaderStyle HorizontalAlign="Center" Width="10%" />
-                                    <ItemStyle HorizontalAlign="Center" Width="10%" />
-                                    <ItemTemplate>
-                                        <div runat="server" commandargument='<%# Eval("Estado") %>' class='<%# GetStatusColor(Eval("Estado")) %>'>
-                                            <asp:LinkButton runat="server" CommandArgument='<%# Eval("Estado") %>' CssClass='<%# GetStatusColor(Eval("Estado")) %>' Text='<%# GetStatusText(Eval("Estado")) %>' />
-                                        </div>
-                                    </ItemTemplate>
-                                </telerik:GridTemplateColumn>
+                                <HeaderStyle HorizontalAlign="Center" Width="10%" />
+                                <ItemStyle HorizontalAlign="Center" Width="10%" />
+                                <ItemTemplate>
+                                    <div runat="server" commandargument='<%# Eval("Estado") %>' class='<%# GetStatusColor(Eval("Estado")) %>'>
+                                        <asp:LinkButton runat="server" CommandArgument='<%# Eval("Estado") %>' CssClass='<%# GetStatusColor(Eval("Estado")) %>' Text='<%# GetStatusText(Eval("Estado")) %>' />
+                                    </div>
+                                </ItemTemplate>
+                            </telerik:GridTemplateColumn>
                         </Columns>
                     </MasterTableView>
                 </telerik:RadGrid>

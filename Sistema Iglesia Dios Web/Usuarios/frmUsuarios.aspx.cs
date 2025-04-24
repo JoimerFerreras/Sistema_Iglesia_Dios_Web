@@ -216,7 +216,6 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Fatal(this, this.GetType());
             }
-
         }
 
         private void VerRegistro()

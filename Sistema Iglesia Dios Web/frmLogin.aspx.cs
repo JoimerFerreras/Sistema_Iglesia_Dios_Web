@@ -226,6 +226,7 @@ namespace Sistema_Iglesia_Dios_Web
                             Session["ID_USUARIO_SESSION"] = usuario.Id_Usuario.ToString();
                             Session["USERNAME_SESSION"] = usuario.Usuario.ToString();
                             Session["ID_ROL_SESSION"] = usuario.Id_Rol.ToString();
+                            Session["NOMBRE_ROL_SESSION"] = usuario.Nombre_Rol.ToString();
                             Session["EMAIL_USUARIO_SESSION"] = usuario.Correo.ToString();
                             Session["BLOQUEO_USUARIO_SESSION"] = usuario.Bloqueo.ToString();
 

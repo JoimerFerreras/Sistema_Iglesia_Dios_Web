@@ -33,13 +33,13 @@ namespace Sistema_Iglesia_Dios_Web
         protected global::System.Web.UI.WebControls.Label lblNombreUsuario;
 
         /// <summary>
-        /// Control lblTipoUsuario.
+        /// Control lblRolUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTipoUsuario;
+        protected global::System.Web.UI.WebControls.Label lblRolUsuario;
 
         /// <summary>
         /// Control upPrincipal.

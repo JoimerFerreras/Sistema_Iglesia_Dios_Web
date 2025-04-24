@@ -49,6 +49,7 @@ namespace Datos.Usuarios
                             entidad.Password = (byte[])dr["Password"];
                             entidad.Correo = dr["Correo"].ToString();
                             entidad.Id_Rol = Convert.ToInt32(dr["Id_Rol"].ToString());
+                            entidad.Nombre_Rol = dr["Nombre_Rol"].ToString();
                             entidad.Bloqueo = bool.Parse(dr["Bloqueo"].ToString());
                             entidad.Verificacion_Dos_Pasos = bool.Parse(dr["Verificacion_Dos_Pasos"].ToString());
                             entidad.RestablecerPassword = bool.Parse(dr["RestablecerPassword"].ToString());
