@@ -58,7 +58,7 @@ namespace Negocio.Otros_Parametros
             {
                 Utilidad_N utilidad = new Utilidad_N();
 
-                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Descripcion", "Descripciones");
+                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Descripcion", "dbo.Descripciones");
             }
             catch (Exception ex)
             {

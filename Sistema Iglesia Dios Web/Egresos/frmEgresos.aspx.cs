@@ -381,7 +381,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                     egreso_E.Id_Descripcion = int.Parse(cmbDescripcion_Egreso.SelectedValue);
                     egreso_E.Monto = double.Parse(txtMonto.Text);
                     egreso_E.Fecha_Egreso = dtpFechaEgreso.SelectedDate.Value;
-                    egreso_E.Id_Usuario_Registro = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
+                    egreso_E.Id_Usuario = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
                     egreso_E.Fecha_Registro = DateTime.Now;
                     egreso_E.Id_Usuario_Ultima_Modificacion = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
                     egreso_E.Fecha_Ultima_Modificacion = DateTime.Now;
@@ -1125,7 +1125,5 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         #endregion
 
         #endregion
-
-
     }
 }

@@ -158,14 +158,14 @@ namespace Datos.Ingresos
                                         I.Id_Forma_Pago,
                                         I.Comentario,
                                         I.Id_Miscelaneo,
-                                        I.Id_Usuario_Registro,
+                                        I.Id_Usuario,
                                         U1.Nombre1 + ' ' + U1.Apellido1 AS Nombre_Usuario_Registro,
                                         I.Fecha_Registro,
                                         I.Id_Usuario_Ultima_Modificacion,
                                         U2.Nombre1 + ' ' + U2.Apellido1 AS Nombre_Usuario_Ultima_Modificacion,
                                         I.Fecha_Ultima_Modificacion
                                         FROM Ingresos I
-                                        LEFT JOIN Usuarios U1 ON U1.Id_Usuario = I.Id_Usuario_Registro
+                                        LEFT JOIN Usuarios U1 ON U1.Id_Usuario = I.Id_Usuario
                                         LEFT JOIN Usuarios U2 ON U2.Id_Usuario = I.Id_Usuario_Ultima_Modificacion
 
                                         WHERE I.Id_Ingreso = @Id";
@@ -188,7 +188,7 @@ namespace Datos.Ingresos
                         entidad.Id_Forma_Pago = int.Parse(row["Id_Forma_Pago"].ToString());
                         entidad.Comentario = row["Comentario"].ToString();
                         entidad.Id_Miscelaneo = int.Parse(row["Id_Miscelaneo"].ToString());
-                        entidad.Id_Usuario_Registro = int.Parse(row["Id_Usuario_Registro"].ToString());
+                        entidad.Id_Usuario = int.Parse(row["Id_Usuario"].ToString());
                         entidad.Nombre_Usuario_Registro = row["Nombre_Usuario_Registro"].ToString();
                         entidad.Fecha_Registro = DateTime.Parse(row["Fecha_Registro"].ToString());
                         entidad.Id_Usuario_Ultima_Modificacion = int.Parse(row["Id_Usuario_Ultima_Modificacion"].ToString());
@@ -225,7 +225,7 @@ namespace Datos.Ingresos
                                         Id_Descripcion,
                                         Monto,
                                         Fecha_Ingreso,
-                                        Id_Usuario_Registro,
+                                        Id_Usuario,
                                         Fecha_Registro,
                                         Id_Usuario_Ultima_Modificacion,
                                         Id_Forma_Pago,
@@ -237,7 +237,7 @@ namespace Datos.Ingresos
                                         @Id_Descripcion,
                                         @Monto,
                                         @Fecha_Ingreso,
-                                        @Id_Usuario_Registro,
+                                        @Id_Usuario,
                                         @Fecha_Registro,
                                         @Id_Usuario_Ultima_Modificacion,
                                         @Id_Forma_Pago,
@@ -251,7 +251,7 @@ namespace Datos.Ingresos
                 cmd.Parameters.AddWithValue("@Id_Descripcion", entidad.Id_Descripcion);
                 cmd.Parameters.AddWithValue("@Monto", entidad.Monto);
                 cmd.Parameters.AddWithValue("@Fecha_Ingreso", entidad.Fecha_Ingreso);
-                cmd.Parameters.AddWithValue("@Id_Usuario_Registro", entidad.Id_Usuario_Registro);
+                cmd.Parameters.AddWithValue("@Id_Usuario", entidad.Id_Usuario);
                 cmd.Parameters.AddWithValue("@Fecha_Registro", entidad.Fecha_Registro);
                 cmd.Parameters.AddWithValue("@Id_Usuario_Ultima_Modificacion", "0");
                 cmd.Parameters.AddWithValue("@Id_Forma_Pago", entidad.Id_Forma_Pago);

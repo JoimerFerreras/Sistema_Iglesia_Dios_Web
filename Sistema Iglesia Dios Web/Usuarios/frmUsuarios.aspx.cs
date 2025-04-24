@@ -259,14 +259,16 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             txtNombre1.Focus();
         }
 
-        private void Eliminar(int Id_Registro)
+        private void Eliminar()
         {
-            if (Id_Registro == 0)
+            if (EDITAR_REGISTRO == false)
             {
                 Utilidad_C.MostrarAlerta_Eliminar_Error(this, this.GetType(), "Primero seleccione un registro para poder eliminarlo");
             }
             else
             {
+                int Id_Registro = int.Parse(ID_REGISTRO);
+
                 if (Usuario_N.RegistrosExistentes(Id_Registro) == false)
                 {
                     bool respuesta = Usuario_N.Eliminar(Id_Registro);
@@ -377,10 +379,7 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
         }
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            LinkButton btn = (LinkButton)sender;
-            int Id_Registro;
-            Id_Registro = System.Convert.ToInt32(btn.CommandArgument.ToString());
-            Eliminar(Id_Registro);
+            Eliminar();
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)

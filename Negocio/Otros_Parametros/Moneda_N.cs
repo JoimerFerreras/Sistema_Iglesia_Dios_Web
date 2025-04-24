@@ -52,7 +52,7 @@ namespace Negocio.Otros_Parametros
             {
                 Utilidad_N utilidad = new Utilidad_N();
 
-                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Moneda", "Monedas");
+                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Moneda", "dbo.Monedas");
             }
             catch (Exception ex)
             {

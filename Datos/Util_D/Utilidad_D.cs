@@ -18,51 +18,50 @@ namespace Datos.Util_D
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"DECLARE @ExcludedTable NVARCHAR(255) = 'dbo.{NombreTablaExcluir}' -- Reemplaza 'NombreDeLaTablaAExcluir' con el nombre de la tabla que deseas excluir
-                                        DECLARE @TableName NVARCHAR(255)
-                                        DECLARE @SQL NVARCHAR(MAX)
+                string sentencia = $@"
+                                        DECLARE @TableName NVARCHAR(255);
+                                        DECLARE @SQL NVARCHAR(MAX);
 
-                                        -- Crear una tabla temporal para almacenar los resultados
                                         CREATE TABLE #TableCounts (
                                             NombreTabla NVARCHAR(255),
                                             CantidadRegistros INT
-                                        )
+                                        );
 
-                                        -- Declarar un cursor para iterar a través de las tablas que contienen el campo ""Id_Descripcion_Ingreso""
                                         DECLARE TableCursor CURSOR FOR
                                         SELECT TABLE_SCHEMA + '.' + TABLE_NAME
                                         FROM INFORMATION_SCHEMA.COLUMNS
-                                        WHERE COLUMN_NAME = '{NombreCampo}'
-                                          AND TABLE_SCHEMA + '.' + TABLE_NAME != @ExcludedTable
+                                        WHERE COLUMN_NAME = @NombreCampo
+                                          AND TABLE_SCHEMA + '.' + TABLE_NAME NOT IN (
+                                              SELECT TRIM(value) FROM STRING_SPLIT(@TablasExcluir, ',')
+                                          );
 
-                                        OPEN TableCursor
+                                        OPEN TableCursor;
 
-                                        FETCH NEXT FROM TableCursor INTO @TableName
+                                        FETCH NEXT FROM TableCursor INTO @TableName;
 
                                         WHILE @@FETCH_STATUS = 0
                                         BEGIN
-                                            -- Crear el SQL dinámico para contar los registros donde Id_Descripcion_Ingreso = 1
-                                            SET @SQL = 'INSERT INTO #TableCounts (NombreTabla, CantidadRegistros) 
-                                                        SELECT ''' + @TableName + ''', COUNT(*) 
-                                                        FROM ' + @TableName + ' 
-                                                        WHERE {NombreCampo} = {Id_Valor}'
+                                            SET @SQL = 
+                                                'INSERT INTO #TableCounts (NombreTabla, CantidadRegistros)
+                                                 SELECT ''' + @TableName + ''', COUNT(*) 
+                                                 FROM ' + @TableName + ' 
+                                                 WHERE ' + QUOTENAME(@NombreCampo) + ' = @IdValor';
 
-                                            -- Ejecutar el SQL dinámico
-                                            EXEC sp_executesql @SQL
+                                            EXEC sp_executesql @SQL, N'@IdValor NVARCHAR(255)', @IdValor;
 
-                                            FETCH NEXT FROM TableCursor INTO @TableName
+                                            FETCH NEXT FROM TableCursor INTO @TableName;
                                         END
 
-                                        CLOSE TableCursor
-                                        DEALLOCATE TableCursor
+                                        CLOSE TableCursor;
+                                        DEALLOCATE TableCursor;
 
-                                        -- Seleccionar los resultados
-                                        SELECT * FROM #TableCounts
-
-                                        -- Limpiar la tabla temporal
-                                        DROP TABLE #TableCounts";
+                                        SELECT * FROM #TableCounts;
+                                        DROP TABLE #TableCounts;";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@IdValor", Id_Valor);
+                cmd.Parameters.AddWithValue("@NombreCampo", NombreCampo);
+                cmd.Parameters.AddWithValue("@TablasExcluir", NombreTablaExcluir);
                 cmd.CommandType = CommandType.Text;
                 try
                 {

@@ -381,7 +381,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
                     ingreso_E.Id_Descripcion = int.Parse(cmbDescripcion_Ingreso.SelectedValue);
                     ingreso_E.Monto = double.Parse(txtMonto.Text);
                     ingreso_E.Fecha_Ingreso = dtpFechaIngreso.SelectedDate.Value;
-                    ingreso_E.Id_Usuario_Registro = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
+                    ingreso_E.Id_Usuario = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
                     ingreso_E.Fecha_Registro = DateTime.Now;
                     ingreso_E.Id_Usuario_Ultima_Modificacion = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
                     ingreso_E.Fecha_Ultima_Modificacion = DateTime.Now;
@@ -1125,7 +1125,5 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         #endregion
 
         #endregion
-
-
     }
 }

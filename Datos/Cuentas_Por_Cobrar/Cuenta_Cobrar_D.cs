@@ -221,15 +221,15 @@ namespace Datos.Cuenta_Por_Cobrar
                                             CPC.Tipo_Documento,
                                             CPC.No_Documento,
                                             CPC.Comentario,
-                                            Id_Usuario_Registro,
+                                            CPC.Id_Usuario,
 	                                        U1.Nombre1 + ' ' + U1.Apellido1 AS Nombre_Usuario_Registro,
 	                                        CPC.Fecha_Registro,
                                             Id_Usuario_Ultima_Modificacion,
 	                                        U2.Nombre1 + ' ' + U2.Apellido1 AS Nombre_Usuario_Ultima_Modificacion,
 	                                        CPC.Fecha_Ultima_Modificacion
                                         FROM Cuentas_Por_Cobrar CPC
-                                        LEFT JOIN Usuarios U1 ON U1.Id_Usuario = CPc.Id_Usuario_Registro
-                                        LEFT JOIN Usuarios U2 ON U2.Id_Usuario = CPc.Id_Usuario_Ultima_Modificacion
+                                        LEFT JOIN Usuarios U1 ON U1.Id_Usuario = CPC.Id_Usuario
+                                        LEFT JOIN Usuarios U2 ON U2.Id_Usuario = CPC.Id_Usuario_Ultima_Modificacion
 
                                         WHERE CPC.Id_Cuenta_Cobrar = @Id";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
@@ -254,7 +254,7 @@ namespace Datos.Cuenta_Por_Cobrar
                         entidad.No_Documento = row["No_Documento"].ToString();
                         entidad.Comentario = row["Comentario"].ToString();
 
-                        entidad.Id_Usuario_Registro = int.Parse(row["Id_Usuario_Registro"].ToString());
+                        entidad.Id_Usuario = int.Parse(row["Id_Usuario"].ToString());
                         entidad.Nombre_Usuario_Registro = row["Nombre_Usuario_Registro"].ToString();
                         entidad.Fecha_Registro = DateTime.Parse(row["Fecha_Registro"].ToString());
                         entidad.Id_Usuario_Ultima_Modificacion = int.Parse(row["Id_Usuario_Ultima_Modificacion"].ToString());
@@ -296,7 +296,7 @@ namespace Datos.Cuenta_Por_Cobrar
                                         Tipo_Documento,
                                         No_Documento,
                                         Comentario,
-                                        Id_Usuario_Registro,
+                                        Id_Usuario,
                                         Fecha_Registro,
                                         Id_Usuario_Ultima_Modificacion)
 
@@ -310,7 +310,7 @@ namespace Datos.Cuenta_Por_Cobrar
                                         @Tipo_Documento,
                                         @No_Documento,
                                         @Comentario,
-                                        @Id_Usuario_Registro,
+                                        @Id_Usuario,
                                         @Fecha_Registro,
                                         @Id_Usuario_Ultima_Modificacion);
 
@@ -326,7 +326,7 @@ namespace Datos.Cuenta_Por_Cobrar
                 cmd.Parameters.AddWithValue("@Tipo_Documento", entidad.Tipo_Documento);
                 cmd.Parameters.AddWithValue("@No_Documento", entidad.No_Documento);
                 cmd.Parameters.AddWithValue("@Comentario", entidad.Comentario);
-                cmd.Parameters.AddWithValue("@Id_Usuario_Registro", entidad.Id_Usuario_Registro);
+                cmd.Parameters.AddWithValue("@Id_Usuario", entidad.Id_Usuario);
                 cmd.Parameters.AddWithValue("@Fecha_Registro", entidad.Fecha_Registro);
                 cmd.Parameters.AddWithValue("@Id_Usuario_Ultima_Modificacion", "0");
                 cmd.CommandType = CommandType.Text;

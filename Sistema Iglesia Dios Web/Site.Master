@@ -42,6 +42,14 @@
     <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <style>
+        ul.dropdown-menu {
+            margin: unset;
+            padding: 0.5rem 0;
+            list-style: none;
+        }
+    </style>
 </head>
 
 <body onload="asignarEnlace()" class="fondo">
@@ -80,15 +88,35 @@
                         <i class="fas fa-bars"></i>
                     </div>
                     <ul>
+                        <li class="nav-item dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown link
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+
                         <li>
                             <asp:Label runat="server" ID="lblNombrePantalla" Text="[Nombre Pantalla]" ClientIDMode="Static" Style="position: absolute; top: 18px; left: 325px; font-size: 22px; font-weight: bold;"></asp:Label>
+
                             <div id="divContenedorInfoUsuario" style="display: inline-block; margin: 0 15px; line-height: 16px; margin-top: 15px;">
                                 <i class="fa-solid fa-circle-user" style="font-size: 40px; color: #2F323A;"></i>
                                 <div style="display: inline-block;">
                                     <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label><asp:Label runat="server" ID="lblRolUsuario" Style="display: block; font-size: 12px;">Rol de usuario (Offline)</asp:Label>
                                 </div>
                             </div>
-                            <a href="#" id="btnCerrarSesion" style="display: inline-block;" onclick="return CerrarSesionAlert(this);"><i class="fa-solid fa-right-from-bracket" style="margin-bottom: 10px;"></i></a></li>
+                        </li>
+                        <li>
+
+                            <a href="#" id="btnCerrarSesion" style="display: inline-block; margin-top: 10px;" onclick="return CerrarSesionAlert(this);">
+                                <i class="fa-solid fa-right-from-bracket fa-lg" style="margin-bottom: 10px;"></i>
+                            </a>
+                        </li>
+                       
+
+
                     </ul>
                 </div>
             </div>

@@ -9,7 +9,7 @@ namespace Entidades.Ingresos
         public int Id_Descripcion { get; set; }
         public double Monto { get; set; }
         public DateTime Fecha_Ingreso { get; set; }
-        public int Id_Usuario_Registro { get; set; }
+        public int Id_Usuario { get; set; }
         public string Nombre_Usuario_Registro { get; set; }
         public DateTime Fecha_Registro { get; set; }
         public int Id_Usuario_Ultima_Modificacion { get; set; }

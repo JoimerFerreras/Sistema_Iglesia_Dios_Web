@@ -64,7 +64,7 @@ namespace Negocio.Usuarios
             {
                 Utilidad_N utilidad = new Utilidad_N();
 
-                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Rol", "Id_Rol");
+                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Usuario", "dbo.Usuarios, dbo.Log_Usuarios_Accesos");
             }
             catch (Exception ex)
             {

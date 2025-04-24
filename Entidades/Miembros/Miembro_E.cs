@@ -30,5 +30,12 @@ namespace Entidades.Miembros
         public string Comentarios_Diacono_Lider_Ministerio { get; set; }
         public string Revisado_Por { get; set; }
         public string Autorizado_Por { get; set; }
+
+        public int Id_Usuario { get; set; }
+        public string Nombre_Usuario_Registro { get; set; }
+        public DateTime Fecha_Registro { get; set; }
+        public int Id_Usuario_Ultima_Modificacion { get; set; }
+        public string Nombre_Usuario_Ultima_Modificacion { get; set; }
+        public DateTime? Fecha_Ultima_Modificacion { get; set; }
     }
 }

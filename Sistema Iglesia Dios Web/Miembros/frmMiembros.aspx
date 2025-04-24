@@ -39,26 +39,26 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Tipo de fecha
-                    <telerik:RadRadioButtonList runat="server" ID="rbtnTipoFecha" RepeatDirection="Horizontal" RepeatColumns="5" TabIndex="1" Direction="Horizontal" RenderMode="Lightweight" Skin="Bootstrap" AutoPostBack="false">
-                        <Items>
-                            <telerik:ButtonListItem Value="2" Text="Fecha de miembro" Selected="True"></telerik:ButtonListItem>
-                            <telerik:ButtonListItem Value="1" Text="Fecha de nacimiento"></telerik:ButtonListItem>
-                        </Items>
-                    </telerik:RadRadioButtonList>
+                                    <telerik:RadRadioButtonList runat="server" ID="rbtnTipoFecha" RepeatDirection="Horizontal" RepeatColumns="5" TabIndex="1" Direction="Horizontal" RenderMode="Lightweight" Skin="Bootstrap" AutoPostBack="false">
+                                        <Items>
+                                            <telerik:ButtonListItem Value="2" Text="Fecha de miembro" Selected="True"></telerik:ButtonListItem>
+                                            <telerik:ButtonListItem Value="1" Text="Fecha de nacimiento"></telerik:ButtonListItem>
+                                        </Items>
+                                    </telerik:RadRadioButtonList>
                                 </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-3">
                                     Fecha inicial
-                    <br>
+                                   <br>
                                     <telerik:RadDatePicker ID="dtpFechaDesdeFiltro" runat="server" Width="100%" Culture="es-DO" TabIndex="2" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
                                         <DateInput ID="DateInput9" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                                     </telerik:RadDatePicker>
                                 </div>
                                 <div class="col-12 col-md-3">
                                     Fecha final
-                    <br>
+                                    <br>
                                     <telerik:RadDatePicker ID="dtpFechaHastaFiltro" runat="server" Width="100%" Culture="es-DO" TabIndex="3" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
                                         <DateInput ID="DateInput10" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                                     </telerik:RadDatePicker>
@@ -66,7 +66,7 @@
 
                                 <div class="col-12 col-md-6">
                                     Nombre, Apellido, Nombre de pila o ID
-                    <asp:TextBox runat="server" ID="txtTextoBusquedaFiltro" CssClass="form-control form-control" Width="100%" placeholder="Introducir nombre, apellido, nombre de pila o ID" MaxLength="100" TabIndex="2"></asp:TextBox>
+                                   <asp:TextBox runat="server" ID="txtTextoBusquedaFiltro" CssClass="form-control form-control" Width="100%" placeholder="Introducir nombre, apellido, nombre de pila o ID" MaxLength="100" TabIndex="2"></asp:TextBox>
                                 </div>
                             </div>
 

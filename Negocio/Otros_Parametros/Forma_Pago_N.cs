@@ -52,7 +52,7 @@ namespace Negocio.Otros_Parametros
             {
                 Utilidad_N utilidad = new Utilidad_N();
 
-                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Forma_Pago", "Formas_Pago");
+                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Forma_Pago", "dbo.Formas_Pago");
             }
             catch (Exception ex)
             {

@@ -399,7 +399,7 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
                     Cuenta_Pagar_E.No_Documento = txtNo_Documento.Text;
                     Cuenta_Pagar_E.Comentario = txtComentario.Text;
 
-                    Cuenta_Pagar_E.Id_Usuario_Registro = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
+                    Cuenta_Pagar_E.Id_Usuario = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
                     Cuenta_Pagar_E.Fecha_Registro = DateTime.Now;
                     Cuenta_Pagar_E.Id_Usuario_Ultima_Modificacion = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
                     Cuenta_Pagar_E.Fecha_Ultima_Modificacion = DateTime.Now;

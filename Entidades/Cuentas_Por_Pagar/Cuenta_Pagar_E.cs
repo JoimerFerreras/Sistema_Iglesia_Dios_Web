@@ -14,7 +14,7 @@ namespace Entidades.Cuentas_Por_Pagar
         public string Tipo_Documento { get; set; } // Pueden ser FT, NC, RS, o ND
         public string No_Documento { get; set; } // Puede ser no. factura o demas...
         public string Comentario { get; set; }
-        public int Id_Usuario_Registro { get; set; }
+        public int Id_Usuario { get; set; }
         public string Nombre_Usuario_Registro { get; set; }
         public DateTime Fecha_Registro { get; set; }
         public int Id_Usuario_Ultima_Modificacion { get; set; }
