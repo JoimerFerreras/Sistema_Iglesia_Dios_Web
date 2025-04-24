@@ -43,13 +43,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
-    <style>
-        ul.dropdown-menu {
-            margin: unset;
-            padding: 0.5rem 0;
-            list-style: none;
-        }
-    </style>
+
 </head>
 
 <body onload="asignarEnlace()" class="fondo">
@@ -87,37 +81,35 @@
                     <div class="sidebar_1-btn_1" id="BotonMenu">
                         <i class="fas fa-bars"></i>
                     </div>
-                    <ul>
-                        <li class="nav-item dropdown">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown link
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
+                    <asp:Label runat="server" ID="lblNombrePantalla" Text="[Nombre Pantalla]" ClientIDMode="Static" Style="position: absolute; top: 18px; left: 325px; font-size: 22px; font-weight: bold;"></asp:Label>
 
-                        <li>
-                            <asp:Label runat="server" ID="lblNombrePantalla" Text="[Nombre Pantalla]" ClientIDMode="Static" Style="position: absolute; top: 18px; left: 325px; font-size: 22px; font-weight: bold;"></asp:Label>
-
-                            <div id="divContenedorInfoUsuario" style="display: inline-block; margin: 0 15px; line-height: 16px; margin-top: 15px;">
-                                <i class="fa-solid fa-circle-user" style="font-size: 40px; color: #2F323A;"></i>
-                                <div style="display: inline-block;">
-                                    <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label><asp:Label runat="server" ID="lblRolUsuario" Style="display: block; font-size: 12px;">Rol de usuario (Offline)</asp:Label>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="dropdown">
+                            <div id="divContenedorInfoUsuario"
+                                class="dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                style="cursor: pointer; margin: 0 15px; line-height: 16px; display: flex; align-items: center;  border-radius: 10px; box-shadow: 0px 1px 10px rgba(0,0,0,0.2); padding:6px 10px 6px 10px; background-color: white;">
+                                <i class="fa-solid fa-circle-user" style="font-size: 40px; color: #2F323A; margin-right: 8px;"></i>
+                                <div style="margin-right: 15px;">
+                                    <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label>
+                                    <asp:Label runat="server" ID="lblRolUsuario" Style="display: block; font-size: 12px;">Rol de usuario (Offline)</asp:Label>
                                 </div>
                             </div>
-                        </li>
-                        <li>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Ver información de perfil</a></li>
+                                <li><a class="dropdown-item" href="#">Cambiar mi contraseña</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" id="btnCerrarSesion" onclick="return CerrarSesionAlert(this);" href="#">Cerrar sesión</a></li>
+                            </ul>
+                        </div>
 
-                            <a href="#" id="btnCerrarSesion" style="display: inline-block; margin-top: 10px;" onclick="return CerrarSesionAlert(this);">
-                                <i class="fa-solid fa-right-from-bracket fa-lg" style="margin-bottom: 10px;"></i>
-                            </a>
-                        </li>
-                       
 
+                        <a href="#" id="btnNotificaciones" class="icon-btn" style="box-shadow: 0px 1px 10px rgba(0,0,0,0.2); padding:14px 18px 14px 18px; background-color: white; border-radius: 10px; color:black;">
+                            <i class="fa-solid fa-bell fa-lg" style="margin-bottom: 10px;"></i>
+                        </a>
+                    </div>
 
-                    </ul>
                 </div>
             </div>
             <!--header_1 menu_1 end-->
@@ -245,10 +237,56 @@
             <!--main container end-->
         </div>
         <!--wrapper_1 end-->
+
     </form>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
     </asp:PlaceHolder>
+    <style type="text/css">
+        .dropdown-menu {
+            display: none; /* oculto por defecto */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            min-width: 10rem;
+            padding: 0.5rem 0;
+            margin: 0;
+            font-size: 1rem;
+            color: #212529;
+            text-align: left;
+            background-color: #fff;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.175);
+            display: none !important; /* 👈 fuerza que no se muestre por defecto */
+        }
+
+            .dropdown-menu.show {
+                display: block !important; /* 👈 permite a Bootstrap mostrarlo solo al click */
+            }
+
+
+            .dropdown-menu .dropdown-item {
+                display: block;
+                width: 100%;
+                clear: both;
+                font-weight: 400;
+                color: #212529;
+                text-align: inherit;
+                white-space: nowrap;
+                background-color: transparent;
+                border: 0;
+                padding: 0.25rem 1.5rem;
+            }
+
+                .dropdown-menu .dropdown-item:hover {
+                    background-color: #f8f9fa; /* color claro de hover */
+                    color: #212529;
+                }
+    </style>
 </body>
 <script src="../Recursos/Javascript/scripts_master.js" type="text/javascript" charset="ISO-8859-1"></script>
+
+
 </html>

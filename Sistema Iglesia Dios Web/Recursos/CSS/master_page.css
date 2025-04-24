@@ -64,7 +64,7 @@ body {
             display: flex;
         }
 
-            .wrapper_1 .header_1 .header_1-menu_1 ul li a {
+            /*   .wrapper_1 .header_1 .header_1-menu_1 ul li a {
                 background-color: transparent;
                 color: #000;
                 display: block;
@@ -83,7 +83,28 @@ body {
                 .wrapper_1 .header_1 .header_1-menu_1 ul li a:hover {
                     background-color: transparent;
                     color: #1E90FF;
+                }*/
+
+            .wrapper_1 .header_1 .header_1-menu_1 ul li.icon-btn a {
+                background-color: transparent;
+                color: #000;
+                display: block;
+                margin: 0 0px;
+                font-size: 18px;
+                width: 33px;
+                height: 34px;
+                line-height: 50px;
+                text-align: center;
+                border-radius: 50%;
+                transition: 0.3s;
+            }
+
+                .wrapper_1 .header_1 .header_1-menu_1 ul li.icon-btn a:hover {
+                    background-color: transparent;
+                    color: #1E90FF;
                 }
+
+
 
 .wrapper_1 .sidebar_1 {
     z-index: 1;

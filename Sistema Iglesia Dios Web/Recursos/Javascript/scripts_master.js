@@ -108,8 +108,8 @@ function asignarEnlace() {
 // Tooltip
 // With the above scripts loaded, you can call `tippy()` with a CSS
 // selector and a `content` prop:
-tippy('#btnCerrarSesion', {
-    content: 'Cerrar sesión',
+tippy('#btnNotificaciones', {
+    content: 'Notificaciones',
     placement: 'bottom',
     arrow: true,
 });
