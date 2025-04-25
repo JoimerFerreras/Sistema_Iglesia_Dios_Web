@@ -244,12 +244,21 @@
                 <button type="button" onclick="cerrarPanelNotificaciones()" class="btn-close"></button>
 
             </div>
-            <div class="panel-body">
+            <div class="panel-body" id="divContenedorNotificaciones" runat="server">
                 <div class="notificacion notificacion-info">
                     <i class="fa-solid fa-circle-info icono-notificacion"></i>
                     <div class="contenido-notificacion">
                         <strong>Info:</strong> Esta es una notificación informativa.
                          <span class="hora-notificacion">hace 5 minutos</span>
+                    </div>
+                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                </div>
+
+                <div class="notificacion notificacion-system">
+                    <i class="fa-solid fa-gear icono-notificacion"></i>
+                    <div class="contenido-notificacion">
+                        <strong>Sistema:</strong> Viene en camino una nueva actualizacion.
+                       <span class="hora-notificacion">hace 5 minutos</span>
                     </div>
                     <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
                 </div>
@@ -550,6 +559,10 @@
         }
 
         /* Variantes de color */
+        .notificacion-system .icono-notificacion {
+            color: #212529;
+        }
+
         .notificacion-info .icono-notificacion {
             color: #0dcaf0;
         }
