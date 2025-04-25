@@ -85,27 +85,25 @@
 
                     <div class="d-flex align-items-center gap-2">
                         <div class="dropdown">
-                            <div id="divContenedorInfoUsuario"
-                                class="dropdown-toggle"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                style="cursor: pointer; margin: 0 15px; line-height: 16px; display: flex; align-items: center;  border-radius: 10px; box-shadow: 0px 1px 10px rgba(0,0,0,0.2); padding:6px 10px 6px 10px; background-color: white;">
+                            <div id="divContenedorInfoUsuario" class="dropdown-toggle contenedor-boton-usuario" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-circle-user" style="font-size: 40px; color: #2F323A; margin-right: 8px;"></i>
                                 <div style="margin-right: 15px;">
                                     <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label>
                                     <asp:Label runat="server" ID="lblRolUsuario" Style="display: block; font-size: 12px;">Rol de usuario (Offline)</asp:Label>
                                 </div>
                             </div>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Ver información de perfil</a></li>
-                                <li><a class="dropdown-item" href="#">Cambiar mi contraseña</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" id="btnCerrarSesion" onclick="return CerrarSesionAlert(this);" href="#">Cerrar sesión</a></li>
+                            <ul class="dropdown-menu dropdown-menu-lg-end">
+                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-address-book" style="padding-right: 10px;"></i>Ver información de perfil</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-key" style="padding-right: 10px;"></i>Cambiar mi contraseña</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item boton-cerrar-sesion" id="btnCerrarSesion" onclick="return CerrarSesionAlert(this);" href="#"><i class="fa-solid fa-right-from-bracket" style="padding-right: 10px;"></i>Cerrar sesión</a></li>
                             </ul>
                         </div>
 
 
-                        <a href="#" id="btnNotificaciones" class="icon-btn" style="box-shadow: 0px 1px 10px rgba(0,0,0,0.2); padding:14px 18px 14px 18px; background-color: white; border-radius: 10px; color:black;">
+                        <a href="#" id="btnNotificaciones" class="icon-btn boton-shadow" onclick="abrirPanelNotificaciones()" style="box-shadow: 0px 1px 10px rgba(0,0,0,0.2); padding: 14px 18px 14px 18px; background-color: white; border-radius: 10px; color: #2F323A">
                             <i class="fa-solid fa-bell fa-lg" style="margin-bottom: 10px;"></i>
                         </a>
                     </div>
@@ -238,6 +236,148 @@
         </div>
         <!--wrapper_1 end-->
 
+        <div id="customOverlay" class="custom-overlay" onclick="cerrarPanelNotificaciones()"></div>
+
+        <div id="panelNotificaciones" class="custom-panel">
+            <div class="panel-header">
+                <h5>Notificaciones</h5>
+                <button type="button" onclick="cerrarPanelNotificaciones()" class="btn-close"></button>
+
+            </div>
+            <div class="panel-body">
+                <div class="notificacion notificacion-info">
+                    <i class="fa-solid fa-circle-info icono-notificacion"></i>
+                    <div class="contenido-notificacion">
+                        <strong>Info:</strong> Esta es una notificación informativa.
+                         <span class="hora-notificacion">hace 5 minutos</span>
+                    </div>
+                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                </div>
+
+                <div class="notificacion notificacion-success">
+                    <i class="fa-solid fa-check-circle icono-notificacion"></i>
+                    <div class="contenido-notificacion">
+                        <strong>Éxito:</strong> El ingreso fue registrado correctamente.
+                      <span class="hora-notificacion">hace 10 minutos</span>
+                    </div>
+                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                </div>
+
+                <div class="notificacion notificacion-warning">
+                    <i class="fa-solid fa-triangle-exclamation icono-notificacion"></i>
+                    <div class="contenido-notificacion">
+                        <strong>Advertencia:</strong> Hay pagos pendientes de hoy.
+                        <span class="hora-notificacion">hace 20 minutos</span>
+                    </div>
+                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                </div>
+
+                <div class="notificacion notificacion-danger">
+                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
+                    <div class="contenido-notificacion">
+                        <strong>Error:</strong> No se pudo conectar con la base de datos.
+                      <span class="hora-notificacion">hace 30 minutos</span>
+                    </div>
+                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                </div>
+
+                <div class="notificacion notificacion-danger">
+                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
+                    <div class="contenido-notificacion">
+                        <strong>Error:</strong> No se pudo conectar con la base de datos.
+       <span class="hora-notificacion">hace 30 minutos</span>
+                    </div>
+                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                </div>
+
+                <div class="notificacion notificacion-danger">
+                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
+                    <div class="contenido-notificacion">
+                        <strong>Error:</strong> No se pudo conectar con la base de datos.
+       <span class="hora-notificacion">hace 30 minutos</span>
+                    </div>
+                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                </div>
+
+                <div class="notificacion notificacion-danger">
+                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
+                    <div class="contenido-notificacion">
+                        <strong>Error:</strong> No se pudo conectar con la base de datos.
+       <span class="hora-notificacion">hace 30 minutos</span>
+                    </div>
+                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                </div>
+
+                <div class="notificacion notificacion-danger">
+                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
+                    <div class="contenido-notificacion">
+                        <strong>Error:</strong> No se pudo conectar con la base de datos.
+       <span class="hora-notificacion">hace 30 minutos</span>
+                    </div>
+                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                </div>
+
+                <div class="notificacion notificacion-danger">
+                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
+                    <div class="contenido-notificacion">
+                        <strong>Error:</strong> No se pudo conectar con la base de datos.
+       <span class="hora-notificacion">hace 30 minutos</span>
+                    </div>
+                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                </div>
+
+                <div class="notificacion notificacion-danger">
+                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
+                    <div class="contenido-notificacion">
+                        <strong>Error:</strong> No se pudo conectar con la base de datos.
+       <span class="hora-notificacion">hace 30 minutos</span>
+                    </div>
+                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                </div>
+
+
+                <div class="notificacion notificacion-danger">
+                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
+                    <div class="contenido-notificacion">
+                        <strong>Error:</strong> No se pudo conectar con la base de datos.
+       <span class="hora-notificacion">hace 30 minutos</span>
+                    </div>
+                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                </div>
+
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <asp:Panel ID="panel1" runat="server" CssClass="notificacion notificacion-info">
+                            <i class="fa-solid fa-circle-info icono-notificacion"></i>
+                            <div class="contenido-notificacion">
+                                <strong>Info:</strong> Esta es una notificación informativa.
+                                <span class="hora-notificacion">hace 5 minutos</span>
+                            </div>
+                            <asp:Button ID="btnEliminar1" runat="server" Text="×" CssClass="btn-cerrar-notificacion" CausesValidation="false"
+                                CommandArgument="1" OnClick="EliminarNotificacion_Click" />
+                        </asp:Panel>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
+
+                <asp:UpdatePanel ID="upNoti_1" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <asp:Panel ID="panelNoti_1" runat="server" CssClass="notificacion notificacion-info">
+                            <i class="fa-solid fa-circle-info icono-notificacion"></i>
+                            <div class="contenido-notificacion">
+                                <strong>Info:</strong> Esta es una notificación informativa.
+                                <span class="hora-notificacion">hace 5 minutos</span>
+                            </div>
+                            <asp:Button ID="Button1" runat="server" Text="×" CssClass="btn-cerrar-notificacion" CausesValidation="false"
+                                CommandArgument="1" OnClick="EliminarNotificacion_Click" />
+                        </asp:Panel>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
+
+
+            </div>
+        </div>
     </form>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
@@ -284,7 +424,190 @@
                     background-color: #f8f9fa; /* color claro de hover */
                     color: #212529;
                 }
+
+        .boton-cerrar-sesion:hover {
+            background-color: #f8f9fa; /* color claro de hover */
+            color: #dc3545 !important;
+        }
+
+        .contenedor-boton-usuario {
+            cursor: pointer;
+            margin: 0 15px;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+            padding: 6px 15px 6px 15px;
+            background-color: white;
+        }
+
+            .contenedor-boton-usuario:hover {
+                background-color: #f8f9fa; /* color claro de hover */
+                color: #212529;
+            }
+
+        .boton-shadow:hover {
+            background-color: #f8f9fa; /* color claro de hover */
+            color: #212529;
+        }
+
+
+
+
+
+
+
+
+        /* Fondo oscuro */
+        .custom-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+            .custom-overlay.show {
+                opacity: 1;
+                visibility: visible;
+            }
+
+        /* Panel lateral derecho */
+        .custom-panel {
+            position: fixed;
+            top: 0;
+            right: -400px; /* oculto al inicio */
+            width: 350px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: right 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Cabecera del panel */
+        .panel-header {
+            padding: 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Cuerpo del panel */
+        .panel-body {
+            padding: 15px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        /* Botón X */
+        .btn-cerrar {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Mostrar cuando se active */
+        .custom-overlay.show {
+            display: block;
+        }
+
+        .custom-panel.show {
+            right: 0;
+        }
+
+
+        .notificacion {
+            display: flex;
+            align-items: flex-start;
+            background-color: #F9FBFF;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease;
+        }
+
+            .notificacion:hover {
+                background-color: #f1f1f1;
+            }
+
+        .icono-notificacion {
+            font-size: 20px;
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+
+        /* Variantes de color */
+        .notificacion-info .icono-notificacion {
+            color: #0dcaf0;
+        }
+
+        .notificacion-success .icono-notificacion {
+            color: #198754;
+        }
+
+        .notificacion-warning .icono-notificacion {
+            color: #ffc107;
+        }
+
+        .notificacion-danger .icono-notificacion {
+            color: #dc3545;
+        }
+
+        .contenido-notificacion {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .hora-notificacion {
+            display: block;
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 3px;
+        }
+
+        .btn-cerrar-notificacion {
+            background: none;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: #6c757d;
+            cursor: pointer;
+            margin-left: 10px;
+            align-self: start;
+            transition: color 0.2s ease;
+        }
+
+            .btn-cerrar-notificacion:hover {
+                color: #000;
+            }
     </style>
+    <script>
+        function abrirPanelNotificaciones() {
+            document.getElementById('panelNotificaciones').classList.add('show');
+            document.getElementById('customOverlay').classList.add('show');
+        }
+
+        function cerrarPanelNotificaciones() {
+            document.getElementById('panelNotificaciones').classList.remove('show');
+            document.getElementById('customOverlay').classList.remove('show');
+        }
+
+
+    </script>
+
 </body>
 <script src="../Recursos/Javascript/scripts_master.js" type="text/javascript" charset="ISO-8859-1"></script>
 

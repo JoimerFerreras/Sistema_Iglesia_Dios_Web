@@ -44,6 +44,34 @@ namespace Sistema_Iglesia_Dios_Web
         {
             Response.Redirect(Utilidad_N.ObtenerRutaServer() + "frmLogin.aspx");
         }
+
+        private T FindParent<T>(Control control) where T : Control
+        {
+            while (control != null && !(control is T))
+            {
+                control = control.Parent;
+            }
+            return control as T;
+        }
+
+        protected void EliminarNotificacion_Click(object sender, EventArgs e)
+        {
+            var btn = (Button)sender;
+            int idNoti = int.Parse(btn.CommandArgument);
+
+            // 🧩 Lógica de eliminación en base de datos
+            // NotificacionDAO.Eliminar(idNoti);
+
+            // 🔍 Buscar el Panel que representa la notificación
+            Panel notiPanel = FindParent<Panel>(btn);
+            if (notiPanel != null)
+            {
+                notiPanel.Visible = false;  // Ocultar solo el contenido visual
+            }
+        }
+
+
+
         #endregion
 
 

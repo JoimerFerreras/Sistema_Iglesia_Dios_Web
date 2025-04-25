@@ -86,8 +86,6 @@ body {
                 }*/
 
             .wrapper_1 .header_1 .header_1-menu_1 ul li.icon-btn a {
-                background-color: transparent;
-                color: #000;
                 display: block;
                 margin: 0 0px;
                 font-size: 18px;
@@ -97,11 +95,27 @@ body {
                 text-align: center;
                 border-radius: 50%;
                 transition: 0.3s;
+                box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
+                padding: 14px 18px 14px 18px;
+                background-color: white !important;
+                border-radius: 10px;
+                color: #2F323A
             }
 
                 .wrapper_1 .header_1 .header_1-menu_1 ul li.icon-btn a:hover {
-                    background-color: transparent;
-                    color: #1E90FF;
+                    background-color: #f8f9fa !important;
+                    color: #212529;
+                }
+
+            .icono-notify {
+                background-color: white !important;
+                border-radius: 10px;
+                color: #2F323A
+            }
+
+                .icono-notify:hover {
+                    background-color: #f8f9fa !important;
+                    color: #212529;
                 }
 
 
