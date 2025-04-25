@@ -70,6 +70,7 @@
     <Compile Include="Resumen\Resumen_N.cs" />
     <Compile Include="Usuarios\Log_Usuario_Acceso_N.cs" />
     <Compile Include="Usuarios\Permiso_N.cs" />
+    <Compile Include="Usuarios\Notificacion_N.cs" />
     <Compile Include="Usuarios\Rol_N.cs" />
     <Compile Include="Usuarios\Usuario_N.cs" />
     <Compile Include="Util_N\InfoUbicacionIP.cs" />

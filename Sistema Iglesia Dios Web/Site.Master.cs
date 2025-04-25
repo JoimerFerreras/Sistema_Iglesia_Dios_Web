@@ -1,6 +1,7 @@
 ﻿using Negocio.Util_N;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -16,16 +17,6 @@ namespace Sistema_Iglesia_Dios_Web
         {
             if (Session["ID_USUARIO_SESSION"] != null && Session["ID_USUARIO_SESSION"].ToString() != "0" && Utilidad_N.ValidarNull(Session["ID_USUARIO_SESSION"].ToString()) == false)
             {
-                //if (Session["TIPO_USUARIO_SESSION"] != null && Session["TIPO_USUARIO_SESSION"].ToString() == "1")
-                //{
-                //    lblRolUsuario.Text = "Administrador";
-                //}
-                //else if (Session["TIPO_USUARIO_SESSION"] != null && Session["TIPO_USUARIO_SESSION"].ToString() == "2")
-                //{
-                //    lblRolUsuario.Text = "Operativo";
-                //    btnConfiguracion_Usuarios.Visible = false;
-                //    btnCambiarPassword.HRef = Utilidad_N.ObtenerRutaServer() + "Usuarios/frmCambiarPassword.aspx";
-                //}
                 lblNombreUsuario.Text = Session["USERNAME_SESSION"].ToString();
                 lblRolUsuario.Text = Session["NOMBRE_ROL_SESSION"].ToString();
             }
@@ -45,6 +36,7 @@ namespace Sistema_Iglesia_Dios_Web
             Response.Redirect(Utilidad_N.ObtenerRutaServer() + "frmLogin.aspx");
         }
 
+        // Método para encontrar el padre de un control de tipo Update panel para Notificaciones
         private T FindParent<T>(Control control) where T : Control
         {
             while (control != null && !(control is T))
@@ -54,6 +46,28 @@ namespace Sistema_Iglesia_Dios_Web
             return control as T;
         }
 
+        private void CargarNotificaciones()
+        {
+            
+        }
+
+       
+
+
+
+        #endregion
+
+
+        #region Eventos
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            EvaluarSesion();
+
+            if (!Page.IsPostBack)
+            {
+                
+            }
+        }
         protected void EliminarNotificacion_Click(object sender, EventArgs e)
         {
             var btn = (Button)sender;
@@ -69,18 +83,6 @@ namespace Sistema_Iglesia_Dios_Web
                 notiPanel.Visible = false;  // Ocultar solo el contenido visual
             }
         }
-
-
-
-        #endregion
-
-
-        #region Eventos
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            EvaluarSesion();
-        }
-
         #endregion
     }
 }

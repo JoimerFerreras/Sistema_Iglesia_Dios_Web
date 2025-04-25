@@ -103,7 +103,7 @@
                         </div>
 
 
-                        <a href="#" id="btnNotificaciones" class="icon-btn boton-shadow" onclick="abrirPanelNotificaciones()" style="box-shadow: 0px 1px 10px rgba(0,0,0,0.2); padding: 14px 18px 14px 18px; background-color: white; border-radius: 10px; color: #2F323A">
+                        <a href="#" id="btnNotificaciones" class="icon-btn boton-notificacion" onclick="abrirPanelNotificaciones()" style="box-shadow: 0px 1px 10px rgba(0,0,0,0.2); padding: 14px 18px 14px 18px; background-color: white; border-radius: 10px; color: #2F323A">
                             <i class="fa-solid fa-bell fa-lg" style="margin-bottom: 10px;"></i>
                         </a>
                     </div>
@@ -443,13 +443,13 @@
         }
 
             .contenedor-boton-usuario:hover {
-                background-color: #f8f9fa; /* color claro de hover */
+                background-color: transparent; /* color claro de hover */
                 color: #212529;
             }
 
-        .boton-shadow:hover {
-            background-color: #f8f9fa; /* color claro de hover */
-            color: #212529;
+        .boton-notificacion:hover {
+            background-color: transparent !important; /* color claro de hover */
+            color: #212529 !important;
         }
 
 
