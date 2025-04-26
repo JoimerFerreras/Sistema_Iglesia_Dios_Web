@@ -34,11 +34,11 @@ namespace Negocio.Usuarios
             }
         }
 
-        public bool Editar(Notificacion_E entidad)
+        public bool MarcarComoVista(int Id_Notificacion)
         {
             try
             {
-                return Notificacion_D.Editar(entidad);
+                return Notificacion_D.MarcarComoVista(Id_Notificacion);
             }
             catch (Exception ex)
             {

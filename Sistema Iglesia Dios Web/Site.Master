@@ -241,151 +241,66 @@
         <div id="panelNotificaciones" class="custom-panel">
             <div class="panel-header">
                 <h5>Notificaciones</h5>
-                <button type="button" onclick="cerrarPanelNotificaciones()" class="btn-close"></button>
+
+                <div class="d-flex align-items-center gap-2">
+                    <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <button runat="server" id="btnEliminarTodas" class="btn btn-sm btn-outline-danger" onserverclick="EliminarTodasNotificaciones_Click" type="button">
+                                <i class="fa-solid fa-trash-can"></i> Borrar todo
+                            </button>
+
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+
+                    <button type="button" id="btnCerrarPanelNotificaciones" onclick="cerrarPanelNotificaciones()" class="btn-close"></button>
+                </div>
 
             </div>
-            <div class="panel-body" id="divContenedorNotificaciones" runat="server">
-                <div class="notificacion notificacion-info">
-                    <i class="fa-solid fa-circle-info icono-notificacion"></i>
-                    <div class="contenido-notificacion">
-                        <strong>Info:</strong> Esta es una notificación informativa.
-                         <span class="hora-notificacion">hace 5 minutos</span>
-                    </div>
-                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                </div>
 
-                <div class="notificacion notificacion-system">
-                    <i class="fa-solid fa-gear icono-notificacion"></i>
-                    <div class="contenido-notificacion">
-                        <strong>Sistema:</strong> Viene en camino una nueva actualizacion.
-                       <span class="hora-notificacion">hace 5 minutos</span>
-                    </div>
-                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                </div>
+            <asp:UpdatePanel ID="upNotificaciones" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
 
-                <div class="notificacion notificacion-success">
-                    <i class="fa-solid fa-check-circle icono-notificacion"></i>
-                    <div class="contenido-notificacion">
-                        <strong>Éxito:</strong> El ingreso fue registrado correctamente.
-                      <span class="hora-notificacion">hace 10 minutos</span>
-                    </div>
-                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                </div>
-
-                <div class="notificacion notificacion-warning">
-                    <i class="fa-solid fa-triangle-exclamation icono-notificacion"></i>
-                    <div class="contenido-notificacion">
-                        <strong>Advertencia:</strong> Hay pagos pendientes de hoy.
-                        <span class="hora-notificacion">hace 20 minutos</span>
-                    </div>
-                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                </div>
-
-                <div class="notificacion notificacion-danger">
-                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
-                    <div class="contenido-notificacion">
-                        <strong>Error:</strong> No se pudo conectar con la base de datos.
-                      <span class="hora-notificacion">hace 30 minutos</span>
-                    </div>
-                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                </div>
-
-                <div class="notificacion notificacion-danger">
-                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
-                    <div class="contenido-notificacion">
-                        <strong>Error:</strong> No se pudo conectar con la base de datos.
-       <span class="hora-notificacion">hace 30 minutos</span>
-                    </div>
-                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                </div>
-
-                <div class="notificacion notificacion-danger">
-                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
-                    <div class="contenido-notificacion">
-                        <strong>Error:</strong> No se pudo conectar con la base de datos.
-       <span class="hora-notificacion">hace 30 minutos</span>
-                    </div>
-                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                </div>
-
-                <div class="notificacion notificacion-danger">
-                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
-                    <div class="contenido-notificacion">
-                        <strong>Error:</strong> No se pudo conectar con la base de datos.
-       <span class="hora-notificacion">hace 30 minutos</span>
-                    </div>
-                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                </div>
-
-                <div class="notificacion notificacion-danger">
-                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
-                    <div class="contenido-notificacion">
-                        <strong>Error:</strong> No se pudo conectar con la base de datos.
-       <span class="hora-notificacion">hace 30 minutos</span>
-                    </div>
-                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                </div>
-
-                <div class="notificacion notificacion-danger">
-                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
-                    <div class="contenido-notificacion">
-                        <strong>Error:</strong> No se pudo conectar con la base de datos.
-       <span class="hora-notificacion">hace 30 minutos</span>
-                    </div>
-                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                </div>
-
-                <div class="notificacion notificacion-danger">
-                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
-                    <div class="contenido-notificacion">
-                        <strong>Error:</strong> No se pudo conectar con la base de datos.
-       <span class="hora-notificacion">hace 30 minutos</span>
-                    </div>
-                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                </div>
-
-
-                <div class="notificacion notificacion-danger">
-                    <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
-                    <div class="contenido-notificacion">
-                        <strong>Error:</strong> No se pudo conectar con la base de datos.
-       <span class="hora-notificacion">hace 30 minutos</span>
-                    </div>
-                    <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                </div>
-
-                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-                    <ContentTemplate>
-                        <asp:Panel ID="panel1" runat="server" CssClass="notificacion notificacion-info">
-                            <i class="fa-solid fa-circle-info icono-notificacion"></i>
+                    <div class="panel-body" id="divContenedorNotificaciones" runat="server">
+                        <div class="notificacion notificacion-danger">
+                            <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
                             <div class="contenido-notificacion">
-                                <strong>Info:</strong> Esta es una notificación informativa.
-                                <span class="hora-notificacion">hace 5 minutos</span>
+                                <strong>Error:</strong> No se pudo conectar con la base de datos.
+                               <span class="hora-notificacion">hace 30 minutos</span>
                             </div>
-                            <asp:Button ID="btnEliminar1" runat="server" Text="×" CssClass="btn-cerrar-notificacion" CausesValidation="false"
-                                CommandArgument="1" OnClick="EliminarNotificacion_Click" />
-                        </asp:Panel>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
+                            <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
+                        </div>
 
-
-                <asp:UpdatePanel ID="upNoti_1" runat="server" UpdateMode="Conditional">
-                    <ContentTemplate>
-                        <asp:Panel ID="panelNoti_1" runat="server" CssClass="notificacion notificacion-info">
-                            <i class="fa-solid fa-circle-info icono-notificacion"></i>
-                            <div class="contenido-notificacion">
-                                <strong>Info:</strong> Esta es una notificación informativa.
+                        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                            <ContentTemplate>
+                                <asp:Panel ID="panel1" runat="server" CssClass="notificacion notificacion-info">
+                                    <i class="fa-solid fa-circle-info icono-notificacion"></i>
+                                    <div class="contenido-notificacion">
+                                        <strong>Info:</strong> Esta es una notificación informativa.
                                 <span class="hora-notificacion">hace 5 minutos</span>
-                            </div>
-                            <asp:Button ID="Button1" runat="server" Text="×" CssClass="btn-cerrar-notificacion" CausesValidation="false"
-                                CommandArgument="1" OnClick="EliminarNotificacion_Click" />
-                        </asp:Panel>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
+                                    </div>
+                                    <asp:Button ID="btnEliminar1" runat="server" Text="×" CssClass="btn-cerrar-notificacion" CausesValidation="false"
+                                        CommandArgument="1" OnClick="EliminarNotificacion_Click" />
+                                </asp:Panel>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
 
 
-
-            </div>
+                        <asp:UpdatePanel ID="upNoti_1" runat="server" UpdateMode="Conditional">
+                            <ContentTemplate>
+                                <asp:Panel ID="panelNoti_1" runat="server" CssClass="notificacion notificacion-info">
+                                    <i class="fa-solid fa-circle-info icono-notificacion"></i>
+                                    <div class="contenido-notificacion">
+                                        <strong>Info:</strong> Esta es una notificación informativa.
+                                <span class="hora-notificacion">hace 5 minutos</span>
+                                    </div>
+                                    <asp:Button ID="Button1" runat="server" Text="×" CssClass="btn-cerrar-notificacion" CausesValidation="false"
+                                        CommandArgument="1" OnClick="EliminarNotificacion_Click" />
+                                </asp:Panel>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
     </form>
     <asp:PlaceHolder runat="server">
@@ -606,6 +521,48 @@
             .btn-cerrar-notificacion:hover {
                 color: #000;
             }
+
+        .notificacion {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+            .notificacion.ocultar {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+
+
+
+            .btn-marcar-notificacion {
+   background: none;
+ border: none;
+ font-size: 18px;
+ font-weight: bold;
+ color: #6c757d;
+ cursor: pointer;
+ margin-left: 10px;
+ align-self: start;
+ transition: color 0.2s ease;
+}
+
+.btn-marcar-notificacion:hover {
+    color: #69AF58;
+}
+
+
+.badge-nueva {
+    width: 15px;
+    height: 15px;
+    background-color: #108df7;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    z-index: 10;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+
     </style>
     <script>
         function abrirPanelNotificaciones() {
@@ -618,6 +575,11 @@
             document.getElementById('customOverlay').classList.remove('show');
         }
 
+
+        function ocultarNotificaciones() {
+            const notis = document.querySelectorAll('.notificacion');
+            notis.forEach(n => n.classList.add('ocultar'));
+        }
 
     </script>
 

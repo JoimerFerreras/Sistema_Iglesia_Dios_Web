@@ -109,17 +109,16 @@ namespace Datos.Usuarios
             }
         }
 
-        public bool Editar(Notificacion_E entidad)
+        public bool MarcarComoVista(int Id_Notificacion)
         {
             bool Respuesta = false;
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"UPDATE Notificaciones SET Visto = 1 WHERE Id_Notificacion = @Id_Notificacion AND Id_Usuario = @Id_Usuario";
+                string sentencia = $@"UPDATE Notificaciones SET Visto = 1 WHERE Id_Notificacion = @Id_Notificacion";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                cmd.Parameters.AddWithValue("@Id_Notificacion", entidad.Id_Notificacion);
-                cmd.Parameters.AddWithValue("@Id_Usuario", entidad.Id_Usuario);
+                cmd.Parameters.AddWithValue("@Id_Notificacion", Id_Notificacion);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -143,7 +142,7 @@ namespace Datos.Usuarios
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = "DELETE FROM Notificaciones WHERE Id_Notificacion = @id;";
+                string sentencia = "DELETE FROM Notificaciones WHERE Id_Notificacion = @Id_Notificacion;";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id_Notificacion", Id);
                 cmd.CommandType = CommandType.Text;

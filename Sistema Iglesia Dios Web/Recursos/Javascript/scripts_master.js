@@ -130,3 +130,15 @@ tippy('#BotonMenu', {
     placement: 'bottom',
     arrow: true,
 });
+
+tippy('.btn-marcar-notificacion', {
+    content: 'Marcar como leído',
+    placement: 'left',
+    arrow: true,
+});
+
+tippy('#btnCerrarPanelNotificaciones', {
+    content: 'Cerrar',
+    placement: 'bottom',
+    arrow: true,
+});
