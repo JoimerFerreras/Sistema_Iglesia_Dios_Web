@@ -136,7 +136,7 @@ namespace Datos.Usuarios
             }
         }
 
-        public bool Eliminar(int Id)
+        public bool Eliminar(int Id_Notificacion)
         {
             bool Respuesta = false;
 
@@ -144,7 +144,33 @@ namespace Datos.Usuarios
             {
                 string sentencia = "DELETE FROM Notificaciones WHERE Id_Notificacion = @Id_Notificacion;";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                cmd.Parameters.AddWithValue("@Id_Notificacion", Id);
+                cmd.Parameters.AddWithValue("@Id_Notificacion", Id_Notificacion);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    int FilasAfectadas = cmd.ExecuteNonQuery();
+                    conexion.Close();
+                    if (FilasAfectadas > 0) Respuesta = true;
+
+                    return Respuesta;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public bool EliminarTodo(int Id_Usuario)
+        {
+            bool Respuesta = false;
+
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = "DELETE FROM Notificaciones WHERE Id_Usuario = @Id_Usuario;";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id_Usuario", Id_Usuario);
                 cmd.CommandType = CommandType.Text;
                 try
                 {

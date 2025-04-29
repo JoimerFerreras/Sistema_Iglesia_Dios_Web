@@ -254,50 +254,11 @@
 
                     <button type="button" id="btnCerrarPanelNotificaciones" onclick="cerrarPanelNotificaciones()" class="btn-close"></button>
                 </div>
-
             </div>
 
             <asp:UpdatePanel ID="upNotificaciones" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-
                     <div class="panel-body" id="divContenedorNotificaciones" runat="server">
-                        <div class="notificacion notificacion-danger">
-                            <i class="fa-solid fa-circle-exclamation icono-notificacion"></i>
-                            <div class="contenido-notificacion">
-                                <strong>Error:</strong> No se pudo conectar con la base de datos.
-                               <span class="hora-notificacion">hace 30 minutos</span>
-                            </div>
-                            <button class="btn-cerrar-notificacion" onclick="this.parentElement.remove()">×</button>
-                        </div>
-
-                        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-                            <ContentTemplate>
-                                <asp:Panel ID="panel1" runat="server" CssClass="notificacion notificacion-info">
-                                    <i class="fa-solid fa-circle-info icono-notificacion"></i>
-                                    <div class="contenido-notificacion">
-                                        <strong>Info:</strong> Esta es una notificación informativa.
-                                <span class="hora-notificacion">hace 5 minutos</span>
-                                    </div>
-                                    <asp:Button ID="btnEliminar1" runat="server" Text="×" CssClass="btn-cerrar-notificacion" CausesValidation="false"
-                                        CommandArgument="1" OnClick="EliminarNotificacion_Click" />
-                                </asp:Panel>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
-
-
-                        <asp:UpdatePanel ID="upNoti_1" runat="server" UpdateMode="Conditional">
-                            <ContentTemplate>
-                                <asp:Panel ID="panelNoti_1" runat="server" CssClass="notificacion notificacion-info">
-                                    <i class="fa-solid fa-circle-info icono-notificacion"></i>
-                                    <div class="contenido-notificacion">
-                                        <strong>Info:</strong> Esta es una notificación informativa.
-                                <span class="hora-notificacion">hace 5 minutos</span>
-                                    </div>
-                                    <asp:Button ID="Button1" runat="server" Text="×" CssClass="btn-cerrar-notificacion" CausesValidation="false"
-                                        CommandArgument="1" OnClick="EliminarNotificacion_Click" />
-                                </asp:Panel>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
                     </div>
                 </ContentTemplate>
             </asp:UpdatePanel>
@@ -560,6 +521,14 @@
     left: -5px;
     z-index: 10;
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.div-sin-notificaciones{
+
+    min-width: 100%;
+    min-height: 100%;
+    text-align:center;
+    align-content:center;
 }
 
 

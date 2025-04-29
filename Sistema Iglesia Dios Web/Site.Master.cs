@@ -69,175 +69,183 @@ namespace Sistema_Iglesia_Dios_Web
                 DataTable dt = new DataTable();
                 dt = notificacion_N.Listar(int.Parse(Session["ID_USUARIO_SESSION"].ToString()));
 
-                divContenedorNotificaciones.Controls.Clear(); // Limpiar anteriores
-
-                foreach (DataRow row in dt.Rows)
+                if (dt.Rows.Count > 0)
                 {
-                    string tipo = row["Tipo_Notificacion"].ToString(); // 1=info, 2=success, 3=warning, 4=danger, 5=system
-                    string titulo = row["Titulo"].ToString();
-                    string texto = row["Texto"].ToString();
-                    DateTime fecha = DateTime.Parse(row["Fecha"].ToString());
-                    int id = Convert.ToInt32(row["Id_Notificacion"]);
-                    bool Visto = false;
-                    if (row["Visto"].ToString() == "True")
+                    divContenedorNotificaciones.Controls.Clear(); // Limpiar anteriores
+
+                    foreach (DataRow row in dt.Rows)
                     {
-                        Visto = true;
-                    }
+                        string tipo = row["Tipo_Notificacion"].ToString(); // 1=info, 2=success, 3=warning, 4=danger, 5=system
+                        string titulo = row["Titulo"].ToString();
+                        string texto = row["Texto"].ToString();
+                        DateTime fecha = DateTime.Parse(row["Fecha"].ToString());
+                        int id = Convert.ToInt32(row["Id_Notificacion"]);
+                        bool Visto = false;
+                        if (row["Visto"].ToString() == "True")
+                        {
+                            Visto = true;
+                        }
 
 
-                    // Asignar clase CSS según tipo
-                    string clase = "notificacion notificacion-info"; // valor por defecto
-                    switch (tipo)
-                    {
-                        case "1":
-                            clase = "notificacion notificacion-info";
-                            break;
-                        case "2":
-                            clase = "notificacion notificacion-success";
-                            break;
-                        case "3":
-                            clase = "notificacion notificacion-warning";
-                            break;
-                        case "4":
-                            clase = "notificacion notificacion-danger";
-                            break;
-                        case "5":
-                            clase = "notificacion notificacion-system";
-                            break;
-                    }
+                        // Asignar clase CSS según tipo
+                        string clase = "notificacion notificacion-info"; // valor por defecto
+                        switch (tipo)
+                        {
+                            case "1":
+                                clase = "notificacion notificacion-info";
+                                break;
+                            case "2":
+                                clase = "notificacion notificacion-success";
+                                break;
+                            case "3":
+                                clase = "notificacion notificacion-warning";
+                                break;
+                            case "4":
+                                clase = "notificacion notificacion-danger";
+                                break;
+                            case "5":
+                                clase = "notificacion notificacion-system";
+                                break;
+                        }
 
-                    string icono = "fa-circle-info"; // valor por defecto
-                    switch (tipo)
-                    {
-                        case "1":
-                            icono = "fa-circle-info";
-                            break;
-                        case "2":
-                            icono = "fa-check-circle";
-                            break;
-                        case "3":
-                            icono = "fa-triangle-exclamation";
-                            break;
-                        case "4":
-                            icono = "fa-circle-exclamation";
-                            break;
-                        case "5":
-                            icono = "fa-gear";
-                            break;
-                    }
+                        string icono = "fa-circle-info"; // valor por defecto
+                        switch (tipo)
+                        {
+                            case "1":
+                                icono = "fa-circle-info";
+                                break;
+                            case "2":
+                                icono = "fa-check-circle";
+                                break;
+                            case "3":
+                                icono = "fa-triangle-exclamation";
+                                break;
+                            case "4":
+                                icono = "fa-circle-exclamation";
+                                break;
+                            case "5":
+                                icono = "fa-gear";
+                                break;
+                        }
 
-                    Panel panel = new Panel
-                    {
-                        CssClass = clase + " position-relative"
-                    };
+                        Panel panel = new Panel
+                        {
+                            CssClass = clase + " position-relative"
+                        };
 
-                    // Icono
-                    Literal iconoLiteral = new Literal
-                    {
-                        Text = $"<i class=\"fa-solid {icono} icono-notificacion\"></i>"
-                    };
+                        // Icono
+                        Literal iconoLiteral = new Literal
+                        {
+                            Text = $"<i class=\"fa-solid {icono} icono-notificacion\"></i>"
+                        };
 
-                    // Contenido
-                    string TextoContenido = $@"<div class=""contenido-notificacion"">
+                        // Contenido
+                        string TextoContenido = $@"<div class=""contenido-notificacion"">
                                             <strong>{titulo}:</strong> {texto}";
 
-                    double segundos = ObtenerDiferenciaSegundos(fecha);
-                    double minutos = ObtenerDiferenciaMinutos(fecha);
-                    double horas = ObtenerDiferenciaHoras(fecha);
-                    double dias = ObtenerDiferenciaDias(fecha);
+                        double segundos = ObtenerDiferenciaSegundos(fecha);
+                        double minutos = ObtenerDiferenciaMinutos(fecha);
+                        double horas = ObtenerDiferenciaHoras(fecha);
+                        double dias = ObtenerDiferenciaDias(fecha);
 
-                    if (segundos >= 0 && segundos < 60)
-                    {
-                        TextoContenido += $@"<span class=""hora-notificacion"">hace un momento</span>";
-                    }
-                    else if (minutos >= 1 && minutos < 60)
-                    {
-                        TextoContenido += $@"<span class=""hora-notificacion"">hace {(int)minutos} minutos</span>";
-                    }
-                    else if (horas >= 1 && horas <= 24)
-                    {
-                        TextoContenido += $@"<span class=""hora-notificacion"">hace {(int)horas} horas</span>";
-                    }
-                    else if (dias >= 1 && dias <= 7)
-                    {
-                        TextoContenido += $@"<span class=""hora-notificacion"">hace {(int)dias} días</span>";
-                    }
-                    else if (dias >= 8 && dias <= 30)
-                    {
-                        int semanas = (int)dias / 7;
-                        TextoContenido += $@"<span class=""hora-notificacion"">hace {semanas} semanas</span>";
-                    }
-                    else if (dias > 30 && dias <= 365)
-                    {
-                        int meses = (int)dias / 30;
-                        TextoContenido += $@"<span class=""hora-notificacion"">hace {meses} meses</span>";
-                    }
-                    else if (dias > 365)
-                    {
-                        TextoContenido += $@"<span class=""hora-notificacion"">hace mucho tiempo</span>";
-                    }
-                    else
-                    {
-                        TextoContenido += $@"<span class=""hora-notificacion"">hace mucho tiempo</span>";
-                    }
-                    TextoContenido += $@"</div>";
+                        if (segundos >= 0 && segundos < 60)
+                        {
+                            TextoContenido += $@"<span class=""hora-notificacion"">hace un momento</span>";
+                        }
+                        else if (minutos >= 1 && minutos < 60)
+                        {
+                            TextoContenido += $@"<span class=""hora-notificacion"">hace {(int)minutos} minutos</span>";
+                        }
+                        else if (horas >= 1 && horas <= 24)
+                        {
+                            TextoContenido += $@"<span class=""hora-notificacion"">hace {(int)horas} horas</span>";
+                        }
+                        else if (dias >= 1 && dias <= 7)
+                        {
+                            TextoContenido += $@"<span class=""hora-notificacion"">hace {(int)dias} días</span>";
+                        }
+                        else if (dias >= 8 && dias <= 30)
+                        {
+                            int semanas = (int)dias / 7;
+                            TextoContenido += $@"<span class=""hora-notificacion"">hace {semanas} semanas</span>";
+                        }
+                        else if (dias > 30 && dias <= 365)
+                        {
+                            int meses = (int)dias / 30;
+                            TextoContenido += $@"<span class=""hora-notificacion"">hace {meses} meses</span>";
+                        }
+                        else if (dias > 365)
+                        {
+                            TextoContenido += $@"<span class=""hora-notificacion"">hace mucho tiempo</span>";
+                        }
+                        else
+                        {
+                            TextoContenido += $@"<span class=""hora-notificacion"">hace mucho tiempo</span>";
+                        }
+                        TextoContenido += $@"</div>";
 
-                    Literal contenidoLiteral = new Literal
-                    {
-                        Text = TextoContenido
-                    };
+                        Literal contenidoLiteral = new Literal
+                        {
+                            Text = TextoContenido
+                        };
 
-                    // Botón cerrar
-                    Button cerrarBtn = new Button
-                    {
-                        Text = "×",
-                        CssClass = "btn-cerrar-notificacion",
-                        CommandArgument = id.ToString(),
-                        CausesValidation = false
-                    };
-                    cerrarBtn.Click += EliminarNotificacion_Click;
-                    cerrarBtn.UseSubmitBehavior = false;
+                        // Botón cerrar
+                        Button cerrarBtn = new Button
+                        {
+                            Text = "×",
+                            CssClass = "btn-cerrar-notificacion",
+                            CommandArgument = id.ToString(),
+                            CausesValidation = false
+                        };
+                        cerrarBtn.Click += EliminarNotificacion_Click;
+                        cerrarBtn.UseSubmitBehavior = false;
 
-                    // Botón marcar como vista
-                    Button marcarBtn = new Button
-                    {
-                        Text = "✓", // ícono font awesome
-                        CssClass = "btn-marcar-notificacion",
-                        CommandArgument = id.ToString(),
-                        CausesValidation = false
-                    };
-                    marcarBtn.Click += MarcarNotificacionComoVista_Click;
-                    marcarBtn.UseSubmitBehavior = false;
-                    marcarBtn.Attributes["type"] = "button"; // evita que dispare submit
+                        // Botón marcar como vista
+                        Button marcarBtn = new Button
+                        {
+                            Text = "✓", // ícono font awesome
+                            CssClass = "btn-marcar-notificacion",
+                            CommandArgument = id.ToString(),
+                            CausesValidation = false
+                        };
+                        marcarBtn.Click += MarcarNotificacionComoVista_Click;
+                        marcarBtn.UseSubmitBehavior = false;
+                        marcarBtn.Attributes["type"] = "button"; // evita que dispare submit
 
-                    // Marcador de nueva notificación
-                    Literal burbuja = new Literal
-                    {
-                        Text = "<span class='badge-nueva'></span>"
-                    };
+                        // Marcador de nueva notificación
+                        Literal burbuja = new Literal
+                        {
+                            Text = "<span class='badge-nueva'></span>"
+                        };
 
-                    // Agregar todo al panel
-                    panel.Controls.Add(iconoLiteral);
-                    panel.Controls.Add(contenidoLiteral);
+                        // Agregar todo al panel
+                        panel.Controls.Add(iconoLiteral);
+                        panel.Controls.Add(contenidoLiteral);
 
-                    if (Visto == false)
-                    {
+                        if (Visto == false)
+                        {
 
-                        panel.Controls.Add(burbuja);
+                            panel.Controls.Add(burbuja);
+                        }
+                        else
+                        {
+                            marcarBtn.Enabled = false;
+                            marcarBtn.Text = "";
+                            marcarBtn.Attributes["disabled"] = "disabled";
+                            marcarBtn.Click += null;
+                        }
+                        panel.Controls.Add(marcarBtn);
+                        panel.Controls.Add(cerrarBtn);
+
+                        // Agregar al div principal
+                        divContenedorNotificaciones.Controls.Add(panel);
                     }
-                    else
-                    {
-                        marcarBtn.Enabled = false;
-                        marcarBtn.Text = "";
-                        marcarBtn.Attributes["disabled"] = "disabled";
-                        marcarBtn.Click += null;
-                    }
-                    panel.Controls.Add(marcarBtn);
-                    panel.Controls.Add(cerrarBtn);
-
-                    // Agregar al div principal
-                    divContenedorNotificaciones.Controls.Add(panel);
                 }
+                else
+                {
+                    divContenedorNotificaciones.InnerHtml = "<div class='div-sin-notificaciones'>No hay notificaciones</div>";
+                }
+                
             }
             catch (Exception ex)
             {
@@ -315,11 +323,10 @@ namespace Sistema_Iglesia_Dios_Web
             CargarNotificaciones();
         }
 
-
         protected void EliminarTodasNotificaciones_Click(object sender, EventArgs e)
         {
-            string a = "sdf";
-            // Recargar visualmente¿
+            notificacion_N.EliminarTodo(int.Parse(Session["ID_USUARIO_SESSION"].ToString()));
+            CargarNotificaciones();
         }
 
         #endregion

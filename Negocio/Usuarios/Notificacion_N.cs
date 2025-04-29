@@ -57,6 +57,18 @@ namespace Negocio.Usuarios
                 throw ex;
             }
         }
+
+        public bool EliminarTodo(int Id)
+        {
+            try
+            {
+                return Notificacion_D.EliminarTodo(Convert.ToInt32(Id));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 
