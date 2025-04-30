@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Security.Policy;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -18,6 +19,22 @@ namespace Sistema_Iglesia_Dios_Web
     public partial class SiteMaster : MasterPage
     {
         Notificacion_N notificacion_N = new Notificacion_N();
+
+        public DataTable DT_NOTIFICACIONES
+        {
+            get
+            {
+                if (Utilidad_N.ValidarNull(ViewState["DT_NOTIFICACIONES"]))
+                {
+                    ViewState["DT_NOTIFICACIONES"] = new DataTable();
+                }
+                return (DataTable)ViewState["DT_NOTIFICACIONES"];
+            }
+            set
+            {
+                ViewState["DT_NOTIFICACIONES"] = value;
+            }
+        }
 
         #region Metodos/Funciones
         private void EvaluarSesion()
@@ -66,26 +83,32 @@ namespace Sistema_Iglesia_Dios_Web
         {
             try
             {
-                DataTable dt = new DataTable();
-                dt = notificacion_N.Listar(int.Parse(Session["ID_USUARIO_SESSION"].ToString()));
+                DT_NOTIFICACIONES = notificacion_N.Listar(int.Parse(Session["ID_USUARIO_SESSION"].ToString()));
 
-                if (dt.Rows.Count > 0)
+                if (DT_NOTIFICACIONES.Rows.Count > 0)
                 {
                     divContenedorNotificaciones.Controls.Clear(); // Limpiar anteriores
 
-                    foreach (DataRow row in dt.Rows)
+                    foreach (DataRow row in DT_NOTIFICACIONES.Rows)
                     {
                         string tipo = row["Tipo_Notificacion"].ToString(); // 1=info, 2=success, 3=warning, 4=danger, 5=system
                         string titulo = row["Titulo"].ToString();
                         string texto = row["Texto"].ToString();
                         DateTime fecha = DateTime.Parse(row["Fecha"].ToString());
                         int id = Convert.ToInt32(row["Id_Notificacion"]);
+                        string Link = row["Link"].ToString();
+
+                        bool Link_Destino_En_Sistema = false;
+                        if (row["Link_Destino_En_Sistema"].ToString() == "True")
+                        {
+                            Link_Destino_En_Sistema = true;
+                        }
+
                         bool Visto = false;
                         if (row["Visto"].ToString() == "True")
                         {
                             Visto = true;
                         }
-
 
                         // Asignar clase CSS según tipo
                         string clase = "notificacion notificacion-info"; // valor por defecto
@@ -130,8 +153,28 @@ namespace Sistema_Iglesia_Dios_Web
 
                         Panel panel = new Panel
                         {
+                            ID = "panelNotificacion_" + id, 
                             CssClass = clase + " position-relative"
+                            
                         };
+                        if (Link.Length > 0)
+                        {
+                            // Hacer que el panel navegue al hacer clic
+                            string atributo = "";
+
+                            if (Link_Destino_En_Sistema == true)
+                            {
+                                atributo += $"window.location.href='../{Link}'; ";
+                            }
+                            else
+                            {
+                                atributo += $"window.open('{Link}', '_blank');";
+                            }
+                            
+                            panel.Attributes["onclick"] = atributo;
+                            panel.Attributes["onclick"] += "event.stopPropagation();";
+                            panel.Attributes["style"] += "cursor: pointer;";
+                        }
 
                         // Icono
                         Literal iconoLiteral = new Literal
@@ -140,8 +183,7 @@ namespace Sistema_Iglesia_Dios_Web
                         };
 
                         // Contenido
-                        string TextoContenido = $@"<div class=""contenido-notificacion"">
-                                            <strong>{titulo}:</strong> {texto}";
+                        string TextoContenido = $@"<div class=""contenido-notificacion""> <strong>{titulo}:</strong> {texto}";
 
                         double segundos = ObtenerDiferenciaSegundos(fecha);
                         double minutos = ObtenerDiferenciaMinutos(fecha);
@@ -192,13 +234,17 @@ namespace Sistema_Iglesia_Dios_Web
                         // Botón cerrar
                         Button cerrarBtn = new Button
                         {
+                            ID = "btnCerrar_" + id,
                             Text = "×",
-                            CssClass = "btn-cerrar-notificacion",
+                            CssClass = "btn-eliminar-notificacion",
                             CommandArgument = id.ToString(),
-                            CausesValidation = false
+                            CausesValidation = false,
+                            UseSubmitBehavior = false
                         };
+
                         cerrarBtn.Click += EliminarNotificacion_Click;
                         cerrarBtn.UseSubmitBehavior = false;
+                        cerrarBtn.Attributes["onclick"] = "event.stopPropagation();";
 
                         // Botón marcar como vista
                         Button marcarBtn = new Button
@@ -211,6 +257,7 @@ namespace Sistema_Iglesia_Dios_Web
                         marcarBtn.Click += MarcarNotificacionComoVista_Click;
                         marcarBtn.UseSubmitBehavior = false;
                         marcarBtn.Attributes["type"] = "button"; // evita que dispare submit
+                        marcarBtn.Attributes["onclick"] = "event.stopPropagation();";
 
                         // Marcador de nueva notificación
                         Literal burbuja = new Literal
@@ -239,23 +286,47 @@ namespace Sistema_Iglesia_Dios_Web
 
                         // Agregar al div principal
                         divContenedorNotificaciones.Controls.Add(panel);
+                        btnEliminarTodas.Visible = true;
+                        ActualizarBotonNotificaciones();
                     }
                 }
                 else
                 {
-                    divContenedorNotificaciones.InnerHtml = "<div class='div-sin-notificaciones'>No hay notificaciones</div>";
+                    LimpiarPanelNotificaciones();
                 }
-                
             }
             catch (Exception ex)
             {
             }
         }
 
+        private void ActualizarBotonNotificaciones()
+        {
+            // Comprueba si hay notificaciones sin leer
+            bool haySinLeer = DT_NOTIFICACIONES.AsEnumerable()
+                .Any(r => r["Visto"].ToString() == "False");
+
+            // Muestra u oculta el badge con un if normal
+            if (haySinLeer)
+            {
+                badgeNotificaciones.Style["display"] = "block";  // o "inline-block" si prefieres
+            }
+            else
+            {
+                badgeNotificaciones.Style["display"] = "none";
+            }
+        }
+
+        private void LimpiarPanelNotificaciones()
+        {
+            divContenedorNotificaciones.InnerHtml = "<div class='div-sin-notificaciones'>No hay notificaciones</div>";
+            btnEliminarTodas.Visible = false;
+        }
+
         private double ObtenerDiferenciaSegundos(DateTime Fecha)
         {
             TimeSpan diferencia = DateTime.Now - Fecha;
-           return diferencia.TotalSeconds;
+            return diferencia.TotalSeconds;
         }
 
         private double ObtenerDiferenciaMinutos(DateTime Fecha)
@@ -282,11 +353,6 @@ namespace Sistema_Iglesia_Dios_Web
         protected void Page_Load(object sender, EventArgs e)
         {
             EvaluarSesion();
-
-            if (!Page.IsPostBack)
-            {
-                
-            }
         }
 
         protected void Page_Init(object sender, EventArgs e)
@@ -299,14 +365,26 @@ namespace Sistema_Iglesia_Dios_Web
         {
             var btn = (Button)sender;
             int Id_Notificacion = int.Parse(btn.CommandArgument);
+
+            // 1) Lo borras de la base
             notificacion_N.Eliminar(Id_Notificacion);
 
-            // 🔍 Buscar el Panel que representa la notificación
+            // 2) Encuentras el panel
             Panel notiPanel = FindParent<Panel>(btn);
             if (notiPanel != null)
             {
-                notiPanel.Visible = false;  // Ocultar solo el contenido visual
+                // en vez de .Visible = false
+                divContenedorNotificaciones.Controls.Remove(notiPanel);
             }
+
+            // 3) Fuerza la actualización del UpdatePanel
+            if (divContenedorNotificaciones.Controls.Count == 0)
+            {
+                LimpiarPanelNotificaciones();
+                ActualizarBotonNotificaciones();
+            }
+
+            upNotificaciones.Update();
         }
 
         protected void MarcarNotificacionComoVista_Click(object sender, EventArgs e)
@@ -315,18 +393,17 @@ namespace Sistema_Iglesia_Dios_Web
             int Id_Notificacion = int.Parse(btn.CommandArgument);
             notificacion_N.MarcarComoVista(Id_Notificacion);
 
-            // Aquí marcas como vista en base de datos
-            // Ejemplo:
-            // notificacion_N.MarcarComoVista(Id_Notificacion);
-
-            // Opcional: recargar visual
+            // Esto es suficiente para que se actualice el contenido
             CargarNotificaciones();
+            upNotificaciones.Update();
         }
 
         protected void EliminarTodasNotificaciones_Click(object sender, EventArgs e)
         {
             notificacion_N.EliminarTodo(int.Parse(Session["ID_USUARIO_SESSION"].ToString()));
-            CargarNotificaciones();
+            LimpiarPanelNotificaciones();
+            upNotificaciones.Update();
+            ActualizarBotonNotificaciones();
         }
 
         #endregion

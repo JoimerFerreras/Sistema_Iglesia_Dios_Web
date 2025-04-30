@@ -51,7 +51,7 @@
     <telerik:RadFormDecorator runat="server" Skin="Bootstrap" RenderMode="Lightweight" Visible="false" />
     <form runat="server">
 
-        <asp:ScriptManager runat="server">
+        <asp:ScriptManager runat="server" EnablePageMethods="true">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
@@ -103,8 +103,8 @@
                         </div>
 
 
-                        <a href="#" id="btnNotificaciones" class="icon-btn boton-notificacion" onclick="abrirPanelNotificaciones()" style="box-shadow: 0px 1px 10px rgba(0,0,0,0.2); padding: 14px 18px 14px 18px; background-color: white; border-radius: 10px; color: #2F323A">
-                            <i class="fa-solid fa-bell fa-lg" style="margin-bottom: 10px;"></i>
+                        <a href="#" id="btnNotificaciones" class="icon-btn boton-notificacion" onclick="abrirPanelNotificaciones()" style="position: relative; box-shadow: 0px 1px 10px rgba(0,0,0,0.2); padding: 14px 18px 14px 18px; background-color: white; border-radius: 10px; color: #2F323A">
+                            <i class="fa-solid fa-bell fa-lg" style="margin-bottom: 10px;"></i>  <span runat="server" id="badgeNotificaciones" class="badge-nueva-boton" style="display: none;"></span>
                         </a>
                     </div>
 
@@ -256,7 +256,7 @@
                 </div>
             </div>
 
-            <asp:UpdatePanel ID="upNotificaciones" runat="server" UpdateMode="Conditional">
+            <asp:UpdatePanel ID="upNotificaciones" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="true">
                 <ContentTemplate>
                     <div class="panel-body" id="divContenedorNotificaciones" runat="server">
                     </div>
@@ -467,7 +467,7 @@
             margin-top: 3px;
         }
 
-        .btn-cerrar-notificacion {
+        .btn-eliminar-notificacion {
             background: none;
             border: none;
             font-size: 18px;
@@ -479,7 +479,7 @@
             transition: color 0.2s ease;
         }
 
-            .btn-cerrar-notificacion:hover {
+            .btn-eliminar-notificacion:hover {
                 color: #000;
             }
 
@@ -523,6 +523,19 @@
     box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
+.badge-nueva-boton {
+    width: 15px;
+    height: 15px;
+    background-color: #108df7;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    right: -5px;   /* <-- antes era left */
+    z-index: 10;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+
 .div-sin-notificaciones{
 
     min-width: 100%;
@@ -530,9 +543,8 @@
     text-align:center;
     align-content:center;
 }
-
-
     </style>
+
     <script>
         function abrirPanelNotificaciones() {
             document.getElementById('panelNotificaciones').classList.add('show');
