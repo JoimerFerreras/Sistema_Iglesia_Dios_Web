@@ -42,6 +42,8 @@
     <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
 </head>
 
 <body onload="asignarEnlace()" class="fondo">
@@ -49,7 +51,7 @@
     <telerik:RadFormDecorator runat="server" Skin="Bootstrap" RenderMode="Lightweight" Visible="false" />
     <form runat="server">
 
-        <asp:ScriptManager runat="server">
+        <asp:ScriptManager runat="server" EnablePageMethods="true">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
@@ -79,17 +81,33 @@
                     <div class="sidebar_1-btn_1" id="BotonMenu">
                         <i class="fas fa-bars"></i>
                     </div>
-                    <ul>
-                        <li>
-                            <asp:Label runat="server" ID="lblNombrePantalla" Text="[Nombre Pantalla]" ClientIDMode="Static" Style="position: absolute; top: 18px; left: 325px; font-size: 22px; font-weight: bold;"></asp:Label>
-                            <div id="divContenedorInfoUsuario" style="display: inline-block; margin: 0 15px; line-height: 16px; margin-top: 15px;">
-                                <i class="fa-solid fa-circle-user" style="font-size: 40px; color: #2F323A;"></i>
-                                <div style="display: inline-block;">
-                                    <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label><asp:Label runat="server" ID="lblRolUsuario" Style="display: block; font-size: 12px;">Rol de usuario (Offline)</asp:Label>
+                    <asp:Label runat="server" ID="lblNombrePantalla" Text="[Nombre Pantalla]" ClientIDMode="Static" Style="position: absolute; top: 18px; left: 325px; font-size: 22px; font-weight: bold;"></asp:Label>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="dropdown">
+                            <div id="divContenedorInfoUsuario" class="dropdown-toggle contenedor-boton-usuario" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-circle-user" style="font-size: 40px; color: #2F323A; margin-right: 8px;"></i>
+                                <div style="margin-right: 15px;">
+                                    <asp:Label runat="server" ID="lblNombreUsuario" Style="display: block; font-weight: bold;">Usuario (Offline)</asp:Label>
+                                    <asp:Label runat="server" ID="lblRolUsuario" Style="display: block; font-size: 12px;">Rol de usuario (Offline)</asp:Label>
                                 </div>
                             </div>
-                            <a href="#" id="btnCerrarSesion" style="display: inline-block;" onclick="return CerrarSesionAlert(this);"><i class="fa-solid fa-right-from-bracket" style="margin-bottom: 10px;"></i></a></li>
-                    </ul>
+                            <ul class="dropdown-menu dropdown-menu-lg-end">
+                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-address-book" style="padding-right: 10px;"></i>Ver información de perfil</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-key" style="padding-right: 10px;"></i>Cambiar mi contraseña</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item boton-cerrar-sesion" id="btnCerrarSesion" onclick="return CerrarSesionAlert(this);" href="#"><i class="fa-solid fa-right-from-bracket" style="padding-right: 10px;"></i>Cerrar sesión</a></li>
+                            </ul>
+                        </div>
+
+
+                        <a href="#" id="btnNotificaciones" class="icon-btn boton-notificacion" onclick="abrirPanelNotificaciones()" style="position: relative; box-shadow: 0px 1px 10px rgba(0,0,0,0.2); padding: 14px 18px 14px 18px; background-color: white; border-radius: 10px; color: #2F323A">
+                            <i class="fa-solid fa-bell fa-lg" style="margin-bottom: 10px;"></i><span runat="server" id="badgeNotificaciones" class="badge-nueva-boton" style="display: none;"></span>
+                        </a>
+                    </div>
+
                 </div>
             </div>
             <!--header_1 menu_1 end-->
@@ -217,6 +235,34 @@
             <!--main container end-->
         </div>
         <!--wrapper_1 end-->
+
+        <div id="customOverlay" class="custom-overlay" onclick="cerrarPanelNotificaciones()"></div>
+
+        <div id="panelNotificaciones" class="custom-panel">
+            <div class="panel-header">
+                <h5>Notificaciones</h5>
+
+                <div class="d-flex align-items-center gap-2">
+                    <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <button runat="server" id="btnEliminarTodas" class="btn btn-sm btn-outline-danger" onserverclick="EliminarTodasNotificaciones_Click" type="button">
+                                <i class="fa-solid fa-trash-can"></i>Borrar todo
+                            </button>
+
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+
+                    <button type="button" id="btnCerrarPanelNotificaciones" onclick="cerrarPanelNotificaciones()" class="btn-close"></button>
+                </div>
+            </div>
+
+            <asp:UpdatePanel ID="upNotificaciones" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="true">
+                <ContentTemplate>
+                    <div class="panel-body" id="divContenedorNotificaciones" runat="server">
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
     </form>
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>

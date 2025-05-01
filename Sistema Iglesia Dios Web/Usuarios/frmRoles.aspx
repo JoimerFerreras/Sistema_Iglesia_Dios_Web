@@ -89,7 +89,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-3">
-                                    Estado <br />
+                                    Estado
+                                    <br />
                                     <telerik:RadComboBox ID="cmbEstado" runat="server" Width="100%" ClientIDMode="Static" Style="max-width: 230px;"
                                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="3"
                                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
@@ -104,31 +105,99 @@
                         </div>
 
                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
+                            <div style="display: flex; justify-content: flex-end; gap: 20px; margin-top: 20px;">
+                                <div style="margin-right: 100px;">
+                                    <b>Visualizar</b><br />
+                                    <telerik:RadCheckBox runat="server" ID="chkMarcarTodosVisualizar" Text="Marcar todos" Skin="Material" EnableEmbeddedSkins="true" RenderMode="Lightweight" OnCheckedChanged="chkMarcarTodosVisualizar_CheckedChanged" />
+                                </div>
+                                <div style="margin-right: 100px;">
+                                    <b>Editar</b><br />
+                                    <telerik:RadCheckBox runat="server" ID="chkMarcarTodosEditar" Text="Marcar todos" Skin="Material" EnableEmbeddedSkins="true" RenderMode="Lightweight" OnCheckedChanged="chkMarcarTodosEditar_CheckedChanged" />
+                                </div>
+                                <div style="margin-right: 30px;">
+                                    <b>Eliminar</b><br />
+                                    <telerik:RadCheckBox runat="server" ID="chkMarcarTodosEliminar" Text="Marcar todos" Skin="Material" EnableEmbeddedSkins="true" RenderMode="Lightweight" OnCheckedChanged="chkMarcarTodosEliminar_CheckedChanged" />
+                                </div>
+                            </div>
+
                             <div class="col-12 div-gridview">
-                                <asp:GridView ID="gvPermisos" runat="server" AutoGenerateColumns="False" Width="100%">
+                                <telerik:RadGrid RenderMode="Lightweight" ID="gvPermisos" runat="server" Culture="es-DO" Style="overflow-x: auto;" BorderColor="White" MasterTableView-Width="100%" Width="100%" HeaderStyle-Font-Bold="true" AlternatingItemStyle-BackColor="#F1F5FF"
+                                    AllowPaging="True" AllowAutomaticUpdates="True" AllowAutomaticInserts="False" MasterTableView-PagerStyle-PageSizeLabelText="Registros" Skin="Bootstrap" HeaderStyle-BackColor="#F1F5FF" PagerStyle-AlwaysVisible="true"
+                                    AllowAutomaticDeletes="True" AllowSorting="False" PagerStyle-BorderStyle="None" BorderStyle="None" FooterStyle-BorderStyle="None" HeaderStyle-BorderStyle="None" MasterTableView-PagerStyle-NextPagesToolTip="" MasterTableView-PagerStyle-PrevPagesToolTip=""
+                                    FooterStyle-ForeColor="Black" HeaderStyle-ForeColor="Black" ItemStyle-ForeColor="Black" AlternatingItemStyle-ForeColor="Black" MasterTableView-PagerStyle-PagerTextFormat="{4} <strong>{5}</strong> Registros en <strong>{1}</strong> Páginas"
+                                    MasterTableView-PagerStyle-FirstPageToolTip="" MasterTableView-PagerStyle-PrevPageToolTip="" MasterTableView-PagerStyle-NextPageToolTip="" MasterTableView-PagerStyle-LastPageToolTip=""
+                                    OnPageIndexChanged="gvPermisos_PageIndexChanged" OnPageSizeChanged="gvPermisos_PageSizeChanged" OnSortCommand="gvPermisos_SortCommand" PageSize="50" CssClass="table-hover" ClientSettings-EnableRowHoverStyle="true">
+                                    <PagerStyle Mode="NextPrevAndNumeric" />
+                                    <MasterTableView AutoGenerateColumns="False">
+                                        <Columns>
+                                            <telerik:GridBoundColumn DataField="Nombre_Funcionalidad" HeaderText="Nombre de Función" HeaderStyle-Width="25%" ItemStyle-Width="25%">
+                                            </telerik:GridBoundColumn>
+
+                                            <telerik:GridBoundColumn DataField="Nombre_Archivo" HeaderText="Pantalla" HeaderStyle-Width="25%" ItemStyle-Width="25%">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridTemplateColumn HeaderText="Visualizar">
+                                                <HeaderStyle HorizontalAlign="Center" Width="10%" />
+                                                <ItemStyle HorizontalAlign="Center" Width="10%" />
+                                                <ItemTemplate>
+                                                    <telerik:RadCheckBox runat="server" ID="chkVisualizar" Skin="Material" EnableEmbeddedSkins="true" RenderMode="Lightweight" Checked='<%# Convert.ToBoolean(Eval("Permiso_Visualizar")) %>' />
+
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+
+                                            <telerik:GridTemplateColumn HeaderText="Editar">
+                                                <HeaderStyle HorizontalAlign="Center" Width="10%" />
+                                                <ItemStyle HorizontalAlign="Center" Width="10%" />
+                                                <ItemTemplate>
+                                                    <telerik:RadCheckBox runat="server" ID="chkEditar" Skin="Material" EnableEmbeddedSkins="true" RenderMode="Lightweight" Checked='<%# Convert.ToBoolean(Eval("Permiso_Editar")) %>' />
+
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+
+                                            <telerik:GridTemplateColumn HeaderText="Eliminar">
+                                                <HeaderStyle HorizontalAlign="Center" Width="10%" />
+                                                <ItemStyle HorizontalAlign="Center" Width="10%" />
+                                                <ItemTemplate>
+                                                    <telerik:RadCheckBox runat="server" ID="chkEliminar" Skin="Material" EnableEmbeddedSkins="true" RenderMode="Lightweight" Checked='<%# Convert.ToBoolean(Eval("Permiso_Eliminar")) %>' />
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+                                        </Columns>
+                                    </MasterTableView>
+                                </telerik:RadGrid>
+
+
+
+                                <asp:GridView runat="server" AutoGenerateColumns="False" Width="100%"
+                                    CssClass="table table-bordered table-hover table-sm text-center" Visible="false"
+                                    GridLines="None"
+                                    HeaderStyle-BackColor="#f0f3fd"
+                                    HeaderStyle-ForeColor="White"
+                                    HeaderStyle-Font-Bold="true"
+                                    RowStyle-BackColor="White"
+                                    AlternatingRowStyle-BackColor="#f8f9fa"
+                                    BorderStyle="Solid"
+                                    BorderWidth="1px">
+                                    <HeaderStyle BackColor="Red" />
                                     <Columns>
-                                        <asp:BoundField DataField="Nombre_Funcionalidad" HeaderText="Nombre de Función" HeaderStyle-Width="20%" ItemStyle-Width="30%" />
-                                        <asp:BoundField DataField="Nombre_Archivo" HeaderText="Pantalla" HeaderStyle-Width="30%" ItemStyle-Width="30%" />
+                                        <asp:BoundField DataField="Nombre_Funcionalidad" HeaderText="Nombre de Función" HeaderStyle-Width="30%" ItemStyle-HorizontalAlign="Left" />
+                                        <asp:BoundField DataField="Nombre_Archivo" HeaderText="Pantalla" HeaderStyle-Width="30%" ItemStyle-HorizontalAlign="Left" />
 
-                                        <asp:TemplateField HeaderText="Visualizar">
+                                        <asp:TemplateField HeaderText="Visualizar" HeaderStyle-Width="13%">
                                             <ItemTemplate>
-                                                <asp:CheckBox ID="chkVisualizar" runat="server" Checked='<%# Convert.ToBoolean(Eval("Permiso_Visualizar")) %>' HeaderStyle-Width="10%" ItemStyle-Width="10%" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="Editar">
+                                        <asp:TemplateField HeaderText="Editar" HeaderStyle-Width="13%">
                                             <ItemTemplate>
-                                                <asp:CheckBox ID="chkEditar" runat="server" Checked='<%# Convert.ToBoolean(Eval("Permiso_Editar")) %>' HeaderStyle-Width="10%" ItemStyle-Width="10%" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
 
-                                        <asp:TemplateField HeaderText="Eliminar">
+                                        <asp:TemplateField HeaderText="Eliminar" HeaderStyle-Width="13%">
                                             <ItemTemplate>
-                                                <asp:CheckBox ID="chkEliminar" runat="server" Checked='<%# Convert.ToBoolean(Eval("Permiso_Eliminar")) %>' HeaderStyle-Width="10%" ItemStyle-Width="10%" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
                                 </asp:GridView>
+
                             </div>
                         </div>
 

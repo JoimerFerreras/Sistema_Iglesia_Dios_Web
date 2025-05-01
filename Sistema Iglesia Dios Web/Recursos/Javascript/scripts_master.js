@@ -105,6 +105,22 @@ function asignarEnlace() {
 }
 
 
+function abrirPanelNotificaciones() {
+    document.getElementById('panelNotificaciones').classList.add('show');
+    document.getElementById('customOverlay').classList.add('show');
+}
+
+function cerrarPanelNotificaciones() {
+    document.getElementById('panelNotificaciones').classList.remove('show');
+    document.getElementById('customOverlay').classList.remove('show');
+}
+
+function ocultarNotificaciones() {
+    const notis = document.querySelectorAll('.notificacion');
+    notis.forEach(n => n.classList.add('ocultar'));
+}
+
+
 // Tooltip
 // With the above scripts loaded, you can call `tippy()` with a CSS
 // selector and a `content` prop:

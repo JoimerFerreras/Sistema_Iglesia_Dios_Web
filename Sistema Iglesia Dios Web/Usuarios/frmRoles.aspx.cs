@@ -151,6 +151,12 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             gvDatos.DataBind();
         }
 
+        private void ActualizarGridPermisos()
+        {
+            gvPermisos.DataSource = DT_PERMISOS;
+            gvPermisos.DataBind();
+        }
+
         private bool ValidarCampos()
         {
             bool Validacion = false;
@@ -317,6 +323,10 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             txtFechaRegistro.Text = "";
             txtFechaUltimaModificacion.Text = "";
 
+            chkMarcarTodosVisualizar.Checked = false;
+            chkMarcarTodosEditar.Checked = false;
+            chkMarcarTodosEliminar.Checked = false;
+
             btnEliminar.Visible = false;
 
             ObtenerPlantillaPermisos();
@@ -361,6 +371,58 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
         {
             Permiso_N Permiso_N = new Permiso_N();
             DT_PERMISOS = Permiso_N.Listar(Id_Rol);
+            DataTable dtVerificarChecksPermisos = DT_PERMISOS.Copy();
+
+            int CantidadFilas = dtVerificarChecksPermisos.Rows.Count;
+
+            int ValorVisualizar = 0;
+            int ValorEditar = 0;
+            int ValorEliminar = 0;
+            for (int i = 0; i < CantidadFilas; i++)
+            {
+                DataRow row = dtVerificarChecksPermisos.Rows[i];
+                if (row["Permiso_Visualizar"].ToString() == "True")
+                {
+                    ValorVisualizar++;
+                }
+
+                if (row["Permiso_Editar"].ToString() == "True")
+                {
+                    ValorEditar++;
+                }
+
+                if (row["Permiso_Eliminar"].ToString() == "True")
+                {
+                    ValorEliminar++;
+                }
+            }
+
+            if (ValorVisualizar == CantidadFilas)
+            {
+                chkMarcarTodosVisualizar.Checked = true;
+            }
+            else
+            {
+                chkMarcarTodosVisualizar.Checked = false;
+            }
+
+            if (ValorEditar == CantidadFilas)
+            {
+                chkMarcarTodosEditar.Checked = true;
+            }
+            else
+            {
+                chkMarcarTodosEditar.Checked = false;
+            }
+
+            if (ValorEliminar == CantidadFilas)
+            {
+                chkMarcarTodosEliminar.Checked = true;
+            }
+            else
+            {
+                chkMarcarTodosEliminar.Checked = false;
+            }
 
             gvPermisos.DataSource = DT_PERMISOS;
             gvPermisos.DataBind();
@@ -420,14 +482,14 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             // Clonar la estructura
             DataTable dtCopia = dtOriginal.Clone();
 
-            for (int i = 0; i < gvPermisos.Rows.Count; i++)
+            for (int i = 0; i < gvPermisos.Items.Count; i++)
             {
-                GridViewRow fila = gvPermisos.Rows[i];
+                GridDataItem fila = gvPermisos.Items[i];
 
                 // Acceder a los valores desde los controles en el GridView
-                CheckBox chkVer = (CheckBox)fila.FindControl("chkVisualizar");
-                CheckBox chkEditar = (CheckBox)fila.FindControl("chkEditar");
-                CheckBox chkEliminar = (CheckBox)fila.FindControl("chkEliminar");
+                RadCheckBox chkVer = (RadCheckBox)fila.FindControl("chkVisualizar");
+                RadCheckBox chkEditar = (RadCheckBox)fila.FindControl("chkEditar");
+                RadCheckBox chkEliminar = (RadCheckBox)fila.FindControl("chkEliminar");
 
                 // Obtener la fila correspondiente del original
                 DataRow filaOriginal = dtOriginal.Rows[i];
@@ -452,6 +514,16 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             }
             return dtCopia;
             // Ahora `dtCopia` tiene todos los permisos con los estados actuales desde el GridView
+        }
+
+        private void MarcarTodos(bool estado, string ControlMarcar)
+        {
+            for (int i = 0; i < gvPermisos.Items.Count; i++)
+            {
+                GridDataItem fila = gvPermisos.Items[i];
+                RadCheckBox chkVer = (RadCheckBox)fila.FindControl(ControlMarcar);
+                chkVer.Checked = estado;
+            }
         }
         #endregion
 
@@ -532,5 +604,35 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             return statusText == "Activo" ? "status-green" : "status-red";
         }
         #endregion
+
+        protected void gvPermisos_PageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            ActualizarGridPermisos();
+        }
+
+        protected void gvPermisos_PageSizeChanged(object sender, GridPageSizeChangedEventArgs e)
+        {
+            ActualizarGridPermisos();
+        }
+
+        protected void gvPermisos_SortCommand(object sender, GridSortCommandEventArgs e)
+        {
+            ActualizarGridPermisos();
+        }
+
+        protected void chkMarcarTodosVisualizar_CheckedChanged(object sender, EventArgs e)
+        {
+            MarcarTodos(chkMarcarTodosVisualizar.Checked.Value, "chkVisualizar");
+        }
+
+        protected void chkMarcarTodosEditar_CheckedChanged(object sender, EventArgs e)
+        {
+            MarcarTodos(chkMarcarTodosEditar.Checked.Value, "chkEditar");
+        }
+
+        protected void chkMarcarTodosEliminar_CheckedChanged(object sender, EventArgs e)
+        {
+            MarcarTodos(chkMarcarTodosEliminar.Checked.Value, "chkEliminar");
+        }
     }
 }

@@ -105,13 +105,40 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
         protected global::Telerik.Web.UI.RadComboBox cmbEstado;
 
         /// <summary>
+        /// Control chkMarcarTodosVisualizar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadCheckBox chkMarcarTodosVisualizar;
+
+        /// <summary>
+        /// Control chkMarcarTodosEditar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadCheckBox chkMarcarTodosEditar;
+
+        /// <summary>
+        /// Control chkMarcarTodosEliminar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadCheckBox chkMarcarTodosEliminar;
+
+        /// <summary>
         /// Control gvPermisos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvPermisos;
+        protected global::Telerik.Web.UI.RadGrid gvPermisos;
 
         /// <summary>
         /// Control txtFechaRegistro.
