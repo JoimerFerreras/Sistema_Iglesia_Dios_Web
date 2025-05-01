@@ -10,9 +10,9 @@ C:\Users\Admin\Source\Repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidad
 C:\Users\Admin\Source\Repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Source\Repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.dll
 C:\Users\Admin\Source\Repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.pdb
-C:\Users\joime\source\repos\Sistema_Iglesia_Dios_Web\Entidades\bin\Debug\Entidades.dll
-C:\Users\joime\source\repos\Sistema_Iglesia_Dios_Web\Entidades\bin\Debug\Entidades.pdb
-C:\Users\joime\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.csproj.AssemblyReference.cache
-C:\Users\joime\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
-C:\Users\joime\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.dll
-C:\Users\joime\source\repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.pdb
+C:\Users\joime\Source\Repos\Sistema_Iglesia_Dios_Web\Entidades\bin\Debug\Entidades.dll
+C:\Users\joime\Source\Repos\Sistema_Iglesia_Dios_Web\Entidades\bin\Debug\Entidades.pdb
+C:\Users\joime\Source\Repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.csproj.AssemblyReference.cache
+C:\Users\joime\Source\Repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.csproj.CoreCompileInputs.cache
+C:\Users\joime\Source\Repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.dll
+C:\Users\joime\Source\Repos\Sistema_Iglesia_Dios_Web\Entidades\obj\Debug\Entidades.pdb

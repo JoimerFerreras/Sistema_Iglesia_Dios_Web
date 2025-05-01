@@ -57,7 +57,6 @@
     <Compile Include="Otros_Parametros\Descripciones_N.cs" />
     <Compile Include="Otros_Parametros\Forma_Pago_N.cs" />
     <Compile Include="Otros_Parametros\Miscelaneo_N.cs" />
-    <Compile Include="Otros_Parametros\Moneda_N.cs" />
     <Compile Include="Ingresos\Ingreso_N.cs" />
     <Compile Include="Miembros\Miembro_Informacion_Familiar1_N.cs" />
     <Compile Include="Miembros\Miembro_Informacion_Familiar2_N.cs" />

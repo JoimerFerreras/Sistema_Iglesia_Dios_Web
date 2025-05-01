@@ -53,7 +53,6 @@
     <Compile Include="Otros_Parametros\Descripciones_E.cs" />
     <Compile Include="Otros_Parametros\Forma_Pago_E.cs" />
     <Compile Include="Otros_Parametros\Miscelaneo_E.cs" />
-    <Compile Include="Otros_Parametros\Moneda_E.cs" />
     <Compile Include="Miembros\Miembro_E.cs" />
     <Compile Include="Miembros\Miembro_Informacion_Familiar1_ E.cs" />
     <Compile Include="Miembros\Miembro_Informacion_Familiar2_E.cs" />
