@@ -60,6 +60,11 @@ namespace Sistema_Iglesia_Dios_Web
             Response.Redirect(Utilidad_N.ObtenerRutaServer() + "frmLogin.aspx");
         }
 
+        public void IrPantallaPrincipal()
+        {
+            Response.Redirect(Utilidad_N.ObtenerRutaServer() + "/Utilidad_Cliente/frmPaginaPrincipal.aspx");
+        }
+
         // Método para encontrar el padre de un control de tipo Update panel para Notificaciones
         private T FindParent<T>(Control control) where T : Control
         {

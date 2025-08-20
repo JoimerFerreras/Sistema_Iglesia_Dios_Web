@@ -16,6 +16,57 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
 {
     public class Utilidad_C
     {
+        #region Manejo de usuarios, roles y funcionalidades
+
+        public static string ObtenerUsuarioSession(Page pagina)
+        {
+            // Se valida la sesión del usuario
+            string Id_Usuario_Session;
+            if (pagina.Session["ID_USUARIO_SESSION"] != null && pagina.Session["ID_USUARIO_SESSION"].ToString() != "0" && Utilidad_N.ValidarNull(pagina.Session["ID_USUARIO_SESSION"].ToString()) == false)
+            {
+                Id_Usuario_Session = pagina.Session["ID_USUARIO_SESSION"].ToString();
+            }
+            else
+            {
+                Id_Usuario_Session = "0";
+            }
+            return Id_Usuario_Session;
+        }
+        public static string ObtenerRolUsuarioSession(Page pagina)
+        {
+            // Se valida la sesión del usuario
+            string Rol;
+            if (pagina.Session["ID_ROL_SESSION"] != null && pagina.Session["ID_ROL_SESSION"].ToString() != "0" && Utilidad_N.ValidarNull(pagina.Session["ID_ROL_SESSION"].ToString()) == false)
+            {
+                Rol = pagina.Session["ID_ROL_SESSION"].ToString();
+            }
+            else
+            {
+                Rol = "0";
+            }
+            return Rol;
+        }
+
+        public static string ObtenerCodigoPantalla(Page pagina)
+        {
+            // Optencion del nombre de la funcionalidad asignado a la pantalla
+            CodigoFuncionalidadAttribute attribute = (CodigoFuncionalidadAttribute)Attribute.GetCustomAttribute(pagina.GetType(), typeof(CodigoFuncionalidadAttribute));
+            return attribute.Codigo;
+        }
+
+        public static DataTable ObtenerPermisos_RolFuncionalidad(string Id_Rol, string NombreFuncionalidad)
+        {
+            DataTable dtPermisos = new DataTable();
+
+            Negocio.Usuarios.Permiso_N permisoNegocio = new Negocio.Usuarios.Permiso_N();
+            dtPermisos = permisoNegocio.ObtenerPermisos_RolFuncionalidad(Id_Rol, NombreFuncionalidad);
+
+            return dtPermisos;
+        }
+        #endregion
+
+
+
         #region Alertas
 
         // -- DECLARACIONES --
@@ -38,6 +89,11 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
         private const string TextoAlerta_Eliminar_Error_Fatal = "Ocurrió un problema al intentar eliminar el registro";
         private const string TituloAlerta_Eliminar_Success = "Se ha eliminado el registro correctamente";
 
+        // Permisos
+        public const string TituloAlerta_Accion_Denegada = "Acción denegada";
+        public const string TextoAlerta_Accion_Denegada = "No tiene permisos para realizar esta acción";
+        public const string TituloAlerta_Acceso_Denegado = "Acceso denegado";
+        public const string TextoAlerta_Acceso_Denegado = "No tiene permisos para acceder a esta funcionalidad";
 
         // Ejeccion de las alertas
         // -- METODOS --
@@ -79,6 +135,17 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
         public static void MostrarAlerta_Personalizada(Page pagina, Type type, string TituloAlerta, string TextoAlerta, string TipoAlerta)
         {
             ScriptManager.RegisterStartupScript(pagina, type.GetType(), key, $"swal('{TituloAlerta}', '{TextoAlerta}', '{TipoAlerta}');", true);
+        }
+
+        // Permisos
+        public static void MostrarAlerta_AccionDenegada(Page pagina, Type type)
+        {
+            ScriptManager.RegisterStartupScript(pagina, type.GetType(), key, $"swal('{TituloAlerta_Accion_Denegada}', '{TextoAlerta_Accion_Denegada}', 'error');", true);
+        }
+
+        public static void MostrarAlerta_AccesoDenegado(Page pagina, Type type)
+        {
+            ScriptManager.RegisterStartupScript(pagina, type.GetType(), key, $"swal('{TituloAlerta_Acceso_Denegado}', '{TextoAlerta_Acceso_Denegado}', 'error');", true);
         }
         #endregion
 
@@ -282,25 +349,12 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
 
 
         #region Validaciones
-        public static string ObtenerUsuarioSession(Page pagina)
-        {
-            // Se valida la sesión del usuario
-            string Id_Usuario_Session;
-            if (pagina.Session["ID_USUARIO_SESSION"] != null && pagina.Session["ID_USUARIO_SESSION"].ToString() != "0" && Utilidad_N.ValidarNull(pagina.Session["ID_USUARIO_SESSION"].ToString()) == false)
-            {
-                Id_Usuario_Session = pagina.Session["ID_USUARIO_SESSION"].ToString();
-            }
-            else
-            {
-                Id_Usuario_Session = "0";
-            }
-            return Id_Usuario_Session;
-        }
 
         public static string ObtenerNombrePC()
         {
             return Environment.MachineName;
         }
+
         #endregion
 
 
@@ -505,16 +559,6 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
             } catch (Exception ex) {
                 throw;
             }
-        }
-        #endregion
-
-
-        #region Manejo de usuarios, roles y funcionalidades
-        public static string ObtenerCodigoPantalla(Page pagina) 
-        {
-            // Optencion del nombre de la funcionalidad asignado a la pantalla
-            CodigoFuncionalidadAttribute attribute = (CodigoFuncionalidadAttribute)Attribute.GetCustomAttribute(pagina.GetType(), typeof(CodigoFuncionalidadAttribute));
-            return attribute.Codigo;
         }
         #endregion
     }

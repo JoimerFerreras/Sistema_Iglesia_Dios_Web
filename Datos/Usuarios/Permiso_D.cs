@@ -110,6 +110,46 @@ namespace Datos.Usuarios
             }
         }
 
+
+        public DataTable ObtenerPermisos_RolFuncionalidad(int Id_Rol, string Nombre_Funcionalidad)
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"SELECT 
+                                    F.Nombre_Funcionalidad,
+                                    P.Id_Rol,
+                                    P.Id_Funcionalidad,
+                                    P.Permiso_Visualizar,
+                                    P.Permiso_Editar,
+                                    P.Permiso_Eliminar
+
+                                    FROM Permisos P
+                                    LEFT JOIN Funcionalidades F ON F.Id_Funcionalidad = P.Id_Funcionalidad
+
+                                    WHERE Id_Rol = @Id_Rol AND Nombre_Funcionalidad = @Nombre_Funcionalidad";
+
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id_Rol", Id_Rol);
+                cmd.Parameters.AddWithValue("@Nombre_Funcionalidad", Nombre_Funcionalidad);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
         //public Permiso_E ObtenerRegistro(int Id_Rol, int Id_Funcionalidad)
         //{
         //    Permiso_E entidad = new Permiso_E();

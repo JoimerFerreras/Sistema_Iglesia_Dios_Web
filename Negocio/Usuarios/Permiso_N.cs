@@ -22,6 +22,18 @@ namespace Negocio.Usuarios
             }
         }
 
+        public DataTable ObtenerPermisos_RolFuncionalidad(string Id_Rol, string Nombre_Funcionalidad)
+        {
+            try
+            {
+                return Permiso_D.ObtenerPermisos_RolFuncionalidad(int.Parse(Id_Rol), Nombre_Funcionalidad);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public DataTable ListarPlantillaPermisos()
         {
             try

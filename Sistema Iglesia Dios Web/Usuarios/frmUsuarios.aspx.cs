@@ -66,9 +66,64 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
         #endregion
 
 
+        #region Permisos
+        public bool[] PERMISOS
+        {
+            get
+            {
+                if (ViewState["PERMISOS"] == null)
+                {
+                    ViewState["PERMISOS"] = new bool[3];
+                }
+                return (bool[])ViewState["PERMISOS"];
+            }
+            set
+            {
+                ViewState["PERMISOS"] = value;
+            }
+        }
+
+        private void ObtenerPermisos()
+        {
+            DataTable dt = Utilidad_C.ObtenerPermisos_RolFuncionalidad(Utilidad_C.ObtenerRolUsuarioSession(this), Utilidad_C.ObtenerCodigoPantalla(this));
+            if (dt.Rows.Count > 0)
+            {
+                PERMISOS[0] = dt.Rows[0].Field<bool>("Permiso_Visualizar");
+                PERMISOS[1] = dt.Rows[0].Field<bool>("Permiso_Editar");
+                PERMISOS[2] = dt.Rows[0].Field<bool>("Permiso_Eliminar");
+            }
+            else
+            {
+                PERMISOS[0] = false;
+                PERMISOS[1] = false;
+                PERMISOS[2] = false;
+            }
+        }
+
+        private bool EvaluarAccionPermiso(int Id_Accion)
+        {
+            bool Validacion = false;
+
+            if (Id_Accion >= 0 && Id_Accion <= 2)
+            {
+                Validacion = PERMISOS[Id_Accion];
+            }
+
+            return Validacion;
+        }
+        #endregion
+
+
         #region Metodos/ Procedimientos
+
         private void Consultar()
         {
+            if (EvaluarAccionPermiso(0) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             DT_DATOS = Usuario_N.Listar(cmbRol_Filtro.SelectedValue);
 
             gvDatos.DataSource = DT_DATOS;
@@ -153,6 +208,12 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
 
         private void GuardarRegistro()
         {
+            if (EvaluarAccionPermiso(1) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             try
             {
                 if (ValidarCampos() == true)
@@ -261,6 +322,12 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
 
         private void Eliminar()
         {
+            if (EvaluarAccionPermiso(2) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             if (EDITAR_REGISTRO == false)
             {
                 Utilidad_C.MostrarAlerta_Eliminar_Error(this, this.GetType(), "Primero seleccione un registro para poder eliminarlo");
@@ -336,12 +403,19 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
 
             if (!Page.IsPostBack)
             {
+                // Permisos *************************
+                ObtenerPermisos();
+                if (EvaluarAccionPermiso(0) == false)
+                {
+                    ((SiteMaster)Master).IrPantallaPrincipal();
+                }
+                // **********************************
+
+
                 ((SiteMaster)Master).EstablecerNombrePantalla("Usuarios");
                 LlenerCombos();
                 LimpiarCampos();
                 Consultar();
-
-                string a = Utilidad_C.ObtenerCodigoPantalla(this);
             }
         }
 
