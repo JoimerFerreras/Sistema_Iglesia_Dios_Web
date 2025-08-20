@@ -139,6 +139,54 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
         #endregion
 
 
+        #region Permisos
+        public bool[] PERMISOS
+        {
+            get
+            {
+                if (ViewState["PERMISOS"] == null)
+                {
+                    ViewState["PERMISOS"] = new bool[3];
+                }
+                return (bool[])ViewState["PERMISOS"];
+            }
+            set
+            {
+                ViewState["PERMISOS"] = value;
+            }
+        }
+
+        private void ObtenerPermisos()
+        {
+            DataTable dt = Utilidad_C.ObtenerPermisos_RolFuncionalidad(Utilidad_C.ObtenerRolUsuarioSession(this), Utilidad_C.ObtenerCodigoPantalla(this));
+            if (dt.Rows.Count > 0)
+            {
+                PERMISOS[0] = dt.Rows[0].Field<bool>("Permiso_Visualizar");
+                PERMISOS[1] = dt.Rows[0].Field<bool>("Permiso_Editar");
+                PERMISOS[2] = dt.Rows[0].Field<bool>("Permiso_Eliminar");
+            }
+            else
+            {
+                PERMISOS[0] = false;
+                PERMISOS[1] = false;
+                PERMISOS[2] = false;
+            }
+        }
+
+        private bool EvaluarAccionPermiso(int Id_Accion)
+        {
+            bool Validacion = false;
+
+            if (Id_Accion >= 0 && Id_Accion <= 2)
+            {
+                Validacion = PERMISOS[Id_Accion];
+            }
+
+            return Validacion;
+        }
+        #endregion
+
+
         #region Metodos/ Procedimientos
 
         #region Cuentas por pagar
@@ -170,6 +218,12 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
         private void Consultar()
         {
+            if (EvaluarAccionPermiso(0) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             DateTime fecha;
 
             if (dtpFechaDesdeFiltro.SelectedDate != null && dtpFechaHastaFiltro.SelectedDate != null)
@@ -210,6 +264,12 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
         private void ConsultarResumen()
         {
+            if (EvaluarAccionPermiso(0) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             DT_DATOS_RESUMEN = Cuenta_Pagar_N.ListarResumen(
                                    rbtnTipoFecha.SelectedValue,
                         dtpFechaDesdeFiltro.SelectedDate.Value,
@@ -383,6 +443,12 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
         private void GuardarRegistro()
         {
+            if (EvaluarAccionPermiso(1) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             try
             {
                 if (ValidarCampos() == true)
@@ -530,6 +596,12 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
         private void Eliminar()
         {
+            if (EvaluarAccionPermiso(2) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             if (EDITAR_REGISTRO == false)
             {
                 Utilidad_C.MostrarAlerta_Eliminar_Error(this, this.GetType(), "Primero seleccione un registro para poder eliminarlo");
@@ -553,6 +625,12 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
         private void GenerarReporteExcel_Detalle()
         {
+            if (EvaluarAccionPermiso(0) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             try
             {
                 // Se establece una lista con el nombre de las columnas del grid
@@ -600,6 +678,12 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
         private void GenerarReporteExcel_Resumen()
         {
+            if (EvaluarAccionPermiso(0) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             try
             {
                 // Se establece una lista con el nombre de las columnas del grid
@@ -648,6 +732,13 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
         private void AgregarDescripcion()
         {
+            if (EvaluarAccionPermiso(1) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+
+            }
+
             if (txtDescripcionAgregar.Text.Length > 0)
             {
                 Descripciones_E entidad = new Descripciones_E();
@@ -668,6 +759,12 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
         private void AgregarMiscelaneo()
         {
+            if (EvaluarAccionPermiso(1) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             if (txtMiscelaneoAgregar.Text.Length > 0)
             {
                 Miscelaneo_E entidad = new Miscelaneo_E();
@@ -708,6 +805,12 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
         private void DescargarArchivo()
         {
+            if (EvaluarAccionPermiso(0) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             if (EDITAR_REGISTRO == true)
             {
                 if (ID_REGISTRO_ARCHIVO == "" || ID_REGISTRO_ARCHIVO == "0")
@@ -766,6 +869,12 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
         private void SubirArchivo()
         {
+            if (EvaluarAccionPermiso(1) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             try
             {
                 // Se revisa que corresponda a un nuevo registro
@@ -849,6 +958,12 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
         private void EliminarArchivo(int Id_Archivo)
         {
+            if (EvaluarAccionPermiso(2) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             Archivo_Cuenta_Pagar_N archivo_N = new Archivo_Cuenta_Pagar_N();
             if (EDITAR_REGISTRO == false)
             {
@@ -894,6 +1009,14 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
 
             if (!Page.IsPostBack)
             {
+                // Permisos *************************
+                ObtenerPermisos();
+                if (EvaluarAccionPermiso(0) == false)
+                {
+                    ((SiteMaster)Master).IrPantallaPrincipal();
+                }
+                // **********************************
+
                 ((SiteMaster)Master).EstablecerNombrePantalla("Cuentas por pagar");
                 LlenerCombos();
                 LimpiarFiltros();

@@ -68,6 +68,55 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         }
         #endregion
 
+
+        #region Permisos
+        public bool[] PERMISOS
+        {
+            get
+            {
+                if (ViewState["PERMISOS"] == null)
+                {
+                    ViewState["PERMISOS"] = new bool[3];
+                }
+                return (bool[])ViewState["PERMISOS"];
+            }
+            set
+            {
+                ViewState["PERMISOS"] = value;
+            }
+        }
+
+        private void ObtenerPermisos()
+        {
+            DataTable dt = Utilidad_C.ObtenerPermisos_RolFuncionalidad(Utilidad_C.ObtenerRolUsuarioSession(this), Utilidad_C.ObtenerCodigoPantalla(this));
+            if (dt.Rows.Count > 0)
+            {
+                PERMISOS[0] = dt.Rows[0].Field<bool>("Permiso_Visualizar");
+                PERMISOS[1] = dt.Rows[0].Field<bool>("Permiso_Editar");
+                PERMISOS[2] = dt.Rows[0].Field<bool>("Permiso_Eliminar");
+            }
+            else
+            {
+                PERMISOS[0] = false;
+                PERMISOS[1] = false;
+                PERMISOS[2] = false;
+            }
+        }
+
+        private bool EvaluarAccionPermiso(int Id_Accion)
+        {
+            bool Validacion = false;
+
+            if (Id_Accion >= 0 && Id_Accion <= 2)
+            {
+                Validacion = PERMISOS[Id_Accion];
+            }
+
+            return Validacion;
+        }
+        #endregion
+
+
         #region Metodos/ Procedimientos
 
         // CONSULTA
@@ -99,6 +148,12 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
 
         private void Consultar()
         {
+            if (EvaluarAccionPermiso(0) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             DateTime fecha;
 
             if (dtpFechaDesdeFiltro.SelectedDate != null && dtpFechaHastaFiltro.SelectedDate != null)
@@ -155,8 +210,6 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         }
 
 
-
-
         // REGISTRO
 
         private bool ValidarCampos()
@@ -193,6 +246,12 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
 
         private void GuardarRegistro()
         {
+            if (EvaluarAccionPermiso(1) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             try
             {
                 if (ValidarCampos() == true)
@@ -660,6 +719,12 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
 
         private void GenerarReporteExcel()
         {
+            if (EvaluarAccionPermiso(0) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
+                return;
+            }
+
             // Se establece una lista con el nombre de las columnas del grid
             List<string> NombresColumnas = new List<string>();
             for (int i = 1; i < gvDatos.MasterTableView.Columns.Count; i++)
@@ -709,6 +774,14 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
 
             if (!Page.IsPostBack)
             {
+                // Permisos *************************
+                ObtenerPermisos();
+                if (EvaluarAccionPermiso(0) == false)
+                {
+                    ((SiteMaster)Master).IrPantallaPrincipal();
+                }
+                // **********************************
+
                 ((SiteMaster)Master).EstablecerNombrePantalla("Miembros");
 
                 LlenarCombos();
