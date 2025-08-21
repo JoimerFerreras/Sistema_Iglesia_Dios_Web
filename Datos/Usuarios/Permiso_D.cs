@@ -181,6 +181,58 @@ namespace Datos.Usuarios
             }
         }
 
+        public DataTable ListadoFuncionalidadesRol_MasterPage(int Id_Rol)
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"
+                                     SELECT
+                                         F.Id_Funcionalidad,
+                                         F.Id_Modulo,
+                                         F.Nombre_Funcionalidad,
+                                         F.Nombre_Archivo,
+                                         F.Orden  AS Orden_Funcionalidad,
+                                         M.Orden  AS Orden_Modulo
+                                     FROM dbo.Funcionalidades AS F
+                                     LEFT JOIN dbo.Modulos AS M
+                                            ON M.Id_Modulo = F.Id_Modulo
+                                     WHERE
+                                         F.Estado = 1                                   -- funcionalidad activa
+                                         AND (M.Id_Modulo IS NULL OR M.Estado = 1)      -- módulo activo o sin módulo
+                                         AND EXISTS (                                   -- permiso de visualizar para @IdRol
+                                             SELECT 1
+                                             FROM dbo.Permisos AS P
+                                             WHERE P.Id_Funcionalidad = F.Id_Funcionalidad
+                                               AND P.Id_Rol = @IdRol
+                                               AND P.Permiso_Visualizar = 1
+                                         )
+                                     ORDER BY
+                                         CASE WHEN ISNULL(F.Id_Modulo,0) = 0 THEN 0 ELSE 1 END,             -- primero Id_Modulo=0
+                                         CASE WHEN ISNULL(F.Id_Modulo,0) = 0 THEN COALESCE(F.Orden, 2147483647) END, -- y por F.Orden ASC
+                                         CASE WHEN M.Orden IS NULL THEN 1 ELSE 0 END, M.Orden ASC,          -- luego módulos (NULL al final)
+                                         CASE WHEN F.Orden IS NULL THEN 1 ELSE 0 END, F.Orden ASC;          -- y funcionalidades ASC";
+
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@IdRol", Id_Rol);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
         //public Permiso_E ObtenerRegistro(int Id_Rol, int Id_Funcionalidad)
         //{
         //    Permiso_E entidad = new Permiso_E();

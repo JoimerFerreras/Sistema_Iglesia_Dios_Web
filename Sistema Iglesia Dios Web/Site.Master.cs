@@ -2,13 +2,18 @@
 using Microsoft.Ajax.Utilities;
 using Negocio.Usuarios;
 using Negocio.Util_N;
+using Newtonsoft.Json;
 using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Policy;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.DynamicData;
 using System.Web.UI;
@@ -159,9 +164,9 @@ namespace Sistema_Iglesia_Dios_Web
 
                         Panel panel = new Panel
                         {
-                            ID = "panelNotificacion_" + id, 
+                            ID = "panelNotificacion_" + id,
                             CssClass = clase + " position-relative"
-                            
+
                         };
                         if (Link.Length > 0)
                         {
@@ -176,7 +181,7 @@ namespace Sistema_Iglesia_Dios_Web
                             {
                                 atributo += $"window.open('{Link}', '_blank');";
                             }
-                            
+
                             panel.Attributes["onclick"] = atributo;
                             panel.Attributes["onclick"] += "event.stopPropagation();";
                             panel.Attributes["style"] += "cursor: pointer;";
@@ -353,97 +358,106 @@ namespace Sistema_Iglesia_Dios_Web
             return diferencia.TotalDays;
         }
 
-        private void EvaluarOpcionesPermisos()
+        private void CargarFuncionalidadesMenu()
         {
+            // Obtencion de funcionalidades disponibles para el rol del usuario actualmente logueado
+            DataTable dtPermisos_Func = new DataTable();
             Permiso_N permiso_N = new Permiso_N();
-            DataTable dtPermisos = permiso_N.ObtenerPermisosOpciones_MasterPage(Utilidad_C.ObtenerRolUsuarioSession(this.Page));
+            dtPermisos_Func = permiso_N.ListadoFuncionalidadesRol_MasterPage(Utilidad_C.ObtenerRolUsuarioSession(this.Page));
 
-            int length = dtPermisos.Rows.Count;
-            if (length > 0)
+            if (dtPermisos_Func.Rows.Count > 0)
             {
+                // Ruta dinámica + lectura
+                string jsonF = File.ReadAllText(this.Server.MapPath(@"~/Recursos/Recursos_Utiles/funcionalidades_menu.json"));
 
-                int Bloque_OtrosParametros = 0;
-                int Bloque_Configuracion = 0;
-                int Bloque_AcercaDe = 3; // Por ahora esta puesto en 3
+                // Deserializar JSONs
+                List<Funcionalidad> lista_funcionalidades = JsonConvert.DeserializeObject<List<Funcionalidad>>(jsonF) ?? new List<Funcionalidad>();
 
-                for (int i = 0; i < length; i++)
+                string RutaServer = Utilidad_N.ObtenerRutaServer();
+                string HTML = "";
+
+                int Id_Modulo_En_Fase = 0;
+                bool ModuloAnteriorPadre = false;
+
+                // Se procede a obtener todas las funcionalidades de la aplicacion que estan guardadas en los JSONs
+                // y compararlas con las disponibles para el usuario logueado para solo mostrar las correspondientes
+                for (int i = 0; i < dtPermisos_Func.Rows.Count; i++)
                 {
-                    DataRow row = dtPermisos.Rows[i];
-                    string Nombre_Funcionalidad = row["Nombre_Funcionalidad"].ToString();
-                    bool Permiso = Convert.ToBoolean(row["PermiSo_Visualizar"]);
+                    DataRow row = dtPermisos_Func.Rows[i];
 
-                    switch (Nombre_Funcionalidad)
+                    for (int j = 0; j < lista_funcionalidades.Count; j++)
                     {
-                        case "Ingresos":
-                            btnIngresos_S.Visible = Permiso;
-                            break;
+                        var f = lista_funcionalidades[j];
 
-                        case "Egresos":
-                            btnEgresos_S.Visible = Permiso;
-                            break;
+                        if (f.IdFuncionalidad.ToString() == row["Id_Funcionalidad"].ToString())
+                        {
+                            if (row["Id_Modulo"].ToString() == "0")
+                            {
+                                if (ModuloAnteriorPadre == true)
+                                {
+                                    HTML += $@"</li>";
+                                    ModuloAnteriorPadre = false;
+                                }
 
-                        case "Cuentas_Por_Cobrar":
-                            btnCuentasCobrar_S.Visible = Permiso;
-                            break;
+                                HTML += $@"<li class=""item_1"" title=""{f.DescripcionFuncionalidad}"">
+                                            <a style=""text-decoration: none;"" href=""{RutaServer + f.NombreArchivo}"" class=""menu_1-btn_1"" id=""btn{f.NombreFuncionalidad + f.IdFuncionalidad}"" data-tippy-content=""{f.DescripcionFuncionalidad}"" title="""">
+                                                <i class=""{f.Clase_CSS_Funcionalidad}""></i><span>{f.DescripcionFuncionalidad}</span>
+                                            </a>
+                                        </li>";
 
-                        case "Cuentas_Por_Pagar":
-                            btnCuentasPagar_S.Visible = Permiso;
-                            break;
+                                Id_Modulo_En_Fase = f.IdModulo; // Asignar el Id del módulo actual para futuras comparaciones
 
-                        case "Miembros":
-                            miembros.Visible = Permiso;
-                            break;
+                                lista_funcionalidades.RemoveAt(j); // Eliminar la funcionalidad ya procesada para optimizar
+                                break; // Salir del bucle una vez encontrada la funcionalidad
+                            }
+                            else
+                            {
+                                if (Id_Modulo_En_Fase != f.IdModulo)
+                                {
+                                    if (ModuloAnteriorPadre == true)
+                                    {
+                                        HTML += $@"</li>";
+                                        ModuloAnteriorPadre = false;
+                                    }
 
-                        case "Descripciones":
-                            btnDescripciones_S.Visible = Permiso;
-                            Bloque_OtrosParametros ++;
-                            break;
+                                    string id_modulo_html = f.NombreModulo + f.IdModulo + "_" + f.IdFuncionalidad;
+                                    HTML += $@"<li class=""item_1"" id=""{id_modulo_html}"" title=""{f.DescripcionModulo}"">
+                                            <a style=""text-decoration: none;"" href=""#{id_modulo_html}"" class=""menu_1-btn_1"" data-tippy-content=""{f.DescripcionModulo}"" title="""">
+                                                <i class=""{f.Clase_CSS_Modulo}""></i><span>{f.DescripcionModulo}<i class=""fas fa-chevron-down drop-down_1""></i></span>
+                                            </a>
+                                        ";
 
-                        case "Formas_Pago":
-                            btnFormasPago_S.Visible = Permiso;
-                            Bloque_OtrosParametros++;
-                            break;
+                                    HTML += $@" <div class=""sub-menu_1"">
+                                        <a href=""{RutaServer + f.NombreArchivo}"" id=""{f.NombreFuncionalidad + f.IdFuncionalidad}"" data-tippy-content=""{f.DescripcionFuncionalidad}"" title=""""><i class=""{f.Clase_CSS_Funcionalidad}""></i><span>{f.DescripcionFuncionalidad}</span></a>
+                                    </div>";
 
-                        case "Miscelaneos":
-                            btnMiscelaneos_S.Visible = Permiso;
-                            Bloque_OtrosParametros++;
-                            break;
+                                    Id_Modulo_En_Fase = f.IdModulo;
+                                    ModuloAnteriorPadre = true;
+                                }
+                                else
+                                {
+                                    HTML += $@" <div class=""sub-menu_1"">
+                                        <a href=""{RutaServer + f.NombreArchivo}"" id=""{f.NombreFuncionalidad + f.IdFuncionalidad}"" data-tippy-content=""{f.DescripcionFuncionalidad}"" title=""""><i class=""{f.Clase_CSS_Funcionalidad}""></i><span>{f.DescripcionFuncionalidad}</span></a>
+                                    </div>";
+                                }
 
-                        case "Resumen":
-                            btnResumen_S.Visible = Permiso;
-                            break;
-
-                        case "Log_Usuarios_Accesos":
-                            btnLogUsuariosAcessos_S.Visible = Permiso;
-                            Bloque_Configuracion ++;
-                            break;
-
-                        case "Roles":
-                            btnRolesPermisos_S.Visible = Permiso;
-                            Bloque_Configuracion++;
-                            break;
-
-                        case "Usuarios":
-                            btnUsuarios_S.Visible = Permiso;
-                            Bloque_Configuracion++;
-                            break;
+                                break;
+                            }
+                        }
                     }
                 }
 
-                if (Bloque_OtrosParametros == 3)
+                if (ModuloAnteriorPadre == true)
                 {
-                    otros_parametros.Visible = false;
+                    HTML += $@"</li>";
+                    ModuloAnteriorPadre = false;
                 }
 
-                if (Bloque_Configuracion == 3)
-                {
-                    configuracion.Visible = false;
-                }
-
-                if (Bloque_AcercaDe == 3)
-                {
-                    acerca_de.Visible = false;
-                }
+                divMenuFunciones.InnerHtml = HTML;
+            }
+            else
+            {
+                divMenuFunciones.InnerHtml = "<label class='label-sin-funcionalidades'>No hay funcionalidades disponibles</label>";
             }
         }
         #endregion
@@ -456,7 +470,7 @@ namespace Sistema_Iglesia_Dios_Web
 
             if (!Page.IsPostBack)
             {
-                EvaluarOpcionesPermisos();
+                CargarFuncionalidadesMenu();
             }
         }
 

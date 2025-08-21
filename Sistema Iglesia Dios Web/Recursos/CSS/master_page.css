@@ -553,3 +553,18 @@ body {
     text-align: center;
     align-content: center;
 }
+
+/* Menu lateral */
+.label-sin-funcionalidades {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    color: #888;
+    background-color: transparent;
+    font-size: 1.1em;
+    font-weight: 500;
+    margin: 16px 0;
+    padding: 20px;
+    text-align: center;
+}

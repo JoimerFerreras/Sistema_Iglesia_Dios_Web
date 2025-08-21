@@ -90,18 +90,18 @@ function asignarEnlace() {
     url = window.location.protocol.replace(/\:/g, '') + "://" + window.location.host + '/'
     // Obtener la etiqueta <a> mediante su ID
 
-    document.getElementById('btnResumen').href = url + 'Resumen/frmResumen.aspx';
-    document.getElementById('btnIngresos').href = url + 'Ingresos/frmIngresos.aspx';
-    document.getElementById('btnEgresos').href = url + 'Egresos/frmEgresos.aspx';
-    document.getElementById('btnCuentasCobrar').href = url + 'Cuentas_Por_Cobrar/frmCuentasCobrar.aspx';
-    document.getElementById('btnCuentasPagar').href = url + 'Cuentas_Por_Pagar/frmCuentasPagar.aspx';
-    document.getElementById('btnMiembros').href = url + 'Miembros/frmMiembros.aspx';
-    document.getElementById('btnDescripciones').href = url + 'Otros_Parametros/frmDescripciones.aspx';
-    document.getElementById('btnFormas_Pago').href = url + 'Otros_Parametros/frmFormas_Pago.aspx';
-    document.getElementById('btnMiscelaneos').href = url + 'Otros_Parametros/frmMiscelaneos.aspx';
-    document.getElementById('btnRoles').href = url + 'Usuarios/frmRoles.aspx';
-    document.getElementById('btnUsuarios').href = url + 'Usuarios/frmUsuarios.aspx';
-    document.getElementById('btnLogUsuariosAccesos').href = url + 'Usuarios/frmLogUsuariosAccesos.aspx';
+    //document.getElementById('btnResumen').href = url + 'Resumen/frmResumen.aspx';
+    //document.getElementById('btnIngresos').href = url + 'Ingresos/frmIngresos.aspx';
+    //document.getElementById('btnEgresos').href = url + 'Egresos/frmEgresos.aspx';
+    //document.getElementById('btnCuentasCobrar').href = url + 'Cuentas_Por_Cobrar/frmCuentasCobrar.aspx';
+    //document.getElementById('btnCuentasPagar').href = url + 'Cuentas_Por_Pagar/frmCuentasPagar.aspx';
+    //document.getElementById('btnMiembros').href = url + 'Miembros/frmMiembros.aspx';
+    //document.getElementById('btnDescripciones').href = url + 'Otros_Parametros/frmDescripciones.aspx';
+    //document.getElementById('btnFormas_Pago').href = url + 'Otros_Parametros/frmFormas_Pago.aspx';
+    //document.getElementById('btnMiscelaneos').href = url + 'Otros_Parametros/frmMiscelaneos.aspx';
+    //document.getElementById('btnRoles').href = url + 'Usuarios/frmRoles.aspx';
+    //document.getElementById('btnUsuarios').href = url + 'Usuarios/frmUsuarios.aspx';
+    //document.getElementById('btnLogUsuariosAccesos').href = url + 'Usuarios/frmLogUsuariosAccesos.aspx';
 }
 
 
