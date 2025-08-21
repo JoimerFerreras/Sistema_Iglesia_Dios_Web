@@ -56,7 +56,7 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
             {
                 ((SiteMaster)Master).EstablecerNombrePantalla("Resumen");
 
-                GraficoIngresosMes();
+                //GraficoIngresosMes();
             }
         }
         #endregion
