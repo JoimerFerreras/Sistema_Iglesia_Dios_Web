@@ -60,6 +60,7 @@ namespace Datos.Usuarios
 
         public int Agregar(Notificacion_E entidad)
         {
+            // Tipo_Notificacion: 1=info, 2=success, 3=warning, 4=danger, 5=system
             int Id = 0;
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
