@@ -196,6 +196,9 @@
     <Content Include="Recursos\Javascript\scripts_general.js" />
     <Content Include="Recursos\Javascript\scripts_master.js" />
     <Content Include="Recursos\Javascript\typpy_tooltip.js" />
+    <Content Include="Recursos\Scripts SQL\Script Creacion BD.sql" />
+    <Content Include="Recursos\Scripts SQL\Script Funcionalidades y Modulos.sql" />
+    <Content Include="Recursos\Scripts SQL\Script Insercion Valores Default.sql" />
     <Content Include="Resumen\frmResumen.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -407,7 +410,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Recursos\Scripts SQL\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -9,7 +9,7 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <LastActiveSolutionConfig>Debug|Any CPU</LastActiveSolutionConfig>
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
     <NameOfLastUsedPublishProfile>C:\Users\Admin\source\repos\Sistema_Iglesia_Dios_Web\Sistema Iglesia Dios Web\Properties\PublishProfiles\FolderProfile1.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup>
