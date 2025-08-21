@@ -34,6 +34,18 @@ namespace Negocio.Usuarios
             }
         }
 
+        public DataTable ObtenerPermisosOpciones_MasterPage(string Id_Rol)
+        {
+            try
+            {
+                return Permiso_D.ObtenerPermisosOpciones_MasterPage(int.Parse(Id_Rol));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public DataTable ListarPlantillaPermisos()
         {
             try

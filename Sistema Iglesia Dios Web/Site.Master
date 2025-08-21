@@ -114,43 +114,43 @@
             <!--sidebar_1 start-->
             <div class="sidebar_1" id="MenuLateral">
                 <div class="sidebar_1-menu_1">
-                    <li class="item_1" title="Resumen">
+                    <li class="item_1" title="Resumen" runat="server" id="btnResumen_S" visible="false">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnResumen" data-tippy-content="Resumen" title="">
                             <i class="fa-solid fa-chart-column"></i><span>Resumen</span>
                         </a>
                     </li>
 
-                    <li class="item_1" title="Ingresos">
+                    <li class="item_1" title="Ingresos" runat="server" id="btnIngresos_S" visible="false">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnIngresos" data-tippy-content="Ingresos" title="">
                             <i class="fa-solid fa-hand-holding-dollar"></i><span>Ingresos</span>
                         </a>
                     </li>
 
-                    <li class="item_1" title="Egresos">
+                    <li class="item_1" title="Egresos" runat="server" id="btnEgresos_S" visible="false">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnEgresos" data-tippy-content="Egresos" title="">
                             <i class="fa-solid fa-cash-register"></i><span>Egresos</span>
                         </a>
                     </li>
 
-                    <li class="item_1" title="Cuentas por cobrar">
+                    <li class="item_1" title="Cuentas por cobrar" runat="server" id="btnCuentasCobrar_S" visible="false">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnCuentasCobrar" data-tippy-content="Cuentas por cobrar" title="">
                             <i class="fa-solid fa-scale-unbalanced-flip"></i><span>Cuentas por cobrar</span>
                         </a>
                     </li>
 
-                    <li class="item_1" title="Cuentas por pagar">
+                    <li class="item_1" title="Cuentas por pagar" runat="server" id="btnCuentasPagar_S" visible="false">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnCuentasPagar" data-tippy-content="Cuentas por pagar" title="">
                             <i class="fa-solid fa-file-invoice-dollar"></i><span>Cuentas por pagar</span>
                         </a>
                     </li>
 
-                    <li class="item_1" title="Inventario de activos fijos">
+                    <li class="item_1" title="Inventario de activos fijos" runat="server" id="btnInventarioActivosFijos_S" visible="false">
                         <a style="text-decoration: none;" href="#" class="menu_1-btn_1" id="btnInventarioActivosFijos" data-tippy-content="Inventario de activos fijos" title="">
                             <i class="fa-solid fa-box-archive"></i><span>Inventario de activos fijos</span>
                         </a>
                     </li>
 
-                    <li class="item_1" id="miembros" title="Miembros">
+                    <li class="item_1" id="miembros" title="Miembros" runat="server" visible="false">
                         <a style="text-decoration: none;" href="#miembros" class="menu_1-btn_1" data-tippy-content="Miembros" title="">
                             <i class="fa-solid fa-church"></i><span>Miembros<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
@@ -159,61 +159,61 @@
                         </div>
                     </li>
 
-                    <li class="item_1" id="otros_parametros" title="Otros parámetros">
+                    <li class="item_1" id="otros_parametros" title="Otros parámetros" runat="server">
                         <a style="text-decoration: none;" href="#otros_parametros" class="menu_1-btn_1" data-tippy-content="Otros parámetros" title="">
                             <i class="fa-solid fa-sliders"></i><span>Otros Parametros<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
 
-                        <div class="sub-menu_1">
+                        <div class="sub-menu_1" runat="server" id="btnDescripciones_S" visible="false">
                             <a href="#" id="btnDescripciones" data-tippy-content="Descripciones" title=""><i class="fa-solid fa-file-signature"></i><span>Descripciones</span></a>
                         </div>
 
-                        <div class="sub-menu_1">
+                        <div class="sub-menu_1" runat="server" id="btnMiscelaneos_S" visible="false">
                             <a href="#" id="btnMiscelaneos" data-tippy-content="Misceláneos" title=""><i class="fa-solid fa-shuffle"></i><span>Misceláneos</span></a>
                         </div>
 
-                        <div class="sub-menu_1">
+                        <div class="sub-menu_1" runat="server" id="btnFormasPago_S" visible="false">
                             <a href="#" id="btnFormas_Pago" data-tippy-content="Formas de pago" title=""><i class="fa-solid fa-money-bill"></i><span>Formas de pago</span></a>
                         </div>
 
                     </li>
 
-                    <li class="item_1" id="configuracion" title="Configuración">
+                    <li class="item_1" id="configuracion" title="Configuración" runat="server">
                         <a style="text-decoration: none;" href="#configuracion" class="menu_1-btn_1" data-tippy-content="Configuración" title="">
                             <i class="fa-solid fa-gear"></i><span>Configuración<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
 
-                        <div class="sub-menu_1">
+                        <div class="sub-menu_1" runat="server" id="btnCambiarPassword_S" visible="false">
                             <a href="#" id="btnCambiarPassword" data-tippy-content="Cambiar contraseña" title=""><i class="fa-solid fa-key"></i><span>Cambiar contraseña</span></a>
                         </div>
 
-                        <div class="sub-menu_1">
+                        <div class="sub-menu_1" runat="server" id="btnUsuarios_S" visible="false">
                             <a href="#" id="btnUsuarios" data-tippy-content="Usuarios" title=""><i class="fa-solid fa-users"></i><span>Usuarios</span></a>
                         </div>
 
-                        <div class="sub-menu_1">
+                        <div class="sub-menu_1" runat="server" id="btnRolesPermisos_S" visible="false">
                             <a href="#" id="btnRoles" data-tippy-content="Roles y permisos" title=""><i class="fa-solid fa-user-gear"></i><span>Roles y permisos</span></a>
                         </div>
 
-                        <div class="sub-menu_1">
+                        <div class="sub-menu_1" runat="server" id="btnLogUsuariosAcessos_S" visible="false">
                             <a href="#" id="btnLogUsuariosAccesos" data-tippy-content="Log de accesos de usuarios" title=""><i class="fa-regular fa-address-book"></i><span>Log de accesos de usuarios</span></a>
                         </div>
                     </li>
 
-                    <li class="item_1" id="acerca_de" title="Acerca de">
+                    <li class="item_1" id="acerca_de" title="Acerca de" runat="server">
                         <a style="text-decoration: none;" href="#acerca_de" class="menu_1-btn_1" data-tippy-content="Acerca de" title="">
                             <i class="fa-solid fa-circle-info"></i><span>Acerca de<i class="fas fa-chevron-down drop-down_1"></i></span>
                         </a>
 
-                        <div class="sub-menu_1">
+                        <div class="sub-menu_1" runat="server" id="btnInfoSistema_S" visible="false">
                             <a href="#" id="btnInformacionSistema" data-tippy-content="Información del sistema" title=""><i class="fa-solid fa-info"></i><span>Información del sistema</span></a>
                         </div>
 
-                        <div class="sub-menu_1">
+                        <div class="sub-menu_1" runat="server" id="btnNovedades_S" visible="false">
                             <a href="#" id="btnNovedades" data-tippy-content="Novedades" title=""><i class="fa-solid fa-newspaper"></i><span>Novedades</span></a>
                         </div>
 
-                        <div class="sub-menu_1">
+                        <div class="sub-menu_1" runat="server" id="btnAyuda_S" visible="false">
                             <a href="#" id="btnAyuda" data-tippy-content="Ayuda" title=""><i class="fa-solid fa-question"></i><span>Ayuda</span></a>
                         </div>
                     </li>

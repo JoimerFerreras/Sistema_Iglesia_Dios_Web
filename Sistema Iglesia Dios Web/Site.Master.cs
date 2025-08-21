@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Policy;
 using System.Web;
+using System.Web.DynamicData;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Literal = System.Web.UI.WebControls.Literal;
@@ -351,6 +352,100 @@ namespace Sistema_Iglesia_Dios_Web
             TimeSpan diferencia = DateTime.Now - Fecha;
             return diferencia.TotalDays;
         }
+
+        private void EvaluarOpcionesPermisos()
+        {
+            Permiso_N permiso_N = new Permiso_N();
+            DataTable dtPermisos = permiso_N.ObtenerPermisosOpciones_MasterPage(Utilidad_C.ObtenerRolUsuarioSession(this.Page));
+
+            int length = dtPermisos.Rows.Count;
+            if (length > 0)
+            {
+
+                int Bloque_OtrosParametros = 0;
+                int Bloque_Configuracion = 0;
+                int Bloque_AcercaDe = 3; // Por ahora esta puesto en 3
+
+                for (int i = 0; i < length; i++)
+                {
+                    DataRow row = dtPermisos.Rows[i];
+                    string Nombre_Funcionalidad = row["Nombre_Funcionalidad"].ToString();
+                    bool Permiso = Convert.ToBoolean(row["PermiSo_Visualizar"]);
+
+                    switch (Nombre_Funcionalidad)
+                    {
+                        case "Ingresos":
+                            btnIngresos_S.Visible = Permiso;
+                            break;
+
+                        case "Egresos":
+                            btnEgresos_S.Visible = Permiso;
+                            break;
+
+                        case "Cuentas_Por_Cobrar":
+                            btnCuentasCobrar_S.Visible = Permiso;
+                            break;
+
+                        case "Cuentas_Por_Pagar":
+                            btnCuentasPagar_S.Visible = Permiso;
+                            break;
+
+                        case "Miembros":
+                            miembros.Visible = Permiso;
+                            break;
+
+                        case "Descripciones":
+                            btnDescripciones_S.Visible = Permiso;
+                            Bloque_OtrosParametros ++;
+                            break;
+
+                        case "Formas_Pago":
+                            btnFormasPago_S.Visible = Permiso;
+                            Bloque_OtrosParametros++;
+                            break;
+
+                        case "Miscelaneos":
+                            btnMiscelaneos_S.Visible = Permiso;
+                            Bloque_OtrosParametros++;
+                            break;
+
+                        case "Resumen":
+                            btnResumen_S.Visible = Permiso;
+                            break;
+
+                        case "Log_Usuarios_Accesos":
+                            btnLogUsuariosAcessos_S.Visible = Permiso;
+                            Bloque_Configuracion ++;
+                            break;
+
+                        case "Roles":
+                            btnRolesPermisos_S.Visible = Permiso;
+                            Bloque_Configuracion++;
+                            break;
+
+                        case "Usuarios":
+                            btnUsuarios_S.Visible = Permiso;
+                            Bloque_Configuracion++;
+                            break;
+                    }
+                }
+
+                if (Bloque_OtrosParametros == 3)
+                {
+                    otros_parametros.Visible = false;
+                }
+
+                if (Bloque_Configuracion == 3)
+                {
+                    configuracion.Visible = false;
+                }
+
+                if (Bloque_AcercaDe == 3)
+                {
+                    acerca_de.Visible = false;
+                }
+            }
+        }
         #endregion
 
 
@@ -358,6 +453,11 @@ namespace Sistema_Iglesia_Dios_Web
         protected void Page_Load(object sender, EventArgs e)
         {
             EvaluarSesion();
+
+            if (!Page.IsPostBack)
+            {
+                EvaluarOpcionesPermisos();
+            }
         }
 
         protected void Page_Init(object sender, EventArgs e)

@@ -214,7 +214,6 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
                                 Fecha: {Log_Usuario_Acceso_E.FechaHora_Login}";
 
             
-
             marker.Title = TextoMark;
 
             RadMap1.MarkersCollection.Add(marker);
