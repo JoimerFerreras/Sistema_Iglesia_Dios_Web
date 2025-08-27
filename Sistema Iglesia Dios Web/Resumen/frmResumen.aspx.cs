@@ -21,21 +21,22 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
         #region Metodos/ Procedimientos
      
 
-        private void GraficoIngresosMes()
+        private void GraficoIngresosVsEgresos()
         {
             try
             {
-                DataTable dt = resumen_N.GraficoIngresosMes();
+                DataTable dt = resumen_N.GraficoIngresosVsEgresos();
                 if (dt.Rows.Count > 0)
                 {
-                    graficoIngresosMes.DataSource = dt;
-                    graficoIngresosMes.DataBind();
+                    // Asegurar orden cronológico en el eje X (YYYY-MM ascendente)
+                    DataView dv = dt.DefaultView;
+                    dv.Sort = "Periodo ASC";
+
+                    chtFinanzas.DataSource = dv.ToTable();
+                    chtFinanzas.DataBind();
                 }
-                else
-                {
-                    graficoIngresosMes.Visible = false;
-                    divMensaje_graficoIngresosMes.Visible = true;
-                }
+
+             
             }
             catch (Exception ex)
             {
@@ -56,7 +57,7 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
             {
                 ((SiteMaster)Master).EstablecerNombrePantalla("Resumen");
 
-                //GraficoIngresosMes();
+                GraficoIngresosVsEgresos();
             }
         }
         #endregion

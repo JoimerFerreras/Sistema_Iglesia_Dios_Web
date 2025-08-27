@@ -15,13 +15,13 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
     {
 
         /// <summary>
-        /// Control graficoIngresosMes.
+        /// Control chtFinanzas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadHtmlChart graficoIngresosMes;
+        protected global::Telerik.Web.UI.RadHtmlChart chtFinanzas;
 
         /// <summary>
         /// Control divMensaje_graficoIngresosMes.

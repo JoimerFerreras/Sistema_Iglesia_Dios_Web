@@ -9,11 +9,11 @@ namespace Negocio.Resumen
         Resumen_D Resumen_D = new Resumen_D();
 
         // Grafico de total de ingresos en el mes
-        public DataTable GraficoIngresosMes()
+        public DataTable GraficoIngresosVsEgresos()
         {
             try
             {
-                return Resumen_D.GraficoIngresosMes(DateTime.Now);
+                return Resumen_D.GraficoIngresosVsEgresos(1);
             }
             catch (Exception ex)
             {

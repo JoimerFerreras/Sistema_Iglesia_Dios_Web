@@ -13,22 +13,46 @@
              <div class="shadowed-div-body" style="width: 100%; margin-top: 20px; margin-right: 20px; flex-basis: 50%; white-space: nowrap; text-align: center; justify-content: center; align-items: center;">
                 <div class="row" style="height: 100%;">
                     <div class="col-12 col-md-12">
-                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: bold; font-size: 20px;">Ingresos del mes en curso</div>
-                          <telerik:RadHtmlChart ID="graficoIngresosMes" runat="server" Skin="Bootstrap" Style="max-width: 850px; overflow-x: auto; white-space: nowrap;" ClientIDMode="Static">
-                                <PlotArea>
-                                    <Series>
-                                        <telerik:PieSeries DataFieldY="Monto_Total" ColorField="Color" ExplodeField="IsExploded"
-                                            NameField="Descripcion_Ingreso">
-                                            <LabelsAppearance>
-                                                <ClientTemplate>#=kendo.format("{0:0,0}", dataItem.Monto_Total)# (#=dataItem.Porcentaje#%)</ClientTemplate>
-                                            </LabelsAppearance>
-                                            <TooltipsAppearance Color="White" DataFormatString="{0:0,0}" />
-                                        </telerik:PieSeries>
-                                    </Series>
-                                </PlotArea>
-                            </telerik:RadHtmlChart>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: bold; font-size: 20px;">Ingresos, Egresos y Neto (últimos 3 meses)</div>
+                        <telerik:RadHtmlChart runat="server" ID="chtFinanzas" Width="100%" Height="420"
+                            Transitions="true" Skin="Silk">
+                            <PlotArea>
+                                <Series>
+                                    <telerik:ColumnSeries Name="Ingresos" DataFieldY="Ingresos">
+                                        <LabelsAppearance DataFormatString="{0:C0}" Position="OutsideEnd" />
+                                        <TooltipsAppearance DataFormatString="Ingresos: {0:C0}" />
+                                    </telerik:ColumnSeries>
+
+                                    <telerik:ColumnSeries Name="Egresos" DataFieldY="Egresos">
+                                        <LabelsAppearance DataFormatString="{0:C0}" Position="OutsideEnd" />
+                                        <TooltipsAppearance DataFormatString="Egresos: {0:C0}" />
+                                    </telerik:ColumnSeries>
+
+                                    <telerik:ColumnSeries Name="Neto" DataFieldY="Neto">
+                                        <LabelsAppearance DataFormatString="{0:C0}" Position="OutsideEnd" />
+                                        <TooltipsAppearance DataFormatString="Neto: {0:C0}" />
+                                    </telerik:ColumnSeries>
+                                </Series>
+
+                                <XAxis DataLabelsField="MesNombre">
+                                    <TitleAppearance Text="Mes" />
+                                </XAxis>
+
+                                <YAxis>
+                                    <TitleAppearance Text="Monto"/>
+                                    <LabelsAppearance DataFormatString="{0:C0}" />
+                                    
+                                </YAxis>
+                            </PlotArea>
+
+                            <ChartTitle Text="" />
+                            <Legend>
+                                <Appearance Position="Bottom" />
+                            </Legend>
+                        </telerik:RadHtmlChart>
+
                         <div runat="server" id="divMensaje_graficoIngresosMes" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center; flex-direction: column;" visible="false">
-                            <div style="margin-top: 20px;" >
+                            <div style="margin-top: 20px;">
                                 <i class="fa-solid fa-ban" style="color: #b3b4b5; font-size: 32px;"></i>
                                 <p style="color: #b3b4b5; font-weight: 100; font-size: 16px; margin-top: 5px;">No hay datos para mostrar</p>
                             </div>
