@@ -122,7 +122,7 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         // CONSULTA
         private void LimpiarFiltros()
         {
-            rbtnTipoFecha.SelectedValue = "2";
+            rbtnTipoFecha.SelectedValue = "0";
 
             //Primero obtenemos el día actual
             DateTime date = DateTime.Now;
@@ -230,11 +230,6 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La fecha de nacimiento debe ser válida"); 
                 dtpFechaNacimiento.Focus();
-            }
-            else if (dtpDesdeCuandoMiembro.SelectedDate == null)
-            {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La fecha de cuando se unió el miembro debe ser válida");
-                dtpDesdeCuandoMiembro.Focus();
             }
             else
             {
@@ -390,7 +385,7 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
 
                     if (EDITAR_REGISTRO == true)
                     {
-                        // Agregar registro
+                        // Guardar registro existente
                         string MensajeSalida = miembro_N.Guardar(
                         miembro_E,
                         info_familiar1_E,
@@ -411,7 +406,7 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
                     }
                     else
                     {
-                        // Guardar registro existente
+                        // Agregar registro
                         string MensajeSalida = miembro_N.Agregar(
                         miembro_E,
                         info_familiar1_E,
@@ -431,12 +426,13 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
                         }
                     }
                 }
+
+                Consultar();
             }
             catch (Exception Ex)
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Fatal(this, this.GetType());
             }
-           
         }
 
         private void VerRegistro()
@@ -444,6 +440,8 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             // Llenado de datos generales
             Miembro_E Miembro_E = new Miembro_E();
             Miembro_E = miembro_N.ObtenerRegistro(ID_REGISTRO);
+
+            EDITAR_REGISTRO = true;
 
             txtIdMiembro.Text = Miembro_E.Id_Miembro.ToString();
             txtNombres_Miembro.Text = Miembro_E.Nombres;
@@ -692,7 +690,6 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             txtHermano5_CorreoElectronico.Text = "";
             txtHermano5_Celular.Text = "";
 
-
             chkCine.Checked = false;
             chkLeer.Checked = false;
             chkVerTV.Checked = false;
@@ -866,6 +863,21 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         }
 
 
+        
+
+        protected void rbtnTipoFecha_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (rbtnTipoFecha.SelectedValue == "0")
+            {
+                divFiltroFechaInicial.Visible = false;
+                divFiltroFechaFinal.Visible = false;
+            }
+            else
+            {
+                divFiltroFechaInicial.Visible = true;
+                divFiltroFechaFinal.Visible = true;
+            }
+        }
         #endregion
     }
 }

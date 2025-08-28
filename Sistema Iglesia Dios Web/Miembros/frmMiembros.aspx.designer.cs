@@ -51,6 +51,15 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::Telerik.Web.UI.RadRadioButtonList rbtnTipoFecha;
 
         /// <summary>
+        /// Control divFiltroFechaInicial.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFiltroFechaInicial;
+
+        /// <summary>
         /// Control dtpFechaDesdeFiltro.
         /// </summary>
         /// <remarks>
@@ -58,6 +67,15 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDatePicker dtpFechaDesdeFiltro;
+
+        /// <summary>
+        /// Control divFiltroFechaFinal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFiltroFechaFinal;
 
         /// <summary>
         /// Control dtpFechaHastaFiltro.

@@ -52,15 +52,12 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
                     chCobrarMes.DataSource = dt;
                     chCobrarMes.DataBind();
                 }
-
-
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-
 
         #endregion
 

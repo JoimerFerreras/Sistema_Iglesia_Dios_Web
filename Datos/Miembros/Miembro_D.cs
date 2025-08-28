@@ -44,36 +44,80 @@ namespace Datos.Miembros
                             
                             ";
 
+                bool WhereAgregado = false;
+
                 // Tipo de fecha
-                sentencia += $@" WHERE ({TipoFecha} BETWEEN @FechaDesde AND @FechaHasta) ";
-                cmd.Parameters.AddWithValue("@FechaDesde", FechaDesde);
-                cmd.Parameters.AddWithValue("@FechaHasta", FechaHasta);
+                if (TipoFecha != "0")
+                {
+                    sentencia += $@" WHERE ({TipoFecha} BETWEEN @FechaDesde AND @FechaHasta) ";
+                    cmd.Parameters.AddWithValue("@FechaDesde", FechaDesde);
+                    cmd.Parameters.AddWithValue("@FechaHasta", FechaHasta);
+                    WhereAgregado = true;
+                }
 
                 // Sexo
                 if (Sexo > 0)
                 {
-                    sentencia += $" AND (m.Sexo = @Sexo) ";
+                    if (WhereAgregado == false)
+                    {
+                        sentencia += $" WHERE ";
+                        WhereAgregado = true;
+                    }
+                    else
+                    {
+                        sentencia += $" AND ";
+                    }
+                    
+                    sentencia += $" (m.Sexo = @Sexo) ";
                     cmd.Parameters.AddWithValue("@Sexo", Sexo);
                 }
 
                 //Estado Civil
                 if (EstadoCivil > 0)
                 {
-                    sentencia += $" AND (m.Estado_Civil = @Estado_Civil) ";
+                    if (WhereAgregado == false)
+                    {
+                        sentencia += $" WHERE ";
+                        WhereAgregado = true;
+                    }
+                    else
+                    {
+                        sentencia += $" AND ";
+                    }
+
+                    sentencia += $" (m.Estado_Civil = @Estado_Civil) ";
                     cmd.Parameters.AddWithValue("@Estado_Civil", EstadoCivil);
                 }
 
                 //Ministerio
                 if (Ministerio > 0)
                 {
-                    sentencia += $" AND (mi.Id_Ministerio = @Id_Ministerio) ";
+                    if (WhereAgregado == false)
+                    {
+                        sentencia += $" WHERE ";
+                        WhereAgregado = true;
+                    }
+                    else
+                    {
+                        sentencia += $" AND ";
+                    }
+
+                    sentencia += $" (mi.Id_Ministerio = @Id_Ministerio) ";
                     cmd.Parameters.AddWithValue("@Id_Ministerio", Ministerio);
                 }
 
                 // Texto de busqueda (Nombre o Matricula)
                 if (TextoBusqueda.Length > 0)
                 {
-                    sentencia += $" AND ";
+                    if (WhereAgregado == false)
+                    {
+                        sentencia += $" WHERE ";
+                        WhereAgregado = true;
+                    }
+                    else
+                    {
+                        sentencia += $" AND ";
+                    }
 
                     char Delimitador = ' '; // Delimitador de espacio
                     string[] Palabras; // Palabras en la que se dividirá el registro

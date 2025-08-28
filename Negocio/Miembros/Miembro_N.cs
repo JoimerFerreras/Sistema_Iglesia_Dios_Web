@@ -23,7 +23,11 @@ namespace Negocio.Miembros
                 {
                     TextoTipoFecha = "Desde_Cuando_Miembro";
                 }
-
+                else
+                {
+                    TextoTipoFecha = "0";
+                }
+                
                 FechaHasta = FechaHasta.Date.AddDays(1).AddTicks(-1);
 
                 return miembro_D.Consultar(TextoTipoFecha, FechaDesde, FechaHasta, TextoBusqueda, int.Parse(Sexo), int.Parse(EstadoCivil), int.Parse(Ministerio));
