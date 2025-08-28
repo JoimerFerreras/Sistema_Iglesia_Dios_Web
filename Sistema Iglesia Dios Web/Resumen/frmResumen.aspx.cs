@@ -19,8 +19,6 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
 
 
         #region Metodos/ Procedimientos
-     
-
         private void GraficoIngresosVsEgresos()
         {
             try
@@ -44,6 +42,25 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
             }
         }
 
+        private void GraficoCobrarPorMes()
+        {
+            try
+            {
+                DataTable dt = resumen_N.GraficoCobrarPorMes();
+                if (dt.Rows.Count > 0)
+                {
+                    chCobrarMes.DataSource = dt;
+                    chCobrarMes.DataBind();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         #endregion
 
@@ -58,6 +75,7 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
                 ((SiteMaster)Master).EstablecerNombrePantalla("Resumen");
 
                 GraficoIngresosVsEgresos();
+                GraficoCobrarPorMes();
             }
         }
         #endregion

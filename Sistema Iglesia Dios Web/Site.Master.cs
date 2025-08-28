@@ -94,7 +94,7 @@ namespace Sistema_Iglesia_Dios_Web
         {
             try
             {
-                DT_NOTIFICACIONES = notificacion_N.Listar(int.Parse(Session["ID_USUARIO_SESSION"].ToString()));
+                DT_NOTIFICACIONES = notificacion_N.Listar(int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page)));
 
                 if (DT_NOTIFICACIONES.Rows.Count > 0)
                 {

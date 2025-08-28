@@ -20,5 +20,17 @@ namespace Negocio.Resumen
                 throw ex;
             }
         }
+
+        public DataTable GraficoCobrarPorMes()
+        {
+            try
+            {
+                return Resumen_D.GraficoCobrarPorMes(6, true);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
