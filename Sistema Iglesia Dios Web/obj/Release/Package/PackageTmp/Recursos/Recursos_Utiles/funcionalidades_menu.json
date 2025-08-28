@@ -1,0 +1,189 @@
+[
+  {
+    "Id_Funcionalidad": 1,
+    "Id_Modulo": 0,
+    "Nombre_Funcionalidad": "Ingresos",
+    "Descripcion_Funcionalidad": "Ingresos",
+    "Nombre_Archivo": "Ingresos/frmIngresos.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-hand-holding-dollar",
+    "Nombre_Modulo": "Ingresos",
+    "Descripcion_Modulo": "Ingresos",
+    "Clase_CSS_Modulo": ""
+  },
+  {
+    "Id_Funcionalidad": 2,
+    "Id_Modulo": 0,
+    "Nombre_Funcionalidad": "Egresos",
+    "Descripcion_Funcionalidad": "Egresos",
+    "Nombre_Archivo": "Egresos/frmEgresos.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-cash-register",
+    "Nombre_Modulo": "Egresos",
+    "Descripcion_Modulo": "Egresos",
+    "Clase_CSS_Modulo": ""
+  },
+  {
+    "Id_Funcionalidad": 3,
+    "Id_Modulo": 0,
+    "Nombre_Funcionalidad": "Cuentas_Por_Cobrar",
+    "Descripcion_Funcionalidad": "Cuentas por cobrar",
+    "Nombre_Archivo": "Cuentas_Por_Cobrar/frmCuentasCobrar.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-scale-unbalanced-flip",
+    "Nombre_Modulo": "Cuentas_Por_Cobrar",
+    "Descripcion_Modulo": "Cuentas por cobrar",
+    "Clase_CSS_Modulo": ""
+  },
+  {
+    "Id_Funcionalidad": 4,
+    "Id_Modulo": 0,
+    "Nombre_Funcionalidad": "Cuentas_Por_Pagar",
+    "Descripcion_Funcionalidad": "Cuentas por pagar",
+    "Nombre_Archivo": "Cuentas_Por_Pagar/frmCuentasPagar.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-file-invoice-dollar",
+    "Nombre_Modulo": "Cuentas_Por_Pagar",
+    "Descripcion_Modulo": "Cuentas por pagar",
+    "Clase_CSS_Modulo": ""
+  },
+  {
+    "Id_Funcionalidad": 5,
+    "Id_Modulo": 0,
+    "Nombre_Funcionalidad": "Miembros",
+    "Descripcion_Funcionalidad": "Miembros",
+    "Nombre_Archivo": "Miembros/frmMiembros.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-church",
+    "Nombre_Modulo": "Miembros",
+    "Descripcion_Modulo": "Miembros",
+    "Clase_CSS_Modulo": ""
+  },
+  {
+    "Id_Funcionalidad": 6,
+    "Id_Modulo": 8,
+    "Nombre_Funcionalidad": "Descripciones",
+    "Descripcion_Funcionalidad": "Descripciones",
+    "Nombre_Archivo": "Otros_Parametros/frmDescripciones.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-file-signature",
+    "Nombre_Modulo": "Otros_Parametros",
+    "Descripcion_Modulo": "Otros parámetros",
+    "Clase_CSS_Modulo": "fa-solid fa-sliders"
+  },
+  {
+    "Id_Funcionalidad": 7,
+    "Id_Modulo": 8,
+    "Nombre_Funcionalidad": "Formas_Pago",
+    "Descripcion_Funcionalidad": "Formas de pago",
+    "Nombre_Archivo": "Otros_Parametros/frmFormas_Pago.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-money-bill",
+    "Nombre_Modulo": "Otros_Parametros",
+    "Descripcion_Modulo": "Otros parámetros",
+    "Clase_CSS_Modulo": "fa-solid fa-sliders"
+  },
+  {
+    "Id_Funcionalidad": 8,
+    "Id_Modulo": 8,
+    "Nombre_Funcionalidad": "Miscelaneos",
+    "Descripcion_Funcionalidad": "Misceláneos",
+    "Nombre_Archivo": "Otros_Parametros/frmMiscelaneos.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-shuffle",
+    "Nombre_Modulo": "Otros_Parametros",
+    "Descripcion_Modulo": "Otros parámetros",
+    "Clase_CSS_Modulo": "fa-solid fa-sliders"
+  },
+  {
+    "Id_Funcionalidad": 9,
+    "Id_Modulo": 0,
+    "Nombre_Funcionalidad": "Resumen",
+    "Descripcion_Funcionalidad": "Resumen",
+    "Nombre_Archivo": "Resumen/frmResumen.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-chart-column",
+    "Nombre_Modulo": "",
+    "Descripcion_Modulo": "",
+    "Clase_CSS_Modulo": ""
+  },
+  {
+    "Id_Funcionalidad": 10,
+    "Id_Modulo": 7,
+    "Nombre_Funcionalidad": "Log_Usuarios_Accesos",
+    "Descripcion_Funcionalidad": "Log de accesos de usuarios",
+    "Nombre_Archivo": "Usuarios/frmLogUsuariosAccesos.aspx",
+    "Clase_CSS_Funcionalidad": "fa-regular fa-address-book",
+    "Nombre_Modulo": "Configuracion",
+    "Descripcion_Modulo": "Configuración",
+    "Clase_CSS_Modulo": "fa-solid fa-gear"
+  },
+  {
+    "Id_Funcionalidad": 11,
+    "Id_Modulo": 7,
+    "Nombre_Funcionalidad": "Roles",
+    "Descripcion_Funcionalidad": "Roles y permisos",
+    "Nombre_Archivo": "Usuarios/frmRoles.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-user-gear",
+    "Nombre_Modulo": "Configuracion",
+    "Descripcion_Modulo": "Configuración",
+    "Clase_CSS_Modulo": "fa-solid fa-gear"
+  },
+  {
+    "Id_Funcionalidad": 12,
+    "Id_Modulo": 7,
+    "Nombre_Funcionalidad": "Usuarios",
+    "Descripcion_Funcionalidad": "Usuarios",
+    "Nombre_Archivo": "Usuarios/frmUsuarios.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-users",
+    "Nombre_Modulo": "Configuracion",
+    "Descripcion_Modulo": "Configuración",
+    "Clase_CSS_Modulo": "fa-solid fa-gear"
+  },
+  {
+    "Id_Funcionalidad": 13,
+    "Id_Modulo": 0,
+    "Nombre_Funcionalidad": "Inventario_Activos_Fijos",
+    "Descripcion_Funcionalidad": "Inventario de activos fijos",
+    "Nombre_Archivo": "#",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-box-archive",
+    "Nombre_Modulo": "",
+    "Descripcion_Modulo": "",
+    "Clase_CSS_Modulo": ""
+  },
+  {
+    "Id_Funcionalidad": 14,
+    "Id_Modulo": 7,
+    "Nombre_Funcionalidad": "Cambiar_Password",
+    "Descripcion_Funcionalidad": "Cambiar contraseña",
+    "Nombre_Archivo": "#",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-key",
+    "Nombre_Modulo": "Configuracion",
+    "Descripcion_Modulo": "Configuración",
+    "Clase_CSS_Modulo": "fa-solid fa-gear"
+  },
+  {
+    "Id_Funcionalidad": 15,
+    "Id_Modulo": 9,
+    "Nombre_Funcionalidad": "Informacion_Sistema",
+    "Descripcion_Funcionalidad": "Información del sitema",
+    "Nombre_Archivo": "#",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-info",
+    "Nombre_Modulo": "Acerca_De",
+    "Descripcion_Modulo": "Acerca de",
+    "Clase_CSS_Modulo": "fa-solid fa-circle-info"
+  },
+  {
+    "Id_Funcionalidad": 16,
+    "Id_Modulo": 9,
+    "Nombre_Funcionalidad": "Novedades",
+    "Descripcion_Funcionalidad": "Novedades",
+    "Nombre_Archivo": "#",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-newspaper",
+    "Nombre_Modulo": "Acerca_De",
+    "Descripcion_Modulo": "Acerca de",
+    "Clase_CSS_Modulo": "fa-solid fa-circle-info"
+  },
+  {
+    "Id_Funcionalidad": 17,
+    "Id_Modulo": 9,
+    "Nombre_Funcionalidad": "Ayuda",
+    "Descripcion_Funcionalidad": "Ayuda",
+    "Nombre_Archivo": "#",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-question",
+    "Nombre_Modulo": "Acerca de",
+    "Descripcion_Modulo": "Acerca de",
+    "Clase_CSS_Modulo": "fa-solid fa-circle-info"
+  }
+]

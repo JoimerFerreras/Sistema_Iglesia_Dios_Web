@@ -861,10 +861,7 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         {
             GenerarReporteExcel();
         }
-
-
         
-
         protected void rbtnTipoFecha_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (rbtnTipoFecha.SelectedValue == "0")

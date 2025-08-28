@@ -140,6 +140,87 @@ namespace Datos.Resumen
             }
         }
 
+        public DataTable TotalesMesActual(int meses, bool incluirMesActual)
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                // Nota: Es necesario el orden en que está desarrollada esta consulta para que funcione correctamente
+                string sentencia = "";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                sentencia = @"DECLARE @iniMes date = DATEFROMPARTS(YEAR(GETDATE()),MONTH(GETDATE()),1);
+                                DECLARE @finMes date = DATEADD(MONTH,1,@iniMes);
+
+                                -- Rango mes anterior
+                                DECLARE @iniAnt date = DATEADD(MONTH,-1,@iniMes);
+                                DECLARE @finAnt date = @iniMes;
+
+                                WITH CurI AS (
+                                    SELECT SUM(Monto) AS Ingresos
+                                    FROM Ingresos
+                                    WHERE Fecha_Ingreso >= @iniMes AND Fecha_Ingreso < @finMes
+                                ),
+                                CurE AS (
+                                    SELECT SUM(Monto) AS Egresos
+                                    FROM Egresos
+                                    WHERE Fecha_Egreso >= @iniMes AND Fecha_Egreso < @finMes
+                                ),
+                                PrevI AS (
+                                    SELECT SUM(Monto) AS IngresosPrev
+                                    FROM Ingresos
+                                    WHERE Fecha_Ingreso >= @iniAnt AND Fecha_Ingreso < @finAnt
+                                ),
+                                PrevE AS (
+                                    SELECT SUM(Monto) AS EgresosPrev
+                                    FROM Egresos
+                                    WHERE Fecha_Egreso >= @iniAnt AND Fecha_Egreso < @finAnt
+                                )
+                                SELECT
+                                    ISNULL(CurI.Ingresos,0)                                   AS IngresosMes,
+                                    ISNULL(CurE.Egresos,0)                                    AS EgresosMes,
+                                    ISNULL(CurI.Ingresos,0) - ISNULL(CurE.Egresos,0)          AS NetoMes,
+
+                                    -- % variación Ingresos vs mes anterior
+                                    CAST( CASE WHEN ISNULL(PrevI.IngresosPrev,0)=0 THEN NULL
+                                               ELSE 100.0 * (ISNULL(CurI.Ingresos,0) - PrevI.IngresosPrev)
+                                                          / NULLIF(PrevI.IngresosPrev,0) END AS decimal(10,2) )
+                                    AS VarPctIngresos,
+
+                                    -- % variación Egresos vs mes anterior
+                                    CAST( CASE WHEN ISNULL(PrevE.EgresosPrev,0)=0 THEN NULL
+                                               ELSE 100.0 * (ISNULL(CurE.Egresos,0) - PrevE.EgresosPrev)
+                                                          / NULLIF(PrevE.EgresosPrev,0) END AS decimal(10,2) )
+                                    AS VarPctEgresos,
+
+                                    -- % variación Neto vs mes anterior
+                                    CAST( CASE WHEN (ISNULL(PrevI.IngresosPrev,0) - ISNULL(PrevE.EgresosPrev,0)) = 0 THEN NULL
+                                               ELSE 100.0 * ( (ISNULL(CurI.Ingresos,0) - ISNULL(CurE.Egresos,0))
+                                                             - (ISNULL(PrevI.IngresosPrev,0) - ISNULL(PrevE.EgresosPrev,0)) )
+                                                          / NULLIF( (ISNULL(PrevI.IngresosPrev,0) - ISNULL(PrevE.EgresosPrev,0)), 0) END
+                                          AS decimal(10,2) )
+                                    AS VarPctNeto
+                                FROM CurI CROSS JOIN CurE CROSS JOIN PrevI CROSS JOIN PrevE;";
+
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
     }
 }
 #endregion

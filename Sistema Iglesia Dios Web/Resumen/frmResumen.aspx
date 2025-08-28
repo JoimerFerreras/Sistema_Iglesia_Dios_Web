@@ -7,6 +7,8 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="../Recursos/CSS/estilos_general.css" />
     <link rel="stylesheet" href="../Recursos/CSS/botones.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=trending_up" />
+
 
     <div style="padding: 20px;">
         <div class="contenedor-graficos">
@@ -71,16 +73,15 @@
                         <div class="card kpi-card kpi--green shadow-sm h-100">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
-                                    <div class="text-muted small fw-semibold">Ingresos del mes</div>
-                                    <div class="h1 fw-bold mb-1">RD$ 3,800</div>
-                                    <div class="small text-muted">Actualizado hoy • 11:20 a. m.</div>
+                                    <div class="text-muted small fw-semibold"><label runat="server" id="lblTituloCard_TotalIngresos"></label></div>
+                                    <div class="h1 fw-bold mb-1"><asp:Label runat="server" ID="lblTotalIngresos_MesActual"></asp:Label></div>
                                 </div>
                                 <div class="text-end">
-                                    <span class="badge rounded-pill badge-delta mb-2">
-                                        <i class="bi bi-arrow-up-right me-1"></i>+12%
+                                    <span class="badge rounded-pill badge-delta mb-2 label-porcentaje">
+                                        <i class="bi bi-arrow-up-right me-1"></i><label runat="server" id="lblPorcentajeTotalIngresos"></label> <%--Porcentaje de Ingresos con respecto al mes anterior--%>
                                     </span>
-                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2">
-                                        <i class="bi bi-cash-coin fs-3"></i>
+                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" id="divIconTotalesIngresos" runat="server" style="background-color: #dcfce7; color: #065f46;">
+
                                     </div>
                                 </div>
                             </div>
@@ -92,16 +93,14 @@
                         <div class="card kpi-card kpi--red shadow-sm h-100">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
-                                    <div class="text-muted small fw-semibold">Egresos del mes</div>
-                                    <div class="h1 fw-bold mb-1">RD$ 4,000</div>
-                                    <div class="small text-muted">Actualizado hoy • 11:20 a. m.</div>
+                                    <div class="text-muted small fw-semibold"><label runat="server" id="lblTituloCard_TotalEgresos"></label></div>
+                                    <div class="h1 fw-bold mb-1"><asp:Label runat="server" ID="lblTotalEgresos_MesActual"></asp:Label></div>
                                 </div>
                                 <div class="text-end">
-                                    <span class="badge rounded-pill" style="background: #fee2e2; color: #991b1b; font-weight: 700;">
-                                        <i class="bi bi-arrow-down-right me-1"></i>-8%
+                                    <span class="badge rounded-pill label-porcentaje" style="background: #fee2e2; color: #991b1b; font-weight: 700;">
+                                        <i class="bi bi-arrow-down-right me-1"></i><label runat="server" id="lblPorcentajeTotalEgresos"></label> <%--Porcentaje de Egresos con respecto al mes anterior--%>
                                     </span>
-                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(239,68,68,.08); color: #ef4444;">
-                                        <i class="bi bi-wallet2 fs-3"></i>
+                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(239,68,68,.08); color: #ef4444;" id="divIconTotalesEgresos" runat="server">
                                     </div>
                                 </div>
                             </div>
@@ -113,16 +112,14 @@
                         <div class="card kpi-card kpi--amber shadow-sm h-100">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
-                                    <div class="text-muted small fw-semibold">Neto del mes</div>
-                                    <div class="h1 fw-bold mb-1">RD$ -200</div>
-                                    <div class="small text-muted">Variación vs. mes anterior</div>
+                                    <div class="text-muted small fw-semibold"><label runat="server" id="lblTituloCard_TotalNeto"></label></div>
+                                    <div class="h1 fw-bold mb-1"><asp:Label runat="server" ID="lblTotalNeto_MesActual"></asp:Label></div>
                                 </div>
                                 <div class="text-end">
-                                    <span class="badge rounded-pill" style="background: #fff7ed; color: #9a3412; font-weight: 700;">
-                                        <i class="bi bi-exclamation-circle me-1"></i>-5%
+                                    <span class="badge rounded-pill label-porcentaje" style="background: #fff7ed; color: #9a3412; font-weight: 700;">
+                                        <i class="bi bi-exclamation-circle me-1"></i><label runat="server" id="lblPorcentajeTotalNeto"></label> <%--Porcentaje Neto con respecto al mes anterior--%>
                                     </span>
-                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(245,158,11,.08); color: #f59e0b;">
-                                        <i class="bi bi-graph-down fs-3"></i>
+                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(245,158,11,.08); color: #f59e0b;" id="divIconTotalesNeto" runat="server">
                                     </div>
                                 </div>
                             </div>
@@ -297,4 +294,14 @@
 
         <script src="../Recursos/Javascript/scripts_general.js"></script>
     </div>
+
+        <script>
+            tippy('.label-porcentaje', {
+                placement: 'top',
+                content: 'Variación porcentual respecto al mes anterior',
+                arrow: true,
+            });
+
+
+        </script>
 </asp:Content>

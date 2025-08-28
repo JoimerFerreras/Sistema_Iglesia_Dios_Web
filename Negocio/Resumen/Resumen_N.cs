@@ -32,5 +32,17 @@ namespace Negocio.Resumen
                 throw ex;
             }
         }
+
+        public DataTable TotalesMesActual()
+        {
+            try
+            {
+                return Resumen_D.TotalesMesActual(6, true);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
