@@ -15,7 +15,7 @@ namespace Datos.Resumen
 
         #region Consultas
 
-        public DataTable GraficoIngresosVsEgresos(int IncluirMesActual)
+        public DataTable GraficoIngresosVsEgresos()
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
@@ -83,7 +83,7 @@ namespace Datos.Resumen
         }
 
 
-        public DataTable GraficoCobrarPorMes(int meses, bool incluirMesActual)
+        public DataTable GraficoCuentasCobrarPorMes(int meses, bool incluirMesActual)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
@@ -140,7 +140,163 @@ namespace Datos.Resumen
             }
         }
 
-        public DataTable TotalesMesActual(int meses, bool incluirMesActual)
+        public DataTable GraficoAntiguedadCxC()
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                // Nota: Es necesario el orden en que está desarrollada esta consulta para que funcione correctamente
+                string sentencia = "";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                sentencia = @";WITH Datos AS (
+                              SELECT DATEDIFF(DAY, CAST(Fecha_CC AS date), CAST(GETDATE() AS date)) AS Dias, Valor
+                              FROM dbo.Cuentas_Por_Cobrar
+                              WHERE Fecha_CC IS NOT NULL
+                            ),
+                            Buckets AS (
+                              SELECT
+                                CASE
+                                  WHEN Dias <= 30 THEN '0-30 días'
+                                  WHEN Dias BETWEEN 31 AND 60 THEN '31-60 días'
+                                  WHEN Dias BETWEEN 61 AND 90 THEN '61-90 días'
+                                  ELSE '91+ días'
+                                END AS Rango, Valor
+                              FROM Datos
+                            )
+                            SELECT Rango, SUM(Valor) AS Total
+                            FROM Buckets
+                            GROUP BY Rango
+                            ORDER BY CASE Rango
+                              WHEN '0-30 días' THEN 1 WHEN '31-60 días' THEN 2
+                              WHEN '61-90 días' THEN 3 ELSE 4 END;
+                            ";
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public DataTable GraficoCuentasPagarPorMes(int meses, bool incluirMesActual)
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                // Nota: Es necesario el orden en que está desarrollada esta consulta para que funcione correctamente
+                string sentencia = "";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                sentencia = @"SET LANGUAGE Spanish;
+
+                                DECLARE @UltimoMes date = IIF(@IncluirMesActual=1,
+                                    DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1),
+                                    DATEADD(MONTH,-1,DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1)));
+                                DECLARE @Inicio date = DATEADD(MONTH, -(@Meses-1), @UltimoMes);
+
+                                ;WITH Meses AS (
+                                  SELECT @Inicio AS Mes
+                                  UNION ALL SELECT DATEADD(MONTH,1,Mes) FROM Meses
+                                  WHERE DATEADD(MONTH,1,Mes) <= @UltimoMes
+                                ),
+                                Agg AS (
+                                  SELECT DATEFROMPARTS(YEAR(Fecha_CP),MONTH(Fecha_CP),1) Mes, SUM(Valor) Total
+                                  FROM dbo.Cuentas_Por_Pagar
+                                  WHERE Fecha_CP >= @Inicio AND Fecha_CP < DATEADD(MONTH,1,@UltimoMes)
+                                  GROUP BY DATEFROMPARTS(YEAR(Fecha_CP),MONTH(Fecha_CP),1)
+                                )
+                                SELECT
+                                  CONVERT(char(7), M.Mes, 120) AS Periodo,
+                                  UPPER(LEFT(DATENAME(MONTH,M.Mes),1)) + SUBSTRING(DATENAME(MONTH,M.Mes),2,50) AS MesNombre,
+                                  ISNULL(A.Total,0) AS TotalPagar
+                                FROM Meses M
+                                LEFT JOIN Agg A ON A.Mes = M.Mes
+                                ORDER BY M.Mes
+                                OPTION (MAXRECURSION 0);";
+
+                cmd.Parameters.AddWithValue("@Meses", meses);
+                cmd.Parameters.AddWithValue("@IncluirMesActual", incluirMesActual);
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public DataTable GraficoAntiguedadCxP()
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                // Nota: Es necesario el orden en que está desarrollada esta consulta para que funcione correctamente
+                string sentencia = "";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                sentencia = @";WITH Datos AS (
+                              SELECT DATEDIFF(DAY, CAST(Fecha_CP AS date), CAST(GETDATE() AS date)) AS Dias, Valor
+                              FROM dbo.Cuentas_Por_Pagar
+                              WHERE Fecha_CP IS NOT NULL
+                            ),
+                            Buckets AS (
+                              SELECT
+                                CASE
+                                  WHEN Dias <= 30 THEN '0-30 días'
+                                  WHEN Dias BETWEEN 31 AND 60 THEN '31-60 días'
+                                  WHEN Dias BETWEEN 61 AND 90 THEN '61-90 días'
+                                  ELSE '91+ días'
+                                END AS Rango, Valor
+                              FROM Datos
+                            )
+                            SELECT Rango, SUM(Valor) AS Total
+                            FROM Buckets
+                            GROUP BY Rango
+                            ORDER BY CASE Rango
+                              WHEN '0-30 días' THEN 1 WHEN '31-60 días' THEN 2
+                              WHEN '61-90 días' THEN 3 ELSE 4 END;";
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public DataTable TotalesMesActual()
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
@@ -221,6 +377,186 @@ namespace Datos.Resumen
             }
         }
 
+        public DataTable TotalMiscelaneos()
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                // Nota: Es necesario el orden en que está desarrollada esta consulta para que funcione correctamente
+                string sentencia = "";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                sentencia = @"SELECT COUNT(*) AS CantidadRegistros FROM Miscelaneos";
+
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public DataTable TotalDescripciones()
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                // Nota: Es necesario el orden en que está desarrollada esta consulta para que funcione correctamente
+                string sentencia = "";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                sentencia = @"SELECT COUNT(*) AS CantidadRegistros FROM Descripciones";
+
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public DataTable TotalFormas_Pago()
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                // Nota: Es necesario el orden en que está desarrollada esta consulta para que funcione correctamente
+                string sentencia = "";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                sentencia = @"SELECT COUNT(*) AS CantidadRegistros FROM Formas_Pago";
+
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public DataTable TotalMiembros()
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                // Nota: Es necesario el orden en que está desarrollada esta consulta para que funcione correctamente
+                string sentencia = "";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                sentencia = @"SELECT COUNT(*) AS CantidadRegistros FROM Miembros";
+
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+
+        public DataTable IngresosPorDia_MesActual()
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                // Nota: Es necesario el orden en que está desarrollada esta consulta para que funcione correctamente
+                string sentencia = "";
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                sentencia = @"SET LANGUAGE Spanish;  -- para nombre de día en español (opcional)
+
+                                DECLARE @iniMes date = DATEFROMPARTS(YEAR(GETDATE()), MONTH(GETDATE()), 1);
+                                DECLARE @finMes date = EOMONTH(@iniMes);  -- último día del mes actual
+
+                                ;WITH Dias AS (
+                                    SELECT @iniMes AS Dia
+                                    UNION ALL
+                                    SELECT DATEADD(DAY, 1, Dia)
+                                    FROM Dias
+                                    WHERE DATEADD(DAY, 1, Dia) <= @finMes
+                                ),
+                                Agg AS (
+                                    SELECT
+                                        CAST(Fecha_Ingreso AS date) AS Dia,
+                                        SUM(Monto) AS TotalIngresos
+                                    FROM dbo.Ingresos
+                                    WHERE Fecha_Ingreso >= @iniMes
+                                      AND Fecha_Ingreso < DATEADD(DAY, 1, @finMes)  -- hasta 23:59:59 del último día
+                                    GROUP BY CAST(Fecha_Ingreso AS date)
+                                )
+                                SELECT
+                                    D.Dia,                                          -- fecha (date)
+                                    CONVERT(char(10), D.Dia, 23)   AS DiaISO,       -- 'YYYY-MM-DD'
+                                    DATENAME(weekday, D.Dia)        AS DiaNombre,   -- Lunes, Martes, ...
+                                    ISNULL(A.TotalIngresos, 0)      AS IngresosDia
+                                FROM Dias D
+                                LEFT JOIN Agg A ON A.Dia = D.Dia
+                                ORDER BY D.Dia
+                                OPTION (MAXRECURSION 100);
+                                ";
+
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
     }
 }
 #endregion

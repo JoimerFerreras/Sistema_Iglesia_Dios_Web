@@ -43,7 +43,26 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
+    <style>
+        /* Fallback (por si no soporta background-clip:text) */
+        .brand-gradient {
+            color: #111827;
+            font-weight: 800;
+            letter-spacing: .2px;
+        }
 
+        /* Degradado en el texto */
+        @supports ((-webkit-background-clip:text) or (background-clip:text)) {
+            .brand-gradient {
+                background: linear-gradient(90deg, #2563eb 0%, #7c3aed 22%, #ef4444 55%, #f59e0b 80%, #facc15 100% );
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent; /* Safari/Chrome */
+                color: transparent; /* Firefox */
+                display: inline-block; /* importante para el clip */
+            }
+        }
+    </style>
 </head>
 
 <body onload="asignarEnlace()" class="fondo">
@@ -77,7 +96,7 @@
             <!--header_1 menu_1 start-->
             <div class="header_1">
                 <div class="header_1-menu_1">
-                    <div class="title_1">Iglesia de Dios <span style="color: #108df7">La 33</span></div>
+                    <div class="title_1"><img src="/Recursos/Imagenes/logo_iglesia_de_dios_color_ico.ico" width="35" height="35" style="margin-right: 5px;" /><span class="brand-gradient">Casa de Fe</span></div>
                     <div class="sidebar_1-btn_1" id="BotonMenu">
                         <i class="fas fa-bars"></i>
                     </div>

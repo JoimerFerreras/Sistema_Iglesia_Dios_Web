@@ -33,8 +33,6 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
                     chtFinanzas.DataSource = dv.ToTable();
                     chtFinanzas.DataBind();
                 }
-
-             
             }
             catch (Exception ex)
             {
@@ -42,15 +40,66 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
             }
         }
 
-        private void GraficoCobrarPorMes()
+        private void GraficoCuentasCobrarPorMes()
         {
             try
             {
-                DataTable dt = resumen_N.GraficoCobrarPorMes();
+                DataTable dt = resumen_N.GraficoCuentasCobrarPorMes();
                 if (dt.Rows.Count > 0)
                 {
                     chCobrarMes.DataSource = dt;
                     chCobrarMes.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void GraficoAntiguedadCxC()
+        {
+            try
+            {
+                DataTable dt = resumen_N.GraficoAntiguedadCxC();
+                if (dt.Rows.Count > 0)
+                {
+                    chCxC_Antiguedad.DataSource = dt;
+                    chCxC_Antiguedad.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void GraficoCuentasPagarPorMes()
+        {
+            try
+            {
+                DataTable dt = resumen_N.GraficoCuentasPagarPorMes();
+                if (dt.Rows.Count > 0)
+                {
+                    chPagarMes.DataSource = dt;
+                    chPagarMes.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void GraficoAntiguedadCxP()
+        {
+            try
+            {
+                DataTable dt = resumen_N.GraficoAntiguedadCxP();
+                if (dt.Rows.Count > 0)
+                {
+                    chCxP_Antiguedad.DataSource = dt;
+                    chCxP_Antiguedad.DataBind();
                 }
             }
             catch (Exception ex)
@@ -130,6 +179,73 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
                 throw ex;
             }
         }
+        private void TotalMiscelaneos()
+        {
+            try
+            {
+                DataTable dt = resumen_N.TotalMiscelaneos();
+                if (dt.Rows.Count > 0)
+                {
+                    DataRow row = dt.Rows[0];
+                    lblTotalMiscelaneos.Text = Convert.ToDecimal(row["CantidadRegistros"]).ToString("");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void TotalDescripciones()
+        {
+            try
+            {
+                DataTable dt = resumen_N.TotalDescripciones();
+                if (dt.Rows.Count > 0)
+                {
+                    DataRow row = dt.Rows[0];
+                    lblTotalDescripciones.Text = Convert.ToDecimal(row["CantidadRegistros"]).ToString("");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void TotalFormas_Pago()
+        {
+            try
+            {
+                DataTable dt = resumen_N.TotalFormas_Pago();
+                if (dt.Rows.Count > 0)
+                {
+                    DataRow row = dt.Rows[0];
+                    lblTotalFormasPago.Text = Convert.ToDecimal(row["CantidadRegistros"]).ToString("");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void TotalMiembros()
+        {
+            try
+            {
+                DataTable dt = resumen_N.TotalMiembros();
+                if (dt.Rows.Count > 0)
+                {
+                    DataRow row = dt.Rows[0];
+                    lblTotalMiembros.Text = Convert.ToDecimal(row["CantidadRegistros"]).ToString("");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         #endregion
 
@@ -144,8 +260,18 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
                 ((SiteMaster)Master).EstablecerNombrePantalla("Resumen");
 
                 GraficoIngresosVsEgresos();
-                GraficoCobrarPorMes();
+
+                GraficoCuentasCobrarPorMes();
+                GraficoAntiguedadCxC();
+
+                GraficoCuentasPagarPorMes();
+                GraficoAntiguedadCxP();
+
                 TotalesMesActual();
+                TotalMiscelaneos();
+                TotalDescripciones();
+                TotalFormas_Pago();
+                TotalMiembros();
             }
         }
         #endregion

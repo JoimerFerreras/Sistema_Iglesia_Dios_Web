@@ -123,6 +123,42 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divIconTotalesNeto;
 
         /// <summary>
+        /// Control lblTotalDescripciones.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalDescripciones;
+
+        /// <summary>
+        /// Control lblTotalMiscelaneos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalMiscelaneos;
+
+        /// <summary>
+        /// Control lblTotalFormasPago.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalFormasPago;
+
+        /// <summary>
+        /// Control lblTotalMiembros.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalMiembros;
+
+        /// <summary>
         /// Control chtFinanzas.
         /// </summary>
         /// <remarks>
@@ -150,12 +186,30 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
         protected global::Telerik.Web.UI.RadHtmlChart chCobrarMes;
 
         /// <summary>
-        /// Control chCobrarAntig.
+        /// Control chCxC_Antiguedad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadHtmlChart chCobrarAntig;
+        protected global::Telerik.Web.UI.RadHtmlChart chCxC_Antiguedad;
+
+        /// <summary>
+        /// Control chPagarMes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadHtmlChart chPagarMes;
+
+        /// <summary>
+        /// Control chCxP_Antiguedad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadHtmlChart chCxP_Antiguedad;
     }
 }

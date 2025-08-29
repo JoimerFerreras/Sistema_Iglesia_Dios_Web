@@ -22,39 +22,59 @@
     <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 
     <style>
-       .fondo_atras {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1; /* Coloca el div detrás de todo */
-        background-image: url('/Recursos/Imagenes/diezmo.jpg');
-        background-size: cover;
-        opacity: 0.9; /* Ajusta la opacidad según tus preferencias */
-        filter: brightness(0.5); /* Reduce la luminosidad en un 10% */
-    }
+        .fondo_atras {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Coloca el div detrás de todo */
+            background-image: url('/Recursos/Imagenes/diezmo.jpg');
+            background-size: cover;
+            opacity: 0.9; /* Ajusta la opacidad según tus preferencias */
+            filter: brightness(0.5); /* Reduce la luminosidad en un 10% */
+        }
 
-       .texto_logo {
-        position: fixed;
-        top: 100px;
-        left: 100px;
-        width: 500px;
-        font-size: 60px;
-        font-weight:bold;
-        color: white;
-    }
+        .texto_logo {
+            position: fixed;
+            top: 100px;
+            left: 100px;
+            width: 500px;
+            font-size: 60px;
+            font-weight: bold;
+            color: white;
+        }
 
-         .texto_logo_second {
-        position: fixed;
-        top: 185px;
-        left: 100px;
-        width: 100%;
-        font-size: 30px;
-        font-weight:bold;
-        color: beige;
-    }
-</style>
+        .texto_logo_second {
+            position: fixed;
+            top: 185px;
+            left: 100px;
+            width: 100%;
+            font-size: 30px;
+            font-weight: bold;
+            color: beige;
+        }
+
+        /* Fallback (por si no soporta background-clip:text) */
+        .brand-gradient {
+            color: #111827;
+            font-weight: 800;
+            letter-spacing: .2px;
+            font-size: 26px;
+        }
+
+        /* Degradado en el texto */
+        @supports ((-webkit-background-clip:text) or (background-clip:text)) {
+            .brand-gradient {
+                background: linear-gradient(90deg, #2563eb 0%, #7c3aed 22%, #ef4444 55%, #f59e0b 80%, #facc15 100% );
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent; /* Safari/Chrome */
+                color: transparent; /* Firefox */
+                display: inline-block; /* importante para el clip */
+            }
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -78,21 +98,21 @@
         </asp:ScriptManager>
         <asp:UpdatePanel ID="upPrincipal" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="fondo_atras"></div> <!-- Este div será el fondo fijo -->
+                <div class="fondo_atras"></div>
+                <!-- Este div será el fondo fijo -->
                 <div class="div-padre fondo">
                     <div class="texto_logo">Sistema Web</div>
-                    <div class="texto_logo_second">Iglesia de Dios La 33</div>
+                    <div class="texto_logo_second">Iglesia de Dios Casa de Fe La 33</div>
                     <div class="shadowed-div-body" style="margin-top: 20px; display: flex; background-color: white;">
 
                         <div class="divContenedorCampos-Login">
 
                             <div style="position: relative; margin: 0 auto;">
                                 <div class="divContenedorTitulo-Login">
-                                    <a>Iglesia de Dios </a>
-                                    <a style="color: #108df7;">&nbsp;La 33</a>
+                                    <img src="/Recursos/Imagenes/logo_iglesia_de_dios_color_ico.ico" width="50" height="50" style="margin-right: 5px;" /><span class="brand-gradient" style="padding-top: 7px;">Casa de Fe</span>
                                 </div>
 
-                                <div style="position: absolute; top: 50%; right: 50%; transform: translate(50%, 50%); margin-top: 100px; font-weight: bold; font-size: 18px;">
+                                <div style="position: absolute; top: 50%; right: 50%; transform: translate(50%, 50%); margin-top: 100px; font-weight: bold; font-size: 20px;">
                                     Inicio de Sesión
                                 </div>
                                 <div style="position: absolute; top: 50%; right: 50%; transform: translate(50%, 50%)">

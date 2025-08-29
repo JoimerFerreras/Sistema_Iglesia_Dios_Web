@@ -47,7 +47,11 @@
                 .kpi--amber {
                     --bar-color: #f59e0b;
                 }
-                /* advertencia */
+
+                .kpi--blue {
+                    --bar-color: #108df7;
+                }
+                
 
                 /* Icono */
                 .kpi-icon {
@@ -68,37 +72,46 @@
             <!-- === layout: cards lado a lado === -->
             <div class="container-fluid px-0">
                 <div class="row g-3">
-                    <!-- Card 1 -->
+                    <!-- Ingresos del mes actual -->
                     <div class="col-12 col-md-6 col-xl-4">
-                        <div class="card kpi-card kpi--green shadow-sm h-100">
+                        <div class="card kpi-card kpi--green shadow-sm h-100" style="padding-left: 10px;">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
-                                    <div class="text-muted small fw-semibold"><label runat="server" id="lblTituloCard_TotalIngresos"></label></div>
-                                    <div class="h1 fw-bold mb-1"><asp:Label runat="server" ID="lblTotalIngresos_MesActual"></asp:Label></div>
+                                    <div class="text-muted small fw-semibold">
+                                        <label runat="server" id="lblTituloCard_TotalIngresos"></label>
+                                    </div>
+                                    <div class="h1 fw-bold mb-1">
+                                        <asp:Label runat="server" ID="lblTotalIngresos_MesActual"></asp:Label></div>
                                 </div>
                                 <div class="text-end">
                                     <span class="badge rounded-pill badge-delta mb-2 label-porcentaje">
-                                        <i class="bi bi-arrow-up-right me-1"></i><label runat="server" id="lblPorcentajeTotalIngresos"></label> <%--Porcentaje de Ingresos con respecto al mes anterior--%>
+                                        <i class="bi bi-arrow-up-right me-1"></i>
+                                        <label runat="server" id="lblPorcentajeTotalIngresos"></label>
+                                        <%--Porcentaje de Ingresos con respecto al mes anterior--%>
                                     </span>
                                     <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" id="divIconTotalesIngresos" runat="server" style="background-color: #dcfce7; color: #065f46;">
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Card 2 -->
+                    <!-- Egresos del mes actual -->
                     <div class="col-12 col-md-6 col-xl-4">
-                        <div class="card kpi-card kpi--red shadow-sm h-100">
+                        <div class="card kpi-card kpi--red shadow-sm h-100" style="padding-left: 10px;">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
-                                    <div class="text-muted small fw-semibold"><label runat="server" id="lblTituloCard_TotalEgresos"></label></div>
-                                    <div class="h1 fw-bold mb-1"><asp:Label runat="server" ID="lblTotalEgresos_MesActual"></asp:Label></div>
+                                    <div class="text-muted small fw-semibold">
+                                        <label runat="server" id="lblTituloCard_TotalEgresos"></label>
+                                    </div>
+                                    <div class="h1 fw-bold mb-1">
+                                        <asp:Label runat="server" ID="lblTotalEgresos_MesActual"></asp:Label></div>
                                 </div>
                                 <div class="text-end">
                                     <span class="badge rounded-pill label-porcentaje" style="background: #fee2e2; color: #991b1b; font-weight: 700;">
-                                        <i class="bi bi-arrow-down-right me-1"></i><label runat="server" id="lblPorcentajeTotalEgresos"></label> <%--Porcentaje de Egresos con respecto al mes anterior--%>
+                                        <i class="bi bi-arrow-down-right me-1"></i>
+                                        <label runat="server" id="lblPorcentajeTotalEgresos"></label>
+                                        <%--Porcentaje de Egresos con respecto al mes anterior--%>
                                     </span>
                                     <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(239,68,68,.08); color: #ef4444;" id="divIconTotalesEgresos" runat="server">
                                     </div>
@@ -107,17 +120,22 @@
                         </div>
                     </div>
 
-                    <!-- (Opcional) Card 3 -->
+                    <!-- Neto del mes actual -->
                     <div class="col-12 col-md-6 col-xl-4">
-                        <div class="card kpi-card kpi--amber shadow-sm h-100">
+                        <div class="card kpi-card kpi--amber shadow-sm h-100" style="padding-left: 10px;">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
-                                    <div class="text-muted small fw-semibold"><label runat="server" id="lblTituloCard_TotalNeto"></label></div>
-                                    <div class="h1 fw-bold mb-1"><asp:Label runat="server" ID="lblTotalNeto_MesActual"></asp:Label></div>
+                                    <div class="text-muted small fw-semibold">
+                                        <label runat="server" id="lblTituloCard_TotalNeto"></label>
+                                    </div>
+                                    <div class="h1 fw-bold mb-1">
+                                        <asp:Label runat="server" ID="lblTotalNeto_MesActual"></asp:Label></div>
                                 </div>
                                 <div class="text-end">
                                     <span class="badge rounded-pill label-porcentaje" style="background: #fff7ed; color: #9a3412; font-weight: 700;">
-                                        <i class="bi bi-exclamation-circle me-1"></i><label runat="server" id="lblPorcentajeTotalNeto"></label> <%--Porcentaje Neto con respecto al mes anterior--%>
+                                        <i class="bi bi-exclamation-circle me-1"></i>
+                                        <label runat="server" id="lblPorcentajeTotalNeto"></label>
+                                        <%--Porcentaje Neto con respecto al mes anterior--%>
                                     </span>
                                     <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(245,158,11,.08); color: #f59e0b;" id="divIconTotalesNeto" runat="server">
                                     </div>
@@ -126,40 +144,81 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6 col-xl-4">
-                        <div class="card kpi-card kpi--amber shadow-sm h-100">
+                    <div class="col-6 col-md-6 col-xl-3">
+                        <div class="card kpi-card kpi--blue shadow-sm h-100" style="padding-left: 10px;">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
-                                    <div class="text-muted small fw-semibold">Neto del mes</div>
-                                    <div class="h1 fw-bold mb-1">RD$ -200</div>
-                                    <div class="small text-muted">Variación vs. mes anterior</div>
+                                    <div class="text-muted small fw-semibold">
+                                        Descripciones
+                                    </div>
+                                    <div class="h1 fw-bold mb-1">
+                                        <asp:Label runat="server" ID="lblTotalDescripciones"></asp:Label>
+                                    </div>
                                 </div>
                                 <div class="text-end">
-                                    <span class="badge rounded-pill" style="background: #fff7ed; color: #9a3412; font-weight: 700;">
-                                        <i class="bi bi-exclamation-circle me-1"></i>-5%
-                                    </span>
-                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(245,158,11,.08); color: #f59e0b;">
-                                        <i class="bi bi-graph-down fs-3"></i>
+                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(12,99,228,.08); color: #0C63E4;">
+                                        <i class="fa-solid fa-file-signature fa-lg"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6 col-xl-4">
-                        <div class="card kpi-card kpi--amber shadow-sm h-100">
+                    <div class="col-6 col-md-6 col-xl-3">
+                        <div class="card kpi-card kpi--blue shadow-sm h-100" style="padding-left: 10px;">
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
-                                    <div class="text-muted small fw-semibold">Neto del mes</div>
-                                    <div class="h1 fw-bold mb-1">RD$ -200</div>
-                                    <div class="small text-muted">Variación vs. mes anterior</div>
+                                    <div class="text-muted small fw-semibold">
+                                        Misceláneos
+                                    </div>
+                                    <div class="h1 fw-bold mb-1">
+                                        <asp:Label runat="server" ID="lblTotalMiscelaneos"></asp:Label>
+                                    </div>
                                 </div>
                                 <div class="text-end">
-                                    <span class="badge rounded-pill" style="background: #fff7ed; color: #9a3412; font-weight: 700;">
-                                        <i class="bi bi-exclamation-circle me-1"></i>-5%
-                                    </span>
-                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(245,158,11,.08); color: #f59e0b;">
-                                        <i class="bi bi-graph-down fs-3"></i>
+                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(12,99,228,.08); color: #0C63E4;">
+                                        <i class="fa-solid fa-shuffle fa-lg"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6 col-xl-3">
+                        <div class="card kpi-card kpi--blue shadow-sm h-100" style="padding-left: 10px;">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="text-muted small fw-semibold">
+                                        Formas de pago
+                                    </div>
+                                    <div class="h1 fw-bold mb-1">
+                                        <asp:Label runat="server" ID="lblTotalFormasPago"></asp:Label>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(12,99,228,.08); color: #0C63E4;">
+                                        <i class="fa-solid fa-money-bill fa-lg"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6 col-xl-3">
+                        <div class="card kpi-card kpi--blue shadow-sm h-100" style="padding-left: 10px;">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="text-muted small fw-semibold">
+                                        Miembros
+                                    </div>
+                                    <div class="h1 fw-bold mb-1">
+                                        <asp:Label runat="server" ID="lblTotalMiembros"></asp:Label>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(12,99,228,.08); color: #0C63E4;">
+                                       
+                                        <i class="fa-solid fa-church fa-lg"></i>
                                     </div>
                                 </div>
                             </div>
@@ -172,43 +231,54 @@
             <div class="shadowed-div-body shadow-sm" style="width: 100%; margin-top: 20px; margin-right: 20px; flex-basis: 50%; white-space: nowrap; text-align: center; justify-content: center; align-items: center;">
                 <div class="row" style="height: 100%;">
                     <div class="col-12 col-md-12">
-                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: bold; font-size: 20px;">Ingresos, Egresos y Neto (últimos 3 meses)</div>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: bold; font-size: 20px;">Ingresos, Egresos y Neto</div>
                         <telerik:RadHtmlChart runat="server" ID="chtFinanzas" Width="100%" Height="420"
                             Transitions="true" Skin="Silk">
                             <PlotArea>
                                 <Series>
+
                                     <telerik:ColumnSeries Name="Ingresos" DataFieldY="Ingresos">
-                                        <LabelsAppearance DataFormatString="{0:C0}" Position="OutsideEnd" />
-                                        <TooltipsAppearance DataFormatString="<b>Ingresos:</b> {0:C0}" Color="White" />
+                                        <Appearance>
+                                            <FillStyle BackgroundColor="#16A34A" />
+                                        </Appearance>
+                                        <LabelsAppearance DataFormatString="RD${0:N2}" Position="OutsideEnd" />
+                                        <TooltipsAppearance DataFormatString="<b>Ingresos:</b> RD${0:N2}" Color="White" />
                                     </telerik:ColumnSeries>
+
 
                                     <telerik:ColumnSeries Name="Egresos" DataFieldY="Egresos">
-                                        <LabelsAppearance DataFormatString="{0:C0}" Position="OutsideEnd" />
-                                        <TooltipsAppearance DataFormatString="<b>Egresos:</b> {0:C0}" />
+                                        <Appearance>
+                                            <FillStyle BackgroundColor="#EF4444" />
+                                        </Appearance>
+                                        <LabelsAppearance DataFormatString="RD${0:N2}" Position="OutsideEnd" />
+                                        <TooltipsAppearance DataFormatString="<b>Egresos:</b> RD${0:N2}" Color="White" />
                                     </telerik:ColumnSeries>
 
+
                                     <telerik:ColumnSeries Name="Neto" DataFieldY="Neto">
-                                        <LabelsAppearance DataFormatString="{0:C0}" Position="OutsideEnd" />
-                                        <TooltipsAppearance DataFormatString="<b>Neto:</b> {0:C0}" />
+                                        <Appearance>
+                                            <FillStyle BackgroundColor="#F59E0B" />
+                                        </Appearance>
+                                        <LabelsAppearance DataFormatString="RD${0:N2}" Position="OutsideEnd" />
+                                        <TooltipsAppearance DataFormatString="<b>Neto:</b> RD${0:N2}" Color="Black" />
                                     </telerik:ColumnSeries>
                                 </Series>
 
                                 <XAxis DataLabelsField="MesNombre">
                                     <TitleAppearance Text="Mes" />
                                 </XAxis>
-
                                 <YAxis>
                                     <TitleAppearance Text="Monto" />
-                                    <LabelsAppearance DataFormatString="{0:C0}" />
-
+                                    <LabelsAppearance DataFormatString="{0:N0}" />
                                 </YAxis>
                             </PlotArea>
 
-                            <ChartTitle Text="" />
+                            <ChartTitle Text="Totales por mes (últimos 3 meses)" />
                             <Legend>
                                 <Appearance Position="Bottom" />
                             </Legend>
                         </telerik:RadHtmlChart>
+
 
                         <div runat="server" id="divMensaje_graficoIngresosMes" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center; flex-direction: column;" visible="false">
                             <div style="margin-top: 20px;">
@@ -220,53 +290,144 @@
                 </div>
             </div>
 
-            <div class="shadowed-div-body shadow-sm" style="width: 100%; margin-top: 20px; margin-right: 20px; flex-basis: 50%; white-space: nowrap; text-align: center; justify-content: center; align-items: center;">
+
+
+
+
+
+
+
+
+
+
+            <div class="shadowed-div-body shadow-sm d-none" style="width: 100%; margin-top: 20px; margin-right: 20px; flex-basis: 50%; white-space: nowrap; text-align: center; justify-content: center; align-items: center;">
                 <div class="row" style="height: 100%;">
                     <div class="col-12 col-md-12">
-                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: bold; font-size: 20px;">Ingresos, Egresos y Neto (últimos 3 meses)</div>
+                    </div>
+                </div>
+            </div>
 
-                     
-                        <telerik:RadHtmlChart runat="server" ID="chCobrarMes" Width="100%" Height="360"
-                            Transitions="true" Skin="Silk">
-                            <PlotArea>
-                                <Series>
-                                    <telerik:ColumnSeries Name="Cuentas por cobrar" DataFieldY="TotalCobrar">
-                                        <LabelsAppearance Position="OutsideEnd" DataFormatString="{0:C0}" />
-                                        <TooltipsAppearance DataFormatString="{0:C0}" />
-                                    </telerik:ColumnSeries>
-                                </Series>
 
-                                <XAxis DataLabelsField="MesNombre">
-                                    <TitleAppearance Text="Mes" />
-                                </XAxis>
-                                <YAxis>
-                                    <TitleAppearance Text="Total" />
-                                    <LabelsAppearance DataFormatString="{0:C0}" />
-                                </YAxis>
-                            </PlotArea>
 
-                            <ChartTitle Text="Cuentas por Cobrar — Últimos 6 meses" />
-                            <Legend>
-                                <Appearance Position="Bottom" />
-                            </Legend>
-                        </telerik:RadHtmlChart>
+            <div class="container-fluid px-0" style="margin-top: 20px;">
+                <div class="row g-3">
+                    <div class="col-12 col-md-12 col-xl-8">
+                        <div class="card h-100"style="padding-left: 10px; border-radius: 16px; border: 0px;">
+                            <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: bold; font-size: 20px; margin-top: 20px;">Cuentas por Cobrar</div>
 
-                        <telerik:RadHtmlChart runat="server" ID="chCobrarAntig" Width="100%" Height="360"
-                            Transitions="true" Skin="Silk">
-                            <PlotArea>
-                                <Series>
-                              
-                                    <telerik:DonutSeries Name="Antigüedad" DataFieldY="Total" NameField="Rango">
-                                        <LabelsAppearance Position="OutsideEnd" DataFormatString="{0:C0}" />
-                                        <TooltipsAppearance DataFormatString="{0:C0}" />
-                                    </telerik:DonutSeries>
-                                </Series>
-                            </PlotArea>
-                            <ChartTitle Text="Antigüedad de Cuentas por Cobrar" />
-                            <Legend>
-                                <Appearance Position="Right" />
-                            </Legend>
-                        </telerik:RadHtmlChart>
+                            <telerik:RadHtmlChart runat="server" ID="chCobrarMes" Width="100%" Height="360"
+                                Transitions="true" Skin="Silk">
+                                <PlotArea>
+                                    <Series>
+                                        <telerik:ColumnSeries Name="Cuentas por cobrar" DataFieldY="TotalCobrar">
+                                            <Appearance>
+                                                <FillStyle BackgroundColor="#16A34A" />
+                                            </Appearance>
+                                            <LabelsAppearance Position="OutsideEnd" DataFormatString="RD${0:N2}" />
+                                            <TooltipsAppearance DataFormatString="<b>Cobrar:</b> RD${0:N2}" Color="White" />
+                                        </telerik:ColumnSeries>
+                                    </Series>
+
+                                    <XAxis DataLabelsField="MesNombre">
+                                        <TitleAppearance Text="Mes" />
+                                    </XAxis>
+                                    <YAxis>
+                                        <TitleAppearance Text="Total" />
+                                        <LabelsAppearance DataFormatString="{0:N0}" />
+                                    </YAxis>
+                                </PlotArea>
+
+                                <ChartTitle Text="Totales por mes (ultimos 6 meses)" />
+                                <Legend>
+                                    <Appearance Position="Bottom" />
+                                </Legend>
+                            </telerik:RadHtmlChart>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-12 col-md-12 col-xl-4">
+                        <div class="card shadow-sm h-100" style="padding-left: 10px; border-radius: 16px; border: 0px;">
+                            <telerik:RadHtmlChart runat="server" ID="chCxC_Antiguedad" Width="100%" Height="360"
+                                Transitions="true" Skin="Silk">
+                                <PlotArea>
+                                    <Series>
+
+                                        <telerik:DonutSeries Name="Antigüedad" DataFieldY="Total" NameField="Rango" ColorField="Color">
+                                            <LabelsAppearance Position="OutsideEnd" DataFormatString="RD${0:N2}" />
+                                            <TooltipsAppearance DataFormatString="RD${0:N2}" />
+                                        </telerik:DonutSeries>
+                                    </Series>
+                                </PlotArea>
+                                <ChartTitle Text="Antigüedad de Cuentas por Cobrar" />
+                                <Legend>
+                                    <Appearance Position="Right" />
+                                </Legend>
+                            </telerik:RadHtmlChart>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid px-0" style="margin-top: 20px;">
+                <div class="row g-3">
+                    <div class="col-12 col-md-12 col-xl-8">
+                        <div class="card h-100" style="padding-left: 10px; border-radius: 16px; border: 0px;">
+                            <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: bold; font-size: 20px; margin-top: 20px;">Cuentas por Pagar</div>
+
+                            <telerik:RadHtmlChart runat="server" ID="chPagarMes" Width="100%" Height="360"
+                                Transitions="true" Skin="Silk">
+                                <PlotArea>
+                                    <Series>
+
+                                        <telerik:ColumnSeries Name="Cuentas por pagar" DataFieldY="TotalPagar">
+                                            <Appearance>
+                                                <FillStyle BackgroundColor="#EF4444" />
+                                            </Appearance>
+                                            <LabelsAppearance Position="OutsideEnd" DataFormatString="RD${0:N2}" />
+                                            <TooltipsAppearance DataFormatString="<b>Pagar:</b> RD${0:N2}" Color="White" />
+                                        </telerik:ColumnSeries>
+                                    </Series>
+
+                                    <XAxis DataLabelsField="MesNombre">
+                                        <TitleAppearance Text="Mes" />
+                                    </XAxis>
+                                    <YAxis>
+                                        <TitleAppearance Text="Total" />
+                                        <LabelsAppearance DataFormatString="{0:N0}" />
+                                    </YAxis>
+                                </PlotArea>
+
+                                <ChartTitle Text="Totales por mes (Últimos 6 meses)" />
+                                <Legend>
+                                    <Appearance Position="Bottom" />
+                                </Legend>
+                            </telerik:RadHtmlChart>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-xl-4">
+                        <div class="card shadow-sm h-100" style="padding-left: 10px; border-radius: 16px; border: 0px;">
+                            <telerik:RadHtmlChart runat="server" ID="chCxP_Antiguedad" Width="100%" Height="360"
+                                Transitions="true" Skin="Silk">
+                                <PlotArea>
+                                    <Series>
+
+                                        <telerik:DonutSeries Name="Antigüedad" DataFieldY="Total" NameField="Rango" ColorField="Color">
+                                            <LabelsAppearance Position="OutsideEnd" DataFormatString="RD${0:N2}" />
+                                            <TooltipsAppearance DataFormatString="RD${0:N2}" />
+                                        </telerik:DonutSeries>
+                                    </Series>
+                                </PlotArea>
+                                <ChartTitle Text="Antigüedad de Cuentas por Pagar" />
+                                <Legend>
+                                    <Appearance Position="Right" />
+                                </Legend>
+                            </telerik:RadHtmlChart>
+
+                        </div>
 
                     </div>
                 </div>
@@ -295,13 +456,13 @@
         <script src="../Recursos/Javascript/scripts_general.js"></script>
     </div>
 
-        <script>
-            tippy('.label-porcentaje', {
-                placement: 'top',
-                content: 'Variación porcentual respecto al mes anterior',
-                arrow: true,
-            });
+    <script>
+        tippy('.label-porcentaje', {
+            placement: 'top',
+            content: 'Variación porcentual respecto al mes anterior',
+            arrow: true,
+        });
 
 
-        </script>
+    </script>
 </asp:Content>
