@@ -123,6 +123,15 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divIconTotalesNeto;
 
         /// <summary>
+        /// Control lblTotalMiembros.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalMiembros;
+
+        /// <summary>
         /// Control lblTotalDescripciones.
         /// </summary>
         /// <remarks>
@@ -148,15 +157,6 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotalFormasPago;
-
-        /// <summary>
-        /// Control lblTotalMiembros.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalMiembros;
 
         /// <summary>
         /// Control chtFinanzas.

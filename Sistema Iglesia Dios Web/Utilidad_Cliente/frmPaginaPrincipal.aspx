@@ -49,7 +49,7 @@
         <div style="text-align: center;">
 
             <img src="../Recursos/Imagenes/logo_iglesia_dios.png" alt="Logo Iglesia de Dios" style="width: 118px; height: 140px;"/>
-             <p class="contenido" style="font-size: 16px; font-family: Roboto, sans-serif; ">Seleccione una opci&oacute;n para comenzar</p>
+             <p class="contenido" style="font-size: 16px; font-family: Roboto, sans-serif; margin-top: 20px;">Seleccione una opci&oacute;n para comenzar</p>
         </div>
     </div>
 

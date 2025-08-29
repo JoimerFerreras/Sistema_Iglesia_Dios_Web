@@ -149,6 +149,27 @@
                             <div class="card-body d-flex align-items-center justify-content-between">
                                 <div>
                                     <div class="text-muted small fw-semibold">
+                                        Miembros
+                                    </div>
+                                    <div class="h1 fw-bold mb-1">
+                                        <asp:Label runat="server" ID="lblTotalMiembros"></asp:Label>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(12,99,228,.08); color: #0C63E4;">
+
+                                        <i class="fa-solid fa-church fa-lg"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6 col-xl-3">
+                        <div class="card kpi-card kpi--blue shadow-sm h-100" style="padding-left: 10px;">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div class="text-muted small fw-semibold">
                                         Descripciones
                                     </div>
                                     <div class="h1 fw-bold mb-1">
@@ -204,26 +225,7 @@
                         </div>
                     </div>
 
-                    <div class="col-6 col-md-6 col-xl-3">
-                        <div class="card kpi-card kpi--blue shadow-sm h-100" style="padding-left: 10px;">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <div class="text-muted small fw-semibold">
-                                        Miembros
-                                    </div>
-                                    <div class="h1 fw-bold mb-1">
-                                        <asp:Label runat="server" ID="lblTotalMiembros"></asp:Label>
-                                    </div>
-                                </div>
-                                <div class="text-end">
-                                    <div class="kpi-icon d-inline-flex align-items-center justify-content-center ms-2" style="background: rgba(12,99,228,.08); color: #0C63E4;">
-                                       
-                                        <i class="fa-solid fa-church fa-lg"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                
 
                 </div>
             </div>
