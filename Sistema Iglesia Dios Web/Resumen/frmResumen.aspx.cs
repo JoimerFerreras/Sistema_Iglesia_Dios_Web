@@ -5,6 +5,7 @@ using Negocio.Util_N;
 using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
 using System.Data;
+using System.Globalization;
 using System.Web.UI;
 
 namespace Sistema_Iglesia_Dios_Web.Resumen
@@ -113,72 +114,67 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
             try
             {
                 DataTable dt = resumen_N.TotalesMesActual();
-                if (dt.Rows.Count > 0)
-                {
-                    DataRow row = dt.Rows[0];
-                    lblTotalIngresos_MesActual.Text = Convert.ToDecimal(row["IngresosMes"]).ToString("C2");
-                    lblTotalEgresos_MesActual.Text = Convert.ToDecimal(row["EgresosMes"]).ToString("C2");
-                    lblTotalNeto_MesActual.Text = Convert.ToDecimal(row["NetoMes"]).ToString("C2");
+                if (dt == null || dt.Rows.Count == 0) return;
 
-                    decimal PctIngresos = Convert.ToDecimal(row["VarPctIngresos"]);
-                    decimal PctEgresos = Convert.ToDecimal(row["VarPctEgresos"]);
-                    decimal PctNeto = Convert.ToDecimal(row["VarPctNeto"]);
+                DataRow row = dt.Rows[0];
 
-                    //string SimboloIngresos = PctIngresos >= 0 ? "▲" : "▼";
+                decimal ingresos = GetDecimal(row, "IngresosMes");
+                decimal egresos = GetDecimal(row, "EgresosMes");
+                decimal neto = GetDecimal(row, "NetoMes");
 
-                    lblPorcentajeTotalIngresos.InnerHtml = PctIngresos.ToString("+0;-0;0") + " %";
-                    lblPorcentajeTotalEgresos.InnerHtml =  PctEgresos.ToString("+0;-0;0") + " %";
-                    lblPorcentajeTotalNeto.InnerHtml = PctNeto.ToString("+0;-0;0") + " %";
+                lblTotalIngresos_MesActual.Text = ingresos.ToString("C2");
+                lblTotalEgresos_MesActual.Text = egresos.ToString("C2");
+                lblTotalNeto_MesActual.Text = neto.ToString("C2");
 
-                    lblTituloCard_TotalIngresos.InnerHtml = "Ingresos del mes actual (" + DateTime.Now.ToString("MMMM") +")";
-                    lblTituloCard_TotalEgresos.InnerHtml = "Egresos del mes actual (" + DateTime.Now.ToString("MMMM") +")";
-                    lblTituloCard_TotalNeto.InnerHtml = "Neto del mes actual (" + DateTime.Now.ToString("MMMM") +")";
+                decimal pctIngresos = GetDecimal(row, "VarPctIngresos");
+                decimal pctEgresos = GetDecimal(row, "VarPctEgresos");
+                decimal pctNeto = GetDecimal(row, "VarPctNeto");
 
-                    if (PctIngresos > 0)
-                    {
-                        divIconTotalesIngresos.InnerHtml = "<i class=\"fa-solid fa-square-caret-up fa-lg\"></i>";
-                    }
-                    else if (PctIngresos < 0)
-                    {
-                        divIconTotalesIngresos.InnerHtml = "<i class=\"fa-solid fa-square-caret-down fa-lg\"></i>";
-                    }
-                    else
-                    {
-                        divIconTotalesIngresos.InnerHtml = "<i class=\"fa-solid fa-square fa-lg\"></i>";
-                    }
+                lblPorcentajeTotalIngresos.InnerHtml = pctIngresos.ToString("+0;-0;0") + " %";
+                lblPorcentajeTotalEgresos.InnerHtml = pctEgresos.ToString("+0;-0;0") + " %";
+                lblPorcentajeTotalNeto.InnerHtml = pctNeto.ToString("+0;-0;0") + " %";
 
-                    if (PctEgresos > 0)
-                    {
-                        divIconTotalesEgresos.InnerHtml = "<i class=\"fa-solid fa-square-caret-up fa-lg\"></i>";
-                    }
-                    else if (PctEgresos < 0)
-                    {
-                        divIconTotalesEgresos.InnerHtml = "<i class=\"fa-solid fa-square-caret-down fa-lg\"></i>";
-                    }
-                    else
-                    {
-                        divIconTotalesEgresos.InnerHtml = "<i class=\"fa-solid fa-square fa-lg\"></i>";
-                    }
+                string mes = GetMonthNameEs();
+                lblTituloCard_TotalIngresos.InnerHtml = "Ingresos del mes actual (" + mes + ")";
+                lblTituloCard_TotalEgresos.InnerHtml = "Egresos del mes actual (" + mes + ")";
+                lblTituloCard_TotalNeto.InnerHtml = "Neto del mes actual (" + mes + ")";
 
-                    if (PctNeto > 0)
-                    {
-                        divIconTotalesNeto.InnerHtml = "<i class=\"fa-solid fa-square-caret-up fa-lg\"></i>";
-                    }
-                    else if (PctNeto < 0)
-                    {
-                        divIconTotalesNeto.InnerHtml = "<i class=\"fa-solid fa-square-caret-down fa-lg\"></i>";
-                    }
-                    else
-                    {
-                        divIconTotalesNeto.InnerHtml = "<i class=\"fa-solid fa-square fa-lg\"></i>";
-                    }
-                }
+                divIconTotalesIngresos.InnerHtml = pctIngresos > 0 ? "<i class=\"fa-solid fa-square-caret-up fa-lg\"></i>"
+                                             : pctIngresos < 0 ? "<i class=\"fa-solid fa-square-caret-down fa-lg\"></i>"
+                                             : "<i class=\"fa-solid fa-square fa-lg\"></i>";
+
+                divIconTotalesEgresos.InnerHtml = pctEgresos > 0 ? "<i class=\"fa-solid fa-square-caret-up fa-lg\"></i>"
+                                            : pctEgresos < 0 ? "<i class=\"fa-solid fa-square-caret-down fa-lg\"></i>"
+                                            : "<i class=\"fa-solid fa-square fa-lg\"></i>";
+
+                divIconTotalesNeto.InnerHtml = pctNeto > 0 ? "<i class=\"fa-solid fa-square-caret-up fa-lg\"></i>"
+                                         : pctNeto < 0 ? "<i class=\"fa-solid fa-square-caret-down fa-lg\"></i>"
+                                         : "<i class=\"fa-solid fa-square fa-lg\"></i>";
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
+
+        private static decimal GetDecimal(DataRow row, string colName)
+        {
+            if (row == null) return 0m;
+            if (!row.Table.Columns.Contains(colName)) return 0m;
+
+            object v = row[colName];
+            if (v == null || v == DBNull.Value) return 0m;
+
+            return Convert.ToDecimal(v);
+        }
+
+        private static string GetMonthNameEs()
+        {
+            // si quieres el mes en español siempre, aunque el server tenga otra cultura
+            return DateTime.Now.ToString("MMMM", new CultureInfo("es-DO"));
+        }
+
+
         private void TotalMiscelaneos()
         {
             try
@@ -267,7 +263,7 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
                 GraficoCuentasPagarPorMes();
                 GraficoAntiguedadCxP();
 
-                //TotalesMesActual();
+                TotalesMesActual();
                 TotalMiscelaneos();
                 TotalDescripciones();
                 TotalFormas_Pago();

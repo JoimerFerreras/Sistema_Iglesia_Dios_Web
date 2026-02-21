@@ -314,7 +314,7 @@
             <div class="container-fluid px-0" style="margin-top: 20px;">
                 <div class="row g-3">
                     <div class="col-12 col-md-12 col-xl-8">
-                        <div class="card h-100"style="padding-left: 10px; border-radius: 16px; border: 0px;">
+                        <div class="card h-100 shadow-sm"style="padding-left: 10px; border-radius: 16px; border: 0px;">
                             <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: bold; font-size: 20px; margin-top: 20px;">Cuentas por Cobrar</div>
 
                             <telerik:RadHtmlChart runat="server" ID="chCobrarMes" Width="100%" Height="360"
@@ -350,7 +350,7 @@
                     </div>
 
                     <div class="col-12 col-md-12 col-xl-4">
-                        <div class="card shadow-sm h-100" style="padding-left: 10px; border-radius: 16px; border: 0px;">
+                        <div class="card shadow-sm h-100 " style="padding-left: 10px; border-radius: 16px; border: 0px;">
                             <telerik:RadHtmlChart runat="server" ID="chCxC_Antiguedad" Width="100%" Height="360"
                                 Transitions="true" Skin="Silk">
                                 <PlotArea>
@@ -376,7 +376,7 @@
             <div class="container-fluid px-0" style="margin-top: 20px;">
                 <div class="row g-3">
                     <div class="col-12 col-md-12 col-xl-8">
-                        <div class="card h-100" style="padding-left: 10px; border-radius: 16px; border: 0px;">
+                        <div class="card h-100 shadow-sm" style="padding-left: 10px; border-radius: 16px; border: 0px;">
                             <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; font-weight: bold; font-size: 20px; margin-top: 20px;">Cuentas por Pagar</div>
 
                             <telerik:RadHtmlChart runat="server" ID="chPagarMes" Width="100%" Height="360"
@@ -411,7 +411,7 @@
                     </div>
 
                     <div class="col-12 col-md-12 col-xl-4">
-                        <div class="card shadow-sm h-100" style="padding-left: 10px; border-radius: 16px; border: 0px;">
+                        <div class="card shadow-sm h-100 shadow-sm" style="padding-left: 10px; border-radius: 16px; border: 0px;">
                             <telerik:RadHtmlChart runat="server" ID="chCxP_Antiguedad" Width="100%" Height="360"
                                 Transitions="true" Skin="Silk">
                                 <PlotArea>
