@@ -14,6 +14,83 @@
             border-color: transparent;
         }
     </style>
+
+
+    <script type="text/javascript">
+        // Funciones para copiar los datos del grid al portapapeles (con y sin encabezados)
+
+        // DATATABLE DATOS
+
+
+        // Clic derecho sobre una fila del grid
+        function gvDatos_RowContextMenu(sender, args) {
+            var ev = args.get_domEvent();
+            ev.preventDefault(); // quita el menú del navegador
+
+            // (Opcional) Seleccionar la fila donde hicieron right click
+            try {
+                var masterTable = sender.get_masterTableView();
+                masterTable.clearSelectedItems();
+                masterTable.selectItem(args.get_item().get_element(), true);
+            } catch (e) { }
+
+            var menu = $find("<%= rcmGridDatos.ClientID %>");
+            menu.show(ev);
+            return false;
+        }
+
+        // Click en item del menú
+        function rcmGridItemClicked_Datos(sender, args) {
+            var item = args.get_item();
+            if (item.get_value() === "copy_tabla") {
+                // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
+                __doPostBack("<%= btnCopiarGrid_Datos.UniqueID %>", "");
+            } else if (item.get_value() === "copy_tabla_sin_encabezados") {
+                // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
+                __doPostBack("<%= btnCopiarGridSinEncabezados_Datos.UniqueID %>", "");
+            }
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        // Funciones para copiar los datos del grid al portapapeles (con y sin encabezados)
+
+        // DATATABLE RESUMEN
+
+
+        // Clic derecho sobre una fila del grid
+        function gvResumen_RowContextMenu(sender, args) {
+            var ev = args.get_domEvent();
+            ev.preventDefault(); // quita el menú del navegador
+
+            // (Opcional) Seleccionar la fila donde hicieron right click
+            try {
+                var masterTable = sender.get_masterTableView();
+                masterTable.clearSelectedItems();
+                masterTable.selectItem(args.get_item().get_element(), true);
+            } catch (e) { }
+
+            var menu = $find("<%= rcmGridResumen.ClientID %>");
+            menu.show(ev);
+            return false;
+        }
+
+        // Click en item del menú
+        function rcmGridItemClicked_Resumen(sender, args) {
+            var item = args.get_item();
+            if (item.get_value() === "copy_tabla") {
+                // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
+                __doPostBack("<%= btnCopiarGrid_Resumen.UniqueID %>", "");
+                } else if (item.get_value() === "copy_tabla_sin_encabezados") {
+                    // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
+                    __doPostBack("<%= btnCopiarGridSinEncabezados_Resumen.UniqueID %>", "");
+            }
+        }
+    </script>
+
+
+
     <asp:UpdatePanel runat="server" UpdateMode="Conditional" ID="upPrincipal">
         <Triggers>
             <asp:PostBackTrigger ControlID="btnGenerarPDF_Detalle" />
@@ -134,15 +211,37 @@
                             </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>
 
+
                             <div class="col-12 div-gridview">
+                                <!-- Botón oculto que disparará el copiado (servidor) -->
+                                <asp:Button ID="btnCopiarGrid_Datos" runat="server" OnClick="btnCopiarGrid_Datos_Click"
+                                    Style="display: none;" UseSubmitBehavior="false" />
+
+                                <asp:Button ID="btnCopiarGridSinEncabezados_Datos" runat="server" OnClick="btnCopiarGridSinEncabezados_Datos_Click"
+                                    Style="display: none;" UseSubmitBehavior="false" />
+
+                                <!-- Menú contextual -->
+                                <telerik:RadContextMenu ID="rcmGridDatos" runat="server" Skin="Bootstrap"
+                                    OnClientItemClicked="rcmGridItemClicked_Datos">
+                                    <Items>
+                                        <telerik:RadMenuItem Text="<i class='fa-solid fa-table' style='margin-right: 5px;'></i> Copiar tabla" Value="copy_tabla" />
+                                        <telerik:RadMenuItem Text="<i class='fa-solid fa-table-cells-large' style='margin-right: 5px;'></i> Copiar tabla sin encabezados" Value="copy_tabla_sin_encabezados" />
+                                    </Items>
+                                </telerik:RadContextMenu>
+
                                 <telerik:RadGrid RenderMode="Lightweight" ID="gvDatos" runat="server" Culture="es-DO" Style="overflow-x: auto;" BorderColor="White" MasterTableView-Width="100%" Width="100%" HeaderStyle-Font-Bold="true" AlternatingItemStyle-BackColor="#F1F5FF"
                                     AllowPaging="True" AllowAutomaticUpdates="True" AllowAutomaticInserts="False" MasterTableView-PagerStyle-PageSizeLabelText="Registros" Skin="Bootstrap" HeaderStyle-BackColor="#F1F5FF" PagerStyle-AlwaysVisible="true"
                                     AllowAutomaticDeletes="True" AllowSorting="True" PagerStyle-BorderStyle="None" BorderStyle="None" FooterStyle-BorderStyle="None" HeaderStyle-BorderStyle="None" MasterTableView-PagerStyle-NextPagesToolTip="" MasterTableView-PagerStyle-PrevPagesToolTip=""
                                     FooterStyle-ForeColor="Black" HeaderStyle-ForeColor="Black" ItemStyle-ForeColor="Black" AlternatingItemStyle-ForeColor="Black" MasterTableView-PagerStyle-PagerTextFormat="{4} <strong>{5}</strong> Registros en <strong>{1}</strong> Páginas"
                                     MasterTableView-PagerStyle-FirstPageToolTip="" MasterTableView-PagerStyle-PrevPageToolTip="" MasterTableView-PagerStyle-NextPageToolTip="" MasterTableView-PagerStyle-LastPageToolTip=""
                                     OnPageIndexChanged="gvDatos_PageIndexChanged" OnPageSizeChanged="gvDatos_PageSizeChanged" OnSortCommand="gvDatos_SortCommand">
+                                    <ClientSettings>
+                                        <ClientEvents OnRowContextMenu="gvDatos_RowContextMenu" />
+                                    </ClientSettings>
+
                                     <PagerStyle Mode="NextPrevAndNumeric" />
                                     <MasterTableView AutoGenerateColumns="False">
+
                                         <Columns>
                                             <telerik:GridTemplateColumn>
                                                 <HeaderStyle HorizontalAlign="Center" />
@@ -188,16 +287,36 @@
                                 <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Vista de libro diario</span>
                                 <asp:LinkButton runat="server" ID="btnGenerarPDF_Resumen" CssClass="btn btn-secondary" OnClick="btnGenerarPDF_Resumen_Click" OnClientClick="MostrarPanelCarga()"><i class="fa-solid fa-file-pdf"></i> Generar reporte PDF</asp:LinkButton>
                                 <asp:LinkButton runat="server" ID="btnGenerarExcel_Resumen" CssClass="btn btn-success" OnClick="btnGenerarExcel_Resumen_Click"><i class="fa-solid fa-file-excel"></i> Generar Excel</asp:LinkButton>
+
                             </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>
 
                             <div class="col-12 div-gridview">
+                                <!-- Botón oculto que disparará el copiado (servidor) -->
+                                <asp:Button ID="btnCopiarGrid_Resumen" runat="server" OnClick="btnCopiarGrid_Resumen_Click"
+                                    Style="display: none;" UseSubmitBehavior="false" />
+
+                                <asp:Button ID="btnCopiarGridSinEncabezados_Resumen" runat="server" OnClick="btnCopiarGridSinEncabezados_Resumen_Click"
+                                    Style="display: none;" UseSubmitBehavior="false" />
+
+                                <!-- Menú contextual -->
+                                <telerik:RadContextMenu ID="rcmGridResumen" runat="server" Skin="Bootstrap"
+                                    OnClientItemClicked="rcmGridItemClicked_Resumen">
+                                    <Items>
+                                        <telerik:RadMenuItem Text="<i class='fa-solid fa-table' style='margin-right: 5px;'></i> Copiar tabla" Value="copy_tabla" />
+                                        <telerik:RadMenuItem Text="<i class='fa-solid fa-table-cells-large' style='margin-right: 5px;'></i> Copiar tabla sin encabezados" Value="copy_tabla_sin_encabezados" />
+                                    </Items>
+                                </telerik:RadContextMenu>
+
                                 <telerik:RadGrid RenderMode="Lightweight" ID="gvResumen" runat="server" Culture="es-DO" Style="overflow-x: auto;" BorderColor="White" MasterTableView-Width="100%" Width="100%" HeaderStyle-Font-Bold="true" AlternatingItemStyle-BackColor="#F1F5FF"
                                     AllowPaging="True" AllowAutomaticUpdates="True" AllowAutomaticInserts="False" MasterTableView-PagerStyle-PageSizeLabelText="Registros" Skin="Bootstrap" HeaderStyle-BackColor="#F1F5FF" PagerStyle-AlwaysVisible="true"
                                     AllowAutomaticDeletes="True" AllowSorting="True" PagerStyle-BorderStyle="None" BorderStyle="None" FooterStyle-BorderStyle="None" HeaderStyle-BorderStyle="None" MasterTableView-PagerStyle-NextPagesToolTip="" MasterTableView-PagerStyle-PrevPagesToolTip=""
                                     FooterStyle-ForeColor="Black" HeaderStyle-ForeColor="Black" ItemStyle-ForeColor="Black" AlternatingItemStyle-ForeColor="Black" MasterTableView-PagerStyle-PagerTextFormat="{4} <strong>{5}</strong> Registros en <strong>{1}</strong> Páginas"
                                     MasterTableView-PagerStyle-FirstPageToolTip="" MasterTableView-PagerStyle-PrevPageToolTip="" MasterTableView-PagerStyle-NextPageToolTip="" MasterTableView-PagerStyle-LastPageToolTip=""
                                     OnPageIndexChanged="gvResumen_PageIndexChanged" OnPageSizeChanged="gvResumen_PageSizeChanged" OnSortCommand="gvResumen_SortCommand">
+                                    <ClientSettings>
+                                        <ClientEvents OnRowContextMenu="gvResumen_RowContextMenu" />
+                                    </ClientSettings>
                                     <PagerStyle Mode="NextPrevAndNumeric" />
                                     <MasterTableView AutoGenerateColumns="False">
                                         <Columns>
@@ -219,7 +338,7 @@
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
 
-                                                                                        <telerik:GridTemplateColumn HeaderText="Crédito" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridTemplateColumn HeaderText="Crédito" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                                 <ItemTemplate>
                                                     <%# Eval("Credito").ToString() == "0" ? "" : String.Format("{0:0,0.00}", Eval("Credito")) %>
                                                 </ItemTemplate>

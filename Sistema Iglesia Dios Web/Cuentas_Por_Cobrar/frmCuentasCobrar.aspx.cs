@@ -1,22 +1,23 @@
 ﻿// Autor: Joimer Ferreras
 
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 using Entidades.Cuentas_Por_Cobrar;
+using Entidades.Otros_Parametros;
 using Negocio.Cuentas_Por_Cobrar;
-using Negocio.Otros_Parametros;
 using Negocio.Miembros;
+using Negocio.Otros_Parametros;
 using Negocio.Util_N;
 using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
-using CrystalDecisions.CrystalReports.Engine;
-using System.Data.OleDb;
-using CrystalDecisions.Shared;
-using Entidades.Otros_Parametros;
 
 namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
 {
@@ -1180,7 +1181,27 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
 
         protected void btnGenerarPDF_Resumen_Click(object sender, EventArgs e)
         {
+            
+        }
 
+        protected void btnCopiarGrid_Datos_Click(object sender, EventArgs e)
+        {
+            Utilidad_C.CopiarRadGridAlClipboard(true, gvDatos, this.Page, this.GetType(), true);
+        }
+
+        protected void btnCopiarGridSinEncabezados_Datos_Click(object sender, EventArgs e)
+        {
+            Utilidad_C.CopiarRadGridAlClipboard(false, gvDatos, this.Page, this.GetType(), true);
+        }
+
+        protected void btnCopiarGrid_Resumen_Click(object sender, EventArgs e)
+        {
+            Utilidad_C.CopiarRadGridAlClipboard(true, gvResumen, this.Page, this.GetType(), true);
+        }
+
+        protected void btnCopiarGridSinEncabezados_Resumen_Click(object sender, EventArgs e)
+        {
+            Utilidad_C.CopiarRadGridAlClipboard(false, gvResumen, this.Page, this.GetType(), true);
         }
     }
 }

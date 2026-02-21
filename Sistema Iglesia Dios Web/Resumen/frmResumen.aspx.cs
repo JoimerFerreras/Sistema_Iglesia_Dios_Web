@@ -267,7 +267,7 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
                 GraficoCuentasPagarPorMes();
                 GraficoAntiguedadCxP();
 
-                TotalesMesActual();
+                //TotalesMesActual();
                 TotalMiscelaneos();
                 TotalDescripciones();
                 TotalFormas_Pago();

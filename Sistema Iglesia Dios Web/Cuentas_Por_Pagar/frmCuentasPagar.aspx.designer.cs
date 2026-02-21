@@ -132,6 +132,33 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
         protected global::System.Web.UI.WebControls.LinkButton btnGenerarExcel_Detalle;
 
         /// <summary>
+        /// Control btnCopiarGrid_Datos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCopiarGrid_Datos;
+
+        /// <summary>
+        /// Control btnCopiarGridSinEncabezados_Datos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCopiarGridSinEncabezados_Datos;
+
+        /// <summary>
+        /// Control rcmGridDatos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadContextMenu rcmGridDatos;
+
+        /// <summary>
         /// Control gvDatos.
         /// </summary>
         /// <remarks>
@@ -157,6 +184,33 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnGenerarExcel_Resumen;
+
+        /// <summary>
+        /// Control btnCopiarGrid_Resumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCopiarGrid_Resumen;
+
+        /// <summary>
+        /// Control btnCopiarGridSinEncabezados_Resumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCopiarGridSinEncabezados_Resumen;
+
+        /// <summary>
+        /// Control rcmGridResumen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadContextMenu rcmGridResumen;
 
         /// <summary>
         /// Control gvResumen.

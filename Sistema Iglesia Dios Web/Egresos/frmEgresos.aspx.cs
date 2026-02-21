@@ -1084,6 +1084,26 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             }
         }
 
+        protected void btnCopiarGrid_Datos_Click(object sender, EventArgs e)
+        {
+            Utilidad_C.CopiarRadGridAlClipboard(true, gvDatos, this.Page, this.GetType(), true);
+        }
+
+        protected void btnCopiarGridSinEncabezados_Datos_Click(object sender, EventArgs e)
+        {
+            Utilidad_C.CopiarRadGridAlClipboard(false, gvDatos, this.Page, this.GetType(), true);
+        }
+
+        protected void btnCopiarGrid_Resumen_Click(object sender, EventArgs e)
+        {
+            Utilidad_C.CopiarRadGridAlClipboard(true, gvResumen, this.Page, this.GetType(), true);
+        }
+
+        protected void btnCopiarGridSinEncabezados_Resumen_Click(object sender, EventArgs e)
+        {
+            Utilidad_C.CopiarRadGridAlClipboard(false, gvResumen, this.Page, this.GetType(), true);
+        }
+
         #region Egresos
 
         // Grid principal

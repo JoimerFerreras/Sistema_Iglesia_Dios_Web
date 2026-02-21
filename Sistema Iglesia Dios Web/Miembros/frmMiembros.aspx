@@ -946,10 +946,6 @@
 
 
                         <div class="contenedor_botones">
-                            <div id="list_example">
-                                <a href="#informacion_personal_panel" class="boton_formulario_Agregar"></a>
-                            </div>
-
                             <asp:LinkButton CssClass="fa-solid fa-plus fa-lg boton_formulario_Agregar" runat="server" ID="btnAgregar" OnClick="btnAgregar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
                             <asp:LinkButton CssClass="fa-solid fa-floppy-disk fa-lg boton_formulario_Guardar" runat="server" ID="btnGuardar" OnClick="btnGuardar_Click" OnClientClick="MostrarPanelCarga()"></asp:LinkButton>
                         </div>

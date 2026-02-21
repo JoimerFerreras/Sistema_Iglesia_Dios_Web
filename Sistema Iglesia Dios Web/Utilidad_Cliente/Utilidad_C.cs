@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.OleDb;
-using System.Data;
-using System.IO;
-using System.Web.UI;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using Entidades;
 using Negocio.Util_N;
 using SpreadsheetLight;
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.OleDb;
+using System.IO;
+using System.Text;
+using System.Web;
+using System.Web.UI;
+using Telerik.Web.UI;
 using Table = CrystalDecisions.CrystalReports.Engine.Table;
-using Entidades;
 
 namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
 {
@@ -559,6 +562,180 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
             } catch (Exception ex) {
                 throw;
             }
+        }
+        #endregion
+
+
+        #region Caracteristicas de la aplicacion
+        // Copiar tabla a Clipboard (incluye headers o no, segun se requiera)
+        public static void CopiarDataTableAlClipboard(bool includeHeaders, DataTable dt, Page page, Type type)
+        {
+            string tsv = DataTableToTsv(dt, includeHeaders);
+
+            string safe = HttpUtility.JavaScriptStringEncode(tsv);
+
+            // (Mantengo tu misma lógica que te funcionó)
+            string js = $@"
+                    (async function() {{
+                      const text = '{safe}';
+                      try {{
+                        if (navigator.clipboard && window.isSecureContext) {{
+                          await navigator.clipboard.writeText(text);
+                        }} else {{
+                          var ta = document.createElement('textarea');
+                          ta.value = text;
+                          ta.style.position = 'fixed';
+                          ta.style.left = '-9999px';
+                          document.body.appendChild(ta);
+                          ta.focus();
+                          ta.select();
+                          document.execCommand('copy');
+                          document.body.removeChild(ta);
+                        }}
+                      }} catch (e) {{
+                        alert('No se pudo copiar al clipboard. Intenta en HTTPS o revisa permisos del navegador.');
+                      }}
+                    }})();";
+
+            ScriptManager.RegisterStartupScript(page, type.GetType(),
+                includeHeaders ? "copyDtHeaders" : "copyDtData",
+                js, true);
+        }
+
+        private static string DataTableToTsv(DataTable dt, bool includeHeaders)
+        {
+            var sb = new StringBuilder();
+
+            if (includeHeaders)
+            {
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    if (i > 0) sb.Append('\t');
+                    sb.Append(dt.Columns[i].ColumnName);
+                }
+                sb.AppendLine();
+            }
+
+            foreach (DataRow row in dt.Rows)
+            {
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    if (i > 0) sb.Append('\t');
+                    var val = (row[i] ?? "").ToString()
+                        .Replace("\r", " ")
+                        .Replace("\n", " ");
+                    sb.Append(val);
+                }
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
+
+
+
+        // Copiar datos de un RadGrid al Clipboard (incluye headers o no, segun se requiera)
+        public static void CopiarRadGridAlClipboard(bool includeHeaders, RadGrid grid, Page page, Type type, bool excluirPrimeraColumnaTemplate = true)
+        {
+            string tsv = RadGridToTsv(grid, includeHeaders, excluirPrimeraColumnaTemplate);
+
+            string safe = HttpUtility.JavaScriptStringEncode(tsv);
+
+            string js = $@"
+                        (async function() {{
+                          const text = '{safe}';
+                          try {{
+                            if (navigator.clipboard && window.isSecureContext) {{
+                              await navigator.clipboard.writeText(text);
+                            }} else {{
+                              var ta = document.createElement('textarea');
+                              ta.value = text;
+                              ta.style.position = 'fixed';
+                              ta.style.left = '-9999px';
+                              document.body.appendChild(ta);
+                              ta.focus();
+                              ta.select();
+                              document.execCommand('copy');
+                              document.body.removeChild(ta);
+                            }}
+                          }} catch (e) {{
+                            alert('No se pudo copiar al clipboard. Intenta en HTTPS o revisa permisos del navegador.');
+                          }}
+                        }})();";
+
+            ScriptManager.RegisterStartupScript(
+                page,
+                type, // <-- aquí va el Type, NO type.GetType()
+                includeHeaders ? "copyGridHeaders" : "copyGridData",
+                js,
+                true
+            );
+        }
+
+        private static string RadGridToTsv(RadGrid grid, bool includeHeaders, bool excluirPrimeraColumnaTemplate)
+        {
+            if (grid == null) throw new ArgumentNullException(nameof(grid));
+
+            var mtv = grid.MasterTableView;
+            var sb = new StringBuilder();
+
+            int startIndex = excluirPrimeraColumnaTemplate ? 1 : 0;
+
+            // Headers (solo columnas visibles)
+            if (includeHeaders)
+            {
+                bool first = true;
+                for (int i = startIndex; i < mtv.RenderColumns.Length; i++)
+                {
+                    var col = mtv.RenderColumns[i];
+                    if (!col.Visible) continue;
+
+                    if (!first) sb.Append('\t');
+                    sb.Append(col.HeaderText?.Replace("\r", " ").Replace("\n", " ") ?? "");
+                    first = false;
+                }
+                sb.AppendLine();
+            }
+
+            // Rows (lo que el grid está mostrando en esa página)
+            foreach (GridDataItem item in mtv.Items)
+            {
+                bool first = true;
+
+                for (int i = startIndex; i < mtv.RenderColumns.Length; i++)
+                {
+                    var col = mtv.RenderColumns[i];
+                    if (!col.Visible) continue;
+
+                    string value = "";
+
+                    // GridBoundColumn / columnas normales: mejor por UniqueName
+                    if (!string.IsNullOrWhiteSpace(col.UniqueName))
+                    {
+                        // item[col.UniqueName].Text trae el texto renderizado
+                        value = (item[col.UniqueName]?.Text ?? "");
+                    }
+                    else
+                    {
+                        // fallback
+                        value = item.Cells[i].Text ?? "";
+                    }
+
+                    value = HttpUtility.HtmlDecode(value)
+                                      .Replace("\t", " ")
+                                      .Replace("\r", " ")
+                                      .Replace("\n", " ")
+                                      .Trim();
+
+                    if (!first) sb.Append('\t');
+                    sb.Append(value);
+                    first = false;
+                }
+
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
         }
         #endregion
     }
