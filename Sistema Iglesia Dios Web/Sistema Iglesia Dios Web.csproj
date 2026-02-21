@@ -156,6 +156,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Ayuda\frmAcercaDe.aspx" />
+    <Content Include="Ayuda\frmAyuda.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -269,6 +271,20 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Ayuda\frmAcercaDe.aspx.cs">
+      <DependentUpon>frmAcercaDe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ayuda\frmAcercaDe.aspx.designer.cs">
+      <DependentUpon>frmAcercaDe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ayuda\frmAyuda.aspx.cs">
+      <DependentUpon>frmAyuda.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ayuda\frmAyuda.aspx.designer.cs">
+      <DependentUpon>frmAyuda.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Cuentas_Por_Cobrar\frmCuentasCobrar.aspx.cs">
       <DependentUpon>frmCuentasCobrar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

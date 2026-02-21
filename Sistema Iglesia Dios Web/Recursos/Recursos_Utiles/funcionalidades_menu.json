@@ -158,10 +158,10 @@
     "Id_Modulo": 9,
     "Nombre_Funcionalidad": "Informacion_Sistema",
     "Descripcion_Funcionalidad": "Información del sitema",
-    "Nombre_Archivo": "#",
+    "Nombre_Archivo": "Ayuda/frmAcercaDe.aspx",
     "Clase_CSS_Funcionalidad": "fa-solid fa-info",
-    "Nombre_Modulo": "Acerca_De",
-    "Descripcion_Modulo": "Acerca de",
+    "Nombre_Modulo": "Ayuda",
+    "Descripcion_Modulo": "Ayuda",
     "Clase_CSS_Modulo": "fa-solid fa-circle-info"
   },
   {
@@ -171,8 +171,8 @@
     "Descripcion_Funcionalidad": "Novedades",
     "Nombre_Archivo": "#",
     "Clase_CSS_Funcionalidad": "fa-solid fa-newspaper",
-    "Nombre_Modulo": "Acerca_De",
-    "Descripcion_Modulo": "Acerca de",
+    "Nombre_Modulo": "Ayuda",
+    "Descripcion_Modulo": "Ayuda",
     "Clase_CSS_Modulo": "fa-solid fa-circle-info"
   },
   {
@@ -180,10 +180,10 @@
     "Id_Modulo": 9,
     "Nombre_Funcionalidad": "Ayuda",
     "Descripcion_Funcionalidad": "Ayuda",
-    "Nombre_Archivo": "#",
+    "Nombre_Archivo": "Ayuda/frmAyuda.aspx",
     "Clase_CSS_Funcionalidad": "fa-solid fa-question",
-    "Nombre_Modulo": "Acerca de",
-    "Descripcion_Modulo": "Acerca de",
+    "Nombre_Modulo": "Ayuda",
+    "Descripcion_Modulo": "Ayuda",
     "Clase_CSS_Modulo": "fa-solid fa-circle-info"
   }
 ]
