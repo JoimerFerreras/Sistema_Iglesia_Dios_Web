@@ -157,7 +157,7 @@
     "Id_Funcionalidad": 15,
     "Id_Modulo": 9,
     "Nombre_Funcionalidad": "Informacion_Sistema",
-    "Descripcion_Funcionalidad": "Información del sitema",
+    "Descripcion_Funcionalidad": "Información del sistema",
     "Nombre_Archivo": "Ayuda/frmAcercaDe.aspx",
     "Clase_CSS_Funcionalidad": "fa-solid fa-info",
     "Nombre_Modulo": "Ayuda",

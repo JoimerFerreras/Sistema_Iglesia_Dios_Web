@@ -332,17 +332,17 @@
                                             <telerik:GridBoundColumn DataField="Descripcion_Cuenta" HeaderText="Descripción" HeaderStyle-Width="40%" ItemStyle-Width="40%">
                                             </telerik:GridBoundColumn>
 
-                                            <telerik:GridTemplateColumn HeaderText="Débito" HeaderStyle-Width="10%" ItemStyle-Width="10%">
-                                                <ItemTemplate>
-                                                    <%# Eval("Debito").ToString() == "0" ? "" : String.Format("{0:0,0.00}", Eval("Debito")) %>
-                                                </ItemTemplate>
-                                            </telerik:GridTemplateColumn>
+                                            <telerik:GridTemplateColumn HeaderText="Débito" UniqueName="Debito" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+    <ItemTemplate>
+        <%# Eval("Debito").ToString() == "0" ? "" : String.Format("{0:0,0.00}", Eval("Debito")) %>
+    </ItemTemplate>
+</telerik:GridTemplateColumn>
 
-                                            <telerik:GridTemplateColumn HeaderText="Crédito" HeaderStyle-Width="10%" ItemStyle-Width="10%">
-                                                <ItemTemplate>
-                                                    <%# Eval("Credito").ToString() == "0" ? "" : String.Format("{0:0,0.00}", Eval("Credito")) %>
-                                                </ItemTemplate>
-                                            </telerik:GridTemplateColumn>
+<telerik:GridTemplateColumn HeaderText="Crédito" UniqueName="Credito" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+    <ItemTemplate>
+        <%# Eval("Credito").ToString() == "0" ? "" : String.Format("{0:0,0.00}", Eval("Credito")) %>
+    </ItemTemplate>
+</telerik:GridTemplateColumn>
 
                                             <telerik:GridBoundColumn DataField="Balance" HeaderText="Balance" DataFormatString="{0:0,0.00}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                             </telerik:GridBoundColumn>

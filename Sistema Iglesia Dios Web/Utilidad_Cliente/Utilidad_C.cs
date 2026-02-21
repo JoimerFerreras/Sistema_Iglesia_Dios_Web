@@ -709,23 +709,21 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
 
                     string value = "";
 
-                    // GridBoundColumn / columnas normales: mejor por UniqueName
-                    if (!string.IsNullOrWhiteSpace(col.UniqueName))
+                    // 1) Si es TemplateColumn: leer controles del template
+                    if (col is GridTemplateColumn)
                     {
-                        // item[col.UniqueName].Text trae el texto renderizado
-                        value = (item[col.UniqueName]?.Text ?? "");
+                        value = ExtractCellTextFromControls(item.Cells[i]);
                     }
                     else
                     {
-                        // fallback
-                        value = item.Cells[i].Text ?? "";
+                        // 2) Bound/otras: por UniqueName si existe
+                        if (!string.IsNullOrWhiteSpace(col.UniqueName))
+                            value = (item[col.UniqueName] != null ? item[col.UniqueName].Text : "");
+                        else
+                            value = item.Cells[i].Text ?? "";
                     }
 
-                    value = HttpUtility.HtmlDecode(value)
-                                      .Replace("\t", " ")
-                                      .Replace("\r", " ")
-                                      .Replace("\n", " ")
-                                      .Trim();
+                    value = CleanForTsv(value);
 
                     if (!first) sb.Append('\t');
                     sb.Append(value);
@@ -736,6 +734,49 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
             }
 
             return sb.ToString();
+        }
+
+
+        private static string ExtractCellTextFromControls(Control parent)
+        {
+            if (parent == null) return "";
+
+            var sb = new StringBuilder();
+
+            foreach (Control c in parent.Controls)
+            {
+                // Lo más común en templates: LiteralControl
+                var lit = c as LiteralControl;
+                if (lit != null)
+                {
+                    sb.Append(lit.Text);
+                    continue;
+                }
+
+                // Por si tienes Label, TextBox, etc.
+                var txt = c as ITextControl;
+                if (txt != null)
+                {
+                    sb.Append(txt.Text);
+                    continue;
+                }
+
+                if (c.HasControls())
+                    sb.Append(ExtractCellTextFromControls(c));
+            }
+
+            return sb.ToString();
+        }
+
+        private static string CleanForTsv(string value)
+        {
+            value = HttpUtility.HtmlDecode(value ?? "");
+            value = value.Replace("&nbsp;", "")
+                         .Replace("\t", " ")
+                         .Replace("\r", " ")
+                         .Replace("\n", " ")
+                         .Trim();
+            return value;
         }
         #endregion
     }
