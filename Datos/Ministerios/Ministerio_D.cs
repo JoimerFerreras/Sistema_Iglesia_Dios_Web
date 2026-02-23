@@ -19,7 +19,14 @@ namespace Datos.Ministerios
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Ministerio, Nombre_Miembro, Estado FROM Ministerios";
+                string sentencia = $@"SELECT Id_Ministerio, 
+                                        Nombre_Ministerio, 
+                                        CASE Estado 
+                                            WHEN '0' THEN 'Inactivo' 
+                                            WHEN '1' THEN 'Activo' 
+                                        END AS Estado 
+
+                                        FROM Ministerios";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.CommandType = CommandType.Text;
                 try

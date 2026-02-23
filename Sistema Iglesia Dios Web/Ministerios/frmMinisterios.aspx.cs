@@ -1,7 +1,7 @@
 ﻿// Autor: Joimer Ferreras
 
-using Entidades.Otros_Parametros;
-using Negocio.Otros_Parametros;
+using Entidades.Ministerios;
+using Negocio.Ministerios;
 using Negocio.Util_N;
 using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
@@ -9,13 +9,13 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
+namespace Sistema_Iglesia_Dios_Web.Ministerios
 {
-    [CodigoFuncionalidad("Descripciones")]
-    public partial class frmDescripciones : System.Web.UI.Page
+    [CodigoFuncionalidad("Ministerios")]
+    public partial class frmMinisterios : System.Web.UI.Page
     {
         #region Declaraciones
-        Descripciones_N Descripciones_N = new Descripciones_N();
+        Ministerio_N Ministerio_N = new Ministerio_N();
         public string ID_REGISTRO
         {
             get
@@ -123,7 +123,7 @@ namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
                 return;
             }
 
-            DT_DATOS = Descripciones_N.Listar(cmbTipoDescripcion_Consulta.SelectedValue);
+            DT_DATOS = Ministerio_N.Listar();
 
             gvDatos.DataSource = DT_DATOS;
             gvDatos.DataBind();
@@ -139,13 +139,9 @@ namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
         {
             bool Validacion = false;
 
-            if (txtNombreDescripcion.Text.Length == 0)
+            if (txtNombreMinisterio.Text.Length == 0)
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El nombre no puede estar vacío");
-            }
-            else if (cmbTipoDescripcion.SelectedValue == "0")
-            {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe espesificar el módulo al que pertenece la descripción");
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El campo descripcion no puede estar vacío");
             }
             else
             {
@@ -168,17 +164,16 @@ namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
                 if (ValidarCampos() == true)
                 {
                     // Agregacion de la informacion basica del miembro
-                    Descripciones_E Descripciones_E = new Descripciones_E();
-                    Descripciones_E.Id_Descripcion = int.Parse(ID_REGISTRO);
-                    Descripciones_E.Nombre = txtNombreDescripcion.Text;
-                    Descripciones_E.Tipo_Descripcion = int.Parse(cmbTipoDescripcion.SelectedValue);
-                    Descripciones_E.Estado = Convert.ToBoolean(cmbEstado.SelectedValue);
+                    Ministerio_E Ministerio_E = new Ministerio_E();
+                    Ministerio_E.Id_Ministerio = int.Parse(ID_REGISTRO);
+                    Ministerio_E.Nombre_Ministerio = txtNombreMinisterio.Text;
+                    Ministerio_E.Estado = Convert.ToBoolean(cmbEstado.SelectedValue);
 
                     if (EDITAR_REGISTRO == true)
                     {
                         
                         // Guardar registro existente
-                        bool salida = Descripciones_N.Editar(Descripciones_E);
+                        bool salida = Ministerio_N.Editar(Ministerio_E);
 
                         if (salida == true)
                         {
@@ -194,7 +189,7 @@ namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
                     else
                     {
                         // Agregar registro
-                        bool salida = Descripciones_N.Agregar(Descripciones_E);
+                        bool salida = Ministerio_N.Agregar(Ministerio_E);
 
                         if (salida == true)
                         {
@@ -219,13 +214,12 @@ namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
         private void VerRegistro()
         {
             // Llenado de datos generales
-            Descripciones_E Descripciones_E = new Descripciones_E();
-            Descripciones_E = Descripciones_N.ObtenerRegistro(ID_REGISTRO);
+            Ministerio_E Ministerio_E = new Ministerio_E();
+            Ministerio_E = Ministerio_N.ObtenerRegistro(ID_REGISTRO);
 
-            txtId_Descripcion.Text = Descripciones_E.Id_Descripcion.ToString();
-            txtNombreDescripcion.Text = Descripciones_E.Nombre.ToString();
-            cmbTipoDescripcion.SelectedValue = Descripciones_E.Tipo_Descripcion.ToString();
-            cmbEstado.SelectedValue = Descripciones_E.Estado.ToString();
+            txtId_Descripcion.Text = Ministerio_E.Id_Ministerio.ToString();
+            txtNombreMinisterio.Text = Ministerio_E.Nombre_Ministerio.ToString();
+            cmbEstado.SelectedValue = Ministerio_E.Estado.ToString();
         }
 
         private void Eliminar(int Id_Registro)
@@ -242,9 +236,9 @@ namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
             }
             else
             {
-                if (Descripciones_N.RegistrosExistentes(Id_Registro) == false)
+                if (Ministerio_N.RegistrosExistentes(Id_Registro) == false)
                 {
-                    bool respuesta = Descripciones_N.Eliminar(Id_Registro);
+                    bool respuesta = Ministerio_N.Eliminar(Id_Registro);
 
                     if (respuesta)
                     {
@@ -271,11 +265,10 @@ namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
             EDITAR_REGISTRO = false;
 
             txtId_Descripcion.Text = "(Nuevo)";
-            txtNombreDescripcion.Text = "";
-            cmbTipoDescripcion.SelectedValue = "0";
+            txtNombreMinisterio.Text = "";
             cmbEstado.SelectedValue = "True";
 
-            txtNombreDescripcion.Focus();
+            txtNombreMinisterio.Focus();
         }
 
         #endregion
@@ -296,7 +289,7 @@ namespace Sistema_Iglesia_Dios_Web.Otros_Parametros
                 }
                 // **********************************
 
-                ((SiteMaster)Master).EstablecerNombrePantalla("Descripciones");
+                ((SiteMaster)Master).EstablecerNombrePantalla("Ministerios");
                 LimpiarCampos();
                 Consultar();
             }

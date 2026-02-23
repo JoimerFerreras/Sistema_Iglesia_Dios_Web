@@ -45,14 +45,14 @@
   },
   {
     "Id_Funcionalidad": 5,
-    "Id_Modulo": 0,
+    "Id_Modulo": 5,
     "Nombre_Funcionalidad": "Miembros",
     "Descripcion_Funcionalidad": "Miembros",
     "Nombre_Archivo": "Miembros/frmMiembros.aspx",
     "Clase_CSS_Funcionalidad": "fa-solid fa-church",
     "Nombre_Modulo": "Miembros",
     "Descripcion_Modulo": "Miembros",
-    "Clase_CSS_Modulo": ""
+    "Clase_CSS_Modulo": "fa-solid fa-church"
   },
   {
     "Id_Funcionalidad": 6,
@@ -185,5 +185,16 @@
     "Nombre_Modulo": "Ayuda",
     "Descripcion_Modulo": "Ayuda",
     "Clase_CSS_Modulo": "fa-solid fa-circle-info"
+  },
+  {
+    "Id_Funcionalidad": 18,
+    "Id_Modulo": 5,
+    "Nombre_Funcionalidad": "Ministerios",
+    "Descripcion_Funcionalidad": "Ministerios",
+    "Nombre_Archivo": "Ministerios/frmMinisterios.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-people-group",
+    "Nombre_Modulo": "Miembros",
+    "Descripcion_Modulo": "Miembros",
+    "Clase_CSS_Modulo": "fa-solid fa-church"
   }
 ]
