@@ -277,8 +277,8 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
                     miembro_E.Es_Miembro = chkEsMiembro.Checked;
                     miembro_E.Desde_Cuando_Miembro = dtpDesdeCuandoMiembro.SelectedDate == null ? null : dtpDesdeCuandoMiembro.SelectedDate;
                     miembro_E.Le_Gustaria_Pertenecer_Ministerio = chkLe_Gustaria_Pertenecer_Ministerio.Checked;
-                    miembro_E.Id_Rol_Miembro = int.Parse(cmbRol_Miembro.SelectedValue);
-                    miembro_E.Id_Ministerio_Pertenece = int.Parse(cmbMinisterio_Pertenece.SelectedValue);
+                    miembro_E.Id_Rol_Ministerio = int.Parse(cmbRol_Miembro.SelectedValue);
+                    miembro_E.Id_Ministerio = int.Parse(cmbMinisterio_Pertenece.SelectedValue);
                     miembro_E.Comentarios_Diacono_Lider_Ministerio = txtComentariosDiaconoLiderMinisterio.Text;
                     miembro_E.Revisado_Por = txtRevisadoPor.Text;
                     miembro_E.Autorizado_Por = txtAutorizadoPor.Text;
@@ -464,8 +464,8 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             dtpDesdeCuandoMiembro.SelectedDate = Miembro_E.Desde_Cuando_Miembro;
             chkLe_Gustaria_Pertenecer_Ministerio.Checked = Miembro_E.Le_Gustaria_Pertenecer_Ministerio;
             txtNumeroMiembroAlternativo.Text = Miembro_E.Numero_Alternativo_Miembro.ToString();
-            cmbRol_Miembro.SelectedValue = Miembro_E.Id_Rol_Miembro.ToString();
-            cmbMinisterio_Pertenece.SelectedValue = Miembro_E.Id_Ministerio_Pertenece.ToString();
+            cmbRol_Miembro.SelectedValue = Miembro_E.Id_Rol_Ministerio.ToString();
+            cmbMinisterio_Pertenece.SelectedValue = Miembro_E.Id_Ministerio.ToString();
             txtComentariosDiaconoLiderMinisterio.Text = Miembro_E.Comentarios_Diacono_Lider_Ministerio;
             txtRevisadoPor.Text = Miembro_E.Revisado_Por;
             txtAutorizadoPor.Text = Miembro_E.Autorizado_Por;

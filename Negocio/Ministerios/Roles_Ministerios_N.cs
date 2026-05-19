@@ -6,26 +6,26 @@ using System.Data;
 
 namespace Negocio.Ministerios
 {
-    public class Ministerio_N
+    public class Roles_Ministerios_N
     {
-        Ministerio_D ministerio_D = new Ministerio_D();
+        Roles_Ministerios_D roles_ministerio_D = new Roles_Ministerios_D();
 
         public DataTable Listar()
         {
             try
             {
-                return ministerio_D.Listar();
+                return roles_ministerio_D.Listar();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public Ministerio_E ObtenerRegistro(string Id)
+        public Roles_Ministerios_E ObtenerRegistro(string Id)
         {
             try
             {
-                return ministerio_D.ObtenerRegistro(Id);
+                return roles_ministerio_D.ObtenerRegistro(Id);
             }
             catch (Exception ex)
             {
@@ -39,7 +39,7 @@ namespace Negocio.Ministerios
             {
                 Utilidad_N utilidad = new Utilidad_N();
 
-                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Ministerio", "dbo.Ministerios");
+                return utilidad.RegistrosExistentesEnTablas(Id_Registro.ToString(), "Id_Rol_Ministerio", "dbo.Roles_Ministerios");
             }
             catch (Exception ex)
             {
@@ -51,7 +51,7 @@ namespace Negocio.Ministerios
         {
             try
             {
-                return ministerio_D.ListaCombo(int.Parse(Id_Registro), TipoConsulta);
+                return roles_ministerio_D.ListaCombo(int.Parse(Id_Registro), TipoConsulta);
             }
             catch (Exception ex)
             {
@@ -59,11 +59,11 @@ namespace Negocio.Ministerios
             }
         }
 
-        public bool Agregar(Ministerio_E entidad)
+        public bool Agregar(Roles_Ministerios_E entidad)
         {
             try
             {
-                return ministerio_D.Agregar(entidad);
+                return roles_ministerio_D.Agregar(entidad);
             }
             catch (Exception ex)
             {
@@ -71,20 +71,20 @@ namespace Negocio.Ministerios
             }
         }
 
-        public bool Editar(Ministerio_E entidad)
+        public bool Editar(Roles_Ministerios_E entidad)
         {
             try
             {
-                if (entidad.Id_Ministerio == 0)
+                if (entidad.Id_Rol_Ministerio == 0)
                 {
                     throw new OperationCanceledException("Debe seleccionar un registro para editar");
                 }
-                if (entidad.Nombre_Ministerio.Length == 0)
+                if (entidad.Nombre_Rol_Ministerio.Length == 0)
                 {
                     throw new OperationCanceledException("El nombre del honor no puede estar vacío");
                 }
 
-                return ministerio_D.Editar(entidad);
+                return roles_ministerio_D.Editar(entidad);
             }
             catch (Exception ex)
             {
@@ -101,7 +101,7 @@ namespace Negocio.Ministerios
                     throw new OperationCanceledException("Debe seleccionar un registro para eliminar");
                 }
 
-                return ministerio_D.Eliminar(Convert.ToInt32(Id));
+                return roles_ministerio_D.Eliminar(Convert.ToInt32(Id));
             }
             catch (Exception ex)
             {

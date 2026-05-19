@@ -50,6 +50,7 @@
     <Compile Include="Cuentas_Por_Pagar\Cuenta_Pagar_D.cs" />
     <Compile Include="Egresos\Archivo_Egreso_D.cs" />
     <Compile Include="Egresos\Egreso_D.cs" />
+    <Compile Include="Ministerios\Roles_Ministerios_D.cs" />
     <Compile Include="Otros_Parametros\Descripciones_D.cs" />
     <Compile Include="Otros_Parametros\Miscelaneo_D.cs" />
     <Compile Include="Resumen\Resumen_D.cs" />

@@ -25,8 +25,8 @@ namespace Entidades.Miembros
         public string Comentarios_Diacono_Lider_Ministerio { get; set; }
         public string Revisado_Por { get; set; }
         public string Autorizado_Por { get; set; }
-        public int Id_Rol_Miembro { get; set; }
-        public int Id_Ministerio_Pertenece { get; set; }
+        public int Id_Rol_Ministerio { get; set; }
+        public int Id_Ministerio { get; set; }
 
         public int Id_Usuario { get; set; }
         public string Nombre_Usuario_Registro { get; set; }
