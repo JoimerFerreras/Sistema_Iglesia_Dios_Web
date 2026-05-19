@@ -8,6 +8,7 @@ using System;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Negocio.Miembros;
 
 namespace Sistema_Iglesia_Dios_Web.Ministerios
 {
@@ -111,6 +112,24 @@ namespace Sistema_Iglesia_Dios_Web.Ministerios
 
             return Validacion;
         }
+
+        private void LlenerCombos()
+        {
+            DataTable dt = new DataTable();
+
+            // Miembro
+            Miembro_N Miembro_N = new Miembro_N();
+            dt = Miembro_N.ListaCombo();
+            cmbLiderMinisterio.DataSource = dt;
+            cmbLiderMinisterio.DataValueField = "Id_Miembro";
+            cmbLiderMinisterio.DataTextField = "Nombre_Miembro";
+            cmbLiderMinisterio.DataBind();
+
+            cmbDiaconoMinisterio.DataSource = dt;
+            cmbDiaconoMinisterio.DataValueField = "Id_Miembro";
+            cmbDiaconoMinisterio.DataTextField = "Nombre_Miembro";
+            cmbDiaconoMinisterio.DataBind();
+        }
         #endregion
 
 
@@ -168,6 +187,8 @@ namespace Sistema_Iglesia_Dios_Web.Ministerios
                     Ministerio_E.Id_Ministerio = int.Parse(ID_REGISTRO);
                     Ministerio_E.Nombre_Ministerio = txtNombreMinisterio.Text;
                     Ministerio_E.Estado = Convert.ToBoolean(cmbEstado.SelectedValue);
+                    Ministerio_E.Id_Lider_Ministerio = int.Parse(cmbLiderMinisterio.SelectedValue);
+                    Ministerio_E.Id_Diacono_Ministerio = int.Parse(cmbDiaconoMinisterio.SelectedValue);
 
                     if (EDITAR_REGISTRO == true)
                     {
@@ -220,6 +241,8 @@ namespace Sistema_Iglesia_Dios_Web.Ministerios
             txtId_Descripcion.Text = Ministerio_E.Id_Ministerio.ToString();
             txtNombreMinisterio.Text = Ministerio_E.Nombre_Ministerio.ToString();
             cmbEstado.SelectedValue = Ministerio_E.Estado.ToString();
+            cmbLiderMinisterio.SelectedValue = Ministerio_E.Id_Lider_Ministerio.ToString();
+            cmbDiaconoMinisterio.SelectedValue = Ministerio_E.Id_Diacono_Ministerio.ToString();
         }
 
         private void Eliminar(int Id_Registro)
@@ -291,6 +314,8 @@ namespace Sistema_Iglesia_Dios_Web.Ministerios
 
                 ((SiteMaster)Master).EstablecerNombrePantalla("Ministerios");
                 LimpiarCampos();
+
+                LlenerCombos();
                 Consultar();
             }
         }

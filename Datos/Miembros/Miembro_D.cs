@@ -23,26 +23,14 @@ namespace Datos.Miembros
                 string sentencia = "";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 sentencia = @"SELECT 
-                                m.Id_Miembro, 
-                                m.Numero_Alternativo_Miembro, 
-                                m.Nombres + ' ' + m.Apellidos AS Miembro, 
-                                m.Fecha_Nacimiento, 
-                                m.Desde_Cuando_Miembro,
-                                ISNULL( STUFF(
-                                    (SELECT ', ' +  CAST(m_.Nombre_Ministerio AS VARCHAR(50)) AS Ministerios
-                                    FROM Miembros_Ministerios m_m 
-                                    LEFT JOIN Ministerios m_ ON m_.Id_Ministerio = m_m.Id_Ministerio
-                                    WHERE m_m.Id_Miembro = m.Id_Miembro
-                                    FOR XML PATH(''), TYPE).value('.', 'VARCHAR(MAX)'),
-                                    1, 2, ''), '') AS Ministerios   
-                            FROM 
-                                Miembros m
-                            LEFT JOIN 
-                                Miembros_Ministerios mm ON m.Id_Miembro = mm.Id_Miembro
-                            LEFT JOIN 
-                                Ministerios mi ON mm.Id_Ministerio = mi.Id_Ministerio
-                            
-                            ";
+                                    m.Id_Miembro, 
+                                    m.Numero_Alternativo_Miembro, 
+                                    m.Nombres + ' ' + m.Apellidos AS Miembro, 
+                                    m.Fecha_Nacimiento, 
+                                    m.Desde_Cuando_Miembro,
+	                                MN.Nombre_Ministerio
+                                FROM Miembros m
+                                LEFT JOIN Ministerios MN ON MN.Id_Ministerio = m.Id_Ministerio_Pertenece ";
 
                 bool WhereAgregado = false;
 
@@ -102,7 +90,7 @@ namespace Datos.Miembros
                         sentencia += $" AND ";
                     }
 
-                    sentencia += $" (mi.Id_Ministerio = @Id_Ministerio) ";
+                    sentencia += $" (m.Id_Ministerio_Pertenece = @Id_Ministerio) ";
                     cmd.Parameters.AddWithValue("@Id_Ministerio", Ministerio);
                 }
 
@@ -140,7 +128,8 @@ namespace Datos.Miembros
                                 m.Nombres, 
                                 m.Apellidos, 
                                 m.Fecha_Nacimiento, 
-                                m.Desde_Cuando_Miembro 
+                                m.Desde_Cuando_Miembro,
+                                MN.Nombre_Ministerio
 
                                 ORDER BY Miembro ASC";
 
@@ -213,13 +202,10 @@ namespace Datos.Miembros
 		                                Numero_Casa,
 		                                Es_Miembro,
 		                                Desde_Cuando_Miembro,
-		                                Pertenece_Ministerio,
 		                                Le_Gustaria_Pertenecer_Ministerio,
 		                                Numero_Alternativo_Miembro,
-		                                Rol_Miembro,
-		                                Otro_Rol,
-		                                Nombre_Diacono,
-		                                Nombre_Lider_Ministerio,
+		                                Id_Rol_Miembro,
+                                        Id_Ministerio_Pertenece,
 		                                Comentarios_Diacono_Lider_Ministerio,
 		                                Revisado_Por,
 		                                Autorizado_Por
@@ -252,14 +238,15 @@ namespace Datos.Miembros
                         entidad.Calle = row["Calle"].ToString();
                         entidad.Numero_Casa = row["Numero_Casa"].ToString();
                         entidad.Es_Miembro = row["Es_Miembro"].ToString() == "True" ? true : false;
-                        entidad.Desde_Cuando_Miembro = DateTime.Parse(row["Desde_Cuando_Miembro"].ToString());
-                        entidad.Pertenece_Ministerio = row["Pertenece_Ministerio"].ToString() == "True" ? true : false;
+                        entidad.Desde_Cuando_Miembro = row["Desde_Cuando_Miembro"] == DBNull.Value ? (DateTime?)null: Convert.ToDateTime(row["Desde_Cuando_Miembro"]);
+                        //entidad.Pertenece_Ministerio = row["Pertenece_Ministerio"].ToString() == "True" ? true : false;
                         entidad.Le_Gustaria_Pertenecer_Ministerio = row["Le_Gustaria_Pertenecer_Ministerio"].ToString() == "True" ? true : false;
                         entidad.Numero_Alternativo_Miembro = int.Parse(row["Numero_Alternativo_Miembro"].ToString());
-                        entidad.Rol_Miembro = int.Parse(row["Rol_Miembro"].ToString());
-                        entidad.Otro_Rol = row["Otro_Rol"].ToString();
-                        entidad.Nombre_Diacono = row["Nombre_Diacono"].ToString();
-                        entidad.Nombre_Lider_Ministerio = row["Nombre_Lider_Ministerio"].ToString();
+                        entidad.Id_Rol_Miembro = int.Parse(row["Id_Rol_Miembro"].ToString());
+                        entidad.Id_Ministerio_Pertenece = int.Parse(row["Id_Ministerio_Pertenece"].ToString());
+                        //entidad.Otro_Rol = row["Otro_Rol"].ToString();
+                        //entidad.Nombre_Diacono = row["Nombre_Diacono"].ToString();
+                        //entidad.Nombre_Lider_Ministerio = row["Nombre_Lider_Ministerio"].ToString();
                         entidad.Comentarios_Diacono_Lider_Ministerio = row["Comentarios_Diacono_Lider_Ministerio"].ToString();
                         entidad.Revisado_Por = row["Revisado_Por"].ToString();
                         entidad.Autorizado_Por = row["Autorizado_Por"].ToString();                    }
@@ -296,14 +283,11 @@ namespace Datos.Miembros
                                     Numero_Casa,
                                     Es_Miembro,
                                     Desde_Cuando_Miembro,
-                                    Pertenece_Ministerio,
                                     Le_Gustaria_Pertenecer_Ministerio,
                                     Numero_Alternativo_Miembro,
                                     
-                                    Rol_Miembro,
-                                    Otro_Rol,
-                                    Nombre_Diacono,
-                                    Nombre_Lider_Ministerio,
+                                    Id_Rol_Miembro,
+                                    Id_Ministerio_Pertenece,
                                     Comentarios_Diacono_Lider_Ministerio,
                                     Revisado_Por,
                                     Autorizado_Por)
@@ -324,14 +308,11 @@ namespace Datos.Miembros
                                     @Numero_Casa,
                                     @Es_Miembro,
                                     @Desde_Cuando_Miembro,
-                                    @Pertenece_Ministerio,
                                     @Le_Gustaria_Pertenecer_Ministerio,
                                     @Numero_Alternativo_Miembro,
                                     
-                                    @Rol_Miembro,
-                                    @Otro_Rol,
-                                    @Nombre_Diacono,
-                                    @Nombre_Lider_Ministerio,
+                                    @Id_Rol_Miembro,
+                                    @Id_Ministerio_Pertenece,
                                     @Comentarios_Diacono_Lider_Ministerio,
                                     @Revisado_Por,
                                     @Autorizado_Por);
@@ -368,14 +349,11 @@ namespace Datos.Miembros
                 {
                     cmd.Parameters.AddWithValue("@Desde_Cuando_Miembro", entidad.Desde_Cuando_Miembro);
                 }
-                cmd.Parameters.AddWithValue("@Pertenece_Ministerio", entidad.Pertenece_Ministerio);
                 cmd.Parameters.AddWithValue("@Le_Gustaria_Pertenecer_Ministerio", entidad.Le_Gustaria_Pertenecer_Ministerio);
                 cmd.Parameters.AddWithValue("@Numero_Alternativo_Miembro", entidad.Numero_Alternativo_Miembro);
                 //cmd.Parameters.AddWithValue("@Ministerio_Al_Que_Pertenece", entidad.Ministerio_Al_Que_Pertenece);
-                cmd.Parameters.AddWithValue("@Rol_Miembro", entidad.Rol_Miembro);
-                cmd.Parameters.AddWithValue("@Otro_Rol", entidad.Otro_Rol);
-                cmd.Parameters.AddWithValue("@Nombre_Diacono", entidad.Nombre_Diacono);
-                cmd.Parameters.AddWithValue("@Nombre_Lider_Ministerio", entidad.Nombre_Lider_Ministerio);
+                cmd.Parameters.AddWithValue("@Id_Rol_Miembro", entidad.Id_Rol_Miembro);
+                cmd.Parameters.AddWithValue("@Id_Ministerio_Pertenece", entidad.Id_Ministerio_Pertenece);
                 cmd.Parameters.AddWithValue("@Comentarios_Diacono_Lider_Ministerio", entidad.Comentarios_Diacono_Lider_Ministerio);
                 cmd.Parameters.AddWithValue("@Revisado_Por", entidad.Revisado_Por);
                 cmd.Parameters.AddWithValue("@Autorizado_Por", entidad.Autorizado_Por);
@@ -423,14 +401,11 @@ namespace Datos.Miembros
                                     Numero_Casa = @Numero_Casa,
                                     Es_Miembro = @Es_Miembro,
                                     Desde_Cuando_Miembro = @Desde_Cuando_Miembro,
-                                    Pertenece_Ministerio = @Pertenece_Ministerio,
                                     Le_Gustaria_Pertenecer_Ministerio = @Le_Gustaria_Pertenecer_Ministerio,
                                     Numero_Alternativo_Miembro = @Numero_Alternativo_Miembro,
                                     
-                                    Rol_Miembro = @Rol_Miembro,
-                                    Otro_Rol = @Otro_Rol,
-                                    Nombre_Diacono = @Nombre_Diacono,
-                                    Nombre_Lider_Ministerio = @Nombre_Lider_Ministerio,
+                                    Id_Rol_Miembro = @Id_Rol_Miembro,
+                                    Id_Ministerio_Pertenece = @Id_Ministerio_Pertenece,
                                     Comentarios_Diacono_Lider_Ministerio = @Comentarios_Diacono_Lider_Ministerio,
                                     Revisado_Por = @Revisado_Por,
                                     Autorizado_Por = @Autorizado_Por 
@@ -468,85 +443,14 @@ namespace Datos.Miembros
                 {
                     cmd.Parameters.AddWithValue("@Desde_Cuando_Miembro", entidad.Desde_Cuando_Miembro);
                 }
-                cmd.Parameters.AddWithValue("@Pertenece_Ministerio", entidad.Pertenece_Ministerio);
                 cmd.Parameters.AddWithValue("@Le_Gustaria_Pertenecer_Ministerio", entidad.Le_Gustaria_Pertenecer_Ministerio);
                 cmd.Parameters.AddWithValue("@Numero_Alternativo_Miembro", entidad.Numero_Alternativo_Miembro);
                 //cmd.Parameters.AddWithValue("@Ministerio_Al_Que_Pertenece", entidad.Ministerio_Al_Que_Pertenece);
-                cmd.Parameters.AddWithValue("@Rol_Miembro", entidad.Rol_Miembro);
-                cmd.Parameters.AddWithValue("@Otro_Rol", entidad.Otro_Rol);
-                cmd.Parameters.AddWithValue("@Nombre_Diacono", entidad.Nombre_Diacono);
-                cmd.Parameters.AddWithValue("@Nombre_Lider_Ministerio", entidad.Nombre_Lider_Ministerio);
+                cmd.Parameters.AddWithValue("@Id_Rol_Miembro", entidad.Id_Rol_Miembro);
+                cmd.Parameters.AddWithValue("@Id_Ministerio_Pertenece", entidad.Id_Ministerio_Pertenece);
                 cmd.Parameters.AddWithValue("@Comentarios_Diacono_Lider_Ministerio", entidad.Comentarios_Diacono_Lider_Ministerio);
                 cmd.Parameters.AddWithValue("@Revisado_Por", entidad.Revisado_Por);
                 cmd.Parameters.AddWithValue("@Autorizado_Por", entidad.Autorizado_Por);
-                cmd.CommandType = CommandType.Text;
-                try
-                {
-                    conexion.Open();
-                    int FilasAfectadas = cmd.ExecuteNonQuery();
-                    conexion.Close();
-                    if (FilasAfectadas > 0) Respuesta = true;
-
-                    return Respuesta;
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
-
-        #endregion
-
-
-
-        #region Miembros_Ministerios
-        // Ministerios de los miembros
-        public bool AgregarMiembroMinisterio(int Id_Miembro, int Id_Ministerio)
-        {
-            bool Respuesta = false;
-
-            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
-            {
-                string sentencia = $@"INSERT INTO Miembros_Ministerios(
-                                    Id_Miembro,
-                                    Id_Ministerio)
-
-                                   VALUES(
-                                    @Id_Miembro,
-                                    @Id_Ministerio);";
-
-                SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                cmd.Parameters.AddWithValue("@Id_Miembro", Id_Miembro);
-                cmd.Parameters.AddWithValue("@Id_Ministerio", Id_Ministerio);
-                cmd.CommandType = CommandType.Text;
-                try
-                {
-                    conexion.Open();
-                    int FilasAfectadas = cmd.ExecuteNonQuery();
-                    conexion.Close();
-                    if (FilasAfectadas > 0) Respuesta = true;
-
-                    return Respuesta;
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
-
-        public bool EliminarMiembroMinisterio(int Id_Miembro, int Id_Ministerio)
-        {
-            bool Respuesta = false;
-
-            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
-            {
-                string sentencia = $@"DELETE FROM Miembros_Ministerios WHERE Id_Miembro = @Id_Miembro AND Id_Ministerio = @Id_Ministerio;";
-
-                SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                cmd.Parameters.AddWithValue("@Id_Miembro", Id_Miembro);
-                cmd.Parameters.AddWithValue("@Id_Ministerio", Id_Ministerio);
                 cmd.CommandType = CommandType.Text;
                 try
                 {

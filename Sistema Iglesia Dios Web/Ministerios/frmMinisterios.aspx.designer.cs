@@ -42,6 +42,24 @@ namespace Sistema_Iglesia_Dios_Web.Ministerios
         protected global::Telerik.Web.UI.RadComboBox cmbEstado;
 
         /// <summary>
+        /// Control cmbLiderMinisterio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbLiderMinisterio;
+
+        /// <summary>
+        /// Control cmbDiaconoMinisterio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbDiaconoMinisterio;
+
+        /// <summary>
         /// Control gvDatos.
         /// </summary>
         /// <remarks>

@@ -20,16 +20,13 @@ namespace Entidades.Miembros
         public string Numero_Casa { get; set; }
         public bool Es_Miembro { get; set; }
         public DateTime? Desde_Cuando_Miembro { get; set; }
-        public bool Pertenece_Ministerio { get; set; }
         public bool Le_Gustaria_Pertenecer_Ministerio { get; set; }
         public int Numero_Alternativo_Miembro { get; set; }
-        public int Rol_Miembro { get; set; }
-        public string Otro_Rol { get; set; }
-        public string Nombre_Diacono { get; set; }
-        public string Nombre_Lider_Ministerio { get; set; }
         public string Comentarios_Diacono_Lider_Ministerio { get; set; }
         public string Revisado_Por { get; set; }
         public string Autorizado_Por { get; set; }
+        public int Id_Rol_Miembro { get; set; }
+        public int Id_Ministerio_Pertenece { get; set; }
 
         public int Id_Usuario { get; set; }
         public string Nombre_Usuario_Registro { get; set; }

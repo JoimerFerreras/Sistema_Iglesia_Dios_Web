@@ -201,6 +201,12 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             cmbMinisterioFiltro.DataValueField = "Id_Ministerio";
             cmbMinisterioFiltro.DataTextField = "Nombre_Ministerio";
             cmbMinisterioFiltro.DataBind();
+
+            cmbMinisterio_Pertenece.DataSource = dt;
+            cmbMinisterio_Pertenece.DataValueField = "Id_Ministerio";
+            cmbMinisterio_Pertenece.DataTextField = "Nombre_Ministerio";
+            cmbMinisterio_Pertenece.DataBind();
+
         }
 
         private void ActualizarGrid()
@@ -270,12 +276,9 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
                     miembro_E.Numero_Alternativo_Miembro = txtNumeroMiembroAlternativo.Text.Length == 0 ? 0 : int.Parse(txtNumeroMiembroAlternativo.Text);
                     miembro_E.Es_Miembro = chkEsMiembro.Checked;
                     miembro_E.Desde_Cuando_Miembro = dtpDesdeCuandoMiembro.SelectedDate == null ? null : dtpDesdeCuandoMiembro.SelectedDate;
-                    miembro_E.Pertenece_Ministerio = chkPertenece_Ministerio.Checked;
                     miembro_E.Le_Gustaria_Pertenecer_Ministerio = chkLe_Gustaria_Pertenecer_Ministerio.Checked;
-                    miembro_E.Rol_Miembro = int.Parse(cmbRol_Miembro.SelectedValue);
-                    miembro_E.Otro_Rol = txtOtroRol.Text;
-                    miembro_E.Nombre_Diacono = txtNombre_Diacono.Text;
-                    miembro_E.Nombre_Lider_Ministerio = txtNombreLiderMinisterio.Text;
+                    miembro_E.Id_Rol_Miembro = int.Parse(cmbRol_Miembro.SelectedValue);
+                    miembro_E.Id_Ministerio_Pertenece = int.Parse(cmbMinisterio_Pertenece.SelectedValue);
                     miembro_E.Comentarios_Diacono_Lider_Ministerio = txtComentariosDiaconoLiderMinisterio.Text;
                     miembro_E.Revisado_Por = txtRevisadoPor.Text;
                     miembro_E.Autorizado_Por = txtAutorizadoPor.Text;
@@ -459,13 +462,10 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             txtNumeroCasa.Text = Miembro_E.Numero_Casa;
             chkEsMiembro.Checked = Miembro_E.Es_Miembro;
             dtpDesdeCuandoMiembro.SelectedDate = Miembro_E.Desde_Cuando_Miembro;
-            chkPertenece_Ministerio.Checked = Miembro_E.Pertenece_Ministerio;
             chkLe_Gustaria_Pertenecer_Ministerio.Checked = Miembro_E.Le_Gustaria_Pertenecer_Ministerio;
             txtNumeroMiembroAlternativo.Text = Miembro_E.Numero_Alternativo_Miembro.ToString();
-            cmbRol_Miembro.SelectedValue = Miembro_E.Rol_Miembro.ToString("");
-            txtOtroRol.Text = Miembro_E.Otro_Rol;
-            txtNombre_Diacono.Text = Miembro_E.Nombre_Diacono;
-            txtNombreLiderMinisterio.Text = Miembro_E.Nombre_Lider_Ministerio;
+            cmbRol_Miembro.SelectedValue = Miembro_E.Id_Rol_Miembro.ToString();
+            cmbMinisterio_Pertenece.SelectedValue = Miembro_E.Id_Ministerio_Pertenece.ToString();
             txtComentariosDiaconoLiderMinisterio.Text = Miembro_E.Comentarios_Diacono_Lider_Ministerio;
             txtRevisadoPor.Text = Miembro_E.Revisado_Por;
             txtAutorizadoPor.Text = Miembro_E.Autorizado_Por;
@@ -700,12 +700,13 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
 
             chkEsMiembro.Checked = false;
             dtpDesdeCuandoMiembro.SelectedDate = null;
-            chkPertenece_Ministerio.Checked = false;
             chkLe_Gustaria_Pertenecer_Ministerio.Checked = false;
             cmbRol_Miembro.SelectedValue = "0";
-            txtOtroRol.Text = "";
+            cmbMinisterio_Pertenece.SelectedValue = "0";
+
             txtNombre_Diacono.Text = "";
             txtNombreLiderMinisterio.Text = "";
+
             txtComentariosDiaconoLiderMinisterio.Text = "";
 
             txtAutorizadoPor.Text = "";

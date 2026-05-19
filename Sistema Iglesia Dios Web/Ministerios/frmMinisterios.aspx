@@ -41,6 +41,37 @@
                     </telerik:RadComboBox>
                 </div>
             </div>
+
+
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-12 col-md-6">
+                    <div>
+                        Lider del ministerio
+                    </div>
+                    <telerik:RadComboBox ID="cmbLiderMinisterio" runat="server" Width="100%" ClientIDMode="Static"
+                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                        <Items>
+                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                        </Items>
+                    </telerik:RadComboBox>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div>
+                        Diacono del ministerio
+                    </div>
+                    <telerik:RadComboBox ID="cmbDiaconoMinisterio" runat="server" Width="100%" ClientIDMode="Static"
+                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                        <Items>
+                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                        </Items>
+                    </telerik:RadComboBox>
+                </div>
+            </div>
         </div>
 
         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
@@ -71,6 +102,12 @@
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn DataField="Nombre_Ministerio" HeaderText="Nombre del ministerio" HeaderStyle-Width="90%" ItemStyle-Width="80%">
+                            </telerik:GridBoundColumn>
+
+                            <telerik:GridBoundColumn DataField="Lider_Ministerio" HeaderText="Lider de ministerio" HeaderStyle-Width="90%" ItemStyle-Width="80%">
+                            </telerik:GridBoundColumn>
+
+                            <telerik:GridBoundColumn DataField="Diacono_Ministerio" HeaderText="Diacono de ministerio" HeaderStyle-Width="90%" ItemStyle-Width="80%">
                             </telerik:GridBoundColumn>
 
                             <telerik:GridTemplateColumn HeaderText="Estado">

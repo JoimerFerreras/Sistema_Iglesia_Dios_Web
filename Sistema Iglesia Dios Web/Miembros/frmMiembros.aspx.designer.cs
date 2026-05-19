@@ -960,15 +960,6 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::Telerik.Web.UI.RadDatePicker dtpDesdeCuandoMiembro;
 
         /// <summary>
-        /// Control chkPertenece_Ministerio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkPertenece_Ministerio;
-
-        /// <summary>
         /// Control chkLe_Gustaria_Pertenecer_Ministerio.
         /// </summary>
         /// <remarks>
@@ -978,6 +969,15 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::System.Web.UI.WebControls.CheckBox chkLe_Gustaria_Pertenecer_Ministerio;
 
         /// <summary>
+        /// Control cmbMinisterio_Pertenece.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbMinisterio_Pertenece;
+
+        /// <summary>
         /// Control cmbRol_Miembro.
         /// </summary>
         /// <remarks>
@@ -985,15 +985,6 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox cmbRol_Miembro;
-
-        /// <summary>
-        /// Control txtOtroRol.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtOtroRol;
 
         /// <summary>
         /// Control txtNombre_Diacono.

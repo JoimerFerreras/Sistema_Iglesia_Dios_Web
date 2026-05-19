@@ -163,7 +163,7 @@
                                                 <telerik:GridBoundColumn DataField="Desde_Cuando_Miembro" HeaderText="Fecha de miembro" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                                 </telerik:GridBoundColumn>
 
-                                                <telerik:GridBoundColumn DataField="Ministerios" HeaderText="Ministerios perteneciente" HeaderStyle-Width="30%" ItemStyle-Width="30%">
+                                                <telerik:GridBoundColumn DataField="Nombre_Ministerio" HeaderText="Ministerio perteneciente" HeaderStyle-Width="30%" ItemStyle-Width="30%">
                                                 </telerik:GridBoundColumn>
                                             </Columns>
                                         </MasterTableView>
@@ -884,42 +884,45 @@
 
                                 <div class="col-12 col-md-6">
                                     <br>
-                                    <asp:CheckBox runat="server" ID="chkPertenece_Ministerio" CssClass="form-check" Text="&nbsp;¿Pertenece a un ministerio?" Style="padding: 0" />
-                                </div>
-
-                                <div class="col-12 col-md-6">
-                                    <br>
                                     <asp:CheckBox runat="server" ID="chkLe_Gustaria_Pertenecer_Ministerio" CssClass="form-check" Text="&nbsp;¿Le gustaria pertenecera a un ministerio?" Style="padding: 0" />
                                 </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
-                                    Rol dentro de la iglesia
-                    <telerik:RadComboBox ID="cmbRol_Miembro" runat="server" Width="100%" ClientIDMode="Static"
-                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
-                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
-                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
-                        <Items>
-                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
-                        </Items>
-                    </telerik:RadComboBox>
+                                    Ministerio al que pertenece
+                                    <telerik:RadComboBox ID="cmbMinisterio_Pertenece" runat="server" Width="100%" ClientIDMode="Static"
+                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                                        </Items>
+                                    </telerik:RadComboBox>
                                 </div>
+
                                 <div class="col-12 col-md-6">
-                                    Otro rol
-                    <asp:TextBox runat="server" ID="txtOtroRol" CssClass="form-control form-control" Width="100%" MaxLength="100" TabIndex="2"></asp:TextBox>
-                                </div>
+                                    Rol dentro de la iglesia
+                                    <telerik:RadComboBox ID="cmbRol_Miembro" runat="server" Width="100%" ClientIDMode="Static"
+                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                </div>  
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
 
                                 <div class="col-12 col-md-6">
                                     Nombre del diacono
-                    <asp:TextBox runat="server" ID="txtNombre_Diacono" CssClass="form-control form-control" Width="100%" MaxLength="100" TabIndex="2"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtNombre_Diacono" CssClass="form-control form-control" Width="100%" MaxLength="100" TabIndex="2" ReadOnly="true"></asp:TextBox>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     Nombre del lider de ministerio
-                    <asp:TextBox runat="server" ID="txtNombreLiderMinisterio" CssClass="form-control form-control" Width="100%" MaxLength="100" TabIndex="2"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtNombreLiderMinisterio" CssClass="form-control form-control" Width="100%" MaxLength="100" TabIndex="2" ReadOnly="true"></asp:TextBox>
                                 </div>
                             </div>
 
@@ -935,11 +938,11 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Revisado por
-                    <asp:TextBox runat="server" ID="txtRevisadoPor" CssClass="form-control form-control" Width="100%" MaxLength="100" TabIndex="2"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtRevisadoPor" CssClass="form-control form-control" Width="100%" MaxLength="100" TabIndex="2"></asp:TextBox>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     Autorizado por
-                    <asp:TextBox runat="server" ID="txtAutorizadoPor" CssClass="form-control form-control" Width="100%" MaxLength="100" TabIndex="2"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtAutorizadoPor" CssClass="form-control form-control" Width="100%" MaxLength="100" TabIndex="2"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
