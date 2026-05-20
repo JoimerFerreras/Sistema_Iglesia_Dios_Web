@@ -207,6 +207,12 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
             cmbMinisterio_Pertenece.DataTextField = "Nombre_Ministerio";
             cmbMinisterio_Pertenece.DataBind();
 
+            Roles_Ministerios_N Roles_Ministerios_N = new Roles_Ministerios_N();
+            dt = Roles_Ministerios_N.ListaCombo("0", false);
+            cmbRol_Miembro.DataSource = dt;
+            cmbRol_Miembro.DataValueField = "Id_Rol_Ministerio";
+            cmbRol_Miembro.DataTextField = "Nombre_Rol_Ministerio";
+            cmbRol_Miembro.DataBind();
         }
 
         private void ActualizarGrid()

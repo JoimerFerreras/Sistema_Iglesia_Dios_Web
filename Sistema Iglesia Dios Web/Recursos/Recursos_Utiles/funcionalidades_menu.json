@@ -196,5 +196,16 @@
     "Nombre_Modulo": "Miembros",
     "Descripcion_Modulo": "Miembros",
     "Clase_CSS_Modulo": "fa-solid fa-church"
+  },
+  {
+    "Id_Funcionalidad": 19,
+    "Id_Modulo": 5,
+    "Nombre_Funcionalidad": "Roles_Ministerios",
+    "Descripcion_Funcionalidad": "Roles de Ministerios",
+    "Nombre_Archivo": "Ministerios/frmRolesMinisterios.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-people-group",
+    "Nombre_Modulo": "Miembros",
+    "Descripcion_Modulo": "Miembros",
+    "Clase_CSS_Modulo": "fa-solid fa-church"
   }
 ]

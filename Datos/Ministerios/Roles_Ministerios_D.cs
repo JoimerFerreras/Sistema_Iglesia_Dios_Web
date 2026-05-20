@@ -19,7 +19,7 @@ namespace Datos.Ministerios
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT Id_Rol_Ministerio_Ministerio,
+                string sentencia = $@"SELECT Id_Rol_Ministerio,
                                         Nombre_Rol_Ministerio,
                                         CASE Estado 
 			                                WHEN '0' THEN 'Inactivo' 
@@ -92,7 +92,7 @@ namespace Datos.Ministerios
                 {
                     // Sentencia que obtiene todos los registros con status activo y tambien trae el registro inactivo de la referencia correspondiente.
                     sentencia = @"SELECT DISTINCT RM.Id_Rol_Ministerio, RM.Nombre_Rol_Ministerio FROM Roles_Ministerios RM
-                                LEFT JOIN Miembros MM ON RM.Id_Rol_Ministerio = MM.Id_Rol_Ministerio_Miembro
+                                LEFT JOIN Miembros MM ON RM.Id_Rol_Ministerio = MM.Id_Rol_Ministerio
                                 WHERE RM.Estado = 1 OR (RM.Estado = 0 AND EXISTS (SELECT 1 FROM Miembros WHERE Id_Miembro = MM.Id_Miembro))
                                 AND Id_Miembro = @Id";
                 }
@@ -198,7 +198,7 @@ namespace Datos.Ministerios
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = "DELETE FROM Nombre_Rol_Ministerio WHERE Id_Rol_Ministerio = @id;";
+                string sentencia = "DELETE FROM Roles_Ministerios WHERE Id_Rol_Ministerio = @id;";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.CommandType = CommandType.Text;
