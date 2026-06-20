@@ -27,6 +27,7 @@ namespace Entidades.Miembros
         public string Autorizado_Por { get; set; }
         public int Id_Rol_Ministerio { get; set; }
         public int Id_Ministerio { get; set; }
+        public int Id_Departamento { get; set; }
 
         public int Id_Usuario { get; set; }
         public string Nombre_Usuario_Registro { get; set; }

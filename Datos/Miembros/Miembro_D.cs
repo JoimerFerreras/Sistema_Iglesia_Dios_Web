@@ -206,6 +206,7 @@ namespace Datos.Miembros
 		                                Numero_Alternativo_Miembro,
 		                                Id_Rol_Ministerio,
                                         Id_Ministerio,
+                                        Id_Departamento,
 		                                Comentarios_Diacono_Lider_Ministerio,
 		                                Revisado_Por,
 		                                Autorizado_Por
@@ -228,7 +229,10 @@ namespace Datos.Miembros
                         entidad.Apellidos = row["Apellidos"].ToString();
                         entidad.Nombre_Pila = row["Nombre_Pila"].ToString();
                         entidad.Sexo = int.Parse(row["Sexo"].ToString());
-                        entidad.Fecha_Nacimiento = DateTime.Parse(row["Fecha_Nacimiento"].ToString());
+                        //entidad.Fecha_Nacimiento = DateTime.Parse(row["Fecha_Nacimiento"].ToString());
+
+                        entidad.Fecha_Nacimiento = row["Fecha_Nacimiento"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(row["Fecha_Nacimiento"]);
+
                         entidad.Estado_Civil = int.Parse(row["Estado_Civil"].ToString());
                         entidad.Tiene_Hijos = row["Tiene_Hijos"].ToString() == "True" ? true : false;
                         entidad.Email = row["Email"].ToString();
@@ -244,6 +248,7 @@ namespace Datos.Miembros
                         entidad.Numero_Alternativo_Miembro = int.Parse(row["Numero_Alternativo_Miembro"].ToString());
                         entidad.Id_Rol_Ministerio = int.Parse(row["Id_Rol_Ministerio"].ToString());
                         entidad.Id_Ministerio = int.Parse(row["Id_Ministerio"].ToString());
+                        entidad.Id_Departamento = int.Parse(row["Id_Departamento"].ToString());
                         //entidad.Otro_Rol = row["Otro_Rol"].ToString();
                         //entidad.Nombre_Diacono = row["Nombre_Diacono"].ToString();
                         //entidad.Nombre_Lider_Ministerio = row["Nombre_Lider_Ministerio"].ToString();
@@ -288,6 +293,7 @@ namespace Datos.Miembros
                                     
                                     Id_Rol_Ministerio,
                                     Id_Ministerio,
+                                    Id_Departamento,
                                     Comentarios_Diacono_Lider_Ministerio,
                                     Revisado_Por,
                                     Autorizado_Por)
@@ -313,6 +319,7 @@ namespace Datos.Miembros
                                     
                                     @Id_Rol_Ministerio,
                                     @Id_Ministerio,
+                                    @Id_Departamento,
                                     @Comentarios_Diacono_Lider_Ministerio,
                                     @Revisado_Por,
                                     @Autorizado_Por);
@@ -354,6 +361,7 @@ namespace Datos.Miembros
                 //cmd.Parameters.AddWithValue("@Ministerio_Al_Que_Pertenece", entidad.Ministerio_Al_Que_Pertenece);
                 cmd.Parameters.AddWithValue("@Id_Rol_Ministerio", entidad.Id_Rol_Ministerio);
                 cmd.Parameters.AddWithValue("@Id_Ministerio", entidad.Id_Ministerio);
+                cmd.Parameters.AddWithValue("@Id_Departamento", entidad.Id_Departamento);
                 cmd.Parameters.AddWithValue("@Comentarios_Diacono_Lider_Ministerio", entidad.Comentarios_Diacono_Lider_Ministerio);
                 cmd.Parameters.AddWithValue("@Revisado_Por", entidad.Revisado_Por);
                 cmd.Parameters.AddWithValue("@Autorizado_Por", entidad.Autorizado_Por);
@@ -406,6 +414,7 @@ namespace Datos.Miembros
                                     
                                     Id_Rol_Ministerio = @Id_Rol_Ministerio,
                                     Id_Ministerio = @Id_Ministerio,
+                                    Id_Departamento = @Id_Departamento,
                                     Comentarios_Diacono_Lider_Ministerio = @Comentarios_Diacono_Lider_Ministerio,
                                     Revisado_Por = @Revisado_Por,
                                     Autorizado_Por = @Autorizado_Por 
@@ -448,6 +457,7 @@ namespace Datos.Miembros
                 //cmd.Parameters.AddWithValue("@Ministerio_Al_Que_Pertenece", entidad.Ministerio_Al_Que_Pertenece);
                 cmd.Parameters.AddWithValue("@Id_Rol_Ministerio", entidad.Id_Rol_Ministerio);
                 cmd.Parameters.AddWithValue("@Id_Ministerio", entidad.Id_Ministerio);
+                cmd.Parameters.AddWithValue("@Id_Departamento", entidad.Id_Departamento);
                 cmd.Parameters.AddWithValue("@Comentarios_Diacono_Lider_Ministerio", entidad.Comentarios_Diacono_Lider_Ministerio);
                 cmd.Parameters.AddWithValue("@Revisado_Por", entidad.Revisado_Por);
                 cmd.Parameters.AddWithValue("@Autorizado_Por", entidad.Autorizado_Por);

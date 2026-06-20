@@ -987,6 +987,15 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::Telerik.Web.UI.RadComboBox cmbRol_Miembro;
 
         /// <summary>
+        /// Control cmbDepartamento_Pertenece.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbDepartamento_Pertenece;
+
+        /// <summary>
         /// Control txtNombre_Diacono.
         /// </summary>
         /// <remarks>

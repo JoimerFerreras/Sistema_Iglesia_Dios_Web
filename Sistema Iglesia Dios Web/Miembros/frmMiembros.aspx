@@ -57,7 +57,7 @@
                                         <DateInput ID="DateInput9" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                                     </telerik:RadDatePicker>
                                 </div>
-                                <div class="col-12 col-md-3"  id="divFiltroFechaFinal" runat="server" visible="false">
+                                <div class="col-12 col-md-3" id="divFiltroFechaFinal" runat="server" visible="false">
                                     Fecha final
                                      <br>
                                     <telerik:RadDatePicker ID="dtpFechaHastaFiltro" runat="server" Width="100%" Culture="es-DO" TabIndex="3" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;">
@@ -911,7 +911,21 @@
                                             <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
                                         </Items>
                                     </telerik:RadComboBox>
-                                </div>  
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col-12 col-md-6">
+                                    Departamento al que pertenece
+                                    <telerik:RadComboBox ID="cmbDepartamento_Pertenece" runat="server" Width="100%" ClientIDMode="Static"
+                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                        MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                                        Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                                        <Items>
+                                            <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                                        </Items>
+                                    </telerik:RadComboBox>
+                                </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
