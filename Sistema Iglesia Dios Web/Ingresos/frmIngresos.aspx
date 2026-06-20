@@ -81,9 +81,9 @@
             if (item.get_value() === "copy_tabla") {
                 // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
                 __doPostBack("<%= btnCopiarGrid_Resumen.UniqueID %>", "");
-        } else if (item.get_value() === "copy_tabla_sin_encabezados") {
-            // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
-            __doPostBack("<%= btnCopiarGridSinEncabezados_Resumen.UniqueID %>", "");
+            } else if (item.get_value() === "copy_tabla_sin_encabezados") {
+                // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
+                __doPostBack("<%= btnCopiarGridSinEncabezados_Resumen.UniqueID %>", "");
             }
         }
     </script>
@@ -183,6 +183,18 @@
                                         </Items>
                                     </telerik:RadComboBox>
                                 </div>
+
+                                <div class="col-12 col-md-6">
+                                    Departamento 
+                                     <telerik:RadComboBox ID="cmbDepartamento_Consulta" runat="server" Width="100%" ClientIDMode="Static"
+                                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                                         Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                                         <Items>
+                                             <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
+                                         </Items>
+                                     </telerik:RadComboBox>
+                                </div>
                             </div>
                         </div>
 
@@ -245,6 +257,9 @@
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="Miscelaneo" HeaderText="Misceláneo" HeaderStyle-Width="30%" ItemStyle-Width="30%">
+                                            </telerik:GridBoundColumn>
+
+                                            <telerik:GridBoundColumn DataField="Departamento" HeaderText="Departamento" HeaderStyle-Width="30%" ItemStyle-Width="30%">
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="Monto" HeaderText="Monto" DataFormatString="{0:0,0.00}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
@@ -320,6 +335,15 @@
                                     ID
                                      <asp:TextBox runat="server" ID="txtId_Ingreso" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
                                 </div>
+
+                                <div class="col-12 col-md-6">
+                                    Fecha de Ingreso <span class="LabelCampoObligatorio">*</span>
+                                    <br />
+                                    <telerik:RadDatePicker ID="dtpFechaIngreso" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                                        <DateInput ID="DateInput1" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
+                                    </telerik:RadDatePicker>
+                                </div>
+
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
@@ -355,11 +379,15 @@
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
-                                    Fecha de Ingreso <span class="LabelCampoObligatorio">*</span>
-                                    <br />
-                                    <telerik:RadDatePicker ID="dtpFechaIngreso" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
-                                        <DateInput ID="DateInput1" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
-                                    </telerik:RadDatePicker>
+                                    Departamento 
+                                     <telerik:RadComboBox ID="cmbDepartamento" runat="server" Width="100%" ClientIDMode="Static"
+                                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                                         Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                                         <Items>
+                                             <telerik:RadComboBoxItem Text="Seleccionar..." Value="0" Selected="true" />
+                                         </Items>
+                                     </telerik:RadComboBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">

@@ -9,7 +9,7 @@ namespace Negocio.Ingresos
     {
         Ingreso_D Ingreso_D = new Ingreso_D();
 
-        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Descripcion_Ingreso, string Miscelaneo)
+        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Descripcion_Ingreso, string Miscelaneo, string Departamento)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace Negocio.Ingresos
 
                 FechaFinal = FechaFinal.Date.AddDays(1).AddTicks(-1);
 
-                return Ingreso_D.Listar(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Descripcion_Ingreso), int.Parse(Miscelaneo));
+                return Ingreso_D.Listar(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Descripcion_Ingreso), int.Parse(Miscelaneo), int.Parse(Departamento));
             }
             catch (Exception ex)
             {
@@ -34,7 +34,7 @@ namespace Negocio.Ingresos
             }
         }
 
-        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Descripcion_Ingreso, string Miscelaneo)
+        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Descripcion_Ingreso, string Miscelaneo, string Departamento)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Negocio.Ingresos
                 {
                     TextoTipoFecha = "Fecha_Registro";
                 }
-                return Ingreso_D.ListarResumen(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Descripcion_Ingreso), int.Parse(Miscelaneo));
+                return Ingreso_D.ListarResumen(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Descripcion_Ingreso), int.Parse(Miscelaneo), int.Parse(Departamento));
             }
             catch (Exception ex)
             {

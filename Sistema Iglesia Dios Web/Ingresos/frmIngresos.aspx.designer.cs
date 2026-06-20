@@ -105,6 +105,15 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::Telerik.Web.UI.RadComboBox cmbDescripcionIngreso_Consulta;
 
         /// <summary>
+        /// Control cmbDepartamento_Consulta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbDepartamento_Consulta;
+
+        /// <summary>
         /// Control btnGenerarPDF_Detalle.
         /// </summary>
         /// <remarks>
@@ -249,6 +258,15 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::System.Web.UI.WebControls.TextBox txtId_Ingreso;
 
         /// <summary>
+        /// Control dtpFechaIngreso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker dtpFechaIngreso;
+
+        /// <summary>
         /// Control cmbMiembro.
         /// </summary>
         /// <remarks>
@@ -267,13 +285,13 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         protected global::Telerik.Web.UI.RadComboBox cmbMiscelaneo;
 
         /// <summary>
-        /// Control dtpFechaIngreso.
+        /// Control cmbDepartamento.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpFechaIngreso;
+        protected global::Telerik.Web.UI.RadComboBox cmbDepartamento;
 
         /// <summary>
         /// Control cmbDescripcion_Ingreso.
