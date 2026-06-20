@@ -182,6 +182,7 @@
     <Content Include="Global.asax" />
     <Content Include="Ingresos\frmIngresos.aspx" />
     <Content Include="Miembros\frmMiembros.aspx" />
+    <Content Include="Ministerios\frmDepartamentos.aspx" />
     <Content Include="Ministerios\frmRolesMinisterios.aspx" />
     <Content Include="Ministerios\frmMinisterios.aspx" />
     <Content Include="Otros_Parametros\frmFormas_Pago.aspx" />
@@ -331,6 +332,13 @@
     </Compile>
     <Compile Include="Miembros\frmMiembros.aspx.designer.cs">
       <DependentUpon>frmMiembros.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ministerios\frmDepartamentos.aspx.cs">
+      <DependentUpon>frmDepartamentos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ministerios\frmDepartamentos.aspx.designer.cs">
+      <DependentUpon>frmDepartamentos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Ministerios\frmRolesMinisterios.aspx.cs">
       <DependentUpon>frmRolesMinisterios.aspx</DependentUpon>

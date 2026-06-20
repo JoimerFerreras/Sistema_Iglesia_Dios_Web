@@ -6,7 +6,7 @@ using Entidades.Ministerios;
 
 namespace Datos.Ministerios
 {
-    public class Ministerio_D
+    public class Departamento_D
     {
         #region Declaraciones
         SqlDataReader leer;
@@ -19,18 +19,18 @@ namespace Datos.Ministerios
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"SELECT MN.Id_Ministerio, 
-                                        MN.Nombre_Ministerio, 
-                                        CASE MN.Estado 
+                string sentencia = $@"SELECT D.Id_Departamento, 
+                                        D.Nombre_Departamento, 
+                                        CASE D.Estado 
                                             WHEN '0' THEN 'Inactivo' 
                                             WHEN '1' THEN 'Activo' 
                                         END AS Estado,
-										Lider.Nombres + ' ' + Lider.Apellidos AS Lider_Ministerio,
-										Diacono.Nombres + ' '  + Diacono.Apellidos AS Diacono_Ministerio
+										Lider.Nombres + ' ' + Lider.Apellidos AS Lider_Departamento,
+										Diacono.Nombres + ' '  + Diacono.Apellidos AS Diacono_Departamento
 
-                                        FROM Ministerios MN
-										LEFT JOIN Miembros Lider ON Lider.Id_Miembro = MN.Id_Lider_Ministerio
-										LEFT JOIN Miembros Diacono ON Diacono.Id_Miembro = MN.Id_Diacono_Ministerio";
+                                        FROM Departamentos D
+										LEFT JOIN Miembros Lider ON Lider.Id_Miembro = D.Id_Lider_Departamento
+										LEFT JOIN Miembros Diacono ON Diacono.Id_Miembro = D.Id_Diacono_Departamento";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.CommandType = CommandType.Text;
                 try
@@ -51,13 +51,13 @@ namespace Datos.Ministerios
             }
         }
 
-        public Ministerio_E ObtenerRegistro(string Id)
+        public Departamento_E ObtenerRegistro(string Id)
         {
-            Ministerio_E entidad = new Ministerio_E();
+            Departamento_E entidad = new Departamento_E();
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = "SELECT Id_Ministerio, Nombre_Ministerio, Estado, Id_Lider_Ministerio, Id_Diacono_Ministerio  FROM Ministerios WHERE Id_Ministerio = @id";
+                string sentencia = "SELECT Id_Departamento, Nombre_Departamento, Estado, Id_Lider_Departamento, Id_Diacono_Departamento  FROM Departamentos WHERE Id_Departamento = @id";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.CommandType = CommandType.Text;
@@ -69,10 +69,10 @@ namespace Datos.Ministerios
                         DataTable dt = new DataTable();
                         dt.Load(dr);
                         DataRow row = dt.Rows[0];
-                        entidad.Id_Ministerio = int.Parse(row["Id_Ministerio"].ToString());
-                        entidad.Nombre_Ministerio = row["Nombre_Ministerio"].ToString();
-                        entidad.Id_Lider_Ministerio = int.Parse(row["Id_Lider_Ministerio"].ToString());
-                        entidad.Id_Diacono_Ministerio = int.Parse(row["Id_Diacono_Ministerio"].ToString());
+                        entidad.Id_Departamento = int.Parse(row["Id_Departamento"].ToString());
+                        entidad.Nombre_Departamento = row["Nombre_Departamento"].ToString();
+                        entidad.Id_Lider_Departamento = int.Parse(row["Id_Lider_Departamento"].ToString());
+                        entidad.Id_Diacono_Departamento = int.Parse(row["Id_Diacono_Departamento"].ToString());
 
                         if (row["Estado"].ToString() == "True")
                             entidad.Estado = true;
@@ -98,15 +98,15 @@ namespace Datos.Ministerios
                 if (TipoConsulta == true) // Sentencia para Insercion y edicion de registro
                 {
                     // Sentencia que obtiene todos los registros con status activo y tambien trae el registro inactivo de la referencia correspondiente.
-                    sentencia = @"SELECT DISTINCT MN.Id_Ministerio, MN.Nombre_Ministerio FROM Ministerios MN
-                                LEFT JOIN Miembros MM ON MN.Id_Ministerio = MM.Id_Ministerio
-                                WHERE MN.Estado = 1 OR (MN.Estado = 0 AND EXISTS (SELECT 1 FROM Miembros WHERE Id_Miembro = MM.Id_Miembro))
+                    sentencia = @"SELECT DISTINCT D.Id_Departamento, D.Nombre_Departamento FROM Departamentos D
+                                LEFT JOIN Miembros MM ON D.Id_Departamento = MM.Id_Departamento
+                                WHERE D.Estado = 1 OR (D.Estado = 0 AND EXISTS (SELECT 1 FROM Miembros WHERE Id_Miembro = MM.Id_Miembro))
                                 AND Id_Miembro = @Id";
                 }
                 else //Sentencia para consulta de registros en pantallas de Consultas
                 {
                     // Sentencia que obtiene todos los registros
-                    sentencia = "SELECT Id_Ministerio, Nombre_Ministerio FROM Ministerios";
+                    sentencia = "SELECT Id_Departamento, Nombre_Departamento FROM Departamentos";
                 }
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@id", Id_Registro);
@@ -135,23 +135,23 @@ namespace Datos.Ministerios
 
         #region Mantenimientos
 
-        public bool Agregar(Ministerio_E entidad)
+        public bool Agregar(Departamento_E entidad)
         {
             bool Respuesta = false;
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"INSERT INTO Ministerios(
-                                    Nombre_Ministerio, Estado, Id_Lider_Ministerio, Id_Diacono_Ministerio)
+                string sentencia = $@"INSERT INTO Departamentos(
+                                    Nombre_Departamento, Estado, Id_Lider_Departamento, Id_Diacono_Departamento)
 
                                    VALUES(
-                                    @Nombre_Ministerio, @Estado, @Id_Lider_Ministerio, @Id_Diacono_Ministerio);";
+                                    @Nombre_Departamento, @Estado, @Id_Lider_Departamento, @Id_Diacono_Departamento);";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                cmd.Parameters.AddWithValue("@Nombre_Ministerio", entidad.Nombre_Ministerio);
+                cmd.Parameters.AddWithValue("@Nombre_Departamento", entidad.Nombre_Departamento);
                 cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
-                cmd.Parameters.AddWithValue("@Id_Lider_Ministerio", entidad.Id_Lider_Ministerio);
-                cmd.Parameters.AddWithValue("@Id_Diacono_Ministerio", entidad.Id_Diacono_Ministerio);
+                cmd.Parameters.AddWithValue("@Id_Lider_Departamento", entidad.Id_Lider_Departamento);
+                cmd.Parameters.AddWithValue("@Id_Diacono_Departamento", entidad.Id_Diacono_Departamento);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -169,25 +169,25 @@ namespace Datos.Ministerios
             }
         }
 
-        public bool Editar(Ministerio_E entidad)
+        public bool Editar(Departamento_E entidad)
         {
             bool Respuesta = false;
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"UPDATE Ministerios SET 
-                                        Nombre_Ministerio = @Nombre_Ministerio, 
+                string sentencia = $@"UPDATE Departamentos SET 
+                                        Nombre_Departamento = @Nombre_Departamento, 
                                         Estado = @Estado, 
-                                        Id_Lider_Ministerio = @Id_Lider_Ministerio, 
-                                        Id_Diacono_Ministerio = @Id_Diacono_Ministerio 
-                                        WHERE Id_Ministerio = @Id_Ministerio";
+                                        Id_Lider_Departamento = @Id_Lider_Departamento, 
+                                        Id_Diacono_Departamento = @Id_Diacono_Departamento 
+                                        WHERE Id_Departamento = @Id_Departamento";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
-                cmd.Parameters.AddWithValue("@Id_Ministerio", entidad.Id_Ministerio);
-                cmd.Parameters.AddWithValue("@Nombre_Ministerio", entidad.Nombre_Ministerio);
+                cmd.Parameters.AddWithValue("@Id_Departamento", entidad.Id_Departamento);
+                cmd.Parameters.AddWithValue("@Nombre_Departamento", entidad.Nombre_Departamento);
                 cmd.Parameters.AddWithValue("@Estado", entidad.Estado);
-                cmd.Parameters.AddWithValue("@Id_Lider_Ministerio", entidad.Id_Lider_Ministerio);
-                cmd.Parameters.AddWithValue("@Id_Diacono_Ministerio", entidad.Id_Diacono_Ministerio);
+                cmd.Parameters.AddWithValue("@Id_Lider_Departamento", entidad.Id_Lider_Departamento);
+                cmd.Parameters.AddWithValue("@Id_Diacono_Departamento", entidad.Id_Diacono_Departamento);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -211,7 +211,7 @@ namespace Datos.Ministerios
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = "DELETE FROM Ministerios WHERE Id_Ministerio = @id;";
+                string sentencia = "DELETE FROM Departamentos WHERE Id_Departamento = @id;";
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.CommandType = CommandType.Text;

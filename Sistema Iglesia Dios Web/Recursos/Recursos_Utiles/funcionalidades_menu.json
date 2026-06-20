@@ -203,7 +203,18 @@
     "Nombre_Funcionalidad": "Roles_Ministerios",
     "Descripcion_Funcionalidad": "Roles de Ministerios",
     "Nombre_Archivo": "Ministerios/frmRolesMinisterios.aspx",
-    "Clase_CSS_Funcionalidad": "fa-solid fa-people-group",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-address-book",
+    "Nombre_Modulo": "Miembros",
+    "Descripcion_Modulo": "Miembros",
+    "Clase_CSS_Modulo": "fa-solid fa-church"
+  },
+  {
+    "Id_Funcionalidad": 20,
+    "Id_Modulo": 5,
+    "Nombre_Funcionalidad": "Departamentos",
+    "Descripcion_Funcionalidad": "Departamentos",
+    "Nombre_Archivo": "Ministerios/frmDepartamentos.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-building-user",
     "Nombre_Modulo": "Miembros",
     "Descripcion_Modulo": "Miembros",
     "Clase_CSS_Modulo": "fa-solid fa-church"
