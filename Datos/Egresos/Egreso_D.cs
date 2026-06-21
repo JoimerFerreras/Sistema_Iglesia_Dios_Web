@@ -15,7 +15,7 @@ namespace Datos.Egresos
 
         #region Consultas
 
-        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion, int Miscelaneo)
+        public DataTable Listar(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion, int Miscelaneo, int Departamento)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
@@ -26,13 +26,15 @@ namespace Datos.Egresos
                                     D.Nombre AS Descripcion,
                                     M.Nombres + ' ' + M.Apellidos AS Miembro,
                                     MC.Descripcion_Miscelaneo AS Miscelaneo,
+									Dep.Nombre_Departamento AS Departamento,
                                     Monto,
                                     FORMAT(Fecha_Registro, 'dd/MM/yyyy') AS Fecha_Registro
 
                                     FROM Egresos E
                                     LEFT JOIN Descripciones D ON D.Id_Descripcion = E.Id_Descripcion
                                     LEFT JOIN Miembros M ON M.Id_Miembro = E.Id_Miembro
-                                    LEFT JOIN Miscelaneos MC ON MC.Id_Miscelaneo = E.Id_Miscelaneo";
+                                    LEFT JOIN Miscelaneos MC ON MC.Id_Miscelaneo = E.Id_Miscelaneo
+									LEFT JOIN Departamentos Dep ON Dep.Id_Departamento = E.Id_Departamento";
 
                 // Tipo de fecha
                 sentencia += $@" WHERE ({TipoFecha} BETWEEN @FechaInicial AND @FechaFinal) ";
@@ -60,6 +62,13 @@ namespace Datos.Egresos
                     cmd.Parameters.AddWithValue("@Id_Descripcion", Descripcion);
                 }
 
+                //Departamento
+                if (Departamento > 0)
+                {
+                    sentencia += $" AND (Dep.Id_Departamento = @Id_Departamento) ";
+                    cmd.Parameters.AddWithValue("@Id_Departamento", Departamento);
+                }
+
                 sentencia += $@"ORDER BY Id_Egreso DESC";
 
                 cmd.CommandText = sentencia;
@@ -84,7 +93,7 @@ namespace Datos.Egresos
         }
 
 
-        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion, int Miscelaneo)
+        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Descripcion, int Miscelaneo, int Departamento)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
@@ -119,6 +128,13 @@ namespace Datos.Egresos
                 {
                     sentencia += " AND (D.Id_Descripcion = @Id_Descripcion) ";
                     cmd.Parameters.AddWithValue("@Id_Descripcion", Descripcion);
+                }
+
+                // Filtrar por Departamento
+                if (Departamento > 0)
+                {
+                    sentencia += " AND (E.Id_Departamento = @Id_Departamento) ";
+                    cmd.Parameters.AddWithValue("@Id_Departamento", Departamento);
                 }
 
                 sentencia += "GROUP BY D.Nombre ORDER BY D.Nombre";
@@ -158,6 +174,7 @@ namespace Datos.Egresos
                                         E.Id_Forma_Pago,
                                         E.Comentario,
                                         E.Id_Miscelaneo,
+                                        E.Id_Departamento,
                                         E.Id_Usuario,
                                         U1.Nombre1 + ' ' + U1.Apellido1 AS Nombre_Usuario_Registro,
                                         E.Fecha_Registro,
@@ -188,6 +205,7 @@ namespace Datos.Egresos
                         entidad.Id_Forma_Pago = int.Parse(row["Id_Forma_Pago"].ToString());
                         entidad.Comentario = row["Comentario"].ToString();
                         entidad.Id_Miscelaneo = int.Parse(row["Id_Miscelaneo"].ToString());
+                        entidad.Id_Departamento = int.Parse(row["Id_Departamento"].ToString());
                         entidad.Id_Usuario = int.Parse(row["Id_Usuario"].ToString());
                         entidad.Nombre_Usuario_Registro = row["Nombre_Usuario_Registro"].ToString();
                         entidad.Fecha_Registro = DateTime.Parse(row["Fecha_Registro"].ToString());
@@ -230,7 +248,8 @@ namespace Datos.Egresos
                                         Id_Usuario_Ultima_Modificacion,
                                         Id_Forma_Pago,
                                         Comentario,
-                                        Id_Miscelaneo)
+                                        Id_Miscelaneo,
+                                        Id_Departamento)
 
                                     VALUES(
                                         @Id_Miembro,
@@ -242,7 +261,8 @@ namespace Datos.Egresos
                                         @Id_Usuario_Ultima_Modificacion,
                                         @Id_Forma_Pago,
                                         @Comentario,
-                                        @Id_Miscelaneo);
+                                        @Id_Miscelaneo,
+                                        @Id_Departamento);
 
                                         SELECT SCOPE_IDENTITY() AS UltimoRegistroAgregado;";
 
@@ -257,6 +277,7 @@ namespace Datos.Egresos
                 cmd.Parameters.AddWithValue("@Id_Forma_Pago", entidad.Id_Forma_Pago);
                 cmd.Parameters.AddWithValue("@Comentario", entidad.Comentario);
                 cmd.Parameters.AddWithValue("@Id_Miscelaneo", entidad.Id_Miscelaneo);
+                cmd.Parameters.AddWithValue("@Id_Departamento", entidad.Id_Departamento);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -294,7 +315,8 @@ namespace Datos.Egresos
                                         Fecha_Ultima_Modificacion = @Fecha_Ultima_Modificacion, 
                                         Id_Forma_Pago = @Id_Forma_Pago, 
                                         Comentario = @Comentario, 
-                                        Id_Miscelaneo = @Id_Miscelaneo 
+                                        Id_Miscelaneo = @Id_Miscelaneo, 
+                                        Id_Departamento = @Id_Departamento 
 
                                         WHERE Id_Egreso = @Id_Egreso";
 
@@ -309,6 +331,7 @@ namespace Datos.Egresos
                 cmd.Parameters.AddWithValue("@Id_Forma_Pago", entidad.Id_Forma_Pago);
                 cmd.Parameters.AddWithValue("@Comentario", entidad.Comentario);
                 cmd.Parameters.AddWithValue("@Id_Miscelaneo", entidad.Id_Miscelaneo);
+                cmd.Parameters.AddWithValue("@Id_Departamento", entidad.Id_Departamento);
                 cmd.CommandType = CommandType.Text;
                 try
                 {

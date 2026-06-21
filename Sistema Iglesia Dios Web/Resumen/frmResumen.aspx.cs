@@ -122,9 +122,9 @@ namespace Sistema_Iglesia_Dios_Web.Resumen
                 decimal egresos = GetDecimal(row, "EgresosMes");
                 decimal neto = GetDecimal(row, "NetoMes");
 
-                lblTotalIngresos_MesActual.Text = ingresos.ToString("C2");
-                lblTotalEgresos_MesActual.Text = egresos.ToString("C2");
-                lblTotalNeto_MesActual.Text = neto.ToString("C2");
+                lblTotalIngresos_MesActual.Text = ingresos.ToString("$#,##0.00;-$#,##0.00;$0.00");
+                lblTotalEgresos_MesActual.Text = egresos.ToString("$#,##0.00;-$#,##0.00;$0.00");
+                lblTotalNeto_MesActual.Text = neto.ToString("$#,##0.00;-$#,##0.00;$0.00");
 
                 decimal pctIngresos = GetDecimal(row, "VarPctIngresos");
                 decimal pctEgresos = GetDecimal(row, "VarPctEgresos");

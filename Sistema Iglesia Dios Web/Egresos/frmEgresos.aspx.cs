@@ -18,6 +18,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using System.Data.OleDb;
 using CrystalDecisions.Shared;
 using Entidades.Otros_Parametros;
+using Negocio.Departamentos;
 
 namespace Sistema_Iglesia_Dios_Web.Egresos
 {
@@ -214,6 +215,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             cmbDescripcionEgreso_Consulta.SelectedValue = "0";
             cmbMiembro_Consulta.SelectedValue = "0";
             cmbMiscelaneo_Consulta.SelectedValue = "0";
+            cmbDepartamento_Consulta.SelectedValue = "0";
         }
 
         private void Consultar()
@@ -238,7 +240,8 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                         dtpFechaHastaFiltro.SelectedDate.Value,
                         cmbMiembro_Consulta.SelectedValue,
                         cmbDescripcionEgreso_Consulta.SelectedValue,
-                        cmbMiscelaneo_Consulta.SelectedValue);
+                        cmbMiscelaneo_Consulta.SelectedValue,
+                        cmbDepartamento_Consulta.SelectedValue);
 
                         gvDatos.DataSource = DT_DATOS;
                         gvDatos.DataBind();
@@ -275,7 +278,8 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                                    dtpFechaHastaFiltro.SelectedDate.Value,
                                    cmbMiembro_Consulta.SelectedValue,
                                    cmbDescripcionEgreso_Consulta.SelectedValue,
-                                   cmbMiscelaneo_Consulta.SelectedValue);
+                                   cmbMiscelaneo_Consulta.SelectedValue,
+                                   cmbDepartamento_Consulta.SelectedValue);
 
             gvResumen.DataSource = DT_DATOS_RESUMEN;
             gvResumen.DataBind();
@@ -305,6 +309,19 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             cmbFormaPago.DataValueField = "Id_Forma_Pago";
             cmbFormaPago.DataTextField = "Descripcion_Forma_Pago";
             cmbFormaPago.DataBind();
+
+            // Departamento
+            Departamento_N Departamento_N = new Departamento_N();
+            dt = Departamento_N.ListaCombo("0", false);
+            cmbDepartamento.DataSource = dt;
+            cmbDepartamento.DataValueField = "Id_Departamento";
+            cmbDepartamento.DataTextField = "Nombre_Departamento";
+            cmbDepartamento.DataBind();
+
+            cmbDepartamento_Consulta.DataSource = dt;
+            cmbDepartamento_Consulta.DataValueField = "Id_Departamento";
+            cmbDepartamento_Consulta.DataTextField = "Nombre_Departamento";
+            cmbDepartamento_Consulta.DataBind();
 
             LlenarComboDescripcion();
             LlenarComboMiscelaneo();
@@ -454,6 +471,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
                     egreso_E.Id_Forma_Pago = int.Parse(cmbFormaPago.SelectedValue);
                     egreso_E.Comentario = txtComentario.Text;
                     egreso_E.Id_Miscelaneo = int.Parse(cmbMiscelaneo.SelectedValue);
+                    egreso_E.Id_Departamento = int.Parse(cmbDepartamento.SelectedValue);
 
                     if (EDITAR_REGISTRO == true)
                     {
@@ -524,6 +542,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             cmbFormaPago.SelectedValue = Egreso_E.Id_Forma_Pago.ToString();
             txtComentario.Text = Egreso_E.Comentario;
             cmbMiscelaneo.SelectedValue = Egreso_E.Id_Miscelaneo.ToString();
+            cmbDepartamento.SelectedValue = Egreso_E.Id_Departamento.ToString();
 
             if (Egreso_E.Fecha_Ultima_Modificacion != null)
             {
@@ -557,6 +576,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
             cmbFormaPago.SelectedValue = "0";
             txtComentario.Text = "";
             cmbMiscelaneo.SelectedValue = "0";
+            cmbDepartamento.SelectedValue = "0";
 
             gvArchivos.DataSource = new DataTable();
             gvArchivos.DataBind();

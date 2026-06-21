@@ -542,6 +542,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
             cmbFormaPago.SelectedValue = Ingreso_E.Id_Forma_Pago.ToString();
             txtComentario.Text = Ingreso_E.Comentario;
             cmbMiscelaneo.SelectedValue = Ingreso_E.Id_Miscelaneo.ToString();
+            cmbDepartamento.SelectedValue = Ingreso_E.Id_Departamento.ToString();
 
             if (Ingreso_E.Fecha_Ultima_Modificacion != null)
             {

@@ -18,5 +18,6 @@ namespace Entidades.Egresos
         public int Id_Forma_Pago { get; set; }
         public string Comentario { get; set; }
         public int Id_Miscelaneo { get; set; }
+        public int Id_Departamento { get; set; }
     }
 }
