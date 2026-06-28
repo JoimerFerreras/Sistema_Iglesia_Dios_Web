@@ -20,5 +20,6 @@ namespace Entidades.Cuentas_Por_Cobrar
         public int Id_Usuario_Ultima_Modificacion { get; set; }
         public string Nombre_Usuario_Ultima_Modificacion { get; set; }
         public DateTime? Fecha_Ultima_Modificacion { get; set; }
+        public int Id_Departamento { get; set; }
     }
 }

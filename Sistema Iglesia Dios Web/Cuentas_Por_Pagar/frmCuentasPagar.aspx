@@ -15,78 +15,78 @@
         }
     </style>
 
-     <script type="text/javascript">
-         // Funciones para copiar los datos del grid al portapapeles (con y sin encabezados)
+    <script type="text/javascript">
+        // Funciones para copiar los datos del grid al portapapeles (con y sin encabezados)
 
-         // DATATABLE DATOS
-
-
-         // Clic derecho sobre una fila del grid
-         function gvDatos_RowContextMenu(sender, args) {
-             var ev = args.get_domEvent();
-             ev.preventDefault(); // quita el menú del navegador
-
-             // (Opcional) Seleccionar la fila donde hicieron right click
-             try {
-                 var masterTable = sender.get_masterTableView();
-                 masterTable.clearSelectedItems();
-                 masterTable.selectItem(args.get_item().get_element(), true);
-             } catch (e) { }
-
-             var menu = $find("<%= rcmGridDatos.ClientID %>");
-             menu.show(ev);
-             return false;
-         }
-
-         // Click en item del menú
-         function rcmGridItemClicked_Datos(sender, args) {
-             var item = args.get_item();
-             if (item.get_value() === "copy_tabla") {
-                 // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
-                 __doPostBack("<%= btnCopiarGrid_Datos.UniqueID %>", "");
-         } else if (item.get_value() === "copy_tabla_sin_encabezados") {
-             // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
-             __doPostBack("<%= btnCopiarGridSinEncabezados_Datos.UniqueID %>", "");
-             }
-         }
-     </script>
+        // DATATABLE DATOS
 
 
- <script type="text/javascript">
-     // Funciones para copiar los datos del grid al portapapeles (con y sin encabezados)
+        // Clic derecho sobre una fila del grid
+        function gvDatos_RowContextMenu(sender, args) {
+            var ev = args.get_domEvent();
+            ev.preventDefault(); // quita el menú del navegador
 
-     // DATATABLE RESUMEN
+            // (Opcional) Seleccionar la fila donde hicieron right click
+            try {
+                var masterTable = sender.get_masterTableView();
+                masterTable.clearSelectedItems();
+                masterTable.selectItem(args.get_item().get_element(), true);
+            } catch (e) { }
 
+            var menu = $find("<%= rcmGridDatos.ClientID %>");
+            menu.show(ev);
+            return false;
+        }
 
-     // Clic derecho sobre una fila del grid
-     function gvResumen_RowContextMenu(sender, args) {
-         var ev = args.get_domEvent();
-         ev.preventDefault(); // quita el menú del navegador
-
-         // (Opcional) Seleccionar la fila donde hicieron right click
-         try {
-             var masterTable = sender.get_masterTableView();
-             masterTable.clearSelectedItems();
-             masterTable.selectItem(args.get_item().get_element(), true);
-         } catch (e) { }
-
-         var menu = $find("<%= rcmGridResumen.ClientID %>");
-         menu.show(ev);
-         return false;
-     }
-
-     // Click en item del menú
-     function rcmGridItemClicked_Resumen(sender, args) {
-         var item = args.get_item();
-         if (item.get_value() === "copy_tabla") {
-             // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
-             __doPostBack("<%= btnCopiarGrid_Resumen.UniqueID %>", "");
+        // Click en item del menú
+        function rcmGridItemClicked_Datos(sender, args) {
+            var item = args.get_item();
+            if (item.get_value() === "copy_tabla") {
+                // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
+                __doPostBack("<%= btnCopiarGrid_Datos.UniqueID %>", "");
              } else if (item.get_value() === "copy_tabla_sin_encabezados") {
                  // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
-                 __doPostBack("<%= btnCopiarGridSinEncabezados_Resumen.UniqueID %>", "");
-         }
-     }
- </script>
+                 __doPostBack("<%= btnCopiarGridSinEncabezados_Datos.UniqueID %>", "");
+            }
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        // Funciones para copiar los datos del grid al portapapeles (con y sin encabezados)
+
+        // DATATABLE RESUMEN
+
+
+        // Clic derecho sobre una fila del grid
+        function gvResumen_RowContextMenu(sender, args) {
+            var ev = args.get_domEvent();
+            ev.preventDefault(); // quita el menú del navegador
+
+            // (Opcional) Seleccionar la fila donde hicieron right click
+            try {
+                var masterTable = sender.get_masterTableView();
+                masterTable.clearSelectedItems();
+                masterTable.selectItem(args.get_item().get_element(), true);
+            } catch (e) { }
+
+            var menu = $find("<%= rcmGridResumen.ClientID %>");
+            menu.show(ev);
+            return false;
+        }
+
+        // Click en item del menú
+        function rcmGridItemClicked_Resumen(sender, args) {
+            var item = args.get_item();
+            if (item.get_value() === "copy_tabla") {
+                // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
+                __doPostBack("<%= btnCopiarGrid_Resumen.UniqueID %>", "");
+         } else if (item.get_value() === "copy_tabla_sin_encabezados") {
+             // Dispara postback al botón oculto (ejecuta btnCopiar_Click en servidor)
+             __doPostBack("<%= btnCopiarGridSinEncabezados_Resumen.UniqueID %>", "");
+            }
+        }
+    </script>
 
 
 
@@ -200,6 +200,20 @@
                                 </telerik:RadComboBox>
                                 </div>
                             </div>
+
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col-12 col-md-6">
+                                    Departamento 
+                                     <telerik:RadComboBox ID="cmbDepartamento_Consulta" runat="server" Width="100%" ClientIDMode="Static"
+                                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                                         Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                                         <Items>
+                                             <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
+                                         </Items>
+                                     </telerik:RadComboBox>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
@@ -260,6 +274,9 @@
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="Miscelaneo" HeaderText="Misceláneo" HeaderStyle-Width="30%" ItemStyle-Width="30%">
+                                            </telerik:GridBoundColumn>
+
+                                            <telerik:GridBoundColumn DataField="Departamento" HeaderText="Departamento" HeaderStyle-Width="30%" ItemStyle-Width="30%">
                                             </telerik:GridBoundColumn>
 
                                             <telerik:GridBoundColumn DataField="Valor" HeaderText="Valor" DataFormatString="{0:0,0.00}" HeaderStyle-Width="10%" ItemStyle-Width="10%">
@@ -335,7 +352,7 @@
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
 
-                                                                                        <telerik:GridTemplateColumn HeaderText="Crédito" HeaderStyle-Width="10%" ItemStyle-Width="10%">
+                                            <telerik:GridTemplateColumn HeaderText="Crédito" HeaderStyle-Width="10%" ItemStyle-Width="10%">
                                                 <ItemTemplate>
                                                     <%# Eval("Credito").ToString() == "0" ? "" : String.Format("{0:0,0.00}", Eval("Credito")) %>
                                                 </ItemTemplate>
@@ -363,13 +380,21 @@
                                     ID
                                <asp:TextBox runat="server" ID="txtIdCuentaPagar" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
                                 </div>
+
+                                <div class="col-12 col-md-6">
+                                    Fecha <span class="LabelCampoObligatorio">*</span>
+                                    <br />
+                                    <telerik:RadDatePicker ID="dtpFechaCC" runat="server" Width="100%" Culture="es-DO" TabIndex="2" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                                        <DateInput ID="DateInput1" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
+                                    </telerik:RadDatePicker>
+                                </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Miembro 
                                  <telerik:RadComboBox ID="cmbMiembro" runat="server" Width="100%" ClientIDMode="Static"
-                                     MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                     MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="3"
                                      MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                                      Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
                                      <Items>
@@ -382,7 +407,7 @@
                                     Misceláneo 
                                     <div class="d-flex align-items-center">
                                         <telerik:RadComboBox ID="cmbMiscelaneo" runat="server" Width="100%" ClientIDMode="Static"
-                                            MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                            MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="4"
                                             MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                                             Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
                                             <Items>
@@ -397,6 +422,19 @@
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
+                                <div class="col-12 col-md-6">
+                                    Departamento 
+                                  <telerik:RadComboBox ID="cmbDepartamento" runat="server" Width="100%" ClientIDMode="Static"
+                                      MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="5"
+                                      MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                                      Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                                      <Items>
+                                          <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
+                                      </Items>
+                                  </telerik:RadComboBox>
+                                </div>
+
+
                                 <div class="col-12 col-md-6">
                                     Descripción <span class="LabelCampoObligatorio">*</span>
                                     <div class="d-flex align-items-center">
@@ -414,10 +452,14 @@
                                     </div>
                                 </div>
 
+
+                            </div>
+
+                            <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Forma de pago <span class="LabelCampoObligatorio">*</span><br />
                                     <telerik:RadComboBox ID="cmbFormaPago" runat="server" Width="300px" ClientIDMode="Static"
-                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="7"
                                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                                         Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
                                         <Items>
@@ -425,20 +467,10 @@
                                         </Items>
                                     </telerik:RadComboBox>
                                 </div>
-                            </div>
-
-                            <div class="row" style="margin-top: 20px;">
-                                <div class="col-12 col-md-6">
-                                    Fecha <span class="LabelCampoObligatorio">*</span>
-                                    <br />
-                                    <telerik:RadDatePicker ID="dtpFechaCC" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
-                                        <DateInput ID="DateInput1" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
-                                    </telerik:RadDatePicker>
-                                </div>
 
                                 <div class="col-12 col-md-6">
                                     Valor <span class="LabelCampoObligatorio">*</span>
-                                    <asp:TextBox runat="server" ID="txtValor" CssClass="form-control" Width="200px" TabIndex="2"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtValor" CssClass="form-control" Width="200px" TabIndex="8"></asp:TextBox>
                                 </div>
                             </div>
 
@@ -446,7 +478,7 @@
                                 <div class="col-12 col-md-6">
                                     Tipo Documento <span class="LabelCampoObligatorio">*</span><br />
                                     <telerik:RadComboBox ID="cmbTipoDocumento" runat="server" Width="300px" ClientIDMode="Static"
-                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="9"
                                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                                         Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true">
                                         <Items>
@@ -461,14 +493,14 @@
 
                                 <div class="col-12 col-md-6">
                                     No. Documento
-                                    <asp:TextBox runat="server" ID="txtNo_Documento" CssClass="form-control" Width="200px" MaxLength="30" TabIndex="2"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtNo_Documento" CssClass="form-control" Width="200px" MaxLength="30" TabIndex="10"></asp:TextBox>
                                 </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-12">
                                     Comentario
-                               <asp:TextBox runat="server" ID="txtComentario" CssClass="form-control" Height="76" TextMode="MultiLine" MaxLength="500" Width="100%" TabIndex="2"></asp:TextBox>
+                               <asp:TextBox runat="server" ID="txtComentario" CssClass="form-control" Height="76" TextMode="MultiLine" MaxLength="500" Width="100%" TabIndex="11"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
@@ -481,24 +513,24 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Usuario que hizo el registro
-                               <asp:TextBox runat="server" ID="txtUsuarioRegistro" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                               <asp:TextBox runat="server" ID="txtUsuarioRegistro" CssClass="form-control" Width="100%" TabIndex="12" ReadOnly="true"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Fecha de registro
-                                  <asp:TextBox runat="server" ID="txtFechaRegistro" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                  <asp:TextBox runat="server" ID="txtFechaRegistro" CssClass="form-control" Width="100%" TabIndex="13" ReadOnly="true"></asp:TextBox>
                                 </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Usuario de ultima modificaci&oacute;n
-                                  <asp:TextBox runat="server" ID="txtUsuarioUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                  <asp:TextBox runat="server" ID="txtUsuarioUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="14" ReadOnly="true"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Fecha de ultima modificaci&oacute;n
-                                 <asp:TextBox runat="server" ID="txtFechaUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                 <asp:TextBox runat="server" ID="txtFechaUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="15" ReadOnly="true"></asp:TextBox>
                                 </div>
                             </div>
                         </div>

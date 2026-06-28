@@ -5,6 +5,7 @@ using CrystalDecisions.Shared;
 using Entidades.Cuentas_Por_Cobrar;
 using Entidades.Otros_Parametros;
 using Negocio.Cuentas_Por_Cobrar;
+using Negocio.Departamentos;
 using Negocio.Miembros;
 using Negocio.Otros_Parametros;
 using Negocio.Util_N;
@@ -215,6 +216,7 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
             cmbMiscelaneo_Consulta.SelectedValue = "0";
             cmbMiembro_Consulta.SelectedValue = "0";
             cmbTipoDocumento_Consulta.SelectedValue = "0";
+            cmbDepartamento_Consulta.SelectedValue = "0";
         }
 
         private void Consultar()
@@ -240,7 +242,8 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
                         cmbMiembro_Consulta.SelectedValue,
                         cmbMiscelaneo_Consulta.SelectedValue,
                         cmbDescripcion_Consulta.SelectedValue,
-                        cmbTipoDocumento_Consulta.SelectedValue);
+                        cmbTipoDocumento_Consulta.SelectedValue, 
+                        cmbDepartamento_Consulta.SelectedValue);
 
                         gvDatos.DataSource = DT_DATOS;
                         gvDatos.DataBind();
@@ -278,7 +281,8 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
                                      cmbMiembro_Consulta.SelectedValue,
                                      cmbMiscelaneo_Consulta.SelectedValue,
                                      cmbDescripcion_Consulta.SelectedValue,
-                                     cmbTipoDocumento_Consulta.SelectedValue);
+                                     cmbTipoDocumento_Consulta.SelectedValue, 
+                                     cmbDepartamento_Consulta.SelectedValue);
 
             gvResumen.DataSource = DT_DATOS_RESUMEN;
             gvResumen.DataBind();
@@ -308,6 +312,19 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
             cmbFormaPago.DataValueField = "Id_Forma_Pago";
             cmbFormaPago.DataTextField = "Descripcion_Forma_Pago";
             cmbFormaPago.DataBind();
+
+            // Departamento
+            Departamento_N Departamento_N = new Departamento_N();
+            dt = Departamento_N.ListaCombo("0", false);
+            cmbDepartamento.DataSource = dt;
+            cmbDepartamento.DataValueField = "Id_Departamento";
+            cmbDepartamento.DataTextField = "Nombre_Departamento";
+            cmbDepartamento.DataBind();
+
+            cmbDepartamento_Consulta.DataSource = dt;
+            cmbDepartamento_Consulta.DataValueField = "Id_Departamento";
+            cmbDepartamento_Consulta.DataTextField = "Nombre_Departamento";
+            cmbDepartamento_Consulta.DataBind();
 
             LlenarComboDescripcion();
             LlenarComboMiscelaneo();
@@ -410,9 +427,9 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
         {
             bool Validacion = false;
 
-            if (cmbMiembro.SelectedValue == "0" && cmbMiscelaneo.SelectedValue == "0")
+            if (cmbMiembro.SelectedValue == "0" && cmbMiscelaneo.SelectedValue == "0" && cmbDepartamento.SelectedValue == "0")
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Si no va a seleccionar un miembro, entonces el campo Misceláneo no puede estar vacío");
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe seleccionar un miembro, un misceláneo o un departamento.");
             }
             else if (cmbDescripcion.SelectedValue == "0")
             {
@@ -465,6 +482,7 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
                     Cuenta_Cobrar_E.Tipo_Documento = cmbTipoDocumento.SelectedValue;
                     Cuenta_Cobrar_E.No_Documento = txtNo_Documento.Text;
                     Cuenta_Cobrar_E.Comentario = txtComentario.Text;
+                    Cuenta_Cobrar_E.Id_Departamento = int.Parse(cmbDepartamento.SelectedValue);
 
                     Cuenta_Cobrar_E.Id_Usuario = int.Parse(Utilidad_C.ObtenerUsuarioSession(this.Page));
                     Cuenta_Cobrar_E.Fecha_Registro = DateTime.Now;
@@ -540,6 +558,7 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
             txtValor.Text = Cuenta_Cobrar_E.Valor.ToString();
             txtNo_Documento.Text = Cuenta_Cobrar_E.No_Documento;
             txtComentario.Text = Cuenta_Cobrar_E.Comentario;
+            cmbDepartamento.SelectedValue = Cuenta_Cobrar_E.Id_Departamento.ToString();
 
             txtUsuarioRegistro.Text = Cuenta_Cobrar_E.Nombre_Usuario_Registro;
             txtFechaRegistro.Text = string.Format("{0:dd/MM/yyyy hh:mm:ss tt}", Cuenta_Cobrar_E.Fecha_Registro);
@@ -579,6 +598,7 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
             txtValor.Text = Utilidad_N.FormatearNumero("0", 2, 2);
             txtNo_Documento.Text = "";
             txtComentario.Text = "";
+            cmbDepartamento.SelectedValue = "0";
 
             txtUsuarioRegistro.Text = "";
             txtFechaRegistro.Text = "";
@@ -663,6 +683,7 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Cobrar
                 dtParametros.Rows.Add("Miscelaneo: ", cmbMiscelaneo_Consulta.Text);
                 dtParametros.Rows.Add("Miembro: ", cmbMiembro_Consulta.Text);
                 dtParametros.Rows.Add("Tipo de documento: ", cmbTipoDocumento_Consulta.Text);
+                dtParametros.Rows.Add("Departamento: ", cmbDepartamento_Consulta.Text);
                 dtParametros.Rows.Add("", "");
                 dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
 

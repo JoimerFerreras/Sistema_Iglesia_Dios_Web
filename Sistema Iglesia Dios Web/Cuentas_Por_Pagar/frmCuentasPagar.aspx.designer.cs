@@ -114,6 +114,15 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
         protected global::Telerik.Web.UI.RadComboBox cmbTipoDocumento_Consulta;
 
         /// <summary>
+        /// Control cmbDepartamento_Consulta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbDepartamento_Consulta;
+
+        /// <summary>
         /// Control btnGenerarPDF_Detalle.
         /// </summary>
         /// <remarks>
@@ -258,6 +267,15 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
         protected global::System.Web.UI.WebControls.TextBox txtIdCuentaPagar;
 
         /// <summary>
+        /// Control dtpFechaCC.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker dtpFechaCC;
+
+        /// <summary>
         /// Control cmbMiembro.
         /// </summary>
         /// <remarks>
@@ -276,6 +294,15 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
         protected global::Telerik.Web.UI.RadComboBox cmbMiscelaneo;
 
         /// <summary>
+        /// Control cmbDepartamento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox cmbDepartamento;
+
+        /// <summary>
         /// Control cmbDescripcion.
         /// </summary>
         /// <remarks>
@@ -292,15 +319,6 @@ namespace Sistema_Iglesia_Dios_Web.Cuentas_Por_Pagar
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox cmbFormaPago;
-
-        /// <summary>
-        /// Control dtpFechaCC.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dtpFechaCC;
 
         /// <summary>
         /// Control txtValor.

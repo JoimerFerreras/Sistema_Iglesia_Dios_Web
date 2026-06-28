@@ -421,8 +421,11 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
         private bool ValidarCampos()
         {
             bool Validacion = false;
-
-            if (cmbDescripcion_Ingreso.SelectedValue == "0")
+            if (cmbMiembro.SelectedValue == "0" && cmbMiscelaneo.SelectedValue == "0" && cmbDepartamento.SelectedValue == "0")
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe seleccionar un miembro, un misceláneo o un departamento.");
+            }
+            else if (cmbDescripcion_Ingreso.SelectedValue == "0")
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La descripción del ingreso no puede estar vacía");
             }
@@ -649,6 +652,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             dtParametros.Rows.Add("Descripción de ingreso: ", cmbDescripcionIngreso_Consulta.Text);
             dtParametros.Rows.Add("Beneficiario: ", cmbMiembro_Consulta.Text);
+            dtParametros.Rows.Add("Departamento: ", cmbDepartamento_Consulta.Text);
             dtParametros.Rows.Add("", "");
             dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
 
@@ -693,6 +697,7 @@ namespace Sistema_Iglesia_Dios_Web.Ingresos
 
             dtParametros.Rows.Add("Descripción de ingreso: ", cmbDescripcionIngreso_Consulta.Text);
             dtParametros.Rows.Add("Beneficiario: ", cmbMiembro_Consulta.Text);
+            dtParametros.Rows.Add("Departamento: ", cmbDepartamento_Consulta.Text);
             dtParametros.Rows.Add("", "");
             dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
 

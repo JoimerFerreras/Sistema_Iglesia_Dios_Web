@@ -422,7 +422,11 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
         {
             bool Validacion = false;
 
-            if (cmbDescripcion_Egreso.SelectedValue == "0")
+            if (cmbMiembro.SelectedValue == "0" && cmbMiscelaneo.SelectedValue == "0" && cmbDepartamento.SelectedValue == "0")
+            {
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Debe seleccionar un miembro, un misceláneo o un departamento.");
+            }
+            else if (cmbDescripcion_Egreso.SelectedValue == "0")
             {
                 Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La descripción del egreso no puede estar vacía");
             }
@@ -649,6 +653,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
 
             dtParametros.Rows.Add("Descripción de egreso: ", cmbDescripcionEgreso_Consulta.Text);
             dtParametros.Rows.Add("Beneficiario: ", cmbMiembro_Consulta.Text);
+            dtParametros.Rows.Add("Departamento: ", cmbDepartamento_Consulta.Text);
             dtParametros.Rows.Add("", "");
             dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
 
@@ -693,6 +698,7 @@ namespace Sistema_Iglesia_Dios_Web.Egresos
 
             dtParametros.Rows.Add("Descripción de egreso: ", cmbDescripcionEgreso_Consulta.Text);
             dtParametros.Rows.Add("Beneficiario: ", cmbMiembro_Consulta.Text);
+            dtParametros.Rows.Add("Departamento: ", cmbDepartamento_Consulta.Text);
             dtParametros.Rows.Add("", "");
             dtParametros.Rows.Add("Total de registros: ", Utilidad_N.FormatearNumero(dtReporte.Rows.Count.ToString(), 0, 0));
 

@@ -340,7 +340,7 @@
                                 <div class="col-12 col-md-6">
                                     Fecha de Egreso <span class="LabelCampoObligatorio">*</span>
                                     <br />
-                                    <telerik:RadDatePicker ID="dtpFechaEgreso" runat="server" Width="100%" Culture="es-DO" TabIndex="1" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
+                                    <telerik:RadDatePicker ID="dtpFechaEgreso" runat="server" Width="100%" Culture="es-DO" TabIndex="2" RenderMode="Lightweight" Skin="Bootstrap" Style="max-width: 200px;" MinDate="01-01-1900">
                                         <DateInput ID="DateInput1" runat="server" DateFormat="dd/MM/yyyy" ReadOnly="false"></DateInput>
                                     </telerik:RadDatePicker>
                                 </div>
@@ -350,7 +350,7 @@
                                 <div class="col-12 col-md-6">
                                     Miembro 
                                      <telerik:RadComboBox ID="cmbMiembro" runat="server" Width="100%" ClientIDMode="Static"
-                                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="3"
                                          MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                                          Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
                                          <Items>
@@ -363,7 +363,7 @@
                                     Misceláneo
                                     <div class="d-flex align-items-center">
                                         <telerik:RadComboBox ID="cmbMiscelaneo" runat="server" Width="100%" ClientIDMode="Static"
-                                            MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                            MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="4"
                                             MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                                             Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
                                             <Items>
@@ -382,7 +382,7 @@
                                 <div class="col-12 col-md-6">
                                     Departamento 
                                      <telerik:RadComboBox ID="cmbDepartamento" runat="server" Width="100%" ClientIDMode="Static"
-                                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                         MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="5"
                                          MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                                          Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
                                          <Items>
@@ -414,7 +414,7 @@
                                 <div class="col-12 col-md-6">
                                     Forma de pago <span class="LabelCampoObligatorio">*</span><br />
                                     <telerik:RadComboBox ID="cmbFormaPago" runat="server" Width="300px" ClientIDMode="Static"
-                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                        MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="7"
                                         MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
                                         Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
                                         <Items>
@@ -425,7 +425,7 @@
 
                                 <div class="col-12 col-md-4">
                                     Monto <span class="LabelCampoObligatorio">*</span>
-                                    <asp:TextBox runat="server" ID="txtMonto" CssClass="form-control" Width="200px" MaxLength="30" TabIndex="2"></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtMonto" CssClass="form-control" Width="200px" MaxLength="30" TabIndex="8"></asp:TextBox>
                                 </div>
 
                             </div>
@@ -433,7 +433,7 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-12">
                                     Comentario
-                               <asp:TextBox runat="server" ID="txtComentario" CssClass="form-control" Height="76" TextMode="MultiLine" MaxLength="500" Width="100%" TabIndex="2"></asp:TextBox>
+                               <asp:TextBox runat="server" ID="txtComentario" CssClass="form-control" Height="76" TextMode="MultiLine" MaxLength="500" Width="100%" TabIndex="9"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
@@ -446,24 +446,24 @@
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Usuario que hizo el registro
-                               <asp:TextBox runat="server" ID="txtUsuarioRegistro" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                               <asp:TextBox runat="server" ID="txtUsuarioRegistro" CssClass="form-control" Width="100%" TabIndex="10" ReadOnly="true"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Fecha de registro
-                                  <asp:TextBox runat="server" ID="txtFechaRegistro" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                  <asp:TextBox runat="server" ID="txtFechaRegistro" CssClass="form-control" Width="100%" TabIndex="11" ReadOnly="true"></asp:TextBox>
                                 </div>
                             </div>
 
                             <div class="row" style="margin-top: 20px;">
                                 <div class="col-12 col-md-6">
                                     Usuario de ultima modificaci&oacute;n
-                                  <asp:TextBox runat="server" ID="txtUsuarioUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                  <asp:TextBox runat="server" ID="txtUsuarioUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="12" ReadOnly="true"></asp:TextBox>
                                 </div>
 
                                 <div class="col-12 col-md-6">
                                     Fecha de ultima modificaci&oacute;n
-                                 <asp:TextBox runat="server" ID="txtFechaUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="2" ReadOnly="true"></asp:TextBox>
+                                 <asp:TextBox runat="server" ID="txtFechaUltimaModificacion" CssClass="form-control" Width="100%" TabIndex="13" ReadOnly="true"></asp:TextBox>
                                 </div>
                             </div>
                         </div>

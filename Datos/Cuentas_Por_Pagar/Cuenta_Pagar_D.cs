@@ -15,7 +15,7 @@ namespace Datos.Cuenta_Por_Pagar
 
         #region Consultas
 
-        public DataTable ListarDetalle(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Miscelaneo, int Descripcion, int Tipo_Documento)
+        public DataTable ListarDetalle(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Miscelaneo, int Descripcion, int Tipo_Documento, int Departamento)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
@@ -29,6 +29,7 @@ namespace Datos.Cuenta_Por_Pagar
                                                     D.Nombre AS Descripcion,
                                                     M.Nombres + ' ' + M.Apellidos AS Miembro,
                                                     MC.Descripcion_Miscelaneo AS Miscelaneo,
+													Dep.Nombre_Departamento AS Departamento,
     
                                                     -- Aplica signo según el tipo de documento
                                                     CASE 
@@ -45,7 +46,8 @@ namespace Datos.Cuenta_Por_Pagar
                                                 LEFT JOIN Descripciones D ON D.Id_Descripcion = CPP.Id_Descripcion
                                                 LEFT JOIN Miembros M ON M.Id_Miembro = CPP.Id_Miembro
                                                 LEFT JOIN Formas_Pago FP ON FP.Id_Forma_Pago = CPP.Id_Forma_Pago
-                                                LEFT JOIN Miscelaneos MC ON MC.Id_Miscelaneo = CPP.Id_Miscelaneo";
+                                                LEFT JOIN Miscelaneos MC ON MC.Id_Miscelaneo = CPP.Id_Miscelaneo
+												LEFT JOIN Departamentos Dep ON Dep.Id_Departamento = CPP.Id_Departamento";
                               
                 
                 // Tipo de fecha
@@ -81,6 +83,13 @@ namespace Datos.Cuenta_Por_Pagar
                     cmd.Parameters.AddWithValue("@Tipo_Documento", Tipo_Documento);
                 }
 
+                //Departamento
+                if (Departamento > 0)
+                {
+                    sentencia += $" AND (CPP.Id_Departamento = @Id_Departamento) ";
+                    cmd.Parameters.AddWithValue("@Id_Departamento", Departamento);
+                }
+
                 sentencia += $@"ORDER BY Id_Cuenta_Pagar ASC";
 
                 cmd.CommandText = sentencia;
@@ -104,7 +113,7 @@ namespace Datos.Cuenta_Por_Pagar
             }
         }
 
-        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Miscelaneo, int Descripcion, int Tipo_Documento)
+        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, int Miembro, int Miscelaneo, int Descripcion, int Tipo_Documento, int Departamento)
         {
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
@@ -181,6 +190,13 @@ namespace Datos.Cuenta_Por_Pagar
                     cmd.Parameters.AddWithValue("@Tipo_Documento", Tipo_Documento);
                 }
 
+                //Departamento
+                if (Departamento > 0)
+                {
+                    sentencia += $" AND (CPP.Id_Departamento = @Id_Departamento) ";
+                    cmd.Parameters.AddWithValue("@Id_Departamento", Departamento);
+                }
+
                 sentencia += $@"ORDER BY CPP.Fecha_CP ASC;";
 
                 cmd.CommandText = sentencia;
@@ -226,7 +242,8 @@ namespace Datos.Cuenta_Por_Pagar
 	                                        CPP.Fecha_Registro,
                                             Id_Usuario_Ultima_Modificacion,
 	                                        U2.Nombre1 + ' ' + U2.Apellido1 AS Nombre_Usuario_Ultima_Modificacion,
-	                                        CPP.Fecha_Ultima_Modificacion
+	                                        CPP.Fecha_Ultima_Modificacion,
+	                                        CPP.Id_Departamento
                                         FROM Cuentas_Por_Pagar CPP
                                         LEFT JOIN Usuarios U1 ON U1.Id_Usuario = CPP.Id_Usuario
                                         LEFT JOIN Usuarios U2 ON U2.Id_Usuario = CPP.Id_Usuario_Ultima_Modificacion
@@ -253,6 +270,7 @@ namespace Datos.Cuenta_Por_Pagar
                         entidad.Tipo_Documento = row["Tipo_Documento"].ToString();
                         entidad.No_Documento = row["No_Documento"].ToString();
                         entidad.Comentario = row["Comentario"].ToString();
+                        entidad.Id_Departamento = int.Parse(row["Id_Departamento"].ToString());
 
                         entidad.Id_Usuario = int.Parse(row["Id_Usuario"].ToString());
                         entidad.Nombre_Usuario_Registro = row["Nombre_Usuario_Registro"].ToString();
@@ -298,6 +316,7 @@ namespace Datos.Cuenta_Por_Pagar
                                         Comentario,
                                         Id_Usuario,
                                         Fecha_Registro,
+                                        Id_Departamento,
                                         Id_Usuario_Ultima_Modificacion)
 
                                     VALUES(
@@ -312,6 +331,7 @@ namespace Datos.Cuenta_Por_Pagar
                                         @Comentario,
                                         @Id_Usuario,
                                         @Fecha_Registro,
+                                        @Id_Departamento,
                                         @Id_Usuario_Ultima_Modificacion);
 
                                         SELECT SCOPE_IDENTITY() AS UltimoRegistroAgregado;";
@@ -329,6 +349,7 @@ namespace Datos.Cuenta_Por_Pagar
                 cmd.Parameters.AddWithValue("@Id_Usuario", entidad.Id_Usuario);
                 cmd.Parameters.AddWithValue("@Fecha_Registro", entidad.Fecha_Registro);
                 cmd.Parameters.AddWithValue("@Id_Usuario_Ultima_Modificacion", "0");
+                cmd.Parameters.AddWithValue("@Id_Departamento", entidad.Id_Departamento);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
@@ -368,7 +389,8 @@ namespace Datos.Cuenta_Por_Pagar
                                         No_Documento = @No_Documento, 
                                         Comentario = @Comentario, 
                                         Id_Usuario_Ultima_Modificacion = @Id_Usuario_Ultima_Modificacion, 
-                                        Fecha_Ultima_Modificacion = @Fecha_Ultima_Modificacion 
+                                        Fecha_Ultima_Modificacion = @Fecha_Ultima_Modificacion, 
+                                        Id_Departamento = @Id_Departamento 
 
                                         WHERE Id_Cuenta_Pagar = @Id_Cuenta_Pagar";
 
@@ -385,6 +407,7 @@ namespace Datos.Cuenta_Por_Pagar
                 cmd.Parameters.AddWithValue("@Comentario", entidad.Comentario);
                 cmd.Parameters.AddWithValue("@Id_Usuario_Ultima_Modificacion", entidad.Id_Usuario_Ultima_Modificacion);
                 cmd.Parameters.AddWithValue("@Fecha_Ultima_Modificacion", entidad.Fecha_Ultima_Modificacion);
+                cmd.Parameters.AddWithValue("@Id_Departamento", entidad.Id_Departamento);
                 cmd.CommandType = CommandType.Text;
                 try
                 {

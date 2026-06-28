@@ -9,7 +9,7 @@ namespace Negocio.Cuentas_Por_Pagar
     {
         Cuenta_Pagar_D Cuenta_Pagar_D = new Cuenta_Pagar_D();
 
-        public DataTable ListarDetalle(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Miscelaneo, string Descripcion, string Tipo_Documento)
+        public DataTable ListarDetalle(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Miscelaneo, string Descripcion, string Tipo_Documento, string Departamento)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace Negocio.Cuentas_Por_Pagar
 
                 FechaFinal = FechaFinal.Date.AddDays(1).AddTicks(-1);
 
-                return Cuenta_Pagar_D.ListarDetalle(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Miscelaneo), int.Parse(Descripcion), int.Parse(Tipo_Documento));
+                return Cuenta_Pagar_D.ListarDetalle(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Miscelaneo), int.Parse(Descripcion), int.Parse(Tipo_Documento), int.Parse(Departamento));
             }
             catch (Exception ex)
             {
@@ -34,7 +34,7 @@ namespace Negocio.Cuentas_Por_Pagar
             }
         }
 
-        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Miscelaneo, string Descripcion, string Tipo_Documento)
+        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Miscelaneo, string Descripcion, string Tipo_Documento, string Departamento)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Negocio.Cuentas_Por_Pagar
                 {
                     TextoTipoFecha = "CPP.Fecha_Registro";
                 }
-                return Cuenta_Pagar_D.ListarResumen(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Miscelaneo), int.Parse(Descripcion), int.Parse(Tipo_Documento));
+                return Cuenta_Pagar_D.ListarResumen(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Miscelaneo), int.Parse(Descripcion), int.Parse(Tipo_Documento), int.Parse(Departamento));
             }
             catch (Exception ex)
             {

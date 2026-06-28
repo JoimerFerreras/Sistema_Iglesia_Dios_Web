@@ -9,7 +9,7 @@ namespace Negocio.Cuentas_Por_Cobrar
     {
         Cuenta_Cobrar_D Cuenta_Cobrar_D = new Cuenta_Cobrar_D();
 
-        public DataTable ListarDetalle(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Miscelaneo, string Descripcion, string Tipo_Documento)
+        public DataTable ListarDetalle(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Miscelaneo, string Descripcion, string Tipo_Documento, string Departamento)
         {
             try
             {
@@ -26,7 +26,7 @@ namespace Negocio.Cuentas_Por_Cobrar
 
                 FechaFinal = FechaFinal.Date.AddDays(1).AddTicks(-1);
 
-                return Cuenta_Cobrar_D.ListarDetalle(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Miscelaneo), int.Parse(Descripcion), int.Parse(Tipo_Documento));
+                return Cuenta_Cobrar_D.ListarDetalle(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Miscelaneo), int.Parse(Descripcion), int.Parse(Tipo_Documento), int.Parse(Departamento));
             }
             catch (Exception ex)
             {
@@ -34,7 +34,7 @@ namespace Negocio.Cuentas_Por_Cobrar
             }
         }
 
-        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Miscelaneo, string Descripcion, string Tipo_Documento)
+        public DataTable ListarResumen(string TipoFecha, DateTime FechaInicial, DateTime FechaFinal, string Miembro, string Miscelaneo, string Descripcion, string Tipo_Documento, string Departamento)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Negocio.Cuentas_Por_Cobrar
                 {
                     TextoTipoFecha = "CPC.Fecha_Registro";
                 }
-                return Cuenta_Cobrar_D.ListarResumen(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Miscelaneo), int.Parse(Descripcion), int.Parse(Tipo_Documento));
+                return Cuenta_Cobrar_D.ListarResumen(TextoTipoFecha, FechaInicial, FechaFinal, int.Parse(Miembro), int.Parse(Miscelaneo), int.Parse(Descripcion), int.Parse(Tipo_Documento), int.Parse(Departamento));
             }
             catch (Exception ex)
             {
