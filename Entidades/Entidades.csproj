@@ -50,6 +50,7 @@
     <Compile Include="Egresos\Egreso_E.cs" />
     <Compile Include="Ingresos\Archivo_Ingreso_E.cs" />
     <Compile Include="Ingresos\Ingreso_E.cs" />
+    <Compile Include="Miembros\Importacion_Miembros_E.cs" />
     <Compile Include="Ministerios\Departamento_E.cs" />
     <Compile Include="Ministerios\Roles_Ministerios_E.cs" />
     <Compile Include="Otros_Parametros\Descripciones_E.cs" />

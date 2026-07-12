@@ -132,6 +132,24 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
         protected global::Telerik.Web.UI.RadGrid gvDatos;
 
         /// <summary>
+        /// Control fuImportarMiembros.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuImportarMiembros;
+
+        /// <summary>
+        /// Control btnImportarMiembros.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnImportarMiembros;
+
+        /// <summary>
         /// Control btnBuscar.
         /// </summary>
         /// <remarks>

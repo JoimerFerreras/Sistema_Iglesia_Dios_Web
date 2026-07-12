@@ -1,16 +1,19 @@
 ﻿// Autor: Joimer Ferreras
 
 using Entidades.Miembros;
+using Negocio.Departamentos;
 using Negocio.Miembros;
+using Negocio.Ministerios;
 using Negocio.Util_N;
 using Sistema_Iglesia_Dios_Web.Utilidad_Cliente;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Negocio.Ministerios;
-using Negocio.Departamentos;
+using System.IO;
 
 namespace Sistema_Iglesia_Dios_Web.Miembros
 {
@@ -890,6 +893,151 @@ namespace Sistema_Iglesia_Dios_Web.Miembros
                 divFiltroFechaFinal.Visible = true;
             }
         }
+
+
+
+
+        protected void btnImportarMiembros_Click(
+    object sender,
+    EventArgs e)
+        {
+            if (EvaluarAccionPermiso(1) == false)
+            {
+                Utilidad_C.MostrarAlerta_AccionDenegada(
+                    this,
+                    this.GetType());
+
+                return;
+            }
+
+            if (!fuImportarMiembros.HasFile)
+            {
+                Utilidad_C.MostrarAlerta_Personalizada(
+                    this,
+                    this.GetType(),
+                    "Advertencia",
+                    "Debe seleccionar un archivo Excel.",
+                    "warning");
+
+                return;
+            }
+
+            string extension = Path
+                .GetExtension(fuImportarMiembros.FileName)
+                .ToLowerInvariant();
+
+            if (extension != ".xlsx")
+            {
+                Utilidad_C.MostrarAlerta_Personalizada(
+                    this,
+                    this.GetType(),
+                    "Advertencia",
+                    "Solo se permiten archivos con extensión .xlsx.",
+                    "warning");
+
+                return;
+            }
+
+            const int tamanoMaximo = 10 * 1024 * 1024;
+
+            if (fuImportarMiembros.PostedFile.ContentLength <= 0)
+            {
+                Utilidad_C.MostrarAlerta_Personalizada(
+                    this,
+                    this.GetType(),
+                    "Advertencia",
+                    "El archivo seleccionado está vacío.",
+                    "warning");
+
+                return;
+            }
+
+            if (fuImportarMiembros.PostedFile.ContentLength > tamanoMaximo)
+            {
+                Utilidad_C.MostrarAlerta_Personalizada(
+                    this,
+                    this.GetType(),
+                    "Advertencia",
+                    "El archivo no puede superar los 10 MB.",
+                    "warning");
+
+                return;
+            }
+
+            try
+            {
+                Importador_Miembros_Excel_N lector =
+                    new Importador_Miembros_Excel_N();
+
+                Importacion_Miembros_E importacion =
+                    lector.Leer(
+                        fuImportarMiembros.PostedFile.InputStream);
+
+                if (importacion.Errores.Count > 0)
+                {
+                    string detalle = string.Join(
+                        " | ",
+                        importacion.Errores.Take(10).ToArray());
+
+                    if (importacion.Errores.Count > 10)
+                    {
+                        detalle +=
+                            " | Existen " +
+                            (importacion.Errores.Count - 10) +
+                            " errores adicionales.";
+                    }
+
+                    Utilidad_C.MostrarAlerta_Personalizada(
+                        this,
+                        this.GetType(),
+                        "Archivo con errores",
+                        detalle,
+                        "warning");
+
+                    return;
+                }
+
+                Miembro_Importacion_N importacion_N =
+                    new Miembro_Importacion_N();
+
+                int cantidadImportada =
+                    importacion_N.Importar(importacion);
+
+                Consultar();
+
+                Utilidad_C.MostrarAlerta_Personalizada(
+                    this,
+                    this.GetType(),
+                    "Importación completada",
+                    "Se importaron correctamente " +
+                        cantidadImportada +
+                        " miembros.",
+                    "success");
+            }
+            catch (SqlException ex)
+            {
+                /*
+                    Los THROW del procedimiento almacenado llegarán aquí
+                    conservando el mensaje definido en SQL Server.
+                */
+                Utilidad_C.MostrarAlerta_Personalizada(
+                    this,
+                    this.GetType(),
+                    "Error de importación",
+                    ex.Message,
+                    "error");
+            }
+            catch (Exception ex)
+            {
+                Utilidad_C.MostrarAlerta_Personalizada(
+                    this,
+                    this.GetType(),
+                    "Error de importación",
+                    ex.Message,
+                    "error");
+            }
+        }
+
         #endregion
     }
 }
