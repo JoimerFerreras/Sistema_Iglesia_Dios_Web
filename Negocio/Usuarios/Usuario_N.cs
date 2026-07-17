@@ -46,6 +46,18 @@ namespace Negocio.Usuarios
             }
         }
 
+        public DataTable ObtenerUsuario_VerInformacion(string Id)
+        {
+            try
+            {
+                return Usuario_D.ObtenerUsuario_VerInformacion(int.Parse(Id));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public Usuario_E ObtenerRegistro(string Id)
         {
             try

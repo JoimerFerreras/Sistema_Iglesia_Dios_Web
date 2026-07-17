@@ -215,6 +215,7 @@
     <Content Include="Ministerios\frmDepartamentos.aspx" />
     <Content Include="Ministerios\frmRolesMinisterios.aspx" />
     <Content Include="Ministerios\frmMinisterios.aspx" />
+    <Content Include="Importacion_Masiva\frmImportacionMasiva.aspx" />
     <Content Include="Otros_Parametros\frmFormas_Pago.aspx" />
     <Content Include="Otros_Parametros\frmDescripciones.aspx" />
     <Content Include="Otros_Parametros\frmMiscelaneos.aspx" />
@@ -264,6 +265,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Recursos\Recursos_Utiles\funcionalidades_menu.json" />
+    <Content Include="Recursos\Plantillas_Importacion_Masiva\Plantilla_Importacion_Miembros.xlsx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -294,6 +296,7 @@
     <Content Include="Site.Master" />
     <Content Include="Usuarios\frmRoles.aspx" />
     <Content Include="Usuarios\frmLogUsuariosAccesos.aspx" />
+    <Content Include="Usuarios\frmInformacionUsuario.aspx" />
     <Content Include="Usuarios\frmUsuarios.aspx" />
     <Content Include="Utilidad_Cliente\frmPaginaPrincipal.aspx" />
     <Content Include="ViewSwitcher.ascx" />
@@ -384,6 +387,13 @@
     <Compile Include="Ministerios\frmMinisterios.aspx.designer.cs">
       <DependentUpon>frmMinisterios.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Importacion_Masiva\frmImportacionMasiva.aspx.cs">
+      <DependentUpon>frmImportacionMasiva.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Importacion_Masiva\frmImportacionMasiva.aspx.designer.cs">
+      <DependentUpon>frmImportacionMasiva.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Otros_Parametros\frmFormas_Pago.aspx.cs">
       <DependentUpon>frmFormas_Pago.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -452,6 +462,13 @@
     </Compile>
     <Compile Include="Usuarios\frmLogUsuariosAccesos.aspx.designer.cs">
       <DependentUpon>frmLogUsuariosAccesos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios\frmInformacionUsuario.aspx.cs">
+      <DependentUpon>frmInformacionUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios\frmInformacionUsuario.aspx.designer.cs">
+      <DependentUpon>frmInformacionUsuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Usuarios\frmUsuarios.aspx.cs">
       <DependentUpon>frmUsuarios.aspx</DependentUpon>

@@ -152,6 +152,56 @@ namespace Datos.Usuarios
             }
         }
 
+        public DataTable ObtenerUsuario_VerInformacion(int Id_Usuario)
+        {
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = @"
+                    SELECT 
+	                    U.Id_Usuario,
+                        U.Nombre1,
+                        U.Nombre2,
+                        U.Apellido1,
+                        U.Apellido2,
+                        CASE U.Sexo 
+						    WHEN '1' THEN 'Masculino' 
+						    WHEN '2' THEN 'Femenino' 
+					    END AS Sexo,
+                                            
+                        R.Nombre_Rol AS Rol,
+                        U.Celular,
+                        U.Telefono,
+                        U.Correo,
+                        U.Usuario
+                    FROM Usuarios U
+				    LEFT JOIN Roles R ON R.Id_Rol = U.Id_Rol
+
+                    WHERE Id_Usuario = @Id_Usuario";
+
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+
+                cmd.Parameters.AddWithValue("@Id_Usuario", Id_Usuario);
+
+                cmd.CommandText = sentencia;
+                cmd.Connection = conexion;
+                cmd.CommandType = CommandType.Text;
+
+                try
+                {
+                    conexion.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    DataTable dt = new DataTable();
+                    dt.Load(dr);
+                    conexion.Close();
+                    return dt;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
 
         public Usuario_E ObtenerRegistro(string Id)
         {
@@ -250,6 +300,7 @@ namespace Datos.Usuarios
                 }
             }
         }
+
 
         public bool Agregar(Usuario_E entidad)
         {
@@ -366,6 +417,35 @@ namespace Datos.Usuarios
                 cmd.Parameters.AddWithValue("@Password", entidad.Password);
                 cmd.Parameters.AddWithValue("@Verificacion_Dos_Pasos", entidad.Verificacion_Dos_Pasos);
                 cmd.Parameters.AddWithValue("@RestablecerPassword", entidad.RestablecerPassword);
+                cmd.CommandType = CommandType.Text;
+                try
+                {
+                    conexion.Open();
+                    int FilasAfectadas = cmd.ExecuteNonQuery();
+                    conexion.Close();
+                    if (FilasAfectadas > 0) Respuesta = true;
+
+                    return Respuesta;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+
+        public bool CambiarContraseña(Usuario_E entidad)
+        {
+            bool Respuesta = false;
+
+            using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
+            {
+                string sentencia = $@"UPDATE Usuarios SET Password = @Password WHERE Id_Usuario = @Id_Usuario";
+
+                SqlCommand cmd = new SqlCommand(sentencia, conexion);
+                cmd.Parameters.AddWithValue("@Id_Usuario", entidad.Id_Usuario);
+                cmd.Parameters.AddWithValue("@Password", entidad.Password);
                 cmd.CommandType = CommandType.Text;
                 try
                 {

@@ -218,5 +218,27 @@
     "Nombre_Modulo": "Miembros",
     "Descripcion_Modulo": "Miembros",
     "Clase_CSS_Modulo": "fa-solid fa-church"
+  },
+  {
+    "Id_Funcionalidad": 21,
+    "Id_Modulo": 8,
+    "Nombre_Funcionalidad": "Importacion_Masiva",
+    "Descripcion_Funcionalidad": "Importación masiva",
+    "Nombre_Archivo": "Importacion_Masiva/frmImportacionMasiva.aspx",
+    "Clase_CSS_Funcionalidad": "fa-solid fa-file-import",
+    "Nombre_Modulo": "Otros_Parametros",
+    "Descripcion_Modulo": "Otros parámetros",
+    "Clase_CSS_Modulo": "fa-solid fa-sliders"
+  },
+  {
+    "Id_Funcionalidad": 22,
+    "Id_Modulo": 7,
+    "Nombre_Funcionalidad": "Informacion_Usuario",
+    "Descripcion_Funcionalidad": "Mi información",
+    "Nombre_Archivo": "Usuarios/frmInformacionUsuario.aspx",
+    "Clase_CSS_Funcionalidad": "fa-regular fa-address-book",
+    "Nombre_Modulo": "Configuracion",
+    "Descripcion_Modulo": "Configuración",
+    "Clase_CSS_Modulo": "fa-solid fa-gear"
   }
 ]

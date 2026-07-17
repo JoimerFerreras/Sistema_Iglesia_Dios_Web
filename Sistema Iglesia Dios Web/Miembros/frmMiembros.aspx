@@ -18,7 +18,6 @@
     <asp:UpdatePanel runat="server" UpdateMode="Conditional">
        <Triggers>
         <asp:PostBackTrigger ControlID="btnGenerarExcel" />
-        <asp:PostBackTrigger ControlID="btnImportarMiembros" />
     </Triggers>
         <ContentTemplate>
 
@@ -109,14 +108,14 @@
 
                                 <div class="col-12 col-md-6">
                                     Ministerio perteneciente
-                <telerik:RadComboBox ID="cmbMinisterioFiltro" runat="server" Width="100%" ClientIDMode="Static"
-                    MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
-                    MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
-                    Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
-                    <Items>
-                        <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
-                    </Items>
-                </telerik:RadComboBox>
+                                <telerik:RadComboBox ID="cmbMinisterioFiltro" runat="server" Width="100%" ClientIDMode="Static"
+                                    MaxHeight="200px" AllowCustomText="True" Sort="Ascending" TabIndex="6"
+                                    MarkFirstMatch="true" OnClientKeyPressing="ChangeToUpperCase" RenderMode="Lightweight" Skin="Bootstrap"
+                                    Filter="Contains" DataValueField="Codigo" DataTextField="Nombre" AppendDataBoundItems="true" AutoPostBack="false">
+                                    <Items>
+                                        <telerik:RadComboBoxItem Text="Todos" Value="0" Selected="true" />
+                                    </Items>
+                                </telerik:RadComboBox>
 
                                 </div>
                             </div>
@@ -172,54 +171,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        <div class="shadowed-div-body"
-             style="width: 100%; margin-top: 20px;">
-            <div>
-                <i class="fa-solid fa-file-import shadowed-div-body-titulo"></i>
-                <span class="shadowed-div-body-titulo">
-                    Importación masiva de miembros
-                </span>
-            </div>
-
-            <div class="linea-separador"
-                 style="margin-top: 20px;"></div>
-
-            <div class="row" style="margin-top: 20px;">
-                <div class="col-12 col-md-8">
-                    Archivo Excel (.xlsx)
-
-                    <asp:FileUpload
-                        ID="fuImportarMiembros"
-                        runat="server"
-                        CssClass="form-control"
-                        accept=".xlsx" />
-
-                    <small class="text-muted">
-                        Utilice la plantilla oficial. Los campos
-                        Nombres, Apellidos y Sexo son obligatorios.
-                    </small>
-                </div>
-
-                <div class="col-12 col-md-4"
-                     style="padding-top: 24px;">
-                    <asp:LinkButton
-                        ID="btnImportarMiembros"
-                        runat="server"
-                        CssClass="btn btn-success"
-                        OnClick="btnImportarMiembros_Click"
-                        OnClientClick="MostrarPanelCarga()"
-                        data-tippy-content="Importar miembros desde Excel">
-
-                        <i class="fa-solid fa-file-import"></i>
-                        Importar miembros
-                    </asp:LinkButton>
-                </div>
-            </div>
-        </div>
-
-
 
                         <div class="contenedor_botones">
                             <asp:LinkButton CssClass="fa-solid fa-magnifying-glass fa-lg boton_formulario_Buscar" runat="server" ID="btnBuscar" OnClientClick="MostrarPanelCarga()" OnClick="btnBuscar_Click"></asp:LinkButton>

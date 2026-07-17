@@ -112,8 +112,20 @@
                                 </div>
                             </div>
                             <ul class="dropdown-menu dropdown-menu-lg-end">
-                                <li><a class="dropdown-item" href="#"><i class="fa-regular fa-address-book" style="padding-right: 10px;"></i>Ver información de perfil</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-key" style="padding-right: 10px;"></i>Cambiar mi contraseña</a></li>
+                                <li>
+    <asp:HyperLink
+        ID="lnkVerInformacionPerfil"
+        runat="server"
+        CssClass="dropdown-item"
+        NavigateUrl="~/Usuarios/frmInformacionUsuario.aspx">
+
+        <i class="fa-regular fa-address-book"
+           style="padding-right: 10px;"></i>
+
+        Ver información de perfil
+    </asp:HyperLink>
+</li>
+                               
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
