@@ -108,6 +108,18 @@ namespace Negocio.Usuarios
             }
         }
 
+        public bool CambiarContraseña(Usuario_E entidad)
+        {
+            try
+            {
+                return Usuario_D.CambiarContraseña(entidad);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool Eliminar(int Id)
         {
             try

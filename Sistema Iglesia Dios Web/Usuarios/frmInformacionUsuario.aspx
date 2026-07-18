@@ -27,43 +27,43 @@
                     <div class="row" style="margin-top: 20px;">
                         <div class="col-12 col-md-6">
                             ID
-                                     <asp:TextBox runat="server" ID="txtIdUsuario" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
+                         <asp:TextBox runat="server" ID="txtIdUsuario" CssClass="form-control form-control" Width="100%" ReadOnly="true" TabIndex="1" Style="max-width: 150px;"></asp:TextBox>
                         </div>
                     </div>
 
                     <div class="row" style="margin-top: 20px;">
                         <div class="col-12 col-md-6">
                             Primer nombre 
-                            <asp:TextBox runat="server" ID="txtNombre1" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="2" Style="max-width: 400px"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtNombre1" CssClass="form-control form-control" ReadOnly="true" MaxLength="30" Width="100%" TabIndex="2" Style="max-width: 400px"></asp:TextBox>
                         </div>
 
                         <div class="col-12 col-md-6">
                             Segundo nombre
-                                    <asp:TextBox runat="server" ID="txtNombre2" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="3" Style="max-width: 400px"></asp:TextBox>
+                           <asp:TextBox runat="server" ID="txtNombre2" CssClass="form-control form-control" ReadOnly="true" MaxLength="30" Width="100%" TabIndex="3" Style="max-width: 400px"></asp:TextBox>
                         </div>
                     </div>
 
                     <div class="row" style="margin-top: 20px;">
                         <div class="col-12 col-md-6">
                             Primer apellido 
-                            <asp:TextBox runat="server" ID="txtApellido1" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="4" Style="max-width: 400px"></asp:TextBox>
+                            <asp:TextBox runat="server" ID="txtApellido1" CssClass="form-control form-control" ReadOnly="true" MaxLength="30" Width="100%" TabIndex="4" Style="max-width: 400px"></asp:TextBox>
                         </div>
 
                         <div class="col-12 col-md-6">
                             Segundo apellido
-                                    <asp:TextBox runat="server" ID="txtApellido2" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="5" Style="max-width: 400px"></asp:TextBox>
+                           <asp:TextBox runat="server" ID="txtApellido2" CssClass="form-control form-control" ReadOnly="true" MaxLength="30" Width="100%" TabIndex="5" Style="max-width: 400px"></asp:TextBox>
                         </div>
                     </div>
 
                     <div class="row" style="margin-top: 20px;">
                         <div class="col-12 col-md-6">
                             Celular
-                                    <telerik:RadMaskedTextBox runat="server" ID="txtCelular" CssClass="form-control form-control" Width="100%" TabIndex="6" Mask="(###) ###-####" AutoCompleteType="Cellular" ClientIDMode="Static" Skin="Bootstrap" Font-Size="12" Style="max-width: 200px"></telerik:RadMaskedTextBox>
+                          <telerik:RadMaskedTextBox runat="server" ID="txtCelular" CssClass="form-control form-control" ReadOnly="true" Width="100%" TabIndex="6" Mask="(###) ###-####" AutoCompleteType="Cellular" ClientIDMode="Static" Skin="Bootstrap" Font-Size="12" Style="max-width: 200px"></telerik:RadMaskedTextBox>
                         </div>
 
                         <div class="col-12 col-md-6">
                             Tel&eacute;fono
-                                    <telerik:RadMaskedTextBox runat="server" ID="txtTelefono" CssClass="form-control form-control" Width="100%" TabIndex="7" Mask="(###) ###-####" AutoCompleteType="HomePhone" ClientIDMode="Static" Skin="Bootstrap" Font-Size="12" Style="max-width: 200px"></telerik:RadMaskedTextBox>
+                           <telerik:RadMaskedTextBox runat="server" ID="txtTelefono" CssClass="form-control form-control" ReadOnly="true" Width="100%" TabIndex="7" Mask="(###) ###-####" AutoCompleteType="HomePhone" ClientIDMode="Static" Skin="Bootstrap" Font-Size="12" Style="max-width: 200px"></telerik:RadMaskedTextBox>
                         </div>
                     </div>
 
@@ -87,9 +87,9 @@
                                     <asp:TextBox runat="server" ID="txtUsuario" CssClass="form-control form-control" MaxLength="30" Width="100%" TabIndex="9" ReadOnly="true" Style="max-width: 400px"></asp:TextBox>
                         </div>
 
-                        <div class="col-12 col-md-6">
+                        <div runat="server" id="pnlCambiarPassword_Activate" class="col-12 col-md-6">
                             Contraseña
-    <br />
+                            <br />
 
                             <asp:LinkButton
                                 ID="btnCambiarPassword"
@@ -98,8 +98,8 @@
                                 CausesValidation="false"
                                 OnClick="btnCambiarPassword_Click">
 
-        <i class="fa-solid fa-key"></i>
-        Cambiar contraseña
+                                <i class="fa-solid fa-key"></i>
+                                Cambiar contraseña
                             </asp:LinkButton>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
 
                             <div class="col-12 col-md-6">
                                 Nueva contraseña
-    <span class="LabelCampoObligatorio">*</span>
+                                <span class="LabelCampoObligatorio">*</span>
 
                                 <i class="fa-solid fa-circle-info btnInfoControl"
                                     data-tippy-content="La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un carácter especial."></i>
@@ -144,7 +144,7 @@
 
                             <div class="col-12 col-md-6">
                                 Repetir contraseña
-    <span class="LabelCampoObligatorio">*</span>
+                                <span class="LabelCampoObligatorio">*</span>
 
                                 <div class="contenedor-btn-pass">
                                     <asp:TextBox
@@ -180,8 +180,8 @@
                                     OnClick="btnGuardarPassword_Click"
                                     OnClientClick="MostrarPanelCarga()">
 
-                <i class="fa-solid fa-floppy-disk"></i>
-                Guardar contraseña
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    Guardar contraseña
                                 </asp:LinkButton>
 
                                 <asp:LinkButton
@@ -192,8 +192,8 @@
                                     OnClick="btnCancelarCambioPassword_Click"
                                     Style="margin-left: 5px;">
 
-                <i class="fa-solid fa-xmark"></i>
-                Cancelar
+                                <i class="fa-solid fa-xmark"></i>
+                                Cancelar
                                 </asp:LinkButton>
 
                             </div>

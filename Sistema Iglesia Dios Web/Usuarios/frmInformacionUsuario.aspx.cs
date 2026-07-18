@@ -89,52 +89,23 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
 
         #region Métodos
 
-        private void ConfigurarCamposSoloLectura()
-        {
-            txtIdUsuario.ReadOnly = true;
-
-            txtNombre1.ReadOnly = true;
-            txtNombre2.ReadOnly = true;
-            txtApellido1.ReadOnly = true;
-            txtApellido2.ReadOnly = true;
-
-            txtCelular.ReadOnly = true;
-            txtTelefono.ReadOnly = true;
-
-            txtSexo.Enabled = false;
-
-            txtUsuario.ReadOnly = true;
-            txtCorreo.ReadOnly = true;
-            txtRolUsuario.ReadOnly = true;
-        }
+  
 
         private void ObtenerInformacionUsuario()
         {
             if (!EvaluarAccionPermiso(0))
             {
-                Utilidad_C.MostrarAlerta_AccionDenegada(
-                    this,
-                    this.GetType()
-                );
-
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
                 return;
             }
 
             try
             {
-                DataTable dt =
-                    Usuario_N.ObtenerUsuario_VerInformacion(ID_REGISTRO);
+                DataTable dt = Usuario_N.ObtenerUsuario_VerInformacion(ID_REGISTRO);
 
                 if (dt == null || dt.Rows.Count == 0)
                 {
-                    Utilidad_C.MostrarAlerta_Personalizada(
-                        this,
-                        this.GetType(),
-                        "Error al consultar sus datos",
-                        "No fue posible obtener la información del usuario.",
-                        "error"
-                    );
-
+                    Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "Error al consultar sus datos", "No fue posible obtener la información del usuario.", "error");
                     return;
                 }
 
@@ -147,7 +118,6 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
                 txtApellido2.Text = row["Apellido2"].ToString();
                 txtCelular.Text = row["Celular"].ToString();
                 txtTelefono.Text = row["Telefono"].ToString();
-
                 txtSexo.Text = row["Sexo"].ToString();
 
                 txtRolUsuario.Text = row["Rol"].ToString();
@@ -156,21 +126,14 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             }
             catch (Exception ex)
             {
-                Utilidad_C.MostrarAlerta_Personalizada(
-                    this,
-                    this.GetType(),
-                    "Error al consultar sus datos",
-                    "Ocurrió un error al obtener la información: " +
-                    ex.Message,
-                    "error"
-                );
+                Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "Error al consultar sus datos", "Ocurrió un error al obtener la información: " + ex.Message,"error");
             }
         }
 
         private void MostrarFormularioPassword()
         {
             pnlCambiarPassword.Visible = true;
-            btnCambiarPassword.Visible = false;
+            pnlCambiarPassword_Activate.Visible = false;
         }
 
         private void OcultarFormularioPassword()
@@ -179,7 +142,7 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             txtRepetirPassword.Text = "";
 
             pnlCambiarPassword.Visible = false;
-            btnCambiarPassword.Visible = true;
+            pnlCambiarPassword_Activate.Visible = true;
         }
 
         private bool ValidarCambioPassword()
@@ -189,57 +152,31 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
 
             if (string.IsNullOrWhiteSpace(nuevaPassword))
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(
-                    this,
-                    this.GetType(),
-                    "El campo Nueva contraseña no puede estar vacío."
-                );
-
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El campo Nueva contraseña no puede estar vacío.");
                 return false;
             }
 
             if (string.IsNullOrWhiteSpace(repetirPassword))
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(
-                    this,
-                    this.GetType(),
-                    "El campo Repetir contraseña no puede estar vacío."
-                );
-
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "El campo Repetir contraseña no puede estar vacío.");
                 return false;
             }
 
             if (nuevaPassword != repetirPassword)
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(
-                    this,
-                    this.GetType(),
-                    "Las contraseñas no coinciden."
-                );
-
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "Las contraseñas no coinciden.");
                 return false;
             }
 
             if (nuevaPassword.Length < 8)
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(
-                    this,
-                    this.GetType(),
-                    "La contraseña debe tener un mínimo de 8 caracteres."
-                );
-
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La contraseña debe tener un mínimo de 8 caracteres.");
                 return false;
             }
 
             if (!Utilidad_N.ValidarPassword(nuevaPassword))
             {
-                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(
-                    this,
-                    this.GetType(),
-                    "La contraseña debe incluir letras mayúsculas, " +
-                    "letras minúsculas, números y un carácter especial."
-                );
-
+                Utilidad_C.MostrarAlerta_Guardar_Error_Personalizado(this, this.GetType(), "La contraseña debe incluir letras mayúsculas, " + "letras minúsculas, números y un carácter especial.");
                 return false;
             }
 
@@ -250,15 +187,9 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
         {
             if (!EvaluarAccionPermiso(1))
             {
-                Utilidad_C.MostrarAlerta_AccionDenegada(
-                    this,
-                    this.GetType()
-                );
-
+                Utilidad_C.MostrarAlerta_AccionDenegada(this, this.GetType());
                 return;
             }
-
-            MostrarFormularioPassword();
 
             if (!ValidarCambioPassword())
             {
@@ -271,65 +202,34 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
                  * Obtiene el usuario completo para evitar que el método
                  * Editar coloque en blanco los demás campos.
                  */
-                Usuario_E usuario =
-                    Usuario_N.ObtenerRegistro(ID_REGISTRO);
+                Usuario_E usuario = Usuario_N.ObtenerRegistro(ID_REGISTRO);
 
                 if (usuario == null)
                 {
-                    Utilidad_C.MostrarAlerta_Personalizada(
-                        this,
-                        this.GetType(),
-                        "Error",
-                        "No se encontró la información del usuario.",
-                        "error"
-                    );
-
+                    Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "Error", "No se encontró la información del usuario.", "error");
                     return;
                 }
 
-                usuario.Password =
-                    Utilidad_N.Encriptar(txtNuevaPassword.Text);
-
-                usuario.Fecha_Ultima_Modificacion =
-                    DateTime.Now;
-
-                bool salida = Usuario_N.Editar(usuario);
+                usuario.Password = Utilidad_N.Encriptar(txtNuevaPassword.Text);
+                usuario.Fecha_Ultima_Modificacion = DateTime.Now;
+                bool salida = Usuario_N.CambiarContraseña(usuario);
 
                 if (salida)
                 {
                     OcultarFormularioPassword();
 
-                    Utilidad_C.MostrarAlerta_Personalizada(
-                        this,
-                        this.GetType(),
-                        "Contraseña actualizada",
-                        "La contraseña se actualizó correctamente.",
-                        "success"
-                    );
+                    Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "Contraseña actualizada", "La contraseña se actualizó correctamente.", "success");
                 }
                 else
                 {
-                    Utilidad_C.MostrarAlerta_Personalizada(
-                        this,
-                        this.GetType(),
-                        "Error",
-                        "No fue posible actualizar la contraseña.",
-                        "error"
-                    );
+                    Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "Error", "No fue posible actualizar la contraseña.", "error");
                 }
             }
             catch (Exception ex)
             {
                 MostrarFormularioPassword();
 
-                Utilidad_C.MostrarAlerta_Personalizada(
-                    this,
-                    this.GetType(),
-                    "Error al cambiar la contraseña",
-                    "Ocurrió un error al actualizar la contraseña: " +
-                    ex.Message,
-                    "error"
-                );
+                Utilidad_C.MostrarAlerta_Personalizada(this, this.GetType(), "Error al cambiar la contraseña", "Ocurrió un error al actualizar la contraseña: " + ex.Message, "error");
             }
         }
 
@@ -339,12 +239,9 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Utilidad_C.RecargarTooltips(
-                this,
-                this.GetType()
-            );
+            Utilidad_C.RecargarTooltips(this, this.GetType());
 
-            ConfigurarCamposSoloLectura();
+
 
             if (!Page.IsPostBack)
             {
@@ -360,21 +257,15 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
                  * Obtiene el ID del usuario que inició sesión.
                  * Ya no se establece ID_REGISTRO en "0".
                  */
-                ID_REGISTRO =
-                    Utilidad_C.ObtenerUsuarioSession(this.Page);
-
-                ((SiteMaster)Master).EstablecerNombrePantalla(
-                    "Mi información"
-                );
+                ID_REGISTRO = Utilidad_C.ObtenerUsuarioSession(this.Page);
+                ((SiteMaster)Master).EstablecerNombrePantalla("Mi información");
 
                 OcultarFormularioPassword();
                 ObtenerInformacionUsuario();
             }
         }
 
-        protected void btnCambiarPassword_Click(
-            object sender,
-            EventArgs e)
+        protected void btnCambiarPassword_Click(object sender, EventArgs e)
         {
             txtNuevaPassword.Text = "";
             txtRepetirPassword.Text = "";
@@ -383,16 +274,12 @@ namespace Sistema_Iglesia_Dios_Web.Usuarios
             txtNuevaPassword.Focus();
         }
 
-        protected void btnGuardarPassword_Click(
-            object sender,
-            EventArgs e)
+        protected void btnGuardarPassword_Click(object sender, EventArgs e)
         {
             CambiarPassword();
         }
 
-        protected void btnCancelarCambioPassword_Click(
-            object sender,
-            EventArgs e)
+        protected void btnCancelarCambioPassword_Click(object sender, EventArgs e)
         {
             OcultarFormularioPassword();
         }

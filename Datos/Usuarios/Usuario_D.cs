@@ -441,11 +441,12 @@ namespace Datos.Usuarios
 
             using (SqlConnection conexion = new SqlConnection(Conexion_D.CadenaSQL))
             {
-                string sentencia = $@"UPDATE Usuarios SET Password = @Password WHERE Id_Usuario = @Id_Usuario";
+                string sentencia = $@"UPDATE Usuarios SET Password = @Password, Fecha_Ultima_Modificacion = @Fecha_Ultima_Modificacion WHERE Id_Usuario = @Id_Usuario";
 
                 SqlCommand cmd = new SqlCommand(sentencia, conexion);
                 cmd.Parameters.AddWithValue("@Id_Usuario", entidad.Id_Usuario);
                 cmd.Parameters.AddWithValue("@Password", entidad.Password);
+                cmd.Parameters.AddWithValue("@Fecha_Ultima_Modificacion", entidad.Fecha_Ultima_Modificacion);
                 cmd.CommandType = CommandType.Text;
                 try
                 {
