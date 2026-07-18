@@ -2,13 +2,14 @@
 using CrystalDecisions.Shared;
 using Entidades;
 using Negocio.Util_N;
-using SpreadsheetLight;
+using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI;
@@ -382,145 +383,283 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
         {
             try
             {
-                if (dtReporte.Rows.Count > 0)
+                if (Pagina == null)
+                    throw new ArgumentNullException(nameof(Pagina));
+
+                if (dtReporte == null || dtReporte.Rows.Count == 0)
                 {
-                    // Se establece el nombre del archivo
-                    string FileName = NombreReporte + "_" + string.Format("{0:ddMMyyyHHmmss}", DateTime.Now) + ".xlsx";
-                    string PathExcel = Pagina.Server.MapPath(@"~/Recursos/Archivos_Temp/");
+                    MostrarAlerta_Personalizada(
+                        Pagina,
+                        Pagina.GetType(),
+                        "No se puede generar el reporte",
+                        "No hay datos para generar el reporte",
+                        "warning");
+                    return;
+                }
 
-                    if (!Directory.Exists(PathExcel))
+                if (dtParametros == null)
+                    dtParametros = new DataTable();
+
+                if (NombresColumnas != null && NombresColumnas.Count > 0)
+                {
+                    if (NombresColumnas.Count != dtReporte.Columns.Count)
                     {
-                        Directory.CreateDirectory(PathExcel);
+                        throw new ArgumentException(
+                            "La cantidad de nombres de columnas no coincide con las columnas del reporte.",
+                            nameof(NombresColumnas));
                     }
-                    PathExcel = Pagina.Server.MapPath(@"~/Recursos/Archivos_Temp/" + FileName);
 
-                    if (NombresColumnas.Count > 0)
+                    for (int i = 0; i < dtReporte.Columns.Count; i++)
                     {
-                        for (int i = 0; i < dtReporte.Columns.Count; i++)
+                        dtReporte.Columns[i].ColumnName = NombresColumnas[i];
+                    }
+                }
+
+                string fileName = NombreReporte + "_" +
+                    DateTime.Now.ToString("ddMMyyyyHHmmss") + ".xlsx";
+
+                string carpetaTemporal = Pagina.Server.MapPath(
+                    @"~/Recursos/Archivos_Temp/");
+
+                if (!Directory.Exists(carpetaTemporal))
+                    Directory.CreateDirectory(carpetaTemporal);
+
+                string pathExcel = Path.Combine(carpetaTemporal, fileName);
+                XLColor colorEncabezado = XLColor.FromHtml("#EFF4FF");
+
+                using (XLWorkbook libro = new XLWorkbook())
+                {
+                    IXLWorksheet hojaReporte = libro.Worksheets.Add("Reporte");
+                    int totalColumnas = dtReporte.Columns.Count;
+
+                    // Parámetros generales del reporte, sin encabezados.
+                    if (dtParametros.Rows.Count > 0)
+                    {
+                        hojaReporte.Cell(1, 1).InsertData(dtParametros);
+
+                        IXLRange nombreInstitucion = hojaReporte.Range(
+                            1, 1, 1, totalColumnas);
+                        nombreInstitucion.Merge();
+                        nombreInstitucion.Style.Font.Bold = false;
+                        nombreInstitucion.Style.Font.FontSize = 22;
+                        nombreInstitucion.Style.Fill.BackgroundColor = colorEncabezado;
+                        nombreInstitucion.Style.Alignment.Horizontal =
+                            XLAlignmentHorizontalValues.Center;
+
+                        if (dtParametros.Rows.Count >= 2)
                         {
-                            dtReporte.Columns[i].ColumnName = NombresColumnas[i];
+                            IXLRange tituloReporte = hojaReporte.Range(
+                                2, 1, 2, totalColumnas);
+                            tituloReporte.Merge();
+                            tituloReporte.Style.Font.Bold = true;
+                            tituloReporte.Style.Font.FontSize = 20;
+                            tituloReporte.Style.Fill.BackgroundColor = colorEncabezado;
+                            tituloReporte.Style.Alignment.Horizontal =
+                                XLAlignmentHorizontalValues.Center;
                         }
-                    }
 
-                    SLDocument oSLDocument = new SLDocument();
+                        if (dtParametros.Rows.Count >= 3)
+                        {
+                            IXLRange fechaReporte = hojaReporte.Range(
+                                3, 1, 3, totalColumnas);
+                            fechaReporte.Merge();
+                            fechaReporte.Style.Alignment.Horizontal =
+                                XLAlignmentHorizontalValues.Right;
+                        }
 
-
-                    if (dtParametros.Rows.Count > 0 && dtParametros != null)
-                    {
-                        oSLDocument.ImportDataTable(1, 1, dtParametros, false);
-
-                        // Dando formato al nombre de la institucion
-                        SpreadsheetLight.SLStyle estiloParametros = new SpreadsheetLight.SLStyle();
-                        estiloParametros.SetFontBold(false);
-                        estiloParametros.Font.FontSize = 22;
-                        estiloParametros.Fill.SetPattern(DocumentFormat.OpenXml.Spreadsheet.PatternValues.Solid, System.Drawing.ColorTranslator.FromHtml("#EFF4FF"), System.Drawing.ColorTranslator.FromHtml("#EFF4FF"));
-                        estiloParametros.SetHorizontalAlignment(DocumentFormat.OpenXml.Spreadsheet.HorizontalAlignmentValues.Center);
-                        oSLDocument.SetCellStyle(1, 1, 1, dtReporte.Columns.Count, estiloParametros);
-                        oSLDocument.MergeWorksheetCells(1, 1, 1, dtReporte.Columns.Count);
-
-                        // Dando formato al titulo del reporte
-                        estiloParametros = new SLStyle();
-                        estiloParametros.Font.FontSize = 20;
-                        estiloParametros.SetFontBold(true);
-                        estiloParametros.Fill.SetPattern(DocumentFormat.OpenXml.Spreadsheet.PatternValues.Solid, System.Drawing.ColorTranslator.FromHtml("#EFF4FF"), System.Drawing.ColorTranslator.FromHtml("#EFF4FF"));
-                        estiloParametros.SetHorizontalAlignment(DocumentFormat.OpenXml.Spreadsheet.HorizontalAlignmentValues.Center);
-                        oSLDocument.SetCellStyle(2, 1, 2, dtReporte.Columns.Count, estiloParametros);
-                        oSLDocument.MergeWorksheetCells(2, 1, 2, dtReporte.Columns.Count);
-
-                        // Dando formato a la fecha/hora del reporte
-                        estiloParametros = new SLStyle();
-                        estiloParametros.SetHorizontalAlignment(DocumentFormat.OpenXml.Spreadsheet.HorizontalAlignmentValues.Right);
-                        oSLDocument.SetCellStyle(3, 1, 3, dtReporte.Columns.Count, estiloParametros);
-                        oSLDocument.MergeWorksheetCells(3, 1, 3, dtReporte.Columns.Count);
-
-                        // Detectando la palabra "Filtros"
+                        // Detectar y aplicar formato a la sección de filtros.
                         for (int i = 0; i < dtParametros.Rows.Count; i++)
                         {
-                            if (dtParametros.Rows[i][0].ToString() == "Filtros")
+                            if (dtParametros.Columns.Count > 0 &&
+                                dtParametros.Rows[i][0].ToString() == "Filtros")
                             {
-                                estiloParametros = new SLStyle();
-                                estiloParametros.SetFontBold(true);
-                                estiloParametros.Font.FontSize = 14;
-                                oSLDocument.SetRowStyle(i + 1, estiloParametros);
+                                int filaFiltros = i + 1;
 
+                                IXLRange encabezadoFiltros = hojaReporte.Range(
+                                    filaFiltros, 1, filaFiltros, totalColumnas);
+                                encabezadoFiltros.Style.Font.Bold = true;
+                                encabezadoFiltros.Style.Font.FontSize = 14;
 
-                                // Estableciendo formato a los filtros
-                                estiloParametros = new SLStyle();
-                                estiloParametros.SetFontBold(true);
-                                oSLDocument.SetCellStyle(i + 2, 1, dtParametros.Rows.Count, 1, estiloParametros);
-                                //oSLDocument.MergeWorksheetCells(i + 1, 1, dtParametros.Rows.Count, dtReporte.Columns.Count);
-                                oSLDocument.AutoFitColumn(1);
+                                if (filaFiltros + 1 <= dtParametros.Rows.Count)
+                                {
+                                    hojaReporte.Range(
+                                        filaFiltros + 1,
+                                        1,
+                                        dtParametros.Rows.Count,
+                                        1).Style.Font.Bold = true;
+                                }
 
+                                hojaReporte.Column(1).AdjustToContents();
                                 break;
                             }
                         }
                     }
 
-                    // Se importa los datos del reporte
-                    oSLDocument.ImportDataTable(dtParametros.Rows.Count + 1, 1, dtReporte, true);
-                    oSLDocument.RenameWorksheet(oSLDocument.GetCurrentWorksheetName(), "Reporte");
+                    // Encabezados del reporte principal.
+                    int filaEncabezados = dtParametros.Rows.Count + 1;
 
-                    // Se le asigna un estilo a la pagina del reporte
-                    SpreadsheetLight.SLStyle estilo = new SpreadsheetLight.SLStyle();
-                    estilo.SetFontBold(true);
-                    estilo.Font.FontSize = 14;
-                    estilo.Fill.SetPattern(DocumentFormat.OpenXml.Spreadsheet.PatternValues.Solid, System.Drawing.ColorTranslator.FromHtml("#EFF4FF"), System.Drawing.ColorTranslator.FromHtml("#EFF4FF"));
+                    for (int columna = 0;
+                         columna < dtReporte.Columns.Count;
+                         columna++)
+                    {
+                        hojaReporte.Cell(filaEncabezados, columna + 1).Value =
+                            dtReporte.Columns[columna].ColumnName;
+                    }
 
-                    oSLDocument.SetCellStyle(dtParametros.Rows.Count + 1, 1, dtParametros.Rows.Count + 1, dtReporte.Columns.Count, estilo);
-                    oSLDocument.AutoFitColumn(1, dtReporte.Columns.Count);
+                    // Datos del reporte principal, sin duplicar encabezados.
+                    hojaReporte.Cell(filaEncabezados + 1, 1)
+                        .InsertData(dtReporte);
 
+                    IXLRange encabezadoReporte = hojaReporte.Range(
+                        filaEncabezados,
+                        1,
+                        filaEncabezados,
+                        totalColumnas);
 
-                    // Si existen tablas secundarias entonces se importan y se les da formato
-                    if (TablasSecundarias != null && TablasSecundarias.Count > 0)
+                    encabezadoReporte.Style.Font.Bold = true;
+                    encabezadoReporte.Style.Font.FontSize = 14;
+                    encabezadoReporte.Style.Fill.BackgroundColor =
+                        colorEncabezado;
+
+                    hojaReporte.Columns(1, totalColumnas).AdjustToContents();
+
+                    // Tablas secundarias.
+                    if (TablasSecundarias != null)
                     {
                         for (int i = 0; i < TablasSecundarias.Count; i++)
                         {
-                            DataTable dtTablaSecundaria = TablasSecundarias[i];
+                            DataTable tabla = TablasSecundarias[i];
 
-                            oSLDocument.AddWorksheet(dtTablaSecundaria.TableName.Replace("_", " "));
-                            oSLDocument.ImportDataTable(1, 1, dtTablaSecundaria, true);
+                            if (tabla == null || tabla.Columns.Count == 0)
+                                continue;
 
-                            SpreadsheetLight.SLStyle estiloTablaSecundaria = new SpreadsheetLight.SLStyle();
-                            estiloTablaSecundaria.SetFontBold(true);
-                            estiloTablaSecundaria.Font.FontSize = 14;
-                            estiloTablaSecundaria.Fill.SetPattern(DocumentFormat.OpenXml.Spreadsheet.PatternValues.Solid, System.Drawing.ColorTranslator.FromHtml("#EFF4FF"), System.Drawing.ColorTranslator.FromHtml("#EFF4FF"));
-                            estiloTablaSecundaria.SetHorizontalAlignment(DocumentFormat.OpenXml.Spreadsheet.HorizontalAlignmentValues.Center);
-                            oSLDocument.SetCellStyle(1, 1, 1, dtTablaSecundaria.Columns.Count, estiloTablaSecundaria);
-                            oSLDocument.AutoFitColumn(1, dtTablaSecundaria.Columns.Count);
+                            string nombreHoja = tabla.TableName.Replace("_", " ");
+
+                            if (string.IsNullOrWhiteSpace(nombreHoja))
+                                nombreHoja = "Tabla " + (i + 1);
+
+                            char[] caracteresInvalidos =
+                            {
+                                ':', '\\', '/', '?', '*', '[', ']'
+                            };
+
+                            foreach (char caracterInvalido in caracteresInvalidos)
+                            {
+                                nombreHoja = nombreHoja.Replace(
+                                    caracterInvalido,
+                                    '-');
+                            }
+
+                            if (nombreHoja.Length > 31)
+                                nombreHoja = nombreHoja.Substring(0, 31);
+
+                            string nombreBase = nombreHoja;
+                            int consecutivo = 2;
+
+                            while (libro.Worksheets.Any(
+                                hoja => hoja.Name.Equals(
+                                    nombreHoja,
+                                    StringComparison.OrdinalIgnoreCase)))
+                            {
+                                string sufijo = " " + consecutivo;
+                                int longitudDisponible = 31 - sufijo.Length;
+
+                                nombreHoja =
+                                    nombreBase.Substring(
+                                        0,
+                                        Math.Min(
+                                            nombreBase.Length,
+                                            longitudDisponible)) + sufijo;
+
+                                consecutivo++;
+                            }
+
+                            IXLWorksheet hojaSecundaria =
+                                libro.Worksheets.Add(nombreHoja);
+
+                            for (int columna = 0;
+                                 columna < tabla.Columns.Count;
+                                 columna++)
+                            {
+                                hojaSecundaria.Cell(1, columna + 1).Value =
+                                    tabla.Columns[columna].ColumnName;
+                            }
+
+                            if (tabla.Rows.Count > 0)
+                            {
+                                hojaSecundaria.Cell(2, 1).InsertData(tabla);
+                            }
+
+                            IXLRange encabezadoSecundario =
+                                hojaSecundaria.Range(
+                                    1,
+                                    1,
+                                    1,
+                                    tabla.Columns.Count);
+
+                            encabezadoSecundario.Style.Font.Bold = true;
+                            encabezadoSecundario.Style.Font.FontSize = 14;
+                            encabezadoSecundario.Style.Fill.BackgroundColor =
+                                colorEncabezado;
+                            encabezadoSecundario.Style.Alignment.Horizontal =
+                                XLAlignmentHorizontalValues.Center;
+
+                            hojaSecundaria.Columns(
+                                1,
+                                tabla.Columns.Count).AdjustToContents();
                         }
-                        oSLDocument.SelectWorksheet("Reporte");
                     }
 
-
-                    // Se guarda el archivo en la ubicacion espesificada para guardar archivos temporales en el servidor
-                    oSLDocument.SaveAs(PathExcel);
-
-                    // Se descarga el archivo en la maquina cliente desde la ubicacion espesificada para guardar archivos temporales del servidor
-                    if (File.Exists(PathExcel))
-                    {
-                        Pagina.Response.AddHeader("Content-Disposition", "attachment;filename=" + FileName);
-                        Pagina.Response.TransmitFile(PathExcel);
-                        Pagina.Response.End();
-                    }
-                    else
-                    {
-                        MostrarAlerta_Personalizada(Pagina, Pagina.GetType(), "Error al generar el reporte", "No se pudo descargar el reporte", "error");
-                    }
+                    libro.SaveAs(pathExcel);
                 }
-                else
+
+                if (!File.Exists(pathExcel))
                 {
-                    MostrarAlerta_Personalizada(Pagina, Pagina.GetType(), "No se puede generar el reporte", "No hay datos para generar el reporte", "warning");
+                    MostrarAlerta_Personalizada(
+                        Pagina,
+                        Pagina.GetType(),
+                        "Error al generar el reporte",
+                        "No se pudo descargar el reporte",
+                        "error");
+                    return;
                 }
+
+                byte[] contenidoExcel = File.ReadAllBytes(pathExcel);
+
+                Pagina.Response.Clear();
+                Pagina.Response.ClearContent();
+                Pagina.Response.ClearHeaders();
+                Pagina.Response.BufferOutput = true;
+                Pagina.Response.ContentType =
+                    "application/vnd.openxmlformats-officedocument." +
+                    "spreadsheetml.sheet";
+
+                Pagina.Response.AddHeader(
+                    "Content-Disposition",
+                    "attachment; filename=\"" + fileName + "\"");
+
+                Pagina.Response.AddHeader(
+                    "Content-Length",
+                    contenidoExcel.Length.ToString());
+
+                Pagina.Response.BinaryWrite(contenidoExcel);
+                Pagina.Response.Flush();
+
+                // Evita que Web Forms agregue HTML al final del archivo XLSX.
+                Pagina.Response.SuppressContent = true;
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
+                return;
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
-               
+                throw;
             }
         }
 
+
         // Se realiza el login con la base de datos para los reportes en PDF de Crystal
-        public static void SetLoginReport(ReportDocument report, String dbname, String dbserver, String dbuser, String userpass) {
+        public static void SetLoginReport(ReportDocument report, String dbname, String dbserver, String dbuser, String userpass)
+        {
 
             var crTableLogonInfo = new TableLogOnInfo();
             var crConnectionInfo = new ConnectionInfo();
@@ -550,7 +689,8 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
         }
 
         // Se obtiene la cadena de conexion para realizar el login para los reportes en PDF de Crystal
-        public static OleDbConnectionStringBuilder LoginReport() {
+        public static OleDbConnectionStringBuilder LoginReport()
+        {
             try
             {
                 var cadena = new OleDbConnectionStringBuilder();
@@ -559,7 +699,9 @@ namespace Sistema_Iglesia_Dios_Web.Utilidad_Cliente
                 //cadena("password") = App_Code.Criptografia.Desencriptar(ConfigurationManager.AppSettings("password"))
 
                 return cadena;
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 throw;
             }
         }
