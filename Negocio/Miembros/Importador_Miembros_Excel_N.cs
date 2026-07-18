@@ -18,12 +18,22 @@ namespace Negocio.Miembros
         private static readonly CultureInfo CulturaDO =
             CultureInfo.GetCultureInfo("es-DO");
 
+        /*
+            El importador se crea por cada solicitud, por lo que estos campos
+            solo existen mientras se procesa un archivo.
+        */
+        private Importacion_Miembros_E _resultadoActual;
+        private Dictionary<int, string> _columnasGridPorNumero;
+
         public Importacion_Miembros_E Leer(Stream archivo)
         {
             if (archivo == null)
                 throw new ArgumentNullException("archivo");
 
             Importacion_Miembros_E resultado = CrearEstructuras();
+            _resultadoActual = resultado;
+            _columnasGridPorNumero =
+                new Dictionary<int, string>();
 
             using (XLWorkbook libro = new XLWorkbook(archivo))
             {
@@ -31,21 +41,49 @@ namespace Negocio.Miembros
 
                 if (hoja == null || hoja.FirstRowUsed() == null)
                 {
-                    resultado.Errores.Add("El archivo Excel está vacío.");
+                    resultado.AgregarError(
+                        new Error_Importacion_Excel_E
+                        {
+                            Mensaje = "El archivo Excel está vacío."
+                        });
+
                     return resultado;
                 }
 
                 IXLRow filaEncabezados = hoja.FirstRowUsed();
+                int primeraFilaDatos =
+                    filaEncabezados.RowNumber() + 1;
+                int ultimaFila =
+                    hoja.LastRowUsed().RowNumber();
+
+                CrearVistaPrevia(
+                    resultado,
+                    hoja,
+                    filaEncabezados,
+                    primeraFilaDatos,
+                    ultimaFila);
+
                 Dictionary<string, int> columnas =
-                    ObtenerColumnas(filaEncabezados, resultado.Errores);
+                    ObtenerColumnas(
+                        filaEncabezados,
+                        resultado);
 
-                ValidarColumnasObligatorias(columnas, resultado.Errores);
+                ValidarColumnasObligatorias(
+                    columnas,
+                    resultado,
+                    filaEncabezados.RowNumber());
 
-                if (resultado.Errores.Count > 0)
+                /*
+                    Si faltan encabezados obligatorios no es posible validar
+                    correctamente las filas.
+                */
+                if (resultado.Errores_Detallados.Any(
+                        error =>
+                            error.Es_Encabezado &&
+                            error.Columna_Excel == 0))
+                {
                     return resultado;
-
-                int primeraFilaDatos = filaEncabezados.RowNumber() + 1;
-                int ultimaFila = hoja.LastRowUsed().RowNumber();
+                }
 
                 for (int numeroFila = primeraFilaDatos;
                      numeroFila <= ultimaFila;
@@ -56,27 +94,144 @@ namespace Negocio.Miembros
                     if (FilaEstaVacia(fila))
                         continue;
 
+                    resultado.Total_Filas_Leidas++;
+
                     try
                     {
-                        AgregarFila(resultado, fila, columnas);
-                        resultado.Total_Filas_Leidas++;
+                        if (AgregarFila(
+                                resultado,
+                                fila,
+                                columnas))
+                        {
+                            resultado.Total_Filas_Validas++;
+                        }
                     }
                     catch (Exception ex)
                     {
-                        resultado.Errores.Add(
-                            "Fila " + numeroFila + ": " + ex.Message);
+                        resultado.AgregarError(
+                            new Error_Importacion_Excel_E
+                            {
+                                Fila_Excel = numeroFila,
+                                Mensaje =
+                                    "No se pudo procesar la fila: " +
+                                    ex.Message
+                            });
                     }
                 }
+
+                /*
+                    Esta validación debe ejecutarse antes de llamar a SQL.
+                    Así, cuando un número alternativo positivo aparece más
+                    de una vez en el mismo Excel, se marcan en rojo todas
+                    las celdas involucradas en lugar de recibir solamente
+                    el THROW general del procedimiento almacenado.
+                */
+                ValidarNumerosAlternativosDuplicados(
+                    hoja,
+                    columnas,
+                    primeraFilaDatos,
+                    ultimaFila,
+                    resultado);
             }
 
             if (resultado.Total_Filas_Leidas == 0 &&
                 resultado.Errores.Count == 0)
             {
-                resultado.Errores.Add(
-                    "El archivo no contiene filas de miembros para importar.");
+                resultado.AgregarError(
+                    new Error_Importacion_Excel_E
+                    {
+                        Mensaje =
+                            "El archivo no contiene filas de miembros para importar."
+                    });
             }
 
             return resultado;
+        }
+
+        private void CrearVistaPrevia(
+            Importacion_Miembros_E resultado,
+            IXLWorksheet hoja,
+            IXLRow filaEncabezados,
+            int primeraFilaDatos,
+            int ultimaFila)
+        {
+            DataTable datosExcel =
+                new DataTable("Datos_Excel");
+
+            datosExcel.Columns.Add(
+                "Fila Excel",
+                typeof(int));
+
+            int primeraColumna =
+                filaEncabezados.FirstCellUsed()
+                    .Address.ColumnNumber;
+
+            int ultimaColumna =
+                hoja.LastCellUsed()
+                    .Address.ColumnNumber;
+
+            for (int numeroColumna = primeraColumna;
+                 numeroColumna <= ultimaColumna;
+                 numeroColumna++)
+            {
+                string nombreBase =
+                    filaEncabezados
+                        .Cell(numeroColumna)
+                        .GetFormattedString()
+                        .Trim();
+
+                if (string.IsNullOrWhiteSpace(nombreBase))
+                {
+                    nombreBase =
+                        "Columna " + numeroColumna;
+                }
+
+                string nombreGrid = nombreBase;
+                int consecutivo = 2;
+
+                while (datosExcel.Columns.Contains(nombreGrid))
+                {
+                    nombreGrid =
+                        nombreBase + " (" + consecutivo + ")";
+                    consecutivo++;
+                }
+
+                datosExcel.Columns.Add(
+                    nombreGrid,
+                    typeof(string));
+
+                _columnasGridPorNumero[numeroColumna] =
+                    nombreGrid;
+            }
+
+            for (int numeroFila = primeraFilaDatos;
+                 numeroFila <= ultimaFila;
+                 numeroFila++)
+            {
+                IXLRow fila = hoja.Row(numeroFila);
+
+                if (FilaEstaVacia(fila))
+                    continue;
+
+                DataRow filaVista = datosExcel.NewRow();
+                filaVista["Fila Excel"] = numeroFila;
+
+                for (int numeroColumna = primeraColumna;
+                     numeroColumna <= ultimaColumna;
+                     numeroColumna++)
+                {
+                    string nombreGrid =
+                        _columnasGridPorNumero[numeroColumna];
+
+                    filaVista[nombreGrid] =
+                        fila.Cell(numeroColumna)
+                            .GetFormattedString();
+                }
+
+                datosExcel.Rows.Add(filaVista);
+            }
+
+            resultado.Datos_Excel = datosExcel;
         }
 
         #region Creación de los DataTable
@@ -331,11 +486,14 @@ namespace Negocio.Miembros
 
         #region Conversión de una fila del Excel
 
-        private void AgregarFila(
+        private bool AgregarFila(
             Importacion_Miembros_E resultado,
             IXLRow fila,
             Dictionary<string, int> columnas)
         {
+            int cantidadErroresAntes =
+                resultado.Errores_Detallados.Count;
+
             Guid importKey = Guid.NewGuid();
 
             string nombres = ObtenerTexto(
@@ -689,12 +847,20 @@ namespace Negocio.Miembros
                 los campos hayan sido validados. Así no quedan DataTable
                 desalineados cuando una fila del Excel tiene errores.
             */
+            if (resultado.Errores_Detallados.Count >
+                cantidadErroresAntes)
+            {
+                return false;
+            }
+
             resultado.Miembros.Rows.Add(miembro);
             resultado.Informacion_Familiar_1.Rows.Add(familiar1);
             resultado.Informacion_Familiar_2.Rows.Add(familiar2);
             resultado.Informacion_Laboral.Rows.Add(laboral);
             resultado.Nivel_Academico.Rows.Add(nivel);
             resultado.Pasatiempos.Rows.Add(pasatiempos);
+
+            return true;
         }
 
         #endregion
@@ -703,7 +869,7 @@ namespace Negocio.Miembros
 
         private Dictionary<string, int> ObtenerColumnas(
             IXLRow filaEncabezados,
-            List<string> errores)
+            Importacion_Miembros_E resultado)
         {
             Dictionary<string, int> columnas =
                 new Dictionary<string, int>(
@@ -711,16 +877,22 @@ namespace Negocio.Miembros
 
             foreach (IXLCell celda in filaEncabezados.CellsUsed())
             {
-                string nombre = celda.GetFormattedString().Trim();
+                string nombre =
+                    celda.GetFormattedString().Trim();
 
                 if (nombre.Length == 0)
                     continue;
 
                 if (columnas.ContainsKey(nombre))
                 {
-                    errores.Add(
-                        "El encabezado '" + nombre +
-                        "' aparece más de una vez.");
+                    resultado.AgregarError(
+                        CrearErrorCelda(
+                            filaEncabezados,
+                            celda.Address.ColumnNumber,
+                            nombre,
+                            "El encabezado '" + nombre +
+                            "' aparece más de una vez.",
+                            true));
                 }
                 else
                 {
@@ -735,7 +907,8 @@ namespace Negocio.Miembros
 
         private void ValidarColumnasObligatorias(
             Dictionary<string, int> columnas,
-            List<string> errores)
+            Importacion_Miembros_E resultado,
+            int filaEncabezados)
         {
             string[] obligatorias =
             {
@@ -748,11 +921,202 @@ namespace Negocio.Miembros
             {
                 if (!columnas.ContainsKey(columna))
                 {
-                    errores.Add(
-                        "No se encontró la columna obligatoria '" +
-                        columna + "'.");
+                    resultado.AgregarError(
+                        new Error_Importacion_Excel_E
+                        {
+                            Fila_Excel = filaEncabezados,
+                            Nombre_Columna = columna,
+                            Es_Encabezado = true,
+                            Mensaje =
+                                "No se encontró la columna obligatoria '" +
+                                columna + "'."
+                        });
                 }
             }
+        }
+
+        private Error_Importacion_Excel_E CrearErrorCelda(
+            IXLRow fila,
+            int numeroColumna,
+            string nombreColumna,
+            string mensaje,
+            bool esEncabezado)
+        {
+            string nombreColumnaGrid = string.Empty;
+
+            if (_columnasGridPorNumero != null)
+            {
+                _columnasGridPorNumero.TryGetValue(
+                    numeroColumna,
+                    out nombreColumnaGrid);
+            }
+
+            return new Error_Importacion_Excel_E
+            {
+                Fila_Excel = fila.RowNumber(),
+                Columna_Excel = numeroColumna,
+                Nombre_Columna = nombreColumna,
+                Nombre_Columna_Grid = nombreColumnaGrid,
+                Valor = fila.Cell(numeroColumna)
+                    .GetFormattedString(),
+                Mensaje = mensaje,
+                Es_Encabezado = esEncabezado
+            };
+        }
+
+        private void RegistrarErrorCelda(
+            IXLRow fila,
+            Dictionary<string, int> columnas,
+            string nombreColumna,
+            string mensaje)
+        {
+            int numeroColumna;
+
+            if (!columnas.TryGetValue(
+                    nombreColumna,
+                    out numeroColumna))
+            {
+                _resultadoActual.AgregarError(
+                    new Error_Importacion_Excel_E
+                    {
+                        Fila_Excel = fila.RowNumber(),
+                        Nombre_Columna = nombreColumna,
+                        Mensaje = mensaje
+                    });
+
+                return;
+            }
+
+            _resultadoActual.AgregarError(
+                CrearErrorCelda(
+                    fila,
+                    numeroColumna,
+                    nombreColumna,
+                    mensaje,
+                    false));
+        }
+
+        private void ValidarNumerosAlternativosDuplicados(
+            IXLWorksheet hoja,
+            Dictionary<string, int> columnas,
+            int primeraFilaDatos,
+            int ultimaFila,
+            Importacion_Miembros_E resultado)
+        {
+            int numeroColumna;
+
+            if (!columnas.TryGetValue(
+                    "Numero_Alternativo_Miembro",
+                    out numeroColumna))
+            {
+                return;
+            }
+
+            Dictionary<int, List<int>> filasPorNumero =
+                new Dictionary<int, List<int>>();
+
+            for (int numeroFila = primeraFilaDatos;
+                 numeroFila <= ultimaFila;
+                 numeroFila++)
+            {
+                IXLRow fila = hoja.Row(numeroFila);
+
+                if (FilaEstaVacia(fila))
+                    continue;
+
+                IXLCell celda = fila.Cell(numeroColumna);
+                int numeroAlternativo;
+
+                if (!TryObtenerEnteroSinRegistrarError(
+                        celda,
+                        out numeroAlternativo))
+                {
+                    /*
+                        Si el contenido no es un entero, el error de tipo ya
+                        fue registrado por ObtenerEnteroNullable durante la
+                        validación normal de la fila.
+                    */
+                    continue;
+                }
+
+                /*
+                    Cero representa "sin número alternativo" en el sistema.
+                    Por eso puede repetirse y no se considera duplicado.
+                */
+                if (numeroAlternativo <= 0)
+                    continue;
+
+                List<int> filas;
+
+                if (!filasPorNumero.TryGetValue(
+                        numeroAlternativo,
+                        out filas))
+                {
+                    filas = new List<int>();
+                    filasPorNumero.Add(
+                        numeroAlternativo,
+                        filas);
+                }
+
+                filas.Add(numeroFila);
+            }
+
+            foreach (KeyValuePair<int, List<int>> grupo in
+                filasPorNumero.Where(item => item.Value.Count > 1))
+            {
+                string filasTexto =
+                    string.Join(
+                        ", ",
+                        grupo.Value
+                            .Select(fila => fila.ToString())
+                            .ToArray());
+
+                foreach (int numeroFila in grupo.Value)
+                {
+                    resultado.AgregarError(
+                        CrearErrorCelda(
+                            hoja.Row(numeroFila),
+                            numeroColumna,
+                            "Numero_Alternativo_Miembro",
+                            "El número alternativo " +
+                            grupo.Key +
+                            " está repetido en las filas " +
+                            filasTexto +
+                            ". Cada número mayor que cero debe ser único.",
+                            false));
+                }
+            }
+        }
+
+        private bool TryObtenerEnteroSinRegistrarError(
+            IXLCell celda,
+            out int valor)
+        {
+            valor = 0;
+
+            if (celda == null || celda.IsEmpty())
+                return false;
+
+            if (celda.TryGetValue<int>(out valor))
+                return true;
+
+            double numero;
+
+            if (celda.TryGetValue<double>(out numero) &&
+                Math.Abs(numero - Math.Round(numero)) < 0.0000001)
+            {
+                valor = Convert.ToInt32(Math.Round(numero));
+                return true;
+            }
+
+            string texto =
+                celda.GetFormattedString().Trim();
+
+            return int.TryParse(
+                texto,
+                NumberStyles.Integer,
+                CulturaDO,
+                out valor);
         }
 
         private bool FilaEstaVacia(IXLRow fila)
@@ -778,7 +1142,10 @@ namespace Negocio.Miembros
             {
                 if (obligatorio)
                 {
-                    throw new Exception(
+                    RegistrarErrorCelda(
+                        fila,
+                        columnas,
+                        nombreColumna,
                         "Falta la columna obligatoria '" +
                         nombreColumna + "'.");
                 }
@@ -794,7 +1161,10 @@ namespace Negocio.Miembros
             if (obligatorio &&
                 string.IsNullOrWhiteSpace(valor))
             {
-                throw new Exception(
+                RegistrarErrorCelda(
+                    fila,
+                    columnas,
+                    nombreColumna,
                     "El campo '" + nombreColumna +
                     "' no puede estar vacío.");
             }
@@ -802,7 +1172,10 @@ namespace Negocio.Miembros
             if (longitudMaxima > 0 &&
                 valor.Length > longitudMaxima)
             {
-                throw new Exception(
+                RegistrarErrorCelda(
+                    fila,
+                    columnas,
+                    nombreColumna,
                     "El campo '" + nombreColumna +
                     "' supera los " + longitudMaxima +
                     " caracteres.");
@@ -873,9 +1246,14 @@ namespace Negocio.Miembros
                 return entero;
             }
 
-            throw new Exception(
+            RegistrarErrorCelda(
+                fila,
+                columnas,
+                nombreColumna,
                 "El campo '" + nombreColumna +
                 "' debe contener un número entero.");
+
+            return null;
         }
 
         private DateTime? ObtenerFecha(
@@ -949,9 +1327,14 @@ namespace Negocio.Miembros
                 return fecha.Date;
             }
 
-            throw new Exception(
+            RegistrarErrorCelda(
+                fila,
+                columnas,
+                nombreColumna,
                 "La fecha del campo '" + nombreColumna +
                 "' no es válida. Use dd/MM/yyyy.");
+
+            return null;
         }
 
         private bool ObtenerBooleano(
@@ -1003,9 +1386,14 @@ namespace Negocio.Miembros
                     return true;
 
                 default:
-                    throw new Exception(
+                    RegistrarErrorCelda(
+                        fila,
+                        columnas,
+                        nombreColumna,
                         "El campo '" + nombreColumna +
                         "' debe contener Sí/No, 1/0 o True/False.");
+
+                    return false;
             }
         }
 
@@ -1019,6 +1407,9 @@ namespace Negocio.Miembros
                 "Sexo",
                 20,
                 true).ToLowerInvariant();
+
+            if (string.IsNullOrWhiteSpace(valor))
+                return 0;
 
             switch (valor)
             {
@@ -1035,8 +1426,13 @@ namespace Negocio.Miembros
                     return 2;
 
                 default:
-                    throw new Exception(
+                    RegistrarErrorCelda(
+                        fila,
+                        columnas,
+                        "Sexo",
                         "El sexo debe ser Masculino, Femenino, 1 o 2.");
+
+                    return 0;
             }
         }
 
@@ -1081,9 +1477,14 @@ namespace Negocio.Miembros
                     return 4;
 
                 default:
-                    throw new Exception(
+                    RegistrarErrorCelda(
+                        fila,
+                        columnas,
+                        "Estado_Civil",
                         "El estado civil debe ser 0, 1, 2, 3, 4, " +
                         "Soltero/a, Casado/a, Unión libre u Otro.");
+
+                    return 0;
             }
         }
 
