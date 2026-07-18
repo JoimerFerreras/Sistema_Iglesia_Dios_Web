@@ -175,7 +175,7 @@
                         <div class="contenedor_botones">
                             <asp:LinkButton CssClass="fa-solid fa-magnifying-glass fa-lg boton_formulario_Buscar" runat="server" ID="btnBuscar" OnClientClick="MostrarPanelCarga()" OnClick="btnBuscar_Click"></asp:LinkButton>
                             <asp:LinkButton CssClass="fa-solid fa-filter-circle-xmark fa-lg boton_formulario_LimpiarFiltros" runat="server" ID="btnLimpiarFiltros" OnClick="btnLimpiarFiltros_Click"></asp:LinkButton>
-                            <asp:LinkButton CssClass="fa-solid fa-file-pdf fa-lg boton_formulario_Agregar" runat="server" ID="btnGenerarPDF" OnClick="btnGenerarPDF_Click" OnClientClick="MostrarPanelCarga()" data-tippy-content="Generar reporte en PDF"></asp:LinkButton>
+                            <asp:LinkButton CssClass="fa-solid fa-file-pdf fa-lg boton_formulario_Agregar" runat="server" ID="btnGenerarPDF" OnClick="btnGenerarPDF_Click" OnClientClick="MostrarPanelCarga()" Enabled="false" Visible="false" data-tippy-content="Generar reporte en PDF"></asp:LinkButton>
                             <asp:LinkButton CssClass="fa-solid fa-file-excel fa-lg boton_formulario_Agregar" runat="server" ID="btnGenerarExcel" OnClick="btnGenerarExcel_Click" data-tippy-content="Generar reporte en Excel"></asp:LinkButton>
                         </div>
 

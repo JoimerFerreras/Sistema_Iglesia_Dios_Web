@@ -202,7 +202,7 @@
                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
                             <div>
                                 <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Detalle</span>
-                                <asp:LinkButton runat="server" ID="btnGenerarPDF_Detalle" CssClass="btn btn-secondary" OnClick="btnGenerarPDF_Detalle_Click" OnClientClick="MostrarPanelCarga()"><i class="fa-solid fa-file-pdf"></i> Generar reporte PDF</asp:LinkButton>
+                                <asp:LinkButton runat="server" ID="btnGenerarPDF_Detalle" CssClass="btn btn-secondary" OnClick="btnGenerarPDF_Detalle_Click" OnClientClick="MostrarPanelCarga()" Enabled="false" Visible="false"><i class="fa-solid fa-file-pdf"></i> Generar reporte PDF</asp:LinkButton>
                                 <asp:LinkButton runat="server" ID="btnGenerarExcel_Detalle" CssClass="btn btn-success" OnClick="btnGenerarExcel_Detalle_Click"><i class="fa-solid fa-file-excel"></i> Generar Excel</asp:LinkButton>
                             </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>
@@ -276,7 +276,7 @@
                         <div class="shadowed-div-body" style="width: 100%; margin-top: 20px;">
                             <div>
                                 <i class="fa-solid fa-table-list shadowed-div-body-titulo"></i><span class="shadowed-div-body-titulo">Resumen</span>
-                                <asp:LinkButton runat="server" ID="btnGenerarPDF_Resumen" CssClass="btn btn-secondary" OnClick="btnGenerarPDF_Resumen_Click" OnClientClick="MostrarPanelCarga()"><i class="fa-solid fa-file-pdf"></i> Generar reporte PDF</asp:LinkButton>
+                                <asp:LinkButton runat="server" ID="btnGenerarPDF_Resumen" CssClass="btn btn-secondary" OnClick="btnGenerarPDF_Resumen_Click" OnClientClick="MostrarPanelCarga()" Enabled="false" Visible="false"><i class="fa-solid fa-file-pdf"></i> Generar reporte PDF</asp:LinkButton>
                                 <asp:LinkButton runat="server" ID="btnGenerarExcel_Resumen" CssClass="btn btn-success" OnClick="btnGenerarExcel_Resumen_Click"><i class="fa-solid fa-file-excel"></i> Generar Excel</asp:LinkButton>
                             </div>
                             <div class="linea-separador" style="margin-top: 20px;"></div>

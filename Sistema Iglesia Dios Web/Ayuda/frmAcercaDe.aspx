@@ -91,12 +91,12 @@
 
                         <div class="col-12 col-md-4">
                             <b>Ultima actualización</b><br />
-                            Febrero 2026
+                            Julio 2026
                         </div>
 
                         <div class="col-12 col-md-4">
                             <b>Fecha de lanzamiento</b><br />
-                            Febrero 2026
+                            Julio 2026
                         </div>
                     </div>
 
